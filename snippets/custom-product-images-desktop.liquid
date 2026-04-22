@@ -1,0 +1,146 @@
+<!-- start snippets/custom-product-images-desktop.liquid -->
+{% assign image_quantity = product.media | size | minus: 1 %}
+
+<style>
+  .product-images__image-wrapper {
+    margin-bottom: 25px;
+  }
+
+  .product-images__image-wrapper:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .product-images__image-wrapper-flex {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    padding-top: unset;
+  }
+
+  .product-images__image-wrapper-flex.odd picture {
+    flex-basis: 32%;
+    height: auto;
+  }
+
+  .product-images__image-wrapper.even picture {
+    flex-basis: 50%;
+  }
+
+  .product-images__image-wrapper img {
+    width: 100%;
+  }
+
+  .product-images__image-wrapper:not(.product-images__image-wrapper-first) img {
+    border-radius: 5.5px 5.5px 6.87px 6.87px;
+  }
+</style>
+
+<div class="product-images desktop">
+  <div class="product-images__image-wrapper product-images__image-wrapper-first">
+    <picture data-position="0">
+      <img
+        width="587"
+        height="650"
+        data-src="{{ product.media[0] | image_url: width: 579 }}"
+        class="product-images__img"
+        data-class="LazyLoad"
+      >
+    </picture>
+  </div>
+
+  {% assign round = 1 %}  
+  {% assign first_index = 1 %}
+  {% assign last_index = 1 %}
+  {% for image in product.media %}
+    {% assign modulo = round | modulo: 2 %}
+    {% assign first_index = first_index | plus: 1 %}
+    {% if modulo != 0 %}
+      {% assign last_index = last_index | plus: 3 %}
+    {% else %}
+      {% assign last_index = last_index | plus: 2 %}
+    {% endif %}
+    <div class="product-images__image-wrapper product-images__image-wrapper-flex {% if modulo != 0 %} odd {% else %} even {% endif %}">
+      {% for image in product.media %}
+        {% if forloop.index < first_index or forloop.index > last_index %} {% continue %} {% endif %}
+        {% if modulo != 0 %}
+          <picture data-position="{{ forloop.index0 }}">
+            <img
+              width="188"
+              height="210"
+              data-src="{{ image | image_url: width: 200, height: 210 }}"
+              class="product-images__img"
+              data-class="LazyLoad"
+            >
+          </picture>
+        {% else %}
+          <picture data-position="{{ forloop.index0 }}">
+            <img
+              width="285"
+              height="316"
+              data-src="{{ image | image_url: width: 285, height: 316 }}"
+              class="product-images__img"
+              data-class="LazyLoad"
+            >
+          </picture>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if first_index >= image_quantity %} {% break %} {% endif %}
+    {% assign first_index = last_index %}
+    {% assign round = round | plus: 1 %}
+  {% endfor %}
+
+  {% comment %} <div class="product-images__image-wrapper product-images__image-wrapper-flex odd">
+    {% for image in product.media %}
+      {% if forloop.index < 2 or forloop.index > 4 %}
+        {% continue %}
+      {% endif %}
+      <picture data-position="{{ forloop.index0 }}">
+        <img
+          width="188"
+          height="210"
+          data-src="{{ image | image_url: width: 200, height: 210 }}"
+          class="product-images__img"
+          data-class="LazyLoad"
+        >
+      </picture>
+    {% endfor %}
+  </div>
+  
+  <div class="product-images__image-wrapper product-images__image-wrapper-flex even">
+    {% for image in product.media %}
+      {% if forloop.index < 5 or forloop.index > 6 %}
+        {% continue %}
+      {% endif %}
+
+      <picture data-position="{{ forloop.index0 }}">
+        <img
+          width="285"
+          height="316"
+          data-src="{{ image | image_url: width: 285, height: 316 }}"
+          class="product-images__img"
+          data-class="LazyLoad"
+        >
+      </picture>
+    {% endfor %}
+  </div>
+  
+  <div class="product-images__image-wrapper product-images__image-wrapper-flex odd">
+    {% for image in product.media %}
+      {% if forloop.index < 7 %}
+        {% continue %}
+      {% endif %}
+
+      <picture data-position="{{ forloop.index0 }}">
+        <img
+          width="285"
+          height="316"
+          data-src="{{ image | image_url: width: 285, height: 316 }}"
+          class="product-images__img"
+          data-class="LazyLoad"
+        >
+      </picture>
+    {% endfor %}
+  </div> {% endcomment %}
+  
+</div>

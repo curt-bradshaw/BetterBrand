@@ -1,0 +1,811 @@
+{% assign cross_sell_collection = section.settings.cross_sell_select_collection %}
+{%- assign enable_lazy = true -%}
+{%- assign temp_product = cross_sell_collection.products -%}
+{%- assign show_price = section.settings.show_price -%}
+{%- assign image_width = 560 -%}
+{%- assign width_mobile = 200 -%}
+{%- assign width_desk = 560 -%}
+{%- assign width_small = 300 -%}
+
+{%- assign qtd_desktop = section.settings['products_per_rows_desktop-'] %}
+
+<style scoped>
+  :root {
+    --cross-sell-title-color:{{ section.settings.title-color }};
+    --cross-sell-title-font-size:{{ section.settings.title-font-size }}px;
+    --cross-sell-title-font-size-tablet:{{ section.settings.title-font-size-tablet }}px;
+    --cross-sell-border-color:{{ section.settings.border-color }};
+    --cross-sell-product-title-color:{{ section.settings.product-title-color }};
+    --cross-sell-price-color:{{ section.settings.price-color }};
+    --cross-sell-compare-price-color:{{ section.settings.compare-price }};
+    --cross-sell-swatch-color:{{ section.settings.swatch-color }};
+    --cross-sell-swatch-border-color:{{ section.settings.swatch-border-color }};
+  }
+  .cross-sell__wrapper .grid__item-price-wrapper,
+  .cross-sell__wrapper .grid__item-title{
+    text-align: center;
+    text-align: center;
+    padding-bottom: 5px;
+  }  
+  .cross-sell__wrapper{
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+  .cross-sell__wrapper .grid__item-title{
+    color: var(--cross-sell-product-title-color);    
+  }
+  .cross-sell__wrapper .grid__item-price-wrapper .grid__item-price .money{
+    color: var(--cross-sell-price-color);
+    font-weight: 700;
+  }
+  .cross-sell__wrapper .grid__item-price-wrapper .grid__item-compare-at-price .money{
+    color: var(--cross-sell-compare-price-color);
+    margin: 0px 10px 0 0;
+    font-weight: 700;
+  }
+  .cross-sell__wrapper .grid__item-image-wrapper {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .cross-sell__wrapper .grid__item-image-wrapper img:nth-of-type(1),
+  .cross-sell__wrapper .grid__item-image-wrapper:hover img:nth-of-type(2) {
+    display: none;
+  }
+  .cross-sell__wrapper .grid__item-image-wrapper:hover img:nth-of-type(1) {
+    display: block;
+  }
+  .cross-sell__wrapper .grid__item-image-wrapper .grid_item--visible:nth-of-type(1) {
+    display: block;
+  }
+  .cross-sell__title{
+    color: var(--cross-sell-title-color);
+    font-size: var(--cross-sell-title-font-size);
+    text-align: center;
+    margin-bottom: 21px;
+    letter-spacing: 0.4px;
+  }
+
+  .cross-sell__product-grid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 71%;
+    margin: 10px auto 3px;
+    position: relative;
+  }
+
+  .cross-sell__product-grid .slick-arrow {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 208px;
+    z-index: 9;
+    transform: scale(2.8);
+    background-color: transparent;
+  }
+
+  .cross-sell__product-grid .prev-arrow {
+    left: 60px;
+  }
+
+  .cross-sell__product-grid .next-arrow {
+    right: 60px;
+  }
+
+  .cross-sell__product-grid .next-arrow::before,
+  .cross-sell__product-grid .prev-arrow::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    background-size: 10px;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .cross-sell__product-grid .prev-arrow::before {
+    background-image: url("{{ 'prev-arrow.svg' | asset_url }}");
+  }
+
+  .cross-sell__product-grid .next-arrow::before {
+    background-image: url("{{ 'next-arrow.svg' | asset_url }}");
+  }
+
+  .cross-sell__product-grid .slick-list {
+    overflow: hidden;
+  }
+
+  .cross-sell__product-grid .slick-track {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .cross-sell__product-grid .slick-slide {
+    width: 255px;
+    margin: 58px 24px 0;
+    transition: all 0.2s ease;
+    height: auto;
+    max-height: 100%;
+  }
+
+  .cross-sell__product-grid .slick-slide.slick-center {
+    width: 327px;
+    margin-top: 0;
+  }
+
+  .cross-sell__product-card{
+    {% if section.settings.enable_product_card_border %}
+      border: 1px solid var(--cross-sell-border-color);
+      border-radius: {{ section.settings.product_card_border_radius }};
+    {% endif %}
+    display: flex;
+    flex-direction: column;
+    width: 30.8%;
+    justify-content: flex-start;
+  }
+  .cross-sell__product-card:nth-of-type(2){
+    transform: scale(1.13, 1.12);
+  }
+  .cross-sell__product-card .product-card__grid-item-fullsize {
+    background: none;
+  }
+  .cross-sell__product-card .product-card__grid-item-image-wrapper {
+    padding-top: 273px;
+  }
+  .cross-sell__product-grid .slick-center .product-card__grid-item-image-wrapper {
+    padding-top: 351px;
+  }
+  .cross-sell__product-card .product-card__grid-item {
+    width: 100%;
+  }
+  .cross-sell__product-card .product-card__item-title {
+    padding: 0;
+    margin: 15px 0 0 0;
+    padding: 0 10px;
+  }
+  .cross-sell__product-grid .slick-center .product-card__item-title {
+    padding: 0 13.3px;
+    margin: 21px 0 0 0;
+  }
+  .cross-sell__product-card .product-card__item-title-span {
+    font-size: 15px;
+    letter-spacing: 0.9px;
+  }
+  .cross-sell__product-grid .slick-center .product-card__item-title-span {
+    font-size: 20px;
+    letter-spacing: 0.7px;
+  }
+  .cross-sell__product-card .product-card__reviews {
+    gap: 9px;
+    display: flex;
+    margin: 4px 0 0 0;
+    align-items: center;
+    padding: 0 9px;
+  }
+  .cross-sell__product-grid .slick-center .product-card__reviews {
+    margin-top: 10.6px;
+    gap: 12px;
+    padding: 0 12px;
+  }
+  .cross-sell__product-card .product-card__reviews svg {
+    width: 53px;
+  }
+  .cross-sell__product-grid .slick-center .product-card__reviews svg {
+    width: 68px;
+  }
+  .cross-sell__product-card .product-card__reviews span {
+    font-size: 8px;
+    text-transform: capitalize;
+  }
+  .cross-sell__product-grid .slick-center .product-card__reviews span {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+  .cross-sell__product-card .product-card__item-price-wrapper {
+    {% unless show_price %}
+      margin: 0;
+    {% else %}
+      margin: 6px 0;
+    {% endunless %}
+  }
+  .cross-sell__product-form {
+    display: flex;
+    justify-content: space-between;
+    margin: 2px 0 7px 0;
+    padding: 0 10px;
+  }
+  .slick-center .cross-sell__product-form {
+    margin: 8px 0 9px 0;
+  }
+  .cross-sell__product-form__swatches{
+    width: 29%;
+  }
+  .cross-sell__product-select,
+  .cross-sell__product-select option{
+    width: 100%;
+    height: 30px;
+    text-align: left;
+    color: var(--cross-sell-swatch-color);
+    border-color: var(--cross-sell-swatch-border-color);
+    border: 1px solid;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  .cross-sell__product-select{
+    padding: 0 14px 0 6px;
+    font-size: 12px;
+    height: 20px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('{{ "vector.svg" | asset_url  }}') no-repeat 95.7% 50%;
+    background-size: 10px;
+  }
+  .cross-sell__product-grid .slick-center .cross-sell__product-select{
+    padding: 0 14px 0 12px;
+    font-size: 14px;
+    height: 23px;
+    background-position: 96% 50%;
+    background-size: 11px;
+  }
+  .cross-sell__product-title,
+  .cross-sell__product-price{
+    padding-top:1rem;
+    text-align: left;
+  }
+  .cross-sell__product-form__submit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 9px;
+    padding-right: 2px;
+  }
+  .cross-sell__product-grid .slick-center .cross-sell__product-form__submit {
+    gap: 10px;
+    padding-right: 5px;
+  }
+  .cross-sell__product-form__value {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+  }
+  .cross-sell__product-grid .slick-center .cross-sell__product-form__value {
+    font-size: 21px;
+    letter-spacing: -0.6px;
+  }
+  .cross-sell__product-button {
+    height: 26px;
+    width: 111px;
+    background: none;
+    border: 1px solid #595959;
+  }
+  .cross-sell__product-grid .slick-center .cross-sell__product-button {
+    height: 34px;
+    width: 143px;
+  }
+  .cross-sell__product-button-text{
+    font-size: 12.6px;
+    display: flex;
+    text-align: center;
+    width: 100%;
+    letter-spacing: -0.1px;
+    align-items: center;
+    justify-content: center;
+  }
+  .cross-sell__product-grid .slick-center .cross-sell__product-button-text{
+    font-size: 16px;
+    letter-spacing: 0px;
+    padding-left: 1.5px;
+  }
+  @media(max-width: 1279px){
+    .cross-sell__product-card{
+      padding:0.5rem;
+    }
+    .cross-sell__product-select,
+    .cross-sell__product-select option,
+    .cross-sell__product-button-text{
+      font-size: 0.8rem;
+    }
+  }
+  @media(max-width: 1019px){
+    .cross-sell__wrapper{
+      padding: 0;
+    }
+
+    .cross-sell__title {
+      font-size: var(--cross-sell-title-font-size-tablet);
+      letter-spacing: 0.3px;
+    }
+
+    .cross-sell__product-grid {
+      padding: 0;
+      margin: 0 auto 3px;
+      width: 100%;
+    }
+
+    .cross-sell__product-grid .slick-slide {
+      width: 255px;
+      margin: 57px 35px 0;
+      height: fit-content;
+    }
+
+    .cross-sell__product-grid .prev-arrow {
+      left: 99px;
+    }
+
+    .cross-sell__product-grid .next-arrow {
+      right: 99px;
+    }
+
+    .cross-sell__product-grid .slick-slide.slick-center {
+      margin-top: 0;
+      width: 328px;
+    }
+
+    .cross-sell__product-grid .cross-sell__product-card {
+      padding: 0;
+    }
+
+    .cross-sell__product-grid .product-card__grid-item-image-wrapper {
+      padding-top: 273px;
+    }
+
+    .cross-sell__product-grid .slick-center .product-card__grid-item-image-wrapper {
+      padding-top: 352px;
+    }
+
+    .cross-sell__product-card .product-card__item-title {
+      margin: 15px 0 0 0;
+      padding: 0 11px;
+    }
+
+    .cross-sell__product-grid .slick-center .product-card__item-title {
+      padding: 0 14px;
+      margin: 19px 0 0 0;
+    }
+
+    .cross-sell__product-grid .product-card__item-title-span {
+      font-size: 15px;
+    }
+
+    .cross-sell__product-grid .slick-center .product-card__item-title-span {
+      font-size: 20px;
+      letter-spacing: 0.7px;
+    }
+
+    .cross-sell__product-grid .product-card__reviews {
+      gap: 10px;
+      margin: 4px 0 0 0;
+    }
+
+    .cross-sell__product-grid .slick-center .product-card__reviews {
+      padding: 0 13px;
+      margin: 10px 0 0 0;
+    }
+
+    .cross-sell__product-grid .product-card__reviews svg {
+      width: 53px;
+    }
+
+    .cross-sell__product-grid .slick-center .product-card__reviews svg {
+      width: 68px;
+    }
+
+    .cross-sell__product-grid .product-card__reviews span {
+      font-size: 7.8px;
+      letter-spacing: 0;
+    }
+
+    .cross-sell__product-grid .slick-center .product-card__reviews span {
+      font-size: 10px;
+      letter-spacing: 0;
+    }
+
+    .cross-sell__product-grid .cross-sell__product-form {
+      padding: 0 11px;
+      margin: 0 0 7px;
+    }
+
+    .cross-sell__product-grid .slick-center .cross-sell__product-form {
+      padding: 0 14px;
+      margin: 5px 0 9px;
+    }
+
+    .cross-sell__product-grid .cross-sell__product-form__swatches {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5px 0;
+    }
+
+    .cross-sell__product-grid .slick-center .cross-sell__product-form__swatches {
+      width: 29.6%;
+    }
+
+    .cross-sell__product-grid .cross-sell__product-select {
+      height: 17px;
+      font-size: 11px;
+      padding: 0 14px 1px 6px;
+      background-position-x: 92%;
+      background-size: 10px;
+    }
+
+    .cross-sell__product-grid .slick-center .cross-sell__product-select {
+      height: 21px;
+      font-size: 15px;
+      background-size: 11px;
+      padding: 0 18px 0 8px;
+      background-position-x: 92%;
+    }
+
+    .cross-sell__product-grid .cross-sell__product-form__submit {
+      gap: 8px;
+      padding-right: 0;
+      padding-top: 3px;
+    }
+
+    .cross-sell__product-grid .slick-center .cross-sell__product-form__submit {
+      justify-content: center;
+      gap: 11px;
+      padding-right: 1px;
+      padding-top: 0;
+    }
+
+    .cross-sell__product-grid .slick-center .cross-sell__product-form__value {
+      font-size: 21px;
+      letter-spacing: -0.5px;
+      padding-top: 3px;
+    }
+
+    .cross-sell__product-grid .cross-sell__product-button {
+      width: 111px;
+      height: 27px;
+    }
+
+    .cross-sell__product-grid .slick-center .cross-sell__product-button-text {
+      padding-left: 0.7px;
+    }
+  }
+  @media (max-width: 767px) {
+    .cross-sell__product-grid {
+    flex-wrap: wrap;
+    }
+    .cross-sell__product-card {
+    border-right: none;
+    }
+    .cross-sell__product-grid{
+        flex-wrap: wrap;
+    }
+    .cross-sell__product-grid{
+        border: 1px solid;
+        border-color: var(--cross-sell-border-color);
+    }
+    .cross-sell__product-card:nth-child( 2n ) {
+        border-left: 1px solid;
+        border-left-color: var(--cross-sell-border-color);
+    }
+
+    .cross-sell__product-card:nth-child(-n + 2){
+        border-bottom: 1px solid;
+        border-bottom-color: var(--cross-sell-border-color);
+    }
+    .cross-sell__product-card{
+        border-right:0;
+    }
+  }
+</style>
+
+<div class="cross-sell__wrapper {% if template contains "product" %} cross-sell__product__wrapper {% endif %}">
+  {% if section.settings.enable_cross_sell_title %}
+    {% if section.settings.cross_sell_title != blank %}
+      <h2 class="cross-sell__title">{{ section.settings.cross_sell_title }}</h2>
+    {% else %}
+      <h2 class="cross-sell__title">{{ cross_sell_collection.title }}</h2>
+    {% endif %}
+  {% endif %}
+
+  {% if section.settings.cross_sell_select_collection != blank %}
+    <div class="wrapper cross-sell__product-grid">
+      {% assign = i = 0 %}
+
+      {%- assign cart_items_ids = '' -%}
+
+      {%- for item in cart.items -%}
+        {%- assign cart_items_ids = cart_items_ids | append: ',' | append: item.product_id -%}
+      {%- endfor -%}
+
+      {% for temp_product in cross_sell_collection.products %}
+        {%- unless cart_items_ids contains temp_product.id or temp_product.available == false -%}
+          <div class="cross-sell__product-card">
+            {%- render 'product-card',
+              prod: temp_product,
+              width_mobile: width_mobile,
+              width_desk: width_desk,
+              max_width: image_width,
+              show_price: show_price
+            -%}
+            <form action="/cart/add" id="cross-sell_form" class="cross-sell__product-form">
+              <div class="cross-sell__product-form__swatches">
+                {%- assign variants_size = temp_product.variants | size -%}
+                {%- if variants_size == 1 -%}
+                  <input type="hidden" name="id" value="{{ temp_product.selected_or_first_available_variant.id }}">
+                {%- else -%}
+                  <select name="id" class="cross-sell__product-select">
+                    <option
+                      value=""
+                      data-image="{{ temp_product.selected_or_first_available_variant.image | img_url: '200x' }}"
+                      disabled
+                    >
+                      Choose Variant:
+                    </option>
+
+                    {% for variant in temp_product.variants %}
+                      <option
+                        value="{{ variant.id }}"
+                        data-image="{{ variant.image | img_url: '200x' }}"
+                        {% if cart_items contains variant.id %}
+                          disabled="disabled"
+                        {% endif %}
+                      >
+                        {{ variant.title }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                {% endif %}
+              </div>
+
+              <div class="cross-sell__product-form__submit">
+                <input type="hidden" name="quantity" value="1">
+                <span class="cross-sell__product-form__value">{{ temp_product.selected_or_first_available_variant.price | money }}</span>
+                <button type="submit" class="cross-sell__product-button cart-icon btn btn-add-tocart">
+                  <span class="cross-sell__product-button-text">Add to Order</span>
+                </button>
+              </div>
+            </form>
+          </div>
+          {%- assign i = i | plus: 1 -%}
+          {%- if i == 4 -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% if enable_lazy %}
+  <script type="lazyload_int">
+    setTimeout(function() {
+      $('.cross-sell__product-grid').slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        prevArrow: '<button type="button" class="prev-arrow"></button>',
+        nextArrow: '<button type="button" class="next-arrow"></button>',
+        centerMode: true,
+        variableWidth: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      });
+    });
+  </script>  
+{% else %}
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      $('.cross-sell__product-grid').slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        prevArrow: '<button type="button" class="prev-arrow"></button>',
+        nextArrow: '<button type="button" class="next-arrow"></button>',
+        centerMode: true,
+        variableWidth: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      });
+    });
+  </script>  
+{% endif %}
+
+<script type="lazyload_int">
+  setTimeout(function () {
+    const methods = {
+      cart: {
+        /**
+         * Get all cart items.
+         */
+        getCart() {
+          return fetch('/cart.js', {
+            cache: 'default',
+          }).then(function (res) {
+            return res.json();
+          });
+        },
+        /**
+         * Add some item into cart.
+         *
+         * @param {Object} data JSON object with data for to insert in cart.
+         */
+        addItem(data) {
+          return fetch('/cart/add.js', {
+            method: 'POST',
+            body: data,
+          }).then(function (res) {
+            return res.json();
+          });
+        },
+      },
+    };
+    $('.cross-sell__product-form').submit(function (e) {
+      e.preventDefault();
+      const form = this;
+      const data = new FormData(this);
+
+      methods.cart
+        .addItem(data)
+        .then(async function (item) {
+          try {
+            const cart = await methods.cart.getCart();
+            const btn = form.querySelector('button');
+            btn.disabled = 'disabled';
+            location.reload();
+          } catch (e) {
+            console.error('[CART ERROR]', e);
+          }
+        })
+        .catch(function (e) {
+          console.error('[ADD ITEM ERROR]', e);
+        });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Cross Sell",
+  "class": "cross-sell",
+  
+  "settings": [
+    {
+      "type": "header",
+      "content": "GENERAL"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cross_sell_title",
+      "label": "Enable Title"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_lazyload",
+      "label": "Enable Lazyload",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cross_sell_title",
+      "label": "Title"
+    },
+    {
+      "type": "range",
+      "id": "title-font-size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "label": "Title Font Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title-font-size-tablet",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "label": "Title Font Size on Tablet",
+      "default": 28
+    },
+    {
+      "type": "collection",
+      "id": "cross_sell_select_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Price"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_product_card_border",
+      "label": "Enable Product Card Border",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "product_card_border_radius",
+      "label": "Product Card Border Radius",
+      "info":"Only works if product card's border is enabled",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "COLOR"
+    },
+    {
+      "type": "color",
+      "id": "title-color",
+      "label": "Section Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "border-color",
+      "label": "Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "product-title-color",
+      "label": "Product Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "swatch-color",
+      "label": "Swatch Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "swatch-border-color",
+      "label": "Swatch Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "price-color",
+      "label": "Price Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "compare-price",
+      "label": "Compare Price Color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cross Sell",
+      "category": "Cross Sell"
+    }
+  ]
+}
+{% endschema %}

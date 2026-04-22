@@ -1,0 +1,40 @@
+<!-- START new-product-card (SNIPPET) -->
+
+<a class="new-product-card" href="{{ product.url }}" id="new-product-card-{{ forloop.index }}">
+  <picture class="new-product-card__image">
+    {% render 'responsive-image' with
+      image: product.featured_image,
+      alt: product.featured_image.alt | default: 'Product Image',
+      class: 'new-product-card__featured-img',
+      width: 274,
+      height: 304,      
+    %}
+  </picture>
+  <div class="new-product-card__title">
+    <h3>{{ product.title }}</h3>
+  </div>
+  <div class="new-product-card__description">
+    {% if product.metafields.field.short_description %}
+        {{ product.metafields.field.short_description | truncatewords: 5 }}
+    {% else %}
+      Short Description
+    {% endif %}
+  </div>
+
+  <div class="new-product-card__reviews">
+    {% render 'reviews-stars' with prod: product %}   
+    {% comment %} Delete this div when a reviews app is downloaded {% endcomment %}
+    {% render 'review-stars-svg' %}
+    <span>(5.0 of 800 Reviews)</span>
+  </div>
+
+  <div class="new-product-card__price-wrapper">
+    {% if product.compare_at_price > product.price %}
+      <s class="new-product-card__regular-price">{{ product.compare_at_price | money_without_trailing_zeros }}</s>
+    {% endif %}
+    <span class="new-product-card__product-price">{{ product.price | money_without_trailing_zeros }}</span>
+  </div>
+  
+
+
+</a>

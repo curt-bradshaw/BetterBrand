@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+  "name": "Footer Group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "custom-footer",
+      "blocks": {
+        "select_gqkGWb": {
+          "type": "select",
+          "settings": {
+            "menu_title": "Policies",
+            "footer_menu": "policies"
+          }
+        },
+        "select_WcnqNC": {
+          "type": "select",
+          "settings": {
+            "menu_title": "ABOUT US",
+            "footer_menu": "about-us"
+          }
+        },
+        "select_b6qy7L": {
+          "type": "select",
+          "settings": {
+            "menu_title": "SUPPORT",
+            "footer_menu": "support"
+          }
+        },
+        "select_gRngxH": {
+          "type": "select",
+          "settings": {
+            "menu_title": "ACCOUNT",
+            "footer_menu": "my-account"
+          }
+        }
+      },
+      "block_order": [
+        "select_gqkGWb",
+        "select_WcnqNC",
+        "select_b6qy7L",
+        "select_gRngxH"
+      ],
+      "custom_css": [
+        ".ntg-form-row {display: none;}"
+      ],
+      "settings": {
+        "signup_header": "",
+        "signup_content": "",
+        "signup_placeholder": "Enter your email",
+        "signup_submit": "Get My Discount Now",
+        "store_menu_title": "STORE LOCATOR",
+        "store_link": "store-locator",
+        "footer_copyright": "<p>*These statements haven't been evaluated by the FDA or any agency. BetterBrand Health's products aren't designed for diagnosing, treating, curing, or preventing diseases or altering any bodily structure/function. Use as directed. All trademarks/copyrights are owned by their respective parties, unaffiliated with and not endorsing this product. No sales to minors. Betterbrand Health makes no health or medical claims for the product. Don't use if on medication or have/suspect a medical condition.</p><p>Provided information doesn't replace medical advice or treatment. Consult a physician for medical advice, and a healthcare professional before using new products. Read all Warnings & Disclaimers. Results may vary, no guaranteed results. Limited offer, void where prohibited. **All products have been formulated for adults 18 and older.</p><p>For accommodations due to vision impairment or Americans with Disabilities Act-covered impairments,contact hello@betterbrandhealth.com</p>"
+      }
+    },
+  },
+  "order": [
+    "footer"
+  ]
+}

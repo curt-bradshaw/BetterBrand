@@ -1,0 +1,130 @@
+<!-- start snippets/custom-product-images-desktop-slider.liquid -->
+<style>
+  .product-images-slider__wrapper {
+    {% comment %} display: none; {% endcomment %}
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    background-color: #ffffffcc;
+    visibility: hidden;
+  }
+
+  .product-images-slider__wrapper.show {
+    {% comment %} display: flex; {% endcomment %}
+    visibility: unset;
+  }
+
+  .product-images-slider__images {
+    width: 750px;
+  }
+
+  .product-images-slider__images .slick-list {
+    height: 100% !important;
+  }
+
+  .product-images-slider__images .slick-arrow {
+    font-size: 40px;
+    width: 71px;
+    height: 71px;
+    color: #000;
+    background: #ffffffa8;
+    border-radius: 50%;
+    position: absolute;
+    top: 45%;
+    z-index: 9;
+  }
+
+  .product-images-slider__images .slick-arrow:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    background-image: url("{{ 'new-arrow-right.png' | asset_url }}");
+    background-size: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .product-images-slider__images .slick-prev {
+    left: 2%;
+  }
+
+  .product-images-slider__images .slick-next {
+    right: 2%;
+    transform: rotate(180deg);
+  }
+
+  .product-images-slider__images .slick-dots{
+    position: absolute;
+    left: 50%;
+    bottom: 35px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .product-images-slider__images .slick-dots li {
+    width: 27px;
+    height: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    border: none;
+  }
+
+  .product-images-slider__images .slick-dots li.slick-active {
+    border: 1px solid #F0CFBA;
+  }
+
+  .product-images-slider__images .slick-dots button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 11px;
+    height: 11px;
+    border-radius: 100px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: #F1E9DB;
+    position: relative;
+  }
+
+  .product-images-slider__images .slick-dots li.slick-active button {
+    background: #F0CFBA;
+  }
+
+  @media(max-width:1019) {
+    .product-images-slider__wrapper {
+      display: none;
+    }
+  }
+</style>
+
+<div class="product-images-slider__wrapper">
+  <div class="product-images-slider__images">
+    {% for image in product.media %}
+      <img
+        width="700"
+        height="700"
+        data-src="{{ image | image_url: width: 700 }}"
+        class="product-images__img"
+        data-class="LazyLoad"
+      >
+    {% endfor %}
+  </div>
+</div>

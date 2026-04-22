@@ -1,0 +1,97 @@
+<div
+  class="soft-banner product-card__grid-item grid__item {{ grid_uniform_class_desktop }} {{ grid_uniform_class_tablet }} {{ grid_uniform_class_mobile }}"
+  style="
+    {% if banner_image %}
+      background-image: url('{{ banner_image | img_url: 'master' }}');
+    {% endif %}
+    background-size: cover;
+    background-position: center;
+    border-radius: 3px;
+    border: 1px solid #E8E8E8;
+    position: relative;
+    overflow: hidden;
+  "
+>
+  {% if show_overlay %}
+    <div
+      class="soft-banner__overlay"
+      style="
+        position: absolute;
+        inset: 0;
+        background-color: {{ overlay_color }};
+        opacity: {{ overlay_opacity | divided_by: 100.0 }};
+        z-index: 1;
+      "
+    ></div>
+  {% endif %}
+
+  <div
+    class="soft-banner__content product-card__product-info"
+    style="
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content:
+        {% if text_alignment == 'top' %}
+          flex-start
+        {% elsif text_alignment == 'bottom' %}
+          flex-end
+        {% else %}
+          space-between
+        {% endif %};
+      align-items: center;
+      text-align: center;
+    "
+  >
+    {% if banner_text != blank %}
+      <div
+        class="soft-banner__text product-card__item-title"
+        style="
+          color: {{ text_color }};
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 10px;
+          line-height: 1.2;
+        "
+      >
+        {{ banner_text }}
+      </div>
+    {% endif %}
+
+    {% if banner_subtext != blank %}
+      <div
+        class="soft-banner__subtext"
+        style="
+          color: {{ subtext_color }};
+          font-size: 14px;
+          margin-bottom: 20px;
+          line-height: 1.4;
+        "
+      >
+        {{ banner_subtext }}
+      </div>
+    {% endif %}
+
+    {% if button_text != blank and button_link != blank %}
+      <a
+        href="{{ button_link }}"
+        class="soft-banner__button"
+        style="
+          background-color: {{ button_bg_color }};
+          color: {{ button_text_color }};
+          padding: 10px 20px;
+          text-decoration: none;
+          font-weight: bold;
+          border-radius: 4px;
+          font-size: 14px;
+          transition: all .3s ease;
+        "
+      >
+        {{ button_text }}
+      </a>
+    {% endif %}
+  </div>
+</div>

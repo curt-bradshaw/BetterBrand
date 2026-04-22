@@ -1,0 +1,311 @@
+<!-- START absolute-banner.liquid -->
+
+<section class="absolute-banner-section">
+  <div class="responsive-banner">
+    <div class="responsive-banner__bg responsive-banner__bg--desktop"
+         style="background-image: url({{ section.settings.bg_image_desktop | image_url: width: 2000 }});">
+    </div>
+
+    <div class="responsive-banner__bg responsive-banner__bg--mobile"
+         style="background-image: url({{ section.settings.bg_image_mobile | image_url: width: 1000 }});">
+    </div>
+
+    {% if section.settings.woman_image != blank %}
+      <div class="responsive-banner__woman-image responsive-banner__woman-image--desktop">
+        {{ section.settings.woman_image | image_url: width: 800 | image_tag: alt: section.settings.heading, class: 'responsive-banner__woman-img' }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.woman_image_tablet != blank %}
+      <div class="responsive-banner__woman-image responsive-banner__woman-image--tablet">
+        {{ section.settings.woman_image_tablet | image_url: width: 600 | image_tag: alt: section.settings.heading, class: 'responsive-banner__woman-img' }}
+      </div>
+    {% endif %}
+
+    <div class="responsive-banner__content">
+      {% if section.settings.heading != blank %}
+        <h2 class="responsive-banner__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <p class="responsive-banner__text">
+          {{ section.settings.text }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <a
+          href="{{ section.settings.button_link }}"
+          class="responsive-banner__button"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+.absolute-banner-section {
+  padding: 140px 20px 40px;
+}
+
+.responsive-banner {
+  position: relative;
+  border-radius: 24px;
+  overflow: visible;
+  min-height: 420px;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.responsive-banner__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  border-radius: 19px;
+}
+
+.responsive-banner__bg--mobile {
+  display: none;
+}
+
+.responsive-banner__content {
+  position: relative;
+  z-index: 2;
+  max-width: 635px;
+  padding: 60px;
+  color: #ffffff;
+}
+
+.responsive-banner__heading {
+  font-size: 40px;
+  color: #ffffff;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-family: var(--bookmaniaFont);
+}
+
+.responsive-banner__text {
+  font-size: 18px;
+  line-height: 1.2;
+  margin-bottom: 25px;
+}
+
+.responsive-banner__button {
+  max-width: 207px;
+  width: 100%;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px;
+  border-radius: 39px;
+  border: 1px solid #F2CB49;
+  color: #F2CB49;
+  text-decoration: none;
+  font-size: 20px;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.responsive-banner__button:hover {
+  background: #F2CB49;
+  color: #FFFFFF;
+}
+
+.responsive-banner__woman-image {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  width: 68%;
+}
+
+.responsive-banner__woman-image--tablet {
+  display: none;
+}
+
+.responsive-banner__woman-img {
+  display: block;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 1279px) {
+  .absolute-banner-section {
+    padding: 40px 20px 40px;
+  }
+
+  .responsive-banner__woman-image {
+    width: 76%;
+  }
+}
+
+@media (max-width: 1019px) {
+  .absolute-banner-section {
+    padding: 60px 20px 40px;
+  }
+  
+  .responsive-banner__woman-image--desktop {
+    display: none;
+  }
+
+  .responsive-banner__woman-image--tablet {
+    display: block;
+  }
+
+  .responsive-banner__woman-image {
+    width: 65%;
+  }
+
+  .responsive-banner__content {
+    padding: 40px;
+  }
+
+  .responsive-banner {
+    min-height: auto;
+  }
+
+  .responsive-banner__heading {
+    font-size: 28px;
+    margin-bottom: 5px;
+  }
+
+  .responsive-banner__content {
+    max-width: 490px;
+  }
+
+  .responsive-banner__text {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .responsive-banner__button {
+    max-width: 154px;
+    height: 46px;
+    padding: 17px 20px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .responsive-banner {
+    min-height: 415px;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .absolute-banner-section {
+    padding: 40px 20px 20px;
+  }
+
+  .responsive-banner__bg--desktop {
+    display: none;
+  }
+
+  .responsive-banner__bg--mobile {
+    display: block;
+  }
+
+  .responsive-banner__bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .responsive-banner__woman-image {
+    display: none;
+  }
+
+  .responsive-banner__content {
+    padding: 20px;
+    max-width: 83%;
+  }
+
+  .responsive-banner__heading {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .responsive-banner__text {
+    font-size: 14px;
+    margin-bottom: 20px;
+    max-width: 240px;
+  }
+
+  .responsive-banner__button {
+    max-width: 145px;
+    height: 49px;
+    padding: 18px 21px;
+    font-size: 18px;
+  }
+}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Absolute Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image_desktop",
+      "label": "Background image (Desktop & Tablet)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (Mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "woman_image",
+      "label": "Woman Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "woman_image_tablet",
+      "label": "Woman Image (Tablet - max 1019px)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lorem ipsum dolor sit amet consectetur. Magna"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Lorem ipsum dolor sit amet consectetur. Netus elit pellentesque amet."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Lorem Ipsum"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Absolute Banner"
+    }
+  ]
+}
+{% endschema %}

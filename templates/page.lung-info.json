@@ -1,0 +1,342 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.old-layout",
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "custom_text_img_YC9EU4": {
+      "type": "custom-text-img",
+      "settings": {
+        "title": "Breathe Easy, Live Better",
+        "content": "<p>Are you truly giving your lungs the care they deserve? In our fast-paced lives, it's easy to overlook the health of our respiratory system. Your lungs play a vital role in your overall well-being, and maintaining their health is key to unlocking a life filled with vitality. </p>",
+        "image": "shopify://shop_images/visual-1.jpg",
+        "image_mobile": "shopify://shop_images/visual-1-mobile.jpg"
+      }
+    },
+    "custom_symptoms_info_XKU3XK": {
+      "type": "custom-symptoms-info",
+      "blocks": {
+        "select_bfxHYw": {
+          "type": "select",
+          "settings": {
+            "icon_image": "shopify://shop_images/symptom-1.svg",
+            "icon_title": "Shortness of Breath",
+            "icon_text": "<p>Feeling winded even with minimal exertion?</p>"
+          }
+        },
+        "select_nyarR8": {
+          "type": "select",
+          "settings": {
+            "icon_image": "shopify://shop_images/symptom-2.svg",
+            "icon_title": "Persistent Cough",
+            "icon_text": "<p>Do you find yourself constantly coughing, with no relief in sight?</p>"
+          }
+        },
+        "select_7fjb9c": {
+          "type": "select",
+          "settings": {
+            "icon_image": "shopify://shop_images/symptom-3.svg",
+            "icon_title": "Fatigue",
+            "icon_text": "<p>Is everyday life leaving you more exhausted than usual?</p>"
+          }
+        },
+        "select_VgK8AV": {
+          "type": "select",
+          "settings": {
+            "icon_image": "shopify://shop_images/symptom-4.svg",
+            "icon_title": "Respiratory Infections",
+            "icon_text": "<p>Catching every cold that comes your way?</p>"
+          }
+        }
+      },
+      "block_order": [
+        "select_bfxHYw",
+        "select_nyarR8",
+        "select_7fjb9c",
+        "select_VgK8AV"
+      ],
+      "settings": {
+        "heading": "Signs Your Lungs Need a Boost",
+        "sub_text": "<p>If you resonate with any of these signs, it's time to give your lungs the support they need.</p>"
+      }
+    },
+    "custom_tips_slider_wDcTKc": {
+      "type": "custom-tips-slider",
+      "blocks": {
+        "select_eHwPcR": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/tip-1.jpg",
+            "title": "Deep Breathing Exercises",
+            "text": "<p>Practice deep, diaphragmatic breathing to fully expand your lungs and increase oxygen intake.</p>"
+          }
+        },
+        "select_rwtErr": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/tip-2.jpg",
+            "title": "Stay Active",
+            "text": "<p>Regular physical activity improves lung function and overall respiratory health.</p>"
+          }
+        },
+        "select_VLLTLE": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/tip-3.jpg",
+            "title": "Avoid Smoking",
+            "text": "<p>Quit smoking or avoid exposure to secondhand smoke to protect your <a href=\"https://www.trybetterbrand.com/blogs/learn/lung-detox-tips\" title=\"Lung Detox Tips For Smokers\">lungs from harmful toxins</a>.</p>"
+          }
+        },
+        "select_NRhcgf": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/tip-4.jpg",
+            "title": "Incorporate Lung-Boosting Foods",
+            "text": "<p>Include foods rich in antioxidants, such as fruits and vegetables, to <a href=\"https://www.trybetterbrand.com/blogs/learn/mullein-tea-benefits-for-lung-health\" title=\"Mullein Tea Benefits for Lung Health\">support lung health</a>.</p>"
+          }
+        },
+        "select_d8qgDf": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/tip-5.jpg",
+            "title": "Regular Check-ups",
+            "text": "<p>Schedule periodic check-ups to monitor and address any respiratory concerns promptly.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "select_eHwPcR",
+        "select_rwtErr",
+        "select_VLLTLE",
+        "select_NRhcgf",
+        "select_d8qgDf"
+      ],
+      "settings": {
+        "heading": "Quick Tips for Healthier Lungs"
+      }
+    },
+    "custom_health_stat_yFWHHL": {
+      "type": "custom-health-stat",
+      "blocks": {
+        "select_7MEyVp": {
+          "type": "select",
+          "settings": {
+            "col_left": "384M",
+            "col_right": "people suffer from chronic obstructive pulmonary disease (COPD)"
+          }
+        },
+        "select_diFEQ4": {
+          "type": "select",
+          "settings": {
+            "col_left": "25M",
+            "col_right": "people suffer from asthma which makes breathing really difficult"
+          }
+        },
+        "select_GM974K": {
+          "type": "select",
+          "settings": {
+            "col_left": "1.7M",
+            "col_right": "people die from lung cancer each year"
+          }
+        }
+      },
+      "block_order": [
+        "select_7MEyVp",
+        "select_diFEQ4",
+        "select_GM974K"
+      ],
+      "settings": {
+        "heading": "Lung Health should not be ignored"
+      }
+    },
+    "custom_prevention_list_KCRLzX": {
+      "type": "custom-prevention-list",
+      "blocks": {
+        "select_7nwqVz": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/prevention-1.png",
+            "image_mobile": "shopify://shop_images/prevention-1-mobile.png",
+            "title": "Proteins",
+            "text": "<p>can help make your respiratory muscles stronger</p>"
+          }
+        },
+        "select_rkAEgg": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/prevention-2.png",
+            "image_mobile": "shopify://shop_images/prevention-2-mobile.png",
+            "title": "Healthy Fats",
+            "text": "<p>can regulate blood pressure and reduce inflammation</p>"
+          }
+        },
+        "select_QPGpAd": {
+          "type": "select",
+          "settings": {
+            "image": "shopify://shop_images/prevention-3.png",
+            "image_mobile": "shopify://shop_images/prevention-3-mobile.png",
+            "title": "Potassium",
+            "text": "<p>helps with water retention and blood pressure</p>"
+          }
+        }
+      },
+      "block_order": [
+        "select_7nwqVz",
+        "select_rkAEgg",
+        "select_QPGpAd"
+      ],
+      "settings": {
+        "heading": "Foods to Promote Lung Health"
+      }
+    },
+    "custom_product_add_Rckbje": {
+      "type": "custom-product-add",
+      "blocks": {
+        "select_4dJzHz": {
+          "type": "select",
+          "settings": {
+            "product": "betterlungs",
+            "alter_image": "shopify://shop_images/capsules_design_5_png.webp",
+            "prod_tagline": "#1 Lung Health Support"
+          }
+        },
+        "select_giwLEY": {
+          "type": "select",
+          "settings": {
+            "product": "betterlungs-tea",
+            "prod_tagline": "+ Restore Natural Energy"
+          }
+        },
+        "select_nKq7MV": {
+          "type": "select",
+          "disabled": true,
+          "settings": {
+            "product": "betterlungs-1",
+            "alter_image": "shopify://shop_images/BetterLungs_Product_Pills_2_50d399f2-f137-4519-bf6f-55140ec4c147.jpg",
+            "prod_tagline": "Respiratory & Immune Health"
+          }
+        },
+        "select_fT99we": {
+          "type": "select",
+          "settings": {
+            "product": "betterlungs®-mullein-chlorophyll",
+            "alter_image": "shopify://shop_images/Mullein_Drops.png",
+            "prod_tagline": "Leaf Extract Tincture"
+          }
+        },
+        "select_TUm8QN": {
+          "type": "select",
+          "settings": {
+            "product": "betterlungs-r-mullein-gummies",
+            "prod_tagline": "Lung Support in a Gummy"
+          }
+        },
+        "select_mAiEQJ": {
+          "type": "select",
+          "disabled": true,
+          "settings": {
+            "product": "betterlungs-sea-moss-gummies",
+            "alter_image": "shopify://shop_images/14_9300b06f-044a-4f26-8590-e780d16a6d83.png",
+            "prod_tagline": "Lung Support in a Gummy"
+          }
+        },
+        "select_irMHdj": {
+          "type": "select",
+          "disabled": true,
+          "settings": {
+            "product": "betterlungs-tea",
+            "alter_image": "shopify://shop_images/Untitled_design_-_2023-04-30T154425.225_8ea920f6-e0f6-4d97-a58b-6bc1de5abc99.png",
+            "prod_tagline": "Lung Detox Blend"
+          }
+        },
+        "select_4Yd6BL": {
+          "type": "select",
+          "disabled": true,
+          "settings": {
+            "product": "better-mushrooms",
+            "alter_image": "shopify://shop_images/4_89b1147a-1245-4b7b-85b2-1ead74bed800.png",
+            "prod_tagline": "Body & Mind"
+          }
+        }
+      },
+      "block_order": [
+        "select_4dJzHz",
+        "select_giwLEY",
+        "select_nKq7MV",
+        "select_fT99we",
+        "select_TUm8QN",
+        "select_mAiEQJ",
+        "select_irMHdj",
+        "select_4Yd6BL"
+      ],
+      "settings": {
+        "heading": "Your Companion on a Better Lungs  Journey",
+        "slider_nav": "dots_on_desktop"
+      }
+    },
+    "custom_feature_articles_zxeeCp": {
+      "type": "custom-feature-articles",
+      "disabled": true,
+      "settings": {
+        "title": "Navigating Lung Health for a Vibrant Life",
+        "blog": "learn"
+      }
+    },
+    "custom_newsletter_QrqAE8": {
+      "type": "custom-newsletter",
+      "settings": {
+        "image": "shopify://shop_images/subscribe-1.jpg",
+        "image_mobile": "shopify://shop_images/subscribe-1-mobile.jpg",
+        "title": "The Exclusive Lung Health Email Club",
+        "content": "<p>Be the first to know about new Products,  Lung health tips and exclusive offers.</p>"
+      }
+    },
+    "1710259086fd621c6e": {
+      "type": "apps",
+      "blocks": {
+        "juniper_tiktok_feed_mintty_tiktok_feed_Gr333i": {
+          "type": "shopify://apps/mintt-tiktok-feed/blocks/mintty-tiktok-feed/fa514c33-5475-4484-b270-5f1e7eb87a9a",
+          "settings": {
+            "title": "A Better Community",
+            "title_color": "",
+            "alignment": "center",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "juniper_tiktok_feed_mintty_tiktok_feed_Gr333i"
+      ],
+      "custom_css": [
+        "{margin-bottom: 50px;}"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "custom_text_img_YC9EU4",
+    "custom_symptoms_info_XKU3XK",
+    "custom_tips_slider_wDcTKc",
+    "custom_health_stat_yFWHHL",
+    "custom_prevention_list_KCRLzX",
+    "custom_product_add_Rckbje",
+    "custom_feature_articles_zxeeCp",
+    "custom_newsletter_QrqAE8",
+    "1710259086fd621c6e"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "layout": "theme.old-layout",
+  "sections": {
+    "tennessee-man-advertorial": {
+      "type": "tennessee-man-advertorial",
+      "settings": {}
+    }
+  },
+  "order": ["tennessee-man-advertorial"]
+}

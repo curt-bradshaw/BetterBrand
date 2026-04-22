@@ -1,0 +1,453 @@
+<!-- sections/stats-question.liquid -->
+
+<section class="stats-banner relative text-center text-white">
+    {% if section.settings.background_img or section.settings.background_img_tablet or section.settings.background_img_mobile %}
+      <picture class="stats-banner__bg">
+        {% if section.settings.background_img_mobile %}
+          <source media="(max-width: 767px)" srcset="{{ section.settings.background_img_mobile | img_url: '1200x' }}">
+        {% endif %}
+        {% if section.settings.background_img_tablet %}
+          <source media="(max-width: 1019px)" srcset="{{ section.settings.background_img_tablet | img_url: '1600x' }}">
+        {% endif %}
+        {% if section.settings.background_img %}
+          <img src="{{ section.settings.background_img | img_url: '2000x' }}" alt="{{ section.settings.background_img.alt | default: 'Background image' | escape }}" loading="eager">
+        {% elsif section.settings.background_img_tablet %}
+          <img src="{{ section.settings.background_img_tablet | img_url: '1600x' }}" alt="{{ section.settings.background_img_tablet.alt | default: 'Background image' | escape }}" loading="eager">
+        {% elsif section.settings.background_img_mobile %}
+          <img src="{{ section.settings.background_img_mobile | img_url: '1200x' }}" alt="{{ section.settings.background_img_mobile.alt | default: 'Background image' | escape }}" loading="eager">
+        {% endif %}
+      </picture>
+    {% endif %}
+  
+    <div class="stats-banner__overlay"></div>
+  
+    <div class="stats-banner__content">
+      <h2 class="stats-banner__title">
+        {{ section.settings.title }}
+      </h2>
+  
+      <p class="stats-banner__subtitle">
+        {{ section.settings.subtitle }}
+      </p>
+  
+      <div class="stats-banner__stats">
+        <div class="stats-banner__stats-left">
+          {% for block in section.blocks %}
+            {% if forloop.index <= 2 %}
+              <div class="stats-banner__stat" {{ block.shopify_attributes }}>
+                <div class="stat-number" data-target="{{ block.settings.number }}">
+                  0
+                </div>
+                <div class="stat-label">
+                  {{ block.settings.label | replace: '[BREAK_MOBILE]', '<br class="break-mobile">' }}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="stats-banner__stats-right">
+          {% for block in section.blocks %}
+            {% if forloop.index > 2 %}
+              <div class="stats-banner__stat" {{ block.shopify_attributes }}>
+                <div class="stat-number" data-target="{{ block.settings.number }}">
+                  0
+                </div>
+                <div class="stat-label">
+                  {{ block.settings.label | replace: '[BREAK_MOBILE]', '<br class="break-mobile">' }}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+  
+      {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_url }}" class="stats-banner__btn">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+</section>
+
+{% style %}
+.stats-banner {
+    position: relative;
+    padding: 80px 0px;
+  }
+
+.stats-banner__content {
+  position: relative;
+  z-index: 3;
+  max-width: 1313px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.stats-banner__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.stats-banner__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.stats-banner__title {
+  font-size: 38px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #234134;
+  font-family: var(--bookmaniaFont);  
+  line-height: 1.2;
+}
+
+.stats-banner__subtitle {
+  font-size: 20px;
+  max-width: 830px;
+  margin: 0 auto 35px auto;
+  line-height: 1.2;
+  color: #234134;
+  background-color: #ffffffe3;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.stats-banner__stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 600px;
+  margin: 90px 0;
+}
+
+.stats-banner__stats-left,
+.stats-banner__stats-right {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 40px;
+  flex: 1;
+}
+
+.stats-banner__stat {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #ffffffba;
+  border-radius: 22px;
+  padding: 26px 30px;
+}
+
+.stats-banner__stat .stat-number {
+  font-size: 40px;
+  font-weight: 700;
+  color: #234134;
+  margin-bottom: 8px;
+}
+
+.stats-banner__stat .stat-label {
+  font-size: 18px;
+  color: #234134;
+}
+
+.stats-banner__btn {
+  display: flex;
+  max-width: 258px;
+  width: 100%;
+  height: 54px;
+  font-size: 18px;
+  padding: 20px 32px;
+  border-radius: 40px;
+  border: 1px solid #234134;
+  background: #FFFFFF26;
+  color: #234134;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.stats-banner__btn:hover {
+  background: #234134;
+  color: #FFFFFF;
+}
+
+.break-mobile {
+  display: none;
+}
+
+@media (max-width: 1019px) {
+  .stats-banner__title {
+    font-size: 32px;
+ }
+ .stats-banner__subtitle {
+    font-size: 18px;
+ }
+  .stats-banner__stats {
+    gap: 262px;
+    margin: 40px 0;
+  }
+  .stats-banner__stat {
+    border-radius: 20px;
+    padding: 22px 26px;
+  }
+  .stats-banner__stat .stat-number {
+    font-size: 36px;
+  }
+  .stats-banner__stat .stat-label {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .stats-banner {
+    padding: 40px 0px;
+  }
+
+  .stats-banner__stats {
+    gap: 10px;
+  }
+
+  .stats-banner__stat {
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  .stats-banner__stats-left,
+  .stats-banner__stats-right {
+    gap: 20px;
+  }
+
+  .stats-banner__title {
+    font-size: 24px;
+  }
+  .stats-banner__subtitle {
+    font-size: 14px;
+  }
+  .stats-banner__stat .stat-number {
+    font-size: 26px;
+  }
+  .stats-banner__stat .stat-label {
+    font-size: 14px;
+    max-width: 100px;
+    margin: 0 auto;
+  }
+  .stats-banner__btn {
+    max-width: 239px;
+    font-size: 18px;
+    padding: 18px 15px;
+    height: 50px;
+  }
+  .break-mobile {
+    display: block;
+  }
+}
+{% endstyle %}
+
+<script>
+(function() {
+  function parseNumberWithSuffix(value) {
+    const str = String(value).trim();
+    const match = str.match(/^([\d.]+)([kKmMbBtT]?)$/);
+    
+    if (!match) {
+      return { number: parseFloat(str), suffix: '', original: str };
+    }
+    
+    const number = parseFloat(match[1]);
+    const suffix = match[2];
+    
+    let multiplier = 1;
+    switch (suffix.toLowerCase()) {
+      case 'k':
+        multiplier = 1000;
+        break;
+      case 'm':
+        multiplier = 1000000;
+        break;
+      case 'b':
+        multiplier = 1000000000;
+        break;
+      case 't':
+        multiplier = 1000000000000;
+        break;
+    }
+    
+    return {
+      number: number,
+      suffix: suffix,
+      numericValue: number * multiplier,
+      original: str
+    };
+  }
+  
+  function formatNumberWithSuffix(value, suffix, original) {
+    if (!suffix) {
+      const isDecimal = value % 1 !== 0;
+      return isDecimal ? value.toFixed(1) : Math.floor(value).toString();
+    }
+    
+    const suffixLower = suffix.toLowerCase();
+    let displayValue = value;
+    let displaySuffix = suffix;
+    
+    if (suffixLower === 'k') {
+      displayValue = value / 1000;
+      displaySuffix = 'k';
+    } else if (suffixLower === 'm') {
+      displayValue = value / 1000000;
+      displaySuffix = 'M';
+    } else if (suffixLower === 'b') {
+      displayValue = value / 1000000000;
+      displaySuffix = 'B';
+    } else if (suffixLower === 't') {
+      displayValue = value / 1000000000000;
+      displaySuffix = 'T';
+    }
+    
+    const isDecimal = displayValue % 1 !== 0;
+    const formatted = isDecimal ? displayValue.toFixed(1) : Math.floor(displayValue).toString();
+    
+    return formatted + displaySuffix;
+  }
+  
+  function animateNumber(element, targetData, duration) {
+    const start = 0;
+    const startTime = performance.now();
+    const targetValue = targetData.numericValue;
+    
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const current = start + (targetValue - start) * easeOutQuart;
+      
+      element.textContent = formatNumberWithSuffix(current, targetData.suffix, targetData.original);
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        element.textContent = targetData.original;
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+  
+  function initStatsAnimation() {
+    const statsSection = document.querySelector('.stats-banner');
+    if (!statsSection) return;
+    
+    const statNumbers = statsSection.querySelectorAll('.stat-number');
+    let hasAnimated = false;
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasAnimated) {
+          hasAnimated = true;
+          
+          statNumbers.forEach((statNumber) => {
+            const targetValue = statNumber.getAttribute('data-target');
+            const targetData = parseNumberWithSuffix(targetValue);
+            
+            if (!isNaN(targetData.numericValue)) {
+              animateNumber(statNumber, targetData, 2000);
+            }
+          });
+          
+          observer.disconnect();
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+    
+    observer.observe(statsSection);
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStatsAnimation);
+  } else {
+    initStatsAnimation();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Banner With Stats",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_img",
+      "label": "Background Banner Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_img_tablet",
+      "label": "Background Banner Image (Tablet - below 1019px)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_img_mobile",
+      "label": "Background Banner Image (Mobile - below 767px)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Lorem Ipsum Dolor Sit Amet Consectetur"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Lorem Ipsum Dolor Sit Amet Consectetur Et Felis Phasellus Posuere Nullam Lorem Neque Aliquam."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Lorem Ipsum"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat Number",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "6"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Years In Business"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Banner With Stats",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+  

@@ -1,0 +1,38 @@
+<div class="product-buy-infos">
+  <div class="product-buy-infos-item">
+    {% if block.settings.product_buy_infos_icon %}
+      <img
+        src="{{ block.settings.product_buy_infos_icon | image_url: width: 31 }}"
+        alt="Buy Infos Icon"
+        width=""
+        height=""
+      >
+    {% endif %}
+    {% if block.settings.product_buy_infos_text != blank %}
+      <span>{{ block.settings.product_buy_infos_text }}</span>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .product-buy-infos {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .product-buy-infos-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .product-buy-infos-item span {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 400;
+    color: #234134;
+    font-family: 'SuisseIntlMono', sans-serif;
+    width: max-content;
+  }
+</style>

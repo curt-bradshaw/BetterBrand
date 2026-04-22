@@ -1,0 +1,101 @@
+{% comment %} Font Faces
+<link rel="preload" href="{{ 'DMSans-Thin.ttf' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Thin.woff2' | file_url }}" as="font" crossorigin>
+
+<link rel="preload" href="{{ 'DMSans-Light.ttf' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Light.woff2' | file_url }}" as="font" crossorigin>
+
+<link rel="preload" href="{{ 'DMSans-Regular.ttf' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Regular.woff' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Regular.woff2' | file_url }}" as="font" crossorigin>
+
+<link rel="preload" href="{{ 'DMSans-Medium.ttf' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Medium.woff' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Medium.woff2' | file_url }}" as="font" crossorigin>
+
+<link rel="preload" href="{{ 'DMSans-Bold.ttf' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Bold.woff' | file_url }}" as="font" crossorigin>
+<link rel="preload" href="{{ 'DMSans-Bold.woff2' | file_url }}" as="font" crossorigin>
+
+<style>
+	@font-face {
+	font-family: 'DM Sans';
+	src: url({{ 'DMSans-Thin.ttf' | file_url }}) format('ttf'),
+		url({{ 'DMSans-Thin.woff2' | file_url }}) format('woff2');
+	font-style: 'normal';
+	font-weight: 100;
+	}
+
+	@font-face {
+		font-family: 'DM Sans';
+		src: url({{ 'DMSans-Light.ttf' | file_url }}) format('ttf'),
+			url({{ 'DMSans-Light.woff2' | file_url }}) format('woff2');
+		font-display: swap;
+		font-style: 'normal';
+		font-weight: 300;
+	}
+
+	@font-face {
+		font-family: 'DM Sans';
+		src: url({{ 'DMSans-Regular.ttf' | file_url }}) format('ttf'),
+			url({{ 'DMSans-Regular.woff' | file_url }}) format('woff'),
+			url({{ 'DMSans-Regular.woff2' | file_url }}) format('woff2');
+		font-display: swap;
+		font-style: 'normal';
+		font-weight: 400;
+	}
+
+	@font-face {
+		font-family: 'DM Sans';
+		src: url({{ 'DMSans-Medium.ttf' | file_url }}) format('ttf'),
+			url({{ 'DMSans-Medium.woff' | file_url }}) format('woff'),
+			url({{ 'DMSans-Medium.woff2' | file_url }}) format('woff2');
+		font-display: swap;
+		font-style: 'normal';
+		font-weight: 500;
+	}
+
+	@font-face {
+		font-family: 'DM Sans';
+		src: url({{ 'DMSans-Bold.ttf' | file_url }}) format('ttf'),
+			url({{ 'DMSans-Bold.woff' | file_url }}) format('woff'),
+			url({{ 'DMSans-Bold.otf' | file_url }}) format('otf'),
+			url({{ 'DMSans-Bold.woff2' | file_url }}) format('woff2');
+		font-display: swap;
+		font-style: 'normal';
+		font-weight: 700;
+	}
+</style> {% endcomment %}
+
+{% comment %}
+  CSS code for elements that be contained in all pages.
+	{% render 'custom-general' %}
+{% endcomment %}
+
+{% comment %}
+	{%- if template contains 'index' -%}
+    CSS code for elements that be contained in homepage only.
+		{% render 'custom-index-css' %}
+	{%- endif -%}
+{% endcomment %}
+
+{% comment %}
+	{%- if template contains 'collection' -%}
+    CSS code for elements that be contained in collection page only.
+		{% render 'custom-collection-css' %}
+	{%- endif -%}
+{% endcomment %}
+
+{% comment %}
+	{%- if template contains 'product' -%}
+    CSS code for elements that be contained in product page only.
+		{% render 'custom-product-css' %}
+	{%- endif -%}
+{% endcomment %}
+
+{% comment %}
+	{%- if template contains 'cart' -%}
+    CSS code for elements that be contained in cart page only.
+		{% render 'custom-cart-css' %}
+	{%- endif -%}
+{% endcomment %}

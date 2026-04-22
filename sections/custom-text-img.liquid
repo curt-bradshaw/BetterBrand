@@ -1,0 +1,67 @@
+<div class="ntg-visual">
+    <div class="ntg-container">
+        <div class="ntg-cols">
+            <div class="ntg-col">
+                <div class="ntg-img-holder{% if section.settings.image_mobile != blank %} ntg-has-mobile-img{% endif %}">
+                    <div class="ntg-desktop-img">
+                        <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.image.alt }}">
+                    </div>
+                  {% if section.settings.image_mobile != blank %}
+                    <div class="ntg-mobile-img">
+                        <img src="{{ section.settings.image_mobile | img_url: 'master' }}" alt="{{ section.settings.image_mobile.alt }}">
+                    </div>
+                  {% endif %}
+                </div>
+            </div>
+            <div class="ntg-col">
+                <div class="ntg-text-holder">
+                    <h1 class="ntg-h1">{{ section.settings.title }}</h1>
+                    {{ section.settings.content }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Text Image",
+  "class": "custom-text-img",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Breathe Easy, Live Better "
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Are you truly giving your lungs the care they deserve? In our fast-paced lives, it's easy to overlook the health of our respiratory system. Your lungs play a vital role in your overall well-being, and maintaining their health is key to unlocking a life filled with vitality.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Text Image",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

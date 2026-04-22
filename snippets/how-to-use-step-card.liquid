@@ -1,0 +1,21 @@
+<!-- START how-to-use-step-card.liquid -->
+<div class="step-card" {{ shopify_attributes }}>
+  <div class="step-badge">
+    <p class="step-badge-text">Step</p>
+    <span>{{ step_index }}</span>
+  </div>
+
+  {% if image %}
+    <img
+      src="{{ image | image_url: width: 600 }}"
+      alt="{{ title }}"
+      loading="lazy"
+      width=""
+      height=""
+    >
+  {% endif %}
+
+  <h3>{{ title }}</h3>
+  <p class="step-card__text">{{ text }}</p>
+</div>
+<!-- END how-to-use-step-card.liquid -->

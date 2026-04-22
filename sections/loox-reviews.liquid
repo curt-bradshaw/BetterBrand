@@ -1,0 +1,20 @@
+<!-- START loox-reviews.liquid -->
+
+{% if product.metafields.loox.num_reviews > 0 %}
+  <style>
+    #shopify-section-{{ section.id }} {
+      padding: 40px 180px 52px;
+    }
+
+    @media screen and (max-width: 1279px) {
+      #shopify-section-{{ section.id }} {
+        padding: 40px 10px 52px;
+      }
+    }
+  </style>
+
+  <div id="looxReviews" data-limit="6" data-product-id="{{ product.id }}" data-upgraded="true">
+    <iframe id="looxReviewsFrame" title="Product reviews widget" src="https://loox.io/widget/EyZsq0Lf2O/reviews/{{ product.id }}?h=1740401420942&amp;limit=6" height="800px" width="100%" frameborder="0" scrolling="no" margin="0" style="overflow: hidden; height: 800px; width: 100%; box-shadow: unset; outline: unset;"></iframe>
+  </div>
+{% endif %}
+<!-- END loox-reviews.liquid -->

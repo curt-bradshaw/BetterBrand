@@ -1,0 +1,213 @@
+<!-- START you-may-also.liquid -->
+
+{% assign collection = collections[section.settings.collection] %}
+
+{% if collection != blank and collection.products.size > 0 %}
+<div class="you-may-also-section">
+    <div class="yma-container">
+    <div class="yma-header">
+      <h2 class="you-may-also-title">{{ section.settings.heading }}</h2>
+    </div>
+  
+    <div class="yma-products">
+      {% for product in collection.products limit: section.settings.products_limit %}
+        <a href="{{ product.url }}" class="yma-card">
+            {% if product.tags contains 'onsale-badge' %}
+                <span class="yma-badge">ON SALE</span>
+            {% elsif product.metafields.custom.badge_text != blank %}
+                <span class="yma-badge">{{ product.metafields.custom.badge_text }}</span>
+            {% endif %}
+          <div class="yma-image-wrapper">
+            <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title | escape }}" />
+          </div>
+  
+          <div class="yma-rating">
+            <span class="yma-stars">★★★★★</span>
+            {% assign rating = product.metafields.reviews.rating | default: section.settings.default_rating %}
+            {% assign reviews_count = product.metafields.reviews.rating_count | default: section.settings.default_reviews %}
+            <span class="yma-rating-text">{{ rating.value }} ({{ reviews_count }})</span>
+          </div>
+  
+          <p class="yma-product-title">{{ product.title }}</p>
+        </a>
+      {% endfor %}
+    </div>
+    </div>
+  </div>
+{% endif %}
+  
+  {% style %}
+  .you-may-also-section {
+    background-color: #C2DEB4;
+    padding: 80px 0;
+  }
+
+  .yma-container {
+    max-width: 1220px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  
+  .yma-header {
+    margin-bottom: 35px;
+  }
+  
+  .you-may-also-title {
+    font-size: 38px;
+    font-weight: 700;
+    font-family: var(--bookmaniaFont);
+    margin: 0;
+    color: #234134;
+    text-align: center;
+    line-height: 1.2;
+  }
+  
+  .yma-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .yma-card {
+    background: #F0FFE9A3;
+    box-shadow: 0px 0px 12.1px -3px #5B5B5B33;
+    border-radius: 6px;
+    padding: 20px;
+    transition: transform 0.2s ease;
+    position: relative;
+  }
+
+  .yma-card:hover { transform: translateY(-4px); }
+  
+  .yma-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .yma-image-wrapper img {
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .yma-badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: #3F745D80;
+    color: white;
+    padding: 4px 10px;
+    font-size: 18px;
+    border-radius: 0 6px 0 14px;
+  }
+  
+  .yma-rating {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #3F745D;
+  }
+  
+  .yma-stars { color: #F4B400; font-size: 14px; }
+  
+  .yma-product-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #234134;
+    font-family: var(--bookmaniaFont);
+  }
+
+  @media (max-width: 1019px) {
+    .you-may-also-section {
+      padding: 60px 0;
+    }
+    .yma-product-title {
+      font-size: 24px;
+    }
+    .you-may-also-title {
+      font-size: 28px;
+    }
+    .yma-products {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    .yma-image-wrapper {
+      height: auto;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .you-may-also-section {
+      padding: 40px 0;
+    }
+    .yma-product-title {
+      font-size: 14px;
+    }
+    .you-may-also-title {
+      font-size: 24px;
+      text-align: left;
+    }
+    .yma-rating {
+      font-size: 10px;
+    }
+    .yma-products {
+      column-gap: 5px;
+      row-gap: 10px;
+    }
+    .yma-card {
+      padding: 11px;
+    }
+  }
+  {% endstyle %}
+  
+  {% schema %}
+  {
+    "name": "You May Also",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "You May Also Like"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "products_limit",
+        "label": "Products to show",
+        "min": 2,
+        "max": 12,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "Rating Settings"
+      },
+      {
+        "type": "text",
+        "id": "default_rating",
+        "label": "Default Rating",
+        "default": "5.0",
+        "info": "Used if product doesn't have rating metafield"
+      },
+      {
+        "type": "text",
+        "id": "default_reviews",
+        "label": "Default Review Count",
+        "default": "238",
+        "info": "Used if product doesn't have review count metafield"
+      }
+    ],
+    "presets": [ { "name": "You May Also" } ]
+  }
+  {% endschema %}
+  

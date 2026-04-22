@@ -1,0 +1,615 @@
+
+{% assign txt_img_id = section.id | replace: '_', '' | downcase %}
+
+{% style %}
+
+  .txt-img-text-overlay-{{ txt_img_id }} {
+    width: 100%;
+  }
+
+  .txt-img-text-overlay-header-{{ txt_img_id }} {
+    text-align: {{ section.settings.header_alignment }};
+    margin-bottom: 40px;
+    margin-top:24px;
+  }
+
+  .txt-img-text-overlay-heading-main-{{ txt_img_id }} {
+    color: {{ section.settings.header_color }};
+    font-size: {{ section.settings.header_size }}px;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+    position:relative;
+  }
+
+  .txt-img-text-overlay-heading-main-{{ txt_img_id }}::before{
+    position: absolute;
+    content: "";
+    width: 70px;
+    height: 4px;
+    left: 0;
+    bottom: -20px;
+    background: #F2CB49;
+  }
+
+  .txt-img-text-overlay-grid-{{ txt_img_id }} {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .txt-img-text-overlay-item-{{ txt_img_id }} {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ section.settings.border_radius }}px;
+    aspect-ratio: {{ section.settings.aspect_ratio }};
+  }
+
+  .txt-img-text-overlay-image-{{ txt_img_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .txt-img-text-overlay-placeholder-{{ txt_img_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .txt-img-text-overlay-placeholder-{{ txt_img_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .txt-img-text-overlay-content-{{ txt_img_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: {{ section.settings.vertical_alignment }};
+    align-items: {{ section.settings.horizontal_alignment }};
+    padding: {{ section.settings.content_padding }}px;
+    text-align: {{ section.settings.text_alignment }};
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(217, 217, 217, 0.00) 0%, rgba(0, 0, 0, 0.68) 83.65%);
+  }
+
+  .txt-img-text-overlay-heading-{{ txt_img_id }} {
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.heading_size }}px;
+    margin: 0 0 {{ section.settings.text_spacing }}px 0;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .txt-img-text-overlay-text-{{ txt_img_id }} {
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size }}px;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .txt-img-text-overlay-text-{{ txt_img_id }}.txt-img-text-overlay-text-below{
+        p, b, strong{
+          color: #F0FFE9;
+          font-family: Inter;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 24px; /* 109.091% */
+          margin: 0;
+        }
+        strong{
+          display:none;
+        }
+   }
+
+
+  @media screen and (min-width: 750px) {
+    .txt-img-text-overlay-text-{{ txt_img_id }}.txt-img-text-overlay-text-top {
+      display:flex;
+      gap: 20px;
+    }
+
+    .txt-img-text-overlay-text-{{ txt_img_id }}.txt-img-text-overlay-text-below{
+        p, b, strong{
+          font-size: 22px;
+        }
+        strong{
+          display:block;
+        }
+    }
+  }
+
+ 
+
+  @media screen and (max-width: 749px) {
+    
+
+    .txt-img-text-overlay-heading-main-{{ txt_img_id }} {
+      color: var(--Color, #234134);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 27px; /* 135% */
+      text-align:center;
+    }
+
+      .txt-img-text-overlay-heading-main-{{ txt_img_id }}::before{
+         left: 50%;
+          bottom: -20px;
+          background: #F2CB49;
+          transform: translate(-50% , 0);
+      
+      }
+
+   
+
+    .txt-img-text-overlay-grid-{{ txt_img_id }} {
+      grid-template-columns: 1fr;
+      gap: {{ section.settings.gap | times: 0.75 }}px;
+    }
+
+    .txt-img-text-overlay-heading-{{ txt_img_id }} {
+      font-size: {{ section.settings.heading_size | times: 0.8 }}px;
+    }
+
+    .txt-img-text-overlay-text-{{ txt_img_id }} {
+      font-size: {{ section.settings.text_size | times: 0.9 }}px;
+      margin-bottom: 4px;
+    }
+
+    .txt-img-text-overlay-content-{{ txt_img_id }} {
+      padding: {{ section.settings.content_padding | times: 0.75 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="txt-img-text-overlay-{{ txt_img_id }}" {{ section.shopify_attributes }}>
+    <div class="ntg-container-nynm">
+        {% if section.settings.header != blank %}
+            <div class="txt-img-text-overlay-header-{{ txt_img_id }}">
+            <h2 class="txt-img-text-overlay-heading-main-{{ txt_img_id }}">{{ section.settings.header }}</h2>
+            </div>
+        {% endif %}
+
+        <div class="txt-img-text-overlay-grid-{{ txt_img_id }}">
+            {% for i in (1..2) %}
+            {% liquid
+                assign image_key = 'image_' | append: i
+                assign mob_image_key = 'mob_image_' | append: i
+                assign heading_key = 'heading_' | append: i
+                assign below_key = 'below_' | append: i
+                assign text_key = 'text_' | append: i
+                assign text_mob_key = 'text_mob_' | append: i
+                assign link_key = 'link_' | append: i
+
+                assign image = section.settings[image_key]
+                assign mob_image = section.settings[mob_image_key]
+                assign heading = section.settings[heading_key]
+                assign text = section.settings[text_key]
+                assign text_mob = section.settings[text_mob_key]
+                assign link = section.settings[link_key]
+                assign below = section.settings[below_key]
+
+            %}
+
+            <div class="txt-img-text-overlay-item-{{ txt_img_id }} ntg-desktop-block">
+                {% if image %}
+                <img
+                    src="{{ image | image_url: width: 1200 }}"
+                    alt="{{ image.alt | escape }}"
+                    loading="lazy"
+                    width="{{ image.width }}"
+                    height="{{ image.height }}"
+                    class="txt-img-text-overlay-image-{{ txt_img_id }}"
+                >
+                {% else %}
+                <div class="txt-img-text-overlay-placeholder-{{ txt_img_id }}">
+                    {{ 'image' | placeholder_svg_tag }}
+                </div>
+                {% endif %}
+
+                <div class="txt-img-text-overlay-content-{{ txt_img_id }}">
+                {% comment %} {% if heading != blank %}
+                    <h3 class="txt-img-text-overlay-heading-{{ txt_img_id }}">{{ heading }}</h3>
+                {% endif %} {% endcomment %}
+                {% if text != blank %}
+                    <div class="txt-img-text-overlay-text-{{ txt_img_id }} txt-img-text-overlay-text-top">{{ text }}</div>
+                {% endif %}
+                {% if below != blank %}
+                    <div class="txt-img-text-overlay-text-{{ txt_img_id }} txt-img-text-overlay-text-below">{{ below }}</div>
+                {% endif %}
+                </div>
+
+                {% if link != blank %}
+                <a href="{{ link }}" style="display:block;position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1;" aria-label="{{ heading | default: 'View more' }}"></a>
+                {% endif %}
+            </div>
+            <div class="txt-img-text-overlay-item-{{ txt_img_id }} ntg-mobile-block">
+                {% if mob_image %}
+                <img
+                    src="{{ mob_image | image_url: width: 1200 }}"
+                    alt="{{ mob_image.alt | escape }}"
+                    loading="lazy"
+                    width="{{ mob_image.width }}"
+                    height="{{ mob_image.height }}"
+                    class="txt-img-text-overlay-image-{{ txt_img_id }}"
+                >
+                {% else %}
+                <div class="txt-img-text-overlay-placeholder-{{ txt_img_id }}">
+                    {{ 'image' | placeholder_svg_tag }}
+                </div>
+                {% endif %}
+
+                <div class="txt-img-text-overlay-content-{{ txt_img_id }}">
+                {% comment %} {% if heading != blank %}
+                    <h3 class="txt-img-text-overlay-heading-{{ txt_img_id }}">{{ heading }}</h3>
+                {% endif %} {% endcomment %}
+                {% if text_mob != blank %}
+                    <div class="txt-img-text-overlay-text-{{ txt_img_id }} txt-img-text-overlay-text-top">{{ text_mob }}</div>
+                {% endif %}
+                {% if below != blank %}
+                    <div class="txt-img-text-overlay-text-{{ txt_img_id }} txt-img-text-overlay-text-below">{{ below }}</div>
+                {% endif %}
+                </div>
+
+                {% if link != blank %}
+                <a href="{{ link }}" style="display:block;position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1;" aria-label="{{ heading | default: 'View more' }}"></a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image text overlay",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Heading",
+      "default": "Our Collection"
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "header_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Heading color",
+      "default": "#234134"
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing below heading",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between items",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        {
+          "value": "auto",
+          "label": "adapt"
+        },
+        {
+          "value": "1 / 1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "4 / 3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "3 / 4",
+          "label": "Portrait (3:4)"
+        }
+      ],
+      "default": "4 / 3"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Overlay style"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "rgba(0, 0, 0, 0.4)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Content padding",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Text alignment"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "Horizontal alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Item heading size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Item text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_spacing",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Spacing between heading and text",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Item 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mob_image_1",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Heading",
+      "default": "First Item"
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "label": "Text",
+      "default": "Add your description here"
+    },
+    {
+      "type": "textarea",
+      "id": "text_mob_1",
+      "label": "Text mobile",
+      "default": "Add your description here"
+    },
+    {
+      "type": "richtext",
+      "id": "below_1",
+      "label": "Text Below header",
+      "default": "<p>Add your description here</p>"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Item 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mob_image_2",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Heading",
+      "default": "Second Item"
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "label": "Text",
+      "default": "Add your description here"
+    },
+    {
+      "type": "textarea",
+      "id": "text_mob_2",
+      "label": "Text mobile",
+      "default": "Add your description here"
+    },
+    {
+      "type": "richtext",
+      "id": "below_2",
+      "label": "Text Below header",
+      "default": "<p>Add your description here</p>"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image text overlay"
+    }
+  ]
+}
+{% endschema %}

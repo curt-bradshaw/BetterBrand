@@ -1,0 +1,1703 @@
+<!-- start blog-template.liquid (SECTION) -->
+
+<style>
+  .blog-page__wrapper {
+    padding: 0 23px;
+  }
+
+  .blog-page__title_container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 357px;
+    padding: 0 23px;
+    background-color: #1a4d3a;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+  }
+
+  .blog-page__title_container[style*="background-image"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, transparent 0%, rgba(15, 29, 23, 0.4) 40%, rgba(15, 29, 23, 0.8) 70%, #0F1D17 100%);
+    z-index: 1;
+  }
+
+  .blog-page__title_container[style*="background-image"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.29);
+    z-index: 1.5;
+  }
+
+  .blog-page__title_container[style*="background-image"] > * {
+    position: relative;
+    z-index: 2;
+    color: #FFFFFF;
+  }
+
+  .blog-page__title {
+    font-size: 60px;
+    line-height: 38px;
+    padding-left: 0;
+    margin: 0;
+    color: #FFFFFF;
+    font-family: Bookmania, serif;
+    font-weight: 700;
+  }
+
+  .blog-page__subtitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin-top: 12px;
+    color: #FFFFFF;
+  }
+
+  .blog-page__grid-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 38px auto 67px;
+  }
+
+  .blog-page__article-title {
+    color: #292930;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .blog-page__article-title-link {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .blog-page__grid-item.grid-item--three-quarters {
+    width: 76.4%;
+    max-width: 912px;
+    order: 2;
+  }
+
+  .blog-page__grid-item.grid-item--one-quarter {
+    width: 100%;
+    max-width: 250px;
+    margin-top: 1px;
+    margin-right: 4px;
+    background-color: #C2DEB4;
+    border-radius: 3px;
+    padding: 30px 15px;
+    order: 1;
+    height: fit-content;
+  }
+
+  {%- if section.settings.fixed_sidebar != true -%}
+    .blog-page__grid-item.grid-item--one-quarter {
+      position: static;
+    }
+  {%- else -%}
+    .blog-page__grid-item.grid-item--one-quarter {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 50px;
+    }
+  {%- endif -%}
+
+  .blog-page__articles-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 34px;
+  }
+
+  .blog-page__article-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+
+  .blog-page__article-image-wrapper {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .blog-page__article-image {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .blog-page__article-image img {
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    object-fit: cover;
+    transform: none;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .blog-page__article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .blog-page__article-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 12px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  .blog-page__article-tag:nth-child(1) {
+    background-color: #3F745D;
+    color: #FFFFFF;
+  }
+
+  .blog-page__article-tag:nth-child(2) {
+    background-color: #F0FFE9;
+    color: #402823;
+  }
+
+  .blog-page__article-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .blog-page__article-title {
+    color: #292930;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .blog-page__article-contents p {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.2;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+  }
+
+  .blog-page__article-button-wrapper {
+    width: fit-content;
+    height: 32px;
+    border: 1px solid #969696;
+    border-radius: 40px;
+    background-color: transparent;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .blog-page__article-button-wrapper:hover {
+    border-color: #3F745D;
+    background-color: #3F745D;
+  }
+
+  .blog-page__article-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-transform: capitalize;
+    color: #969696;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    transition: color 0.3s ease;
+    text-decoration: none;
+  }
+
+  .blog-page__article-button-wrapper:hover .blog-page__article-button {
+    color: #FFFFFF;
+  }
+
+  .template-blog .breadcrumbs {
+    line-height: 1.2;
+    margin-top: 11px;
+    margin-left: 2px;
+  }
+  
+  .template-blog .breadcrumbs {
+    line-height: 1.2;
+    margin-top: 11px;
+    margin-left: 2px;
+  }
+
+  .template-blog .breadcrumbs__separator svg {
+    width: 5px;
+    margin: 0 2px 0 5px;
+    height: auto;
+    transform: none;
+  }
+
+  .template-blog .breadcrumbs__separator svg path {
+    stroke: transparent;
+  }
+
+  /* paginate style */
+  .blog-page__article-paginate {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    border-top: 0.5px solid #D3D3D3;
+    padding: 15px 6px 0 0;
+  }
+  
+  .blog-page__article-paginate .next {
+    transform: translateX(8px);
+  }
+
+  .blog-page__article-paginate .page a,
+  .blog-page__article-paginate .next a {
+    font-size: 16px;
+    color: #ACACAC;
+  }
+
+  .blog-page__article-paginate .page.current {
+    color: #252525;
+  }
+
+  .template-blog .breadcrumbs__item {
+    padding-left: 5px;
+    letter-spacing: 0.2px;
+  }
+
+  .template-blog .breadcrumbs__item.breadcrumbs__link{
+    padding-left: 0;
+    letter-spacing: 0;
+    margin-right: 1px;
+    color: #969696;
+    line-height: 1;
+  }
+
+  .blog-page__wrapper .news_letter_title {
+    display: none; 
+  }
+
+  .blog-page__header-controls {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin: 20px 0 0;
+    gap: 20px;
+    padding-left: 2px;
+    border-bottom: 0.5px solid #CFCFCF;
+    padding-bottom: 17px;
+  }
+
+  .blog-page__header-controls .breadcrumbs {
+    justify-self: flex-start;
+    margin: 0;
+    align-items: center;
+  }
+
+  .blog-page__items-counter {
+    color: #969696;
+    font-size: 16px;
+    line-height: 24px;
+    flex-shrink: 0;
+    justify-self: center;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  .blog-page__search-form {
+    border: 1px solid rgba(0, 0, 0, 0);
+    height: 46px;
+    width: 100%;
+    max-width: 349px;
+    margin: 0;
+    margin-left: auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    border-radius: 23px;
+    justify-self: flex-end;
+  }
+
+  .blog-page__wrapper .blog-page__search-input {
+    border: 1px solid transparent;
+    border-radius: 23px;
+    color: #000;
+    font-size: 1rem;
+    padding: 6px 12px;
+    margin: 0;
+    height: 46px;
+    width: 80%;
+    background-color: #f5f5f5;
+  }
+
+  .blog-page__search-input::placeholder {
+    color: #A8A8A8;
+  }
+
+  .blog-page__search-input:focus {
+    outline: none;
+  }
+
+  .blog-page__search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    width: 50px;
+    gap: 10px;
+    border-radius: 23px;
+    text-transform: capitalize;
+    background: #f5f5f5;
+    color: #000000;
+    border-left: 1px solid rgba(0, 0, 0, 0);
+  }
+
+  .blog-page__search-button span {
+    display: none;
+  }
+
+  /* end paginate style */
+
+  @media (max-width: 1279px) {
+    .template-blog .blog-page__grid-item.grid-item--three-quarters {
+        width: calc(100% - 260px);
+    }
+}
+
+  @media (max-width: 1019px) {
+    .blog-page__wrapper {
+      padding: 0 20px;
+    }
+    
+    .sidebar-recent-post__image-link img {
+      max-height: 249px;
+      object-fit: cover;
+    }
+
+    .blog-page__title_container {
+      height: 300px;
+      padding: 0 20px;
+      font-size: 32px;
+    }
+
+    .blog-page__title {
+      font-size: 30px;
+      line-height: 130%;
+      padding-top: 0;
+      padding-left: 0;
+    }
+
+    .blog-page__subtitle {
+      font-size: 16px;
+      line-height: 22px;
+      margin-top: 10px;
+    }
+
+    .template-blog .breadcrumbs {
+      line-height: 0.2;
+      margin-top: 30px;
+    }  
+
+    .blog-page__grid-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1.7%;
+      margin: 30.2px auto 39px;
+    }   
+
+    .blog-page__grid-item.grid-item--three-quarters,
+    .blog-page__grid-item.grid-item--one-quarter {
+      width: 100%;
+      min-width: 100%;
+      margin-top: 0px;
+    }
+
+    .blog-page__grid-item.grid-item--three-quarters {
+      order: 1;
+    }
+
+    .blog-page__grid-item.grid-item--one-quarter {
+      order: 2;
+      margin-top: 29px;
+      margin-right: 0;
+    }
+
+    .blog-page__articles-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 27px;
+    }
+
+    .blog-page__article-image-wrapper {
+      margin-bottom: 10px;
+    }
+
+    .blog-page__article-image img {
+      min-height: 200px;
+    }
+
+    .blog-page__article-tags {
+      margin-bottom: 10px;
+    }
+
+    .blog-page__article-info {
+      gap: 10px;
+    }
+
+    .blog-page__article-title {
+      font-size: 16px;
+      line-height: normal;
+      letter-spacing: 0;
+    }
+
+    .blog-page__article-contents p {
+      font-size: 14px;
+    }
+
+    .blog-page__article-button-wrapper {
+      height: 32px;
+      margin-top: 12px;
+      border-radius: 40px;
+      letter-spacing: 0.1px;
+    }
+
+    .blog-page__article-button {
+      font-size: 12px;
+      line-height: 19.1px;
+    }
+
+    .blog-page__article-paginate {
+      font-size: 12px;
+      gap: 8px;
+      padding: 15px 0 0 0;
+    }
+    .blog-page__article-paginate .page.current, .blog-page__article-paginate .page a, .blog-page__article-paginate .next a{
+      font-size: 14px;
+      line-height: 17.5px;
+    }
+
+    .blog-page__article-paginate .next {
+      margin-left: 7px;
+      transform: translateX(0px);
+    }
+
+    .blog-page__header-controls {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 15px;
+      margin: 15px 0 0;
+    }
+
+    .blog-page__header-controls .breadcrumbs {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      justify-self: flex-start;
+      width: 100%;
+    }
+    
+    .blog-page__header-controls .breadcrumbs__separator svg {
+      position: static;
+    }
+
+    .blog-page__header-controls > div:empty {
+      display: none;
+    }
+
+    .blog-page__header-controls .blog-page__search-form {
+      grid-column: 1;
+      grid-row: 2;
+      max-width: 349px;
+      width: 100%;
+      margin-left: 0;
+      justify-self: flex-start;
+    }
+
+    .blog-page__header-controls .blog-page__items-counter {
+      grid-column: 2;
+      grid-row: 2;
+      font-size: 16px;
+      line-height: 20px;
+      justify-self: flex-end;
+    }
+
+    .blog-page__search-input {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+    }
+
+    .blog-page__search-button {
+      font-size: 0.85rem;
+      min-width: 50px;
+      max-width: 50px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .blog-page__title_container {
+      height: 200px;
+      padding: 0 20px;
+      font-size: 28px;
+    }
+    
+    .blog-page__title {
+      font-size: 20px;
+      padding-top: 0;
+    }
+
+    .blog-page__subtitle {
+      font-size: 14px;
+      line-height: 20px;
+      margin-top: 8px;
+    }
+
+    .template-blog .breadcrumbs {
+      margin-top: 0;
+      margin-left: 0;
+    }
+
+    .template-blog .breadcrumbs__separator {
+      margin-right: 0;
+    }
+
+    .blog-page__grid-wrapper {
+      margin: 22px auto 19px;
+    }
+
+    .blog-page__articles-container {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 26.5px;
+    }
+
+    .blog-page__article-image-wrapper {
+      margin-bottom: 10px;
+    }
+
+    .blog-page__article-image img {
+      min-height: 180px;
+    }
+
+    .blog-page__article-tags {
+      margin-bottom: 8px;
+    }
+
+    .blog-page__article-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+    }
+
+    .blog-page__article-info {
+      gap: 8px;
+    }
+
+    .blog-page__article-title {
+      font-size: 16px;
+    }
+
+    .blog-page__article-button-wrapper {
+      margin-top: 12px;
+    }
+    
+    .blog-page__article-button {
+      line-height: 20px;
+    }
+    
+    .blog-page__grid-item.grid-item--three-quarters {
+      order: 1;
+    }
+
+    .blog-page__grid-item.grid-item--one-quarter {
+      order: 2;
+      margin-top: 32.1px;
+    }
+
+    .blog-page__header-controls {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 12px;
+      margin: 12px 0 0;
+      padding-bottom: 6px;
+    }
+
+    .blog-page__header-controls .breadcrumbs {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: flex-start;
+      width: 100%;
+      align-self: center;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      padding-top: 20px;
+      margin-bottom: 5px;
+    }
+
+    .blog-page__header-controls > div:empty {
+      display: none;
+    }
+
+    .blog-page__header-controls .blog-page__search-form {
+      grid-column: 1;
+      grid-row: 2;
+      max-width: 100%;
+      width: 100%;
+      margin-left: 0;
+      justify-self: stretch;
+    }
+
+    .blog-page__header-controls .blog-page__items-counter {
+      grid-column: 1;
+      grid-row: 3;
+      font-size: 14px;
+      line-height: 18px;
+      justify-self: start;
+    }
+
+    .blog-page__search-input {
+      font-size: 0.85rem;
+      padding: 6px 10px;
+    }
+  }
+</style>
+
+  {% if section.settings.blog_page_title != blank %}
+    <div 
+      class="blog-page__title_container"
+      {% if section.settings.title_background_image != blank %}
+        style="background-image: url('{{ section.settings.title_background_image | image_url: width: 1920 }}');"
+      {% endif %}
+    >
+      <h2 class="blog-page__title">
+        {{ section.settings.blog_page_title }}
+      </h2>
+      {% if section.settings.blog_page_subtitle != blank %}
+        <p class="blog-page__subtitle">
+          {{ section.settings.blog_page_subtitle }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="blog-page__wrapper wrapper">
+
+  {% paginate blog.articles by settings.blog_num_posts %}
+    {% assign start_item = paginate.current_offset | plus: 1 %}
+    {% assign end_item = paginate.current_offset | plus: paginate.page_size %}
+    {% if end_item > paginate.items %}
+      {% assign end_item = paginate.items %}
+    {% endif %}
+    <div class="blog-page__header-controls">
+    {% if settings.enable_breadcrumbs_blog %}
+      {% render 'breadcrumb' %}
+    {% else %}
+    <div></div>
+    {% endif %}
+    <div class="blog-page__items-counter" id="blog-items-counter">
+      Showing <span id="blog-items-start">{{ start_item }}</span> - <span id="blog-items-end">{{ end_item }}</span> of <span id="blog-items-total">{{ paginate.items }}</span> items
+    </div>
+    <form action="{{ routes.search_url }}" method="get" class="blog-page__search-form" id="blog-search-form">
+            <input type="hidden" name="type" value="article">
+            <input
+              type="text"
+              name="q"
+              value="{{ search.terms | escape }}"
+              placeholder="Search"
+              class="blog-page__search-input"
+              aria-label="search-text"
+              autocomplete="off"
+              id="blog-search-input"
+            >
+            <button type="submit" class="blog-page__search-button button">
+              <span>{{ 'general.search.submit' | t }}</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 17L21 21M3 11C3 13.1217 3.84285 15.1566 5.34315 16.6569C6.84344 18.1571 8.87827 19 11 19C13.1217 19 15.1566 18.1571 16.6569 16.6569C18.1571 15.1566 19 13.1217 19 11C19 8.87827 18.1571 6.84344 16.6569 5.34315C15.1566 3.84285 13.1217 3 11 3C8.87827 3 6.84344 3.84285 5.34315 5.34315C3.84285 6.84344 3 8.87827 3 11Z" stroke="#0A0A0A" style="stroke:#0A0A0A;stroke:color(display-p3 0.0392 0.0392 0.0392);stroke-opacity:1;" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>        
+            </button>
+          </form>
+    </div>
+    <div class="blog-page__grid-wrapper">
+      {%- if section.settings.enable_sidebar -%}
+        <aside class="blog-page__grid-item grid-item--one-quarter">
+          {%- render 'blog-sidebars' -%}
+        </aside>
+      {%- endif -%}
+
+      <div class="blog-page__grid-item grid-item--three-quarters">
+        <section class="blog-page__articles-container">
+          <div class="blog-page__no-results" style="display: none;">
+            <p>No articles found for "<span class="blog-page__search-term"></span>"</p>
+          </div>
+
+          {% for article in blog.articles %}
+            {% assign article_content_text = article.excerpt | default: article.content | strip_html %}
+            {% assign article_tags_text = article.tags | join: ' ' %}
+            {% assign searchable_text = article.title | append: ' ' | append: article_content_text | append: ' ' | append: article_tags_text | downcase %}
+            <article class="blog-page__article-content" data-search-text="{{ searchable_text | escape }}">
+              {% if settings.show_featured_image %}
+                <div class="blog-page__article-image-wrapper">
+                  {%- assign article_image = article.image -%}
+                  {% if article.image == blank and settings.blog_rewrite_image == 'placeholder' -%}
+                    {%- assign article_image = settings.blog_article_placeholder -%}
+                  {% endif %}
+
+                  <a
+                    title="{{ article.title | strip_html | escape }}"
+                    id="article-featured-image-{{ forloop.index }}"
+                    class="blog-page__article-image"
+                    href="{{ article.url | default: '#' }}"
+                  >
+                    {%
+                       render 'responsive-image' with
+                       id: article.title,
+                       image: article_image,
+                       lazyload: false,
+                       width: 800,
+                       no_wrap: true,
+                       alt: article.title 
+                    %}
+                  </a>
+                </div>
+              {% endif %}
+
+              {% if article.tags.size > 0 %}
+                <div class="blog-page__article-tags">
+                  {% for tag in article.tags limit: 2 %}
+                    {% assign tag_handle = tag | handle %}
+                    {% assign tag_color = blank %}
+                    
+                    {% comment %} Busca cor no metafield JSON de mapeamento de tags {% endcomment %}
+                    {% if article.metafields.custom.tag_colors != blank %}
+                      {% assign tag_colors_json = article.metafields.custom.tag_colors %}
+                      {% if tag_colors_json[tag_handle] != blank %}
+                        {% assign tag_color = tag_colors_json[tag_handle] %}
+                      {% endif %}
+                    {% endif %}
+                    
+                    {% comment %} Se não encontrou no JSON, busca no metafield de mapeamento de texto (formato: "tag1:color1,tag2:color2") {% endcomment %}
+                    {% if tag_color == blank and article.metafields.custom.tag_colors_map != blank %}
+                      {% assign tag_colors_map = article.metafields.custom.tag_colors_map | split: ',' %}
+                      {% for color_mapping in tag_colors_map %}
+                        {% assign mapping_parts = color_mapping | split: ':' %}
+                        {% if mapping_parts.size == 2 %}
+                          {% assign mapped_tag = mapping_parts[0] | strip | handle %}
+                          {% if mapped_tag == tag_handle %}
+                            {% assign tag_color = mapping_parts[1] | strip %}
+                            {% break %}
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    
+                    {% comment %} Se não encontrou, busca metafield específico da tag (custom.tag_color_[handle]) {% endcomment %}
+                    {% if tag_color == blank %}
+                      {% assign tag_color_metafield = 'tag_color_' | append: tag_handle %}
+                      {% assign tag_color = article.metafields.custom[tag_color_metafield] %}
+                    {% endif %}
+                    
+                    <a 
+                      href="{{ blog.url }}/tagged/{{ tag | handle }}" 
+                      class="blog-page__article-tag"
+                      {% if tag_color != blank %}
+                        style="background-color: {{ tag_color }};"
+                      {% endif %}
+                    >
+                      {%- comment -%} Separate PascalCase words by adding space before uppercase letters {%- endcomment -%}
+                      {%- assign formated_tag = tag | replace: "-", " " | replace: "_", " " -%}
+                      {%- assign formated_tag = formated_tag | replace: "A", " A" | replace: "B", " B" | replace: "C", " C" | replace: "D", " D" | replace: "E", " E" | replace: "F", " F" | replace: "G", " G" | replace: "H", " H" | replace: "I", " I" | replace: "J", " J" | replace: "K", " K" | replace: "L", " L" | replace: "M", " M" | replace: "N", " N" | replace: "O", " O" | replace: "P", " P" | replace: "Q", " Q" | replace: "R", " R" | replace: "S", " S" | replace: "T", " T" | replace: "U", " U" | replace: "V", " V" | replace: "W", " W" | replace: "X", " X" | replace: "Y", " Y" | replace: "Z", " Z" -%}
+                      {%- assign formated_tag = formated_tag | split: " " | join: " " | strip -%}
+                      {{ formated_tag }}
+                    </a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <div id="article-info-{{ forloop.index }}" class="blog-page__article-info">
+                <h2 class="blog-page__article-title">
+                  <a class="blog-page__article-title-link" href="{{ article.url | default: '#' }}">
+                    {{ article.title }}
+                  </a>
+                </h2>
+
+                <div class="blog-page__article-contents">
+                  {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt }}
+                  {% else %}
+                    {% assign article_content = article.content | strip_html | split: '<!--split-->' | last %}
+                    {% if section.settings.enable_auto_truncate_excerpt %}
+                      {{ article_content | truncatewords: 40 }}
+                    {% else %}
+                      {{ article_content | truncatewords: section.settings.truncate_word_limit }}
+                    {% endif %}
+                  {% endif %}
+                </div>
+
+                <div class="blog-page__article-button-wrapper">
+                  <a
+                    title="{{ article.title | strip_html | escape }}"
+                    href="{{ article.url | default: '#' }}"
+                    rel="bookmark"
+                    id="blog-button-{{ forloop.index }}"
+                    class="blog-page__article-button"
+                  >
+                    {{- 'blogs.article.read_more' | t -}}
+                  </a>
+                </div>
+                {% if settings.enable_blogs_comments and blog.comments_enabled? and article.comments_count > 0 %}
+                  {% comment %} <div class="clearfix"></div> {% endcomment %}
+                  <a href="{{ article.url }}#comments" class="blog-page__article-comments">
+                    {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                  </a>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </section>
+
+        {%- if paginate.pages > 1 -%}
+          <div class="blog-page__article-paginate">{{ paginate | default_pagination: next: '>', previous: '<' }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  {% endpaginate %}
+</div>
+
+<script>
+(function() {
+  'use strict';
+  
+  const searchForm = document.getElementById('blog-search-form');
+  const searchInput = document.getElementById('blog-search-input');
+  const articlesContainer = document.querySelector('.blog-page__articles-container');
+  const articles = document.querySelectorAll('.blog-page__article-content');
+  const noResultsMessage = document.querySelector('.blog-page__no-results');
+  const searchTermSpan = document.querySelector('.blog-page__search-term');
+  const itemsCounter = document.getElementById('blog-items-counter');
+  const itemsStart = document.getElementById('blog-items-start');
+  const itemsEnd = document.getElementById('blog-items-end');
+  const itemsTotal = document.getElementById('blog-items-total');
+  const paginateContainer = document.querySelector('.blog-page__article-paginate');
+  
+  if (!searchForm || !searchInput || !articlesContainer) return;
+  
+  const totalArticles = articles.length;
+  const originalItemsTotal = itemsTotal ? itemsTotal.textContent : totalArticles.toString();
+  const originalArticlesHTML = articlesContainer.innerHTML;
+  let isLoading = false;
+  let currentRequest = null;
+  
+  // Função para escapar HTML
+  function escapeHTML(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+  
+  // Função para criar HTML de um artigo
+  function createArticleHTML(article) {
+    const title = escapeHTML(article.title || '');
+    const url = article.url || '#';
+    const image = article.image || '';
+    const excerpt = escapeHTML((article.excerpt || article.summary || '').substring(0, 200));
+    const blogUrl = article.blog_url || '{{ blog.url }}';
+    
+    const imageHTML = image ? `
+      <div class="blog-page__article-image-wrapper">
+        <a
+          title="${title}"
+          class="blog-page__article-image"
+          href="${url}"
+        >
+          <img src="${image}" alt="${title}" class="blog-page__article-image" style="width: 100%; height: auto; min-height: 250px; object-fit: cover; display: block; border-radius: 8px;" />
+        </a>
+      </div>
+    ` : '';
+    
+    const tagsHTML = article.tags && article.tags.length > 0 ? `
+      <div class="blog-page__article-tags">
+        ${article.tags.slice(0, 2).map((tag) => {
+          // Separate PascalCase words (e.g., "AirPollutionEffects" -> "Air Pollution Effects")
+          const tagText = escapeHTML(tag)
+            .replace(/-/g, ' ')
+            .replace(/_/g, ' ')
+            .replace(/([A-Z])/g, ' $1')
+            .replace(/\s+/g, ' ')
+            .trim();
+          const tagHandle = tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+          return `
+          <a href="${blogUrl}/tagged/${tagHandle}" class="blog-page__article-tag">
+            ${tagText}
+          </a>
+        `;
+        }).join('')}
+      </div>
+    ` : '';
+    
+    const contentHTML = excerpt ? `<div class="blog-page__article-contents"><p>${excerpt}</p></div>` : '';
+    
+    return `
+      <article class="blog-page__article-content">
+        ${imageHTML}
+        ${tagsHTML}
+        <div class="blog-page__article-info">
+          <h2 class="blog-page__article-title">
+            <a class="blog-page__article-title-link" href="${url}">
+              ${title}
+            </a>
+          </h2>
+          ${contentHTML}
+          <div class="blog-page__article-button-wrapper">
+            <a
+              title="${title}"
+              href="${url}"
+              rel="bookmark"
+              class="blog-page__article-button"
+            >
+              Read More
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+  
+  // Função para buscar artigos via API do Shopify
+  async function searchAllArticles(searchTerm) {
+    if (isLoading) return;
+    
+    const term = searchTerm.trim();
+    
+    // Se o termo estiver vazio, restaurar artigos originais
+    if (term === '') {
+      articlesContainer.innerHTML = originalArticlesHTML;
+      updateCounter(totalArticles, 1, totalArticles, true);
+      if (paginateContainer) {
+        paginateContainer.style.display = '';
+      }
+      if (noResultsMessage) {
+        noResultsMessage.style.display = 'none';
+      }
+      return;
+    }
+    
+    isLoading = true;
+    
+    // Cancelar requisição anterior se existir
+    if (currentRequest) {
+      currentRequest.abort();
+    }
+    
+    // Criar nova requisição
+    const controller = new AbortController();
+    currentRequest = controller;
+    
+    try {
+      // Usar o endpoint de busca do Shopify
+      const searchUrl = `{{ routes.search_url }}?type=article&q=${encodeURIComponent(term)}`;
+      const response = await fetch(searchUrl, {
+        signal: controller.signal,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Search failed');
+      }
+      
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      
+      // Procurar pelos artigos no HTML retornado
+      // O Shopify pode retornar artigos em diferentes estruturas
+      let foundArticles = doc.querySelectorAll('.grid__item');
+      
+      // Se não encontrou com a classe específica, tentar outras estruturas comuns
+      if (foundArticles.length === 0) {
+        foundArticles = doc.querySelectorAll('article[class*="article"], .search-result-item, [data-article-id]');
+      }
+      
+      // Se ainda não encontrou, tentar buscar por links de artigos e construir a estrutura
+      if (foundArticles.length === 0) {
+        const articleLinks = doc.querySelectorAll('a[href*="/blogs/"][href*="/articles/"]');
+        if (articleLinks.length > 0) {
+          // Construir artigos a partir dos links encontrados
+          const articlesData = Array.from(articleLinks).map(link => {
+            const articleCard = link.closest('article, [class*="article"], [class*="card"], [class*="item"]') || link.parentElement;
+            const titleEl = articleCard.querySelector('h2, h3, h4, [class*="title"]') || link;
+            const imageEl = articleCard.querySelector('img');
+            const excerptEl = articleCard.querySelector('p, [class*="excerpt"], [class*="summary"], [class*="content"]');
+            const tagsEl = articleCard.querySelectorAll('[class*="tag"], .tag, [data-tag]');
+            
+            return {
+              title: titleEl.textContent.trim(),
+              url: link.href,
+              image: imageEl ? imageEl.src : '',
+              excerpt: excerptEl ? excerptEl.textContent.trim().substring(0, 150) + '...' : '',
+              tags: Array.from(tagsEl).map(tag => tag.textContent.trim()).filter(t => t),
+              blog_url: '{{ blog.url }}'
+            };
+          });
+          
+          // Remover duplicatas baseado na URL
+          const uniqueArticles = articlesData.filter((article, index, self) => 
+            index === self.findIndex(a => a.url === article.url)
+          );
+          
+          if (uniqueArticles.length > 0) {
+            const articlesHTML = uniqueArticles.map(article => createArticleHTML(article)).join('');
+            articlesContainer.innerHTML = articlesHTML;
+            updateCounter(uniqueArticles.length, 1, uniqueArticles.length, false);
+            if (noResultsMessage) {
+              noResultsMessage.style.display = 'none';
+            }
+            if (paginateContainer) {
+              paginateContainer.style.display = 'none';
+            }
+            return;
+          }
+        }
+      }
+      
+      if (foundArticles.length > 0) {
+        // Converter estrutura .grid__item para .blog-page__article-content
+        const articlesData = Array.from(foundArticles).map(gridItem => {
+          const imageWrapper = gridItem.querySelector('.grid__item-image-wrapper');
+          const imageLink = imageWrapper ? imageWrapper.querySelector('a.grid__item-link') : null;
+          const image = imageLink ? imageLink.querySelector('img') : null;
+          const titleEl = gridItem.querySelector('.grid__item-title');
+          const titleLink = titleEl ? titleEl.querySelector('a.grid__item-title-link') : null;
+          
+          // Extrair URL - remover parâmetros de tracking se existirem
+          let url = '';
+          if (titleLink) {
+            url = titleLink.getAttribute('href') || titleLink.href;
+            // Remover query params de tracking (_pos, _sid, _ss, etc)
+            if (url.includes('?')) {
+              url = url.split('?')[0];
+            }
+          } else if (imageLink) {
+            url = imageLink.getAttribute('href') || imageLink.href;
+            if (url.includes('?')) {
+              url = url.split('?')[0];
+            }
+          }
+          
+          // Extrair título
+          const title = titleEl ? titleEl.textContent.trim() : '';
+          
+          // Extrair imagem - tentar pegar a melhor qualidade disponível
+          let imageSrc = '';
+          if (image) {
+            // Tentar pegar srcset primeiro (melhor qualidade)
+            const srcset = image.getAttribute('srcset');
+            if (srcset) {
+              // Pegar a maior resolução do srcset
+              const srcsetParts = srcset.split(',').map(s => s.trim());
+              if (srcsetParts.length > 0) {
+                const largest = srcsetParts[srcsetParts.length - 1].split(' ')[0];
+                imageSrc = largest;
+              }
+            }
+            // Se não tiver srcset, usar src ou data-src
+            if (!imageSrc) {
+              imageSrc = image.src || image.getAttribute('data-src') || image.getAttribute('data-lazy-src') || '';
+            }
+            // Limpar parâmetros de query da URL da imagem para obter melhor qualidade
+            if (imageSrc) {
+              // Remover parâmetros de width, height, etc, mas manter o v (version)
+              const urlParts = imageSrc.split('?');
+              if (urlParts.length > 1) {
+                const params = new URLSearchParams(urlParts[1]);
+                // Manter apenas o parâmetro 'v' (version) se existir
+                const version = params.get('v');
+                imageSrc = urlParts[0] + (version ? '?v=' + version : '');
+              }
+            }
+          }
+          
+          // Extrair tags
+          const tagsContainer = gridItem.querySelector('.blog-page__article-tags');
+          const tags = [];
+          if (tagsContainer) {
+            const tagLinks = tagsContainer.querySelectorAll('a.blog-page__article-tag');
+            tagLinks.forEach(tagLink => {
+              const tagText = tagLink.textContent.trim();
+              if (tagText) {
+                tags.push(tagText);
+              }
+            });
+          }
+          
+          // Extrair conteúdo/excerpt
+          const contentsContainer = gridItem.querySelector('.blog-page__article-contents');
+          let excerpt = '';
+          if (contentsContainer) {
+            const paragraph = contentsContainer.querySelector('p');
+            if (paragraph) {
+              excerpt = paragraph.textContent.trim();
+            } else {
+              // Se não tiver parágrafo, pegar todo o texto do container
+              excerpt = contentsContainer.textContent.trim();
+            }
+          }
+          
+          return {
+            title: title,
+            url: url,
+            image: imageSrc,
+            excerpt: excerpt,
+            tags: tags,
+            blog_url: '{{ blog.url }}'
+          };
+        }).filter(article => article.title && article.url); // Filtrar artigos inválidos
+        
+        // Remover duplicatas baseado na URL
+        const uniqueArticles = articlesData.filter((article, index, self) => 
+          index === self.findIndex(a => a.url === article.url)
+        );
+        
+        if (uniqueArticles.length > 0) {
+          const articlesHTML = uniqueArticles.map(article => createArticleHTML(article)).join('');
+          articlesContainer.innerHTML = articlesHTML;
+          updateCounter(uniqueArticles.length, 1, uniqueArticles.length, false);
+          if (noResultsMessage) {
+            noResultsMessage.style.display = 'none';
+          }
+        } else {
+          // Nenhum resultado válido encontrado
+          articlesContainer.innerHTML = '';
+          updateCounter(0, 0, 0, false);
+          if (noResultsMessage) {
+            noResultsMessage.style.display = 'block';
+            if (searchTermSpan) {
+              searchTermSpan.textContent = term;
+            }
+          }
+        }
+      } else {
+        // Nenhum resultado encontrado
+        articlesContainer.innerHTML = '';
+        updateCounter(0, 0, 0, false);
+        if (noResultsMessage) {
+          noResultsMessage.style.display = 'block';
+          if (searchTermSpan) {
+            searchTermSpan.textContent = term;
+          }
+        }
+      }
+      
+      // Esconder paginação durante busca
+      if (paginateContainer) {
+        paginateContainer.style.display = 'none';
+      }
+      
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return; // Requisição foi cancelada
+      }
+      
+      console.error('Erro na busca:', error);
+      
+      // Fallback: usar busca local se a API falhar
+      filterLocalArticles(term);
+    } finally {
+      isLoading = false;
+      currentRequest = null;
+    }
+  }
+  
+  // Função de fallback para busca local (artigos da página atual)
+  function filterLocalArticles(searchTerm) {
+    const term = searchTerm.toLowerCase().trim();
+    let visibleCount = 0;
+    let firstVisibleIndex = null;
+    
+    articles.forEach(function(article, index) {
+      const searchText = article.getAttribute('data-search-text') || '';
+      
+      if (term === '' || searchText.includes(term)) {
+        article.style.display = '';
+        visibleCount++;
+        if (firstVisibleIndex === null) firstVisibleIndex = visibleCount;
+      } else {
+        article.style.display = 'none';
+      }
+    });
+    
+    // Atualizar mensagem de "nenhum resultado"
+    if (noResultsMessage) {
+      if (visibleCount === 0 && term !== '') {
+        noResultsMessage.style.display = 'block';
+        if (searchTermSpan) {
+          searchTermSpan.textContent = searchTerm;
+        }
+      } else {
+        noResultsMessage.style.display = 'none';
+      }
+    }
+    
+    // Atualizar contador
+    updateCounter(visibleCount, firstVisibleIndex || 1, visibleCount, term === '');
+    
+    // Esconder paginação se estiver filtrando
+    if (paginateContainer) {
+      if (term !== '') {
+        paginateContainer.style.display = 'none';
+      } else {
+        paginateContainer.style.display = '';
+      }
+    }
+  }
+  
+  // Função para atualizar contador
+  function updateCounter(count, start, end, isOriginal) {
+    if (itemsStart && itemsEnd && itemsTotal) {
+      if (count === 0) {
+        itemsStart.textContent = '0';
+        itemsEnd.textContent = '0';
+        itemsTotal.textContent = '0';
+      } else {
+        itemsStart.textContent = start.toString();
+        itemsEnd.textContent = end.toString();
+        itemsTotal.textContent = isOriginal ? originalItemsTotal : count.toString();
+      }
+    }
+  }
+  
+  // Interceptar submit do formulário
+  searchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const searchTerm = searchInput.value;
+    searchAllArticles(searchTerm);
+    
+    // Atualizar URL sem recarregar a página
+    const url = new URL(window.location);
+    if (searchTerm) {
+      url.searchParams.set('q', searchTerm);
+    } else {
+      url.searchParams.delete('q');
+    }
+    window.history.pushState({}, '', url);
+  });
+  
+  // Busca em tempo real enquanto digita (debounce)
+  let searchTimeout;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(function() {
+      const searchTerm = searchInput.value;
+      searchAllArticles(searchTerm);
+      
+      // Atualizar URL sem recarregar a página
+      const url = new URL(window.location);
+      if (searchTerm) {
+        url.searchParams.set('q', searchTerm);
+      } else {
+        url.searchParams.delete('q');
+      }
+      window.history.pushState({}, '', url);
+    }, 300);
+  });
+  
+  // Verificar se há termo de busca na URL ao carregar a página
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialSearchTerm = urlParams.get('q') || '';
+  if (initialSearchTerm) {
+    searchInput.value = initialSearchTerm;
+    searchAllArticles(initialSearchTerm);
+  }
+  
+  // Permitir limpar a busca com Escape
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      searchInput.value = '';
+      searchAllArticles('');
+      const url = new URL(window.location);
+      url.searchParams.delete('q');
+      window.history.pushState({}, '', url);
+    }
+  });
+})();
+</script>
+
+<style>
+  .blog-page__search-form {
+    position: relative;
+  }
+
+  .blog-search-results-wrapper {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 15;
+    background: #ffffff;
+    border: 1px solid #c1c1c1;
+    border-radius: 8px;
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .blog-search-results {
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .blog-search-section-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #234134;
+    font-family: "bookmania", serif;
+    margin: 0 0 12px 0;
+    padding: 0;
+    text-transform: capitalize;
+  }
+
+  .blog-result-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  .blog-result-item:last-child {
+    border-bottom: none;
+  }
+
+  .blog-result-item-link {
+    display: block;
+    text-decoration: none;
+    transition: opacity 0.1s;
+  }
+
+  .blog-result-item-link:hover {
+    opacity: 0.7;
+  }
+
+  .blog-result-title {
+    color: var(--color-link, #234134);
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.4;
+    display: block;
+  }
+
+  .blog-no-result-term {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: #234134;
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  .blog-no-result-message {
+    text-align: center;
+    color: #969696;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .blog-search-link-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-top: 1px solid #c1c1c1;
+    padding: 8px;
+  }
+
+  .blog-search-link-wrapper.empty {
+    flex-direction: column;
+  }
+
+  .blog-no-result-all-results {
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 8px;
+    color: #234134;
+    text-decoration: none;
+    transition: opacity 0.1s;
+  }
+
+  .blog-no-result-all-results:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 767px) {
+    .blog-search-results-wrapper {
+      width: 100%;
+    }
+
+    .blog-search-results {
+      padding: 12px;
+      max-height: 300px;
+    }
+
+    .blog-search-section-title {
+      font-size: 14px;
+    }
+
+    .blog-result-title {
+      font-size: 13px;
+    }
+
+    .blog-no-result-term {
+      font-size: 14px;
+    }
+
+    .blog-no-result-message {
+      font-size: 13px;
+    }
+
+    .blog-no-result-all-results {
+      font-size: 14px;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Blog Template",
+    "class": "blog-template",
+    "settings": [
+      {"type": "text",
+        "label": "Page Title",
+        "id": "blog_page_title",
+        "default": "Blog"
+      },
+      {
+        "type": "text",
+        "label": "Page Subtitle",
+        "id": "blog_page_subtitle",
+        "default": "Discover our latest articles and insights"
+      },
+      {
+        "type": "image_picker",
+        "label": "Title Background Image",
+        "id": "title_background_image"
+      },
+      {
+        "type": "checkbox",
+        "label": "Enable Sidebar",
+        "id": "enable_sidebar",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "label": "Sidebar Left",
+        "id": "sidebar_left"
+      },
+      {
+        "type": "checkbox",
+        "label": "Fixed Sidebar",
+        "id": "fixed_sidebar"
+      },
+      {
+        "type": "checkbox",
+        "label": "Enable auto limit excerpt",
+        "id": "enable_auto_truncate_excerpt",
+        "info": "The excerpt will be limited in 50 words"
+      },
+      {
+        "type": "range",
+        "id": "truncate_word_limit",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 43,
+        "label": "Manual word limit on blog exceprt",
+        "info": "Only works in the blog post does not have a proper excerpt and the auto limit option is unchecked"
+      }, 
+      {
+        "type": "select",
+        "id": "blog_text_align",
+        "label": "Text Blog Position",
+        "options": [
+          {
+            "value": "justify",
+            "label": "Justify"
+          }, 
+          {
+            "value": "left",
+            "label": "Left"
+          }, 
+          {
+            "value": "center",
+            "label": "Center"
+          }, 
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      }, 
+      {
+        "type": "select",
+        "id": "blog_button_align",
+        "label": "Button Blog Alignment",
+        "options": [
+          {
+            "value": "flex-start",
+            "label": "Left"
+          }, 
+          {
+            "value": "center",
+            "label": "Center"
+          }, 
+          {
+            "value": "flex-end",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "button_background",
+        "label": "Button Background Color",
+        "default": "#555555"
+      },
+      {
+        "type": "color",
+        "id": "button_border_color",
+        "label": "Button Border Color",
+        "default": "#D6664D"
+      },
+      {
+        "type": "header",
+        "content": "Sidebar"
+      }, 
+      {
+        "type": "select",
+        "id": "sidebar_text_align",
+        "label": "Sidebar Text Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          }, 
+          {
+            "value": "center",
+            "label": "Center"
+          }, 
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "recent_posts",
+        "name": "Recent Posts",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "Recent Posts"
+          }
+        ]
+      }, 
+      {
+        "type": "categories",
+        "name": "Categories",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "Categories"
+          }, 
+          {
+            "type": "textarea",
+            "id": "filter_by_tags",
+            "label": "Filter Categories By Tag",
+            "placeholder": "Type the tags",
+            "info": "Separate tags handle with ( ; )."
+          }
+        ]
+      }, 
+      {
+        "type": "newsletter",
+        "name": "Newsletter Widget ",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header",
+            "content": "Newsletter Widget "
+          }, 
+          {
+            "type": "text",
+            "id": "sidebar_title",
+            "label": "Newsletter Widget Title",
+            "placeholder": "Newsletter Widget Title"
+          }, 
+          {
+            "type": "textarea",
+            "id": "sidebar_text",
+            "label": "Newsletter Widget Text",
+            "default": "Ready to find out more about our new, and upcoming products? Sign up below. "
+          }, 
+          {
+            "type": "select",
+            "id": "select_newsletter",
+            "label": "Newsletter Manager",
+            "info": "Klaviyo only will work if enabled, check it on Newsletter",
+            "options": [
+              {
+                "label": "Klaviyo",
+                "value": "klaviyo"
+              }, 
+              {
+                "label": "Default Shopify Form",
+                "value": "newsletter-default"
+              }, 
+              {
+                "label": "Custom Newsletter",
+                "value": "newsletter-custom"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

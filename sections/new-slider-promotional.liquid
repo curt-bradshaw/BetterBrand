@@ -1,0 +1,542 @@
+<!-- start new-new-slider-promotional.liquid (SECTION) -->
+<style>
+  #shopify-section-{{ section.id }} {
+      {% if section.settings.enable_custom_margins_paddings %}
+        margin-top: {{ section.settings.custom-margin-top }}px;
+        margin-bottom: {{ section.settings.custom-margin-bottom }}px;
+        padding-top: {{ section.settings.custom-padding-top }}px;
+        padding-bottom: {{ section.settings.custom-padding-bottom }}px;
+      {% else %}
+          margin: 20px 0;
+      {% endif %}
+    }
+    #new-slider-promotional-{{ section.id }} {
+      background-color: {{ section.settings.background_section }};
+    }
+    #new-slider-promotional-{{ section.id }} .section-slider-title {
+      text-transform: {{ section.settings.headline_text_transform_title_slider }};
+    }
+    .shopify-section.banner+  #shopify-section-{{ section.id }} {
+      position: relative;
+      top: -{{ section.settings.top_margin_slide }}px;
+      {% if section.settings.enable_custom_margins_paddings %}
+        margin-bottom: {{ section.settings.top_margin_slide | times: -1 | plus: section.settings.custom-margin-bottom }}px;
+      {% else %}
+        margin-bottom: {{ section.settings.top_margin_slide | times: -1 | plus: 20 }}px;
+      {% endif %}
+      float: left;
+      width: 100%;
+    }
+    #shopify-section-{{ section.id }}.section-slide-promotional .section-slider .slider__item.featured {
+      border: 2px solid {{ section.settings.background_slide_promotional }};
+    }
+
+    #new-slider-promotional-{{ section.id }} .grid-product-title .grid-product-title-link {
+      text-transform: {{ section.settings.text_transform_title_slider }};
+      color:{{ section.settings.text_color_slider_promotional }};
+      width: 100%;
+    }
+
+    {%- if section.settings.top_margin_slide -%}
+      .shopify-section.banner+  #shopify-section-{{ section.id }} > .wrapper {
+        display: block;
+        margin: 0 auto;
+        background: #fff;
+      }
+    {%- endif -%}
+
+    @media only screen and (max-width: 767px ){
+      .shopify-section.banner + #shopify-section-{{ section.id }}{
+        top: 0;
+        margin-bottom: 0;
+      }
+      .section-slide-promotional  .slick-prev,
+      .section-slide-promotional  .slick-next {
+        top: 38%;
+        height: 30px;
+        width: 30px;
+      }
+    }
+
+    /*RESPONSIVE STYLES*/
+    @media (max-width: 767px) {
+        .section-slide-promotional {
+            margin-top: 0;
+        }
+    }
+</style>
+<style>
+  /*SPLIDE STYLES*/
+  :root {
+    font-size: clamp(20px, calc(1.25rem + ((1vw - 7.68px) * 0.8929)), 26px);
+    min-height: 0vw;
+  }
+
+  .splide__slide {
+    border-radius: 0.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+  }
+
+  .sld-promotional img {
+    display: block;
+    max-height: 100%;
+    transition: opacity 150ms ease-in, filter 150ms ease-in;
+    opacity: 0.5;
+  }
+
+  .splide__slide.is-active img {
+    filter: saturate(1.1) brightness(110%) contrast(1.1);
+    opacity: 1;
+  }
+
+  .my-carousel-progress {
+    background: #4b5659;
+    boackground: rgba(255, 255, 255, 0.25);
+    margin: 0.25rem;
+  }
+
+  .my-carousel-progress-bar {
+    background: #b4e900;
+    height: 4px;
+    transition: width 400ms ease;
+    width: 0;
+  }
+
+  .splide__pagination {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.25rem;
+  }
+
+  .splide__pagination li {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+  }
+
+  .splide__pagination__page {
+    border-radius: 100vw;
+    background: #4b5659;
+    transition: transform 150ms ease-in, width 150ms ease-in;
+  }
+
+  .splide__pagination__page.is-active {
+    width: 24px;
+    border-radius: 100vw;
+    background: #b4e900;
+    transform: scale(1.1);
+    transform-position: center;
+    opacity: 1;
+  }
+
+  .splide__arrow {
+    width: 2rem;
+    height: 2rem;
+    background-color: #4b5659;
+  }
+
+  .splide__arrow svg {
+    width: 1rem;
+    height: 1rem;
+    fill: #b4e900;
+  }
+  .sliderPromotional img {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .section-slide-promotional .slick-prev,
+  .section-slide-promotional .slick-next {
+    position: absolute;
+    z-index: 1;
+    top: 45%;
+    border: none;
+    background-color: #fff;
+    height: 50px;
+    border-radius: 50%;
+    width: 50px;
+    box-shadow: 0 1px 2px #0003;
+  }
+
+  .section-slide-promotional .slick-next {
+    right: -20px;
+  }
+
+  .section-slide-promotional .slick-prev {
+    left: -20px;
+  }
+
+  .grid-product-title {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+  }
+
+  .responsive-image__wrapper:hover + .grid-product-title {
+    display: block;
+  }
+
+  .grid-product-title:hover {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #000;
+    animation: slidein 0.5s;
+  }
+
+  @keyframes slidein {
+    from {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    to {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  .section-slider-title {
+    text-align: center;
+    margin-bottom: 0 20px;
+  }
+
+</style>
+
+<section class="wrapper splide {{ section.settings.custom_class }}" id="new-slider-promotional-{{ section.id }}">
+  {%- if section.settings.section_title != blank -%}
+    <h2 class="section-slider-title">{{ section.settings.section_title | escape }}</h2>
+  {%- endif -%}
+
+  <div
+    id="promotional-{{ section.id }}"
+    class="section-slider section-slider--s4 sliderPromotional sld-promotional splide__track"
+    data-autoplay="{{ section.settings.slider_autoplay }}"
+    data-speed="{{ section.settings.slider_speed }}"
+  >
+    <div class="splide__list">
+      {%- for block in section.blocks -%}
+        <div class="splide__slide featured" {{ block.shopify_attributes }}>
+          <div id="promo-slider-{{ forloop.index }}" class="grid-product-link">
+            {%- assign index = 'img-' | append: block.id -%}
+            <div class="responsive-image__wrapper image-responsive">
+              <a
+                class="grid-product-link"
+                title="{{ block.settings.title | strip_html | escape }}"
+                href="{{ block.settings.link_Image_slide_promotional | default: '#' }}"
+              >
+                {%-
+                  render 'responsive-image' with
+                  image: block.settings.image_slide_promotional,
+                  width: 600,
+                  lazyload: false,
+                  id: index
+                -%}
+              </a>
+            </div>
+
+            <h3 class="grid-product-title">
+              <a
+                class="grid-product-title-link"
+                title="{{ block.settings.title | strip_html | escape }}"
+                href="{{ block.settings.link_Image_slide_promotional | default: '#' }}"
+              >
+                {{- block.settings.title_slide_promotional -}}
+              </a>
+            </h3>
+          </div>
+        </div>
+      {%- else -%}
+        {%- render 'no-blocks' -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="my-carousel-progress">
+    <div class="my-carousel-progress-bar"></div>
+  </div>
+</section>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    Splide.defaults = {
+      type: 'loop',
+      perPage: {{ section.settings.slider_perpage }},
+      focus: 'center',
+      gap: '.5rem',
+      cloneStatus: false,
+      trimSpace: 'true',
+      easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+      preloadPages: '2',
+      keyboard: 'global',
+      updateOnMove: 'true',
+      {% if section.settings.slider_autoplay %}
+      autoplay: true,
+      {% endif %}
+      autoScroll: {
+        speed: {{ section.settings.slider_speed }},
+        pauseOnHover: false,
+      },
+      arrowPath:
+        'M28.4,21.93H6.93c-.55,0-1-.18-1.37-.55s-.55-.83-.55-1.37.18-1,.55-1.37c.37-.37.83-.55,1.37-.55h21.48l-5.49-5.49c-.39-.39-.57-.83-.55-1.35s.2-.96.55-1.35c.39-.39.84-.59,1.37-.6s.99.17,1.37.55l8.81,8.81c.19.19.33.4.41.63s.12.47.12.72-.04.5-.12.72-.22.43-.41.63l-8.81,8.81c-.39.39-.84.57-1.37.55s-.99-.22-1.37-.6c-.35-.39-.54-.83-.55-1.35s.17-.96.55-1.35l5.49-5.49Z',
+    };
+
+    var splide = new Splide('.splide');
+    var bar = splide.root.querySelector('.my-carousel-progress-bar');
+
+    splide.on('ready', function () {
+      console.log('ready');
+    });
+
+
+
+    splide.on('mounted move', function () {
+      var end = splide.Components.Controller.getEnd() + 1;
+      var rate = Math.min((splide.index + 1) / end, 1);
+      bar.style.width = String(100 * rate) + '%';
+    });
+
+    splide.mount(
+      {% if section.settings.slider_autoscroll %} 
+      {
+        AutoScroll = window.splide.Extensions.AutoScroll,
+      }
+    {% endif %}
+    );
+  });
+</script>
+
+{% schema %}
+{
+  "name": "New Promotional Slider",
+  "max_blocks": 12,
+  "class": "section-slide-promotional",
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class",
+      "info": "Custom class to apply css styles for specific sections"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_custom_margins_paddings",
+      "label": "Enable Custom Margins and Paddings",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "custom-margin-top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "custom-margin-bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "custom-padding-top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "custom-padding-bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Promotional Slider"
+    },
+    {
+      "type": "color",
+      "id": "background_section",
+      "label": "Background Section Color",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "background_slide_promotional",
+      "label": "Border Color",
+      "default": "#444"
+    },
+    {
+      "type": "color",
+      "id": "text_color_slider_promotional",
+      "label": "Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "range",
+      "id": "top_margin_slide",
+      "info": "Only works if section above is the banner",
+      "min": 0,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Position On/Off Banner",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "headline_text_transform_title_slider",
+      "label": "Headline Text Transform",
+      "options": [
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "none",
+          "label": "Same as Input"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_transform_title_slider",
+      "label": "Slide Title Transform",
+      "options": [
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "none",
+          "label": "Same as Input"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_autoplay",
+      "label": "Slider Autoplay",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_autoscroll",
+      "label": "Slider Auto Scroll",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "slider_perpage",
+      "label": "Slider Per Page",
+      "min": 1,
+      "max": 4,
+      "step": 0.5,
+      "default": 4,
+      "info": "Transition time in seconds."
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Slider Speed",
+      "min": 0,
+      "max": 3,
+      "step": 0.1,
+      "unit": "s",
+      "default": 0.5,
+      "info": "Transition time in seconds."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide Image",
+      "settings": [
+        {
+          "label": "Slide Title",
+          "id": "title_slide_promotional",
+          "type": "text",
+          "default": "Example"
+        },
+        {
+          "type": "text",
+          "id": "link_Image_slide_promotional",
+          "label": "Slide Link",
+          "default": "#"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_slide_promotional",
+          "label": "Image "
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Promotional Slider",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

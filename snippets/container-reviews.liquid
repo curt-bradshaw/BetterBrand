@@ -1,0 +1,117 @@
+{%- comment -%} Support block and section settings: prefer block.settings, then section.settings, then theme settings {%- endcomment -%}
+{%- if block and block.settings.reviewer_image -%}
+  {%- assign reviewer_img = block.settings.reviewer_image -%}
+{%- elsif section and section.settings.reviewer_image -%}
+  {%- assign reviewer_img = section.settings.reviewer_image -%}
+{%- else -%}
+  {%- assign reviewer_img = settings.reviewer_image -%}
+{%- endif -%}
+
+{%- if block and block.settings.review_text -%}
+  {%- assign review_text = block.settings.review_text -%}
+{%- elsif section and section.settings.review_text -%}
+  {%- assign review_text = section.settings.review_text -%}
+{%- else -%}
+  {%- assign review_text = settings.review_text -%}
+{%- endif -%}
+
+{%- if block and block.settings.review_stars -%}
+  {%- assign review_stars = block.settings.review_stars -%}
+{%- elsif section and section.settings.review_stars -%}
+  {%- assign review_stars = section.settings.review_stars -%}
+{%- else -%}
+  {%- assign review_stars = 5 -%}
+{%- endif -%}
+
+{%- if reviewer_img or review_text -%}
+  <div class="container-reviews">
+    <div class="container-reviews-content">
+      <div class="photo-stars">
+        {%- if reviewer_img -%}
+          <img src="{{ reviewer_img | img_url: 'medium' }}" alt="Review Image" class="review-image" width="" height="">
+        {%- endif -%}
+        <div class="stars-review">
+          {% for i in (1..5) %}
+            {% if i <= review_stars %}
+              <span class="star filled">★</span>
+            {% else %}
+              <span class="star">☆</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="review-text">
+        <p>{{ review_text }}</p>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  .container-reviews {
+    padding: 13px 10px;
+    border: 1px solid #234134;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .container-reviews-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .photo-stars {
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+    gap: 5px;
+  }
+  .review-image {
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    object-fit: cover;
+  }
+  .container-reviews .stars-review {
+    font-size: 16px;
+    color: #ffcc00;
+    display: flex;
+    max-width: 65px;
+    flex-wrap: nowrap;
+  }
+  .container-reviews .star.filled {
+    color: #ffcc00;
+  }
+  .container-reviews .star {
+    color: #ccc;
+  }
+  .review-text {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 100%;
+    color: #234134;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .review-text p {
+    line-height: 120%;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .container-reviews {
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .review-text p {
+      font-size: 14px;
+    }
+  }
+</style>

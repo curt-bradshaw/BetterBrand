@@ -1,0 +1,605 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+{% if product.variants.size > 1 %}
+  <div class="plan-wrapper" id="product-plan-selector">
+    <h3 class="plan-title">Choose Your Plan</h3>
+    <!-- VARIANTS -->
+    <div class="plan-list">
+      {% for v in product.variants %}
+        {% if v.available %}
+          <label
+            class="plan-card {% if v.id == current_variant.id %}active{% endif %}"
+            data-variant-id="{{ v.id }}"
+            data-price="{{ v.price }}"
+          >
+            <input type="radio" hidden>
+
+            <div class="plan-left">
+              {% if v.image %}
+                <img src="{{ v.image | image_url: width: 120 }}" alt="{{ v.title }}">
+              {% elsif product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ v.title }}">
+              {% else %}
+                <div class="image-placeholder"></div>
+              {% endif %}
+            </div>
+
+            <div class="plan-center">
+              <strong class="plan-name">
+                {{ v.title | split: '(' | first }}
+              </strong>
+            </div>
+
+            <div class="plan-right">
+              <div class="plan-badge {% unless forloop.index > 1 and v.compare_at_price > v.price %}hidden{% endunless %}">
+                {% if forloop.index > 1 and v.compare_at_price > v.price %}
+                  {% assign discount = v.compare_at_price
+                    | minus: v.price
+                    | times: 100
+                    | divided_by: v.compare_at_price
+                  %}
+                  <span>SAVE {{ discount }}%</span>
+                {% endif %}
+              </div>
+              <div class="plan-price">
+                ${{ v.price | divided_by: 100 }}
+                <span>each</span>
+              </div>
+            </div>
+          </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- SELECT REAL SHOPIFY -->
+  </div>
+
+  <!-- SUBSCRIPTIONS -->
+  {% if product.selling_plan_groups.size > 0 %}
+    <div class="subscription-wrapper" id="subscription-options">
+      {% for v in product.variants %}
+        {% if v.selling_plan_allocations.size > 0 %}
+          <div
+            class="subscription-group"
+            data-variant-id="{{ v.id }}"
+            {% unless v.id == current_variant.id %}
+              hidden
+            {% endunless %}
+          >
+            {% assign first_plan = true %}
+            {% for allocation in v.selling_plan_allocations %}
+              {% assign plan = allocation.selling_plan %}
+              {% assign plan_group = product.selling_plan_groups
+                | where: 'id', allocation.selling_plan_group_id
+                | first
+              %}
+
+              {% comment %} Only show selling plans WITHOUT discount {% endcomment %}
+              {% unless allocation.compare_at_price > allocation.price %}
+                <label
+                  class="subscription-card"
+                  data-price="{{ allocation.price }}"
+                >
+                  <input type="radio" hidden value="{{ plan.id }}">
+                  {% if first_plan %}
+                    <span class="subscription-best">Best Value</span>
+                    {% assign first_plan = false %}
+                  {% endif %}
+                  <div class="content">
+                    <p class="subscrition-name">
+                      <span class="subscription-title">
+                        {{ plan_group.name }}
+                      </span>
+                      <br>
+                      <span class="subscription-frequency">
+                        {{ plan.options[0].value }}
+                      </span>
+                    </p>
+                    <div class="plan-right">
+                      <div class="plan-price">
+                        ${{ allocation.price | divided_by: 100 }}
+                        <span>each</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="subscription-note">
+                    <span><strong>FREE</strong> Shipping</span>
+                    <span>Change, Pause or Cancel Anytime</span>
+                  </div>
+                </label>
+              
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <input type="hidden" name="selling_plan" id="selected-selling-plan">
+{% endif %}
+
+<select
+  id="all-product-variants"
+  name="id"
+  class="product-variant all-variant hide"
+  data-productid="{{ product.id }}"
+>
+  {% for v in product.variants %}
+    {% if v.available %}
+      <option
+        value="{{ v.id }}"
+        {% if v.id == current_variant.id %}
+          selected
+        {% endif %}
+        data-available="{{ v.available }}"
+        data-options="{{ v.options | join: ',' | escape }}"
+        data-sku="{{ v.sku }}"
+        data-price="{{ v.price }}"
+        data-compare-at-price="{{ v.compare_at_price }}"
+        data-variant-inventory="{{ v.inventory_management }}"
+        data-inventory-policy="{{ v.inventory_policy }}"
+        data-inventory="{% if v.inventory_policy == 'continue' or v.inventory_management == blank %}-1{% else %}{{ v.inventory_quantity }}{% endif %}"
+        data-image="{{ v.image.src | split: '?' | first }}"
+        data-image-position="{{ v.featured_media.position | default: 0 }}"
+      >
+        {{ v.title }}
+      </option>
+    {% endif %}
+  {% endfor %}
+</select>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const variantCards = document.querySelectorAll('.plan-card');
+    const variantSelect = document.querySelector('select[name="id"]');
+    const subscriptionGroups = document.querySelectorAll('.subscription-group');
+    const sellingPlanInput = document.querySelector('input[name="selling_plan"]');
+    const productForm = variantSelect?.closest('form');
+
+    if (!variantSelect || !productForm) return;
+
+    /* ===============================
+       HELPER FUNCTIONS
+    =============================== */
+    function formatMoney(cents) {
+      const amount = (parseInt(cents) / 100).toFixed(2);
+      // Simple USD format - adjust if needed for other currencies
+      return `$${amount}`;
+    }
+
+    function formatMoneyWithoutCurrency(cents) {
+      return (parseInt(cents) / 100).toFixed(2);
+    }
+
+    function updatePriceDisplay(priceInCents) {
+      const formattedPrice = formatMoney(priceInCents);
+      const priceWithoutCurrency = formatMoneyWithoutCurrency(priceInCents);
+      console.log('[Subscription] Updating price to:', formattedPrice, 'cents:', priceInCents);
+
+      // Update .btn-money in ATC button
+      const btnMoney = document.querySelector('.btn-add-tocart .btn-money');
+      if (btnMoney) {
+        btnMoney.textContent = formattedPrice;
+        console.log('[Subscription] Updated .btn-money');
+      } else {
+        console.log('[Subscription] .btn-money not found');
+      }
+
+      // Update .current-price (standard layout)
+      const currentPrice = document.querySelector('.current-price.price');
+      if (currentPrice) {
+        currentPrice.textContent = formattedPrice;
+        console.log('[Subscription] Updated .current-price');
+      } else {
+        console.log('[Subscription] .current-price not found');
+      }
+
+      // Update .new-product-price-value (new layout - without currency symbol)
+      const newPriceValue = document.querySelector('.new-product-price-value.jq-new-price');
+      if (newPriceValue) {
+        newPriceValue.textContent = priceWithoutCurrency;
+        console.log('[Subscription] Updated .new-product-price-value');
+      } else {
+        console.log('[Subscription] .new-product-price-value not found');
+      }
+
+      // Update data-product-price attribute for consistency
+      const priceContainer = document.querySelector('#product-price');
+      if (priceContainer) {
+        priceContainer.dataset.productPrice = priceInCents;
+      }
+
+      // Also update recharger-price class elements
+      const rechargerPrices = document.querySelectorAll('.recharger-price');
+      rechargerPrices.forEach((el) => {
+        if (el.classList.contains('new-product-price-value')) {
+          el.textContent = priceWithoutCurrency;
+        } else {
+          el.textContent = formattedPrice;
+        }
+      });
+    }
+
+    /* ===============================
+       VARIANT CLICK
+    =============================== */
+    variantCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const variantId = card.dataset.variantId;
+        const variantPrice = card.dataset.price;
+
+        // Update real variant select
+        variantSelect.value = variantId;
+        variantSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+        // Update UI
+        variantCards.forEach((c) => c.classList.remove('active'));
+        card.classList.add('active');
+
+        // Show subscriptions for selected variant
+        subscriptionGroups.forEach((group) => {
+          group.hidden = group.dataset.variantId !== variantId;
+        });
+
+        // Remove selling plan and active subscription
+        if (sellingPlanInput) {
+          sellingPlanInput.value = '';
+          sellingPlanInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        document.querySelectorAll('.subscription-card').forEach((c) => c.classList.remove('active'));
+
+        // Update price to selected variant price
+        if (variantPrice) {
+          updatePriceDisplay(variantPrice);
+        }
+
+        // Force theme to recalculate everything
+        productForm.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+
+    /* ===============================
+       SUBSCRIPTION CLICK
+    =============================== */
+    document.querySelectorAll('.subscription-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const input = card.querySelector('input');
+        const subscriptionPrice = card.dataset.price;
+
+        console.log('[Subscription] Card clicked, price:', subscriptionPrice);
+
+        // Update selling plan input
+        if (sellingPlanInput && input) {
+          sellingPlanInput.value = input.value;
+          sellingPlanInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        // Update UI - remove active from all, add to clicked
+        document.querySelectorAll('.subscription-card').forEach((c) => c.classList.remove('active'));
+        card.classList.add('active');
+
+        // Update price in ATC and current-price
+        if (subscriptionPrice) {
+          updatePriceDisplay(subscriptionPrice);
+        }
+
+        // Force theme to recalculate price / ATC
+        productForm.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+  });
+</script>
+
+<style>
+    .subscription-wrapper {
+      margin-bottom: 60px;
+    }
+
+    .plan-wrapper {
+      width: 100%;
+    }
+
+    .plan-wrapper *,
+    .subscription-wrapper * {
+      font-family: var(--bookmaniaFont);
+    }
+
+    .plan-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0px;
+      font-family: var(--bookmaniaFont);
+      color: #234134;
+      margin-top: 25px;
+    }
+    .plan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 23px;
+    }
+
+    .plan-badge.hidden {
+    visibility: hidden;
+    height: 24px;
+  }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .plan-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      border: 1px solid #234134;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      height: 92px;
+      position: relative;
+    }
+    .plan-card:hover {
+      border: 1px solid #234134;
+    }
+    .plan-card.active {
+      box-shadow: 0px 0px 4.9px 3px #23413475 inset;
+    }
+    .plan-left {
+      width: 75px;
+      height: 75px;
+    }
+    .plan-left img {
+      width: 100%;
+      height: 100%;
+    }
+    .plan-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan-name {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0px;
+      color: #234134;
+    }
+    .plan-subtitle {
+      font-size: 12px;
+      color: #777;
+    }
+    .plan-right {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 23px;
+    }
+    .plan-price {
+      font-size: 20px;
+      font-weight: 700;
+      height: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.2;
+      color: #234134;
+    }
+    .plan-price span {
+      font-size: 16px;
+      font-weight: 400;
+      text-align: end;
+    }
+    .plan-badge {
+      background: #234134;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 7px 8px 2px;
+      border-radius: 20px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      min-width: 84px;
+    }
+
+    /* VARIANT CARDS */
+
+    /* SUBSCRIPTIONS */
+    .subscription-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .subscription-group[hidden] {
+      display: none !important;
+    }
+
+    .subscription-card {
+      border: 1px solid #234134;
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .subscription-card.active {
+      box-shadow: 0px 0px 4.9px 3px #23413475 inset;
+    }
+
+    .subscription-top {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .subscription-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 25px;
+    }
+
+    .subscription-best {
+      font-family: var(--copyBodyFont);
+      background: #f2cb49;
+      color: #234134;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 35px;
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 1px solid #234134;
+      white-space: nowrap;
+      z-index: 1;
+      line-height: 1.2;
+    }
+
+    .subscription-off {
+      background: #ffc107;
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      position: absolute;
+      top: -1px;
+      right: -2px;
+      border-bottom-left-radius: 11px;
+      border-top-right-radius: 11px;
+      height: 24px;
+    }
+
+    .subscrition-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 0px;
+      line-height: 1.2;
+      color: #234134;
+    }
+
+    .subscription-frequency {
+      color: #234134;
+    }
+
+    .subscription-note {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 0px;
+      color: #234134;
+    }
+
+    .subscription-note span {
+      line-height: 1.2;
+    }
+
+    @media screen and (max-width: 1019px) {
+      .plan-wrapper,
+      .subscription-wrapper {
+        max-width: 100%;
+      }
+
+      .plan-name {
+        font-size: 14px;
+      }
+    }
+
+
+    @media screen and (max-width: 767px) {
+      .subscription-wrapper {
+        margin-bottom: 35px;
+      }
+      .plan-badge {
+        font-size: 12px;
+        padding: 6px 8px;
+        height: fit-content;
+      }
+
+      .plan-badge span {
+        position: relative;
+        top: 2px;
+      }
+      .plan-card{
+        height: 65px;
+      }
+
+      .plan-left{
+        width: 45px;
+        height: 45px;
+      }
+
+      .plan-title {
+        font-size: 18px;
+        margin-top: 20px;
+      }
+
+      .plan-price {
+        font-size: 14px;
+        height: auto;
+        position: relative;
+        top: 1px;
+      }
+
+      .plan-price span {
+        font-size: 12px;
+      }
+      .subscription-title,
+      .subscription-frequency {
+        font-size: 14px;
+      }
+      .plan-name {
+        position: relative;
+        top: 1px;
+      }
+
+      .subscription-card {
+        padding: 20px 10px;
+      }
+
+      .subscrition-name {
+        line-height: 1;
+      }
+
+      .subscription-note {
+        font-size: 14px;
+        gap: 2px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .content {
+        flex-wrap: nowrap;
+        gap: 15px;
+      }
+
+      .plan-right {
+        gap: 10px;
+      }
+
+      .subscription-wrapper .plan-right {
+        align-items: start;
+      }
+
+      .subscription-best {
+        font-size: 12px;
+        padding: 3px 8px;
+      }
+    }
+</style>

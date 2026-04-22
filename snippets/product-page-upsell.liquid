@@ -1,0 +1,638 @@
+<!-- start new-product-page-upsell.liquid (SNIPPET) -->
+{% assign curr_collection = block.settings.upsell_collection %}
+{% if block.settings.upsell_collection.products.size > 0 %}
+ {% assign upsell_collection = block.settings.upsell_collection %}
+{% else %}
+ {% assign upsell_collection = collections['best-mullein-extract-for-lungs'] %}
+{% endif %}
+<div class="new-product-page-upsell-carousel">
+ <button
+   class="upsell-carousel-arrow upsell-carousel-prev"
+   aria-label="Previous"
+   type="button"
+ >
+   {% render 'upsell-arrow-icon' %}
+ </button>
+ <div class="new-product-page-upsell-track" id="upsell-container">
+   {% if upsell_collection.products.size > 0 %}
+     {% for custom_product in upsell_collection.products %}
+       {% if forloop.index > 6 %}{% break %}{% endif %}
+
+       <div class="new-product-page-upsell">
+         <div class="new-product-page-upsell-image-link">
+           {% render 'responsive-image',
+             image: custom_product.featured_image,
+             width: 393,
+             height: 393,
+             lazyload: true,
+             class: 'new-product-page-upsell-image'
+           %}
+         </div>
+
+         <div class="new-product-page-upsell-content">
+           <div class="new-product-page-upsell-title">
+             {{ custom_product.title }}
+           </div>
+
+           <div class="new-product-page-upsell-price">
+             {{ custom_product.price | money }}
+           </div>
+
+           <div class="new-product-page-upsell-form">
+                            <button
+                              {% unless custom_product.available %}
+                                disabled
+                              {% endunless %}
+                              type="button"
+                              class="new-product-page-upsell-atc-button"
+                              data-upsell-atc
+                              data-product-id="{{ custom_product.first_available_variant.id }}"
+                            >
+                              <span class="btn-text">Add to Cart</span>
+                              <span class="btn-text-success">
+                                Added!
+                                <svg class="btn-checkmark-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                  <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                              </span>
+                              <span class="btn-loader"></span>
+                            </button>
+                          </div>
+         </div>
+       </div>
+     {% endfor %}
+   {% endif %}
+ </div>
+ <button
+   class="upsell-carousel-arrow upsell-carousel-next"
+   aria-label="Next"
+   type="button"
+ >
+   {% render 'upsell-arrow-icon' %}
+ </button>
+</div>
+
+<style>
+       .new-product-page-upsell-carousel {
+         width: 100%;
+         padding-top: 20px;
+         position: relative;
+       }
+
+       .upsell-carousel-prev svg {
+         transform: scaleX(-1);
+       }
+
+       .new-product-page-upsell-track {
+         display: flex;
+         flex-direction: row;
+         gap: 24px;
+         overflow-x: auto;
+         scroll-snap-type: x mandatory;
+         scroll-behavior: smooth;
+         -webkit-overflow-scrolling: touch;
+         padding-bottom: 10px;
+       }
+
+       .new-product-page-upsell-track::-webkit-scrollbar {
+         display: none;
+       }
+
+       .new-product-page-upsell {
+         flex: 0 0 auto;
+         width: 100%;
+         max-width: 393px;
+         display: flex;
+         flex-direction: row;
+         position: relative;
+         scroll-snap-align: start;
+         padding: 20px;
+         gap: 15px;
+         border-radius: 8px;
+         border: 1px solid #234134;
+       }
+
+       .new-product-page-upsell-image-link {
+         width: 155px;
+         height: auto;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+       }
+
+       .new-product-page-upsell-image-link img {
+         width: 155px;
+         height: auto;
+         display: block;
+         border-radius: 8px;
+       }
+
+       .new-product-page-upsell-content {
+         max-width: 183px;
+         width: 100%;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         gap: 10px;
+         padding-top: 10px;
+       }
+
+       .product-page .rte a.new-product-page-upsell-title {
+         font-size: 20px;
+         font-weight: 750;
+         line-height: 120%;
+         color: #234134;
+         font-family: var(--bookmaniaFont);
+         text-decoration: none;
+       }
+
+       .product-page .rte a.new-product-page-upsell-title:hover {
+         text-decoration: none;
+       }
+
+       .new-product-page-upsell-atc-button {
+         position: relative;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding: 10px 8px;
+         gap: 7px;
+         width: 100%;
+         border: 1px solid #234134;
+         background: #fff;
+         cursor: pointer;
+         overflow: hidden;
+         border-radius: 42px;
+       }
+
+       .new-product-page-upsell-atc-button:disabled {
+         opacity: 0.5;
+         cursor: not-allowed;
+       }
+
+       .new-product-page-upsell-atc-button span {
+         position: relative;
+         z-index: 1;
+         color: #234134;
+         transition: color 0.5s ease, opacity 0.3s ease;
+         font-size: 20px;
+         font-weight: 400;
+         line-height: 24px;
+       }
+
+       /* Loading state */
+       .new-product-page-upsell-atc-button.is-loading {
+         pointer-events: none;
+       }
+
+       .new-product-page-upsell-atc-button.is-loading span {
+         opacity: 0;
+       }
+
+       .new-product-page-upsell-atc-button .btn-loader {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         width: 20px;
+         height: 20px;
+         border: 2px solid #234134;
+         border-top-color: transparent;
+         border-radius: 50%;
+         opacity: 0;
+         transition: opacity 0.2s ease;
+         animation: upsell-spin 0.8s linear infinite;
+         z-index: 2;
+       }
+
+       .new-product-page-upsell-atc-button.is-loading .btn-loader {
+         opacity: 1;
+       }
+
+       @keyframes upsell-spin {
+         to {
+           transform: translate(-50%, -50%) rotate(360deg);
+         }
+       }
+
+       /* Success state */
+       .new-product-page-upsell-atc-button.is-success {
+         background: #234134;
+         border-color: #234134;
+         pointer-events: none;
+       }
+
+       .new-product-page-upsell-atc-button.is-success .btn-text {
+         display: none;
+       }
+
+       .new-product-page-upsell-atc-button.is-success:before {
+         display: none;
+       }
+
+       .new-product-page-upsell-atc-button.is-success .btn-loader {
+         opacity: 0;
+       }
+
+       .new-product-page-upsell-atc-button .btn-text-success {
+         position: relative;
+         z-index: 1;
+         color: #fff;
+         font-size: 20px;
+         font-weight: 400;
+         line-height: 24px;
+         display: none;
+         align-items: center;
+         gap: 6px;
+       }
+
+       .new-product-page-upsell-atc-button.is-success .btn-text-success {
+         display: inline-flex;
+       }
+
+       .new-product-page-upsell-atc-button .btn-checkmark-inline {
+         width: 18px;
+         height: 18px;
+         flex-shrink: 0;
+       }
+
+       .new-product-page-upsell-atc-button:before {
+         content: '';
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         width: 1px;
+         height: 1px;
+         background-color: #F6EDDA;
+         border-radius: 100px;
+         z-index: 0;
+         transition: all 0.5s ease;
+         cursor: pointer;
+       }
+
+       .new-product-page-upsell-atc-button:hover:before {
+         width: 300%;
+         height: 300%;
+       }
+
+       body.ios-device .new-product-page-upsell-atc-button:before {
+         content: none;
+         display: none;
+       }
+
+       body.ios-device .new-product-page-upsell-atc-button:hover:before {
+         transform: unset;
+         background-color: transparent;
+         border-radius: 0;
+       }
+
+       p.new-product-page-upsell-compare-price {
+         position: absolute;
+         top: 12px;
+         left: 12px;
+         background-color: {{ product.metafields.custom.uvp_section_background_color | default:'#000000' }};
+         text-transform: uppercase;
+         font-weight: 600;
+         font-size: 14px;
+         line-height: 14px;
+         text-align: center;
+         padding: 7px 12px;
+         border-radius: 8px;
+         color: #ffffff;
+         margin: 0;
+         z-index: 2;
+       }
+
+       .upsell-carousel-arrow {
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         width: 42px;
+         height: 42px;
+         border-radius: 50%;
+         border: 1px solid #969696;
+         background: #F5F5F53D;
+         color: #000;
+         font-size: 26px;
+         line-height: 1;
+         cursor: pointer;
+         z-index: 5;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         transition: all 0.2s ease;
+         backdrop-filter: blur(2px);
+       }
+
+
+
+     .upsell-carousel-prev {
+       left: 0px;
+     }
+
+     .upsell-carousel-next {
+       right: 12px;
+     }
+
+     .new-product-page-upsell {
+     transition: opacity 0.3s ease;
+   }
+
+   .new-product-page-upsell.is-inactive {
+     opacity: 0.5;
+   }
+
+   .new-product-page-upsell.is-active {
+     opacity: 1;
+   }
+
+   .upsell-carousel-arrow.is-disabled {
+     opacity: 0.5;
+     pointer-events: none;
+   }
+
+   @media (max-width: 1019px) {
+     .new-product-page-upsell-track {
+       gap: 10px;
+     }
+   }
+
+       @media (max-width: 767px) {
+
+       .new-product-page-upsell-track {
+         padding-bottom: 0;
+       }
+
+         .product-page .rte a.new-product-page-upsell-title {
+           font-size: 14px;
+         }
+         
+         .new-product-page-upsell-content {
+           padding-top: 0;
+           justify-content: space-around;
+         }
+
+         .new-product-page-upsell-title {
+           font-size: 14px;
+         }
+
+         .new-product-page-upsell-atc-button span,
+         .new-product-page-upsell-atc-button .btn-text-success {
+           font-size: 14px;
+         }
+
+         .upsell-carousel-arrow {
+           width: 44px;
+           height: 44px;
+         }
+
+         .upsell-carousel-prev {
+           left: -12px;
+         }
+
+         .upsell-carousel-next {
+           right: 12px;
+         }
+
+         .new-product-page-upsell-atc-button {
+           padding: 4px 8px;
+         }
+
+         .new-product-page-upsell-image-link{
+           min-width: 113px;
+           height: auto;
+         }
+
+         .new-product-page-upsell-image-link img{
+           width: 100%;
+           height: auto;
+         }
+       }
+
+       @media (max-width: 480px) {
+
+         p.new-product-page-upsell-compare-price {
+           top: 8px;
+           left: 8px;
+         }
+       }
+</style>
+
+<script>
+ document.addEventListener('DOMContentLoaded', function () {
+   const track = document.querySelector('.new-product-page-upsell-track');
+   const prevBtn = document.querySelector('.upsell-carousel-prev');
+   const nextBtn = document.querySelector('.upsell-carousel-next');
+
+   if (!track || !prevBtn || !nextBtn) return;
+
+   function getCards() {
+     return Array.from(track.querySelectorAll('.new-product-page-upsell'));
+   }
+
+   function getScrollAmount() {
+     const card = track.querySelector('.new-product-page-upsell');
+     if (!card) return 400;
+     const gap = parseInt(getComputedStyle(track).gap) || 24;
+     return card.offsetWidth + gap;
+   }
+
+   function updateActiveCard() {
+     const cards = getCards();
+     if (!cards.length) return;
+
+     const trackRect = track.getBoundingClientRect();
+     const trackCenter = trackRect.left + trackRect.width / 2;
+
+     let closestCard = null;
+     let closestDistance = Infinity;
+
+     cards.forEach((card) => {
+       const rect = card.getBoundingClientRect();
+       const cardCenter = rect.left + rect.width / 2;
+       const distance = Math.abs(trackCenter - cardCenter);
+
+       if (distance < closestDistance) {
+         closestDistance = distance;
+         closestCard = card;
+       }
+     });
+
+     cards.forEach((card) => {
+       card.classList.remove('is-active');
+       card.classList.add('is-inactive');
+     });
+
+     if (closestCard) {
+       closestCard.classList.add('is-active');
+       closestCard.classList.remove('is-inactive');
+     }
+
+     updateArrowsState(cards);
+   }
+
+   function updateArrowsState(cards) {
+     const maxScrollLeft = track.scrollWidth - track.clientWidth;
+
+     prevBtn.classList.toggle('is-disabled', track.scrollLeft <= 5);
+
+     nextBtn.classList.toggle('is-disabled', track.scrollLeft >= maxScrollLeft - 5);
+   }
+
+   prevBtn.addEventListener('click', () => {
+     track.scrollBy({
+       left: -getScrollAmount(),
+       behavior: 'smooth',
+     });
+   });
+
+   nextBtn.addEventListener('click', () => {
+     track.scrollBy({
+       left: getScrollAmount(),
+       behavior: 'smooth',
+     });
+   });
+
+   track.addEventListener('scroll', () => {
+     window.requestAnimationFrame(updateActiveCard);
+   });
+
+   window.addEventListener('resize', updateActiveCard);
+
+   updateActiveCard();
+ });
+
+ document.addEventListener('DOMContentLoaded', function () {
+   const upsellContainer = document.getElementById('upsell-container');
+   if (!upsellContainer) return;
+   async function customAddItem(id, quantity = 1) {
+     try {
+       const formData = {
+         items: [
+           {
+             id: id,
+             quantity: quantity,
+           },
+         ],
+       };
+
+       const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           Accept: 'application/json',
+         },
+         body: JSON.stringify(formData),
+       });
+
+       if (!response.ok) {
+         throw new Error('Error adding item to cart');
+       }
+
+       return await response.json();
+     } catch (error) {
+       console.error('[UPSSELL] Add item error:', error);
+     }
+   }
+   upsellContainer.addEventListener('click', async function (e) {
+     const btn = e.target.closest('[data-upsell-atc]');
+     if (!btn || btn.classList.contains('is-loading') || btn.classList.contains('is-success')) return;
+     
+     const productId = btn.dataset.productId;
+     
+     // Estado de loading
+     btn.classList.add('is-loading');
+     
+     try {
+       await customAddItem(Number(productId), 1);
+       
+       // Estado de sucesso
+       btn.classList.remove('is-loading');
+       btn.classList.add('is-success');
+       
+       // Abre o cart drawer
+       if (window.AMP_API && window.AMP_API.OPEN_CART) {
+         await window.AMP_API.OPEN_CART();
+       } else {
+         document.body.classList.add('cart-drawer--opened');
+         if (window.CartAPI && window.CartAPI.buildCart) {
+           await window.CartAPI.buildCart();
+         }
+       }
+       
+       // Volta ao estado normal após 2 segundos
+       setTimeout(function() {
+         btn.classList.remove('is-success');
+       }, 2000);
+       
+     } catch (error) {
+       console.error('[UPSSELL] ATC error:', error);
+       // Remove loading em caso de erro
+       btn.classList.remove('is-loading');
+     }
+   });
+   
+   
+   // async function getRecommendProduct() {
+   //   try {
+   //     const rq = await fetch(
+   //       `${window.Shopify.routes.root}recommendations/products.json?product_id={{ product.id }}&limit=10`
+   //     );
+   //     const { products } = await rq.json();
+   //     if (products.length === 0) return;
+   //     function discountPercent(price, compare) {
+   //       return Math.round(((compare - price) * 100) / compare);
+   //     }
+   //     function buildUpsellHTML(products) {
+   //       const wrapper = document.getElementById('upsell-container');
+   //       let html = '';
+   //       products.forEach((product) => {
+   //         if (product.tags && product.tags.includes('addon')) {
+   //           return;
+   //         }
+   //         const imgLink = `
+   //           <div class="new-product-page-upsell-image-link">
+   //             <img src="${product.featured_image}" width="144" height="144" class="new-product-page-upsell-image" />
+   //           </div>
+   //         `;
+   //         const content = `
+   //           <div class="new-product-page-upsell-content">
+   //             <div class="new-product-page-upsell-title">
+   //               ${product.title}
+   //             </div>
+   //             <div class="new-product-page-upsell-price">
+   //               ${Shopify.formatMoney(product.price)}
+   //             </div>
+   //             <div class="new-product-page-upsell-form">
+   //               <button type="button"
+   //                 class="new-product-page-upsell-atc-button"
+   //                 data-upsell-atc
+   //                 data-product-id="${product.variants[0].id}">
+   //                 <span>ADD TO CART</span>
+   //               </button>
+   //             </div>
+   //           </div>
+   //         `;
+   //         let discountHTML = '';
+   //         // if (product.compare_at_price > product.price) {
+   //         //   const percent = discountPercent(product.price, product.compare_at_price);
+   //         //   discountHTML = `<p class="new-product-page-upsell-compare-price">(${percent}% OFF)</p>`;
+   //         // }
+   //         html += `<div class="new-product-page-upsell">${imgLink}${content}</div>`;
+   //       });
+   //       wrapper.innerHTML = html;
+   //     }
+   //     buildUpsellHTML(products);
+   //   } catch (error) {
+   //     console.error('[UPSSELL]', error);
+   //   }
+   // }
+   // // Load upsell on first scroll
+   // async function onScrollOnce() {
+   //   await getRecommendProduct();
+   //   document.removeEventListener('scroll', onScrollOnce);
+   // }
+   // document.addEventListener('scroll', onScrollOnce, { passive: true });
+ });
+</script>

@@ -1,0 +1,68 @@
+<div class="ntg-health-detail">
+    <div class="ntg-container">
+        <div class="ntg-heading-holder">
+            <h2 class="ntg-h2">{{ section.settings.heading }}</h2>
+        </div>
+        <ul class="ntg-health-list">
+          {% for block in section.blocks %}
+            <li>
+                <div class="ntg-number">{{ block.settings.col_left }}</div>
+                <div class="ntg-text">{{ block.settings.col_right }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Health Stat",
+  "class": "custom-health-stat",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lung Health should not be ignored"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "col_left",
+          "label": "Left Column text"
+        },
+        {
+          "type": "text",
+          "id": "col_right",
+          "label": "Right Column text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Health Stat",
+      "category": "Custom Sections",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,92 @@
+<!-- start custom-trust-badges.liquid (SNIPPET) -->
+<div class="trust-badges-wrapper">
+    {% if block.settings.trust_badges_title != '' or block.settings.trust_badges_title != blank %}
+      <h3 class="trust-badges-wrapper__title">{{ block.settings.trust_badges_title }}</h3>
+    {% endif %}
+  
+    <div class="trust-badges">
+      {% if block.settings.enable_trust_badge01 %}
+        <div class="trust-badge">
+          {% if block.settings.product_form_trust_badge01 != "" or block.settings.product_form_trust_badge01 != blank %}
+            {{ block.settings.product_form_trust_badge01 }}
+          {% elsif block.settings.product_form_trust_badge_svg01 != "" or block.settings.product_form_trust_badge_svg01 != blank %}
+              {% assign trust_badge = 'icon-' | append: block.settings.product_form_trust_badge_svg01 | append: '.svg' | asset_url %}
+              <img
+                width="{{ block.settings.trust_badge01_width }}"
+                height="{{ block.settings.trust_badge01_height }}"
+                class="cart-drawer__badge"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9Ta0UqDkYQcchQnSyIijhqFYpQIdQKrTqYXPohNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APE0clJ0UVK/F9SaBHrwXE/3t173L0DhFqJ6XbHGKAbjpVKxKVMdkUKvyKETojoh6gw25yV5STajq97BPh6F+NZ7c/9OXq0nM2AgEQ8w0zLIV4nntp0TM77xCIrKhrxOfGoRRckfuS66vMb54LHAs8UrXRqjlgklgotrLYwK1o68SRxVNMNyhcyPmuctzjrpQpr3JO/MJIzlpe4TnMICSxgETIkqKhgAyU4iNFqkGIjRfvxNv5Bzy+TSyXXBhg55lGGDsXzg//B727t/MS4nxSJA6EX1/0YBsK7QL3qut/Hrls/AYLPwJXR9JdrwPQn6dWmFj0CereBi+umpu4BlzvAwJOpWIonBWkK+TzwfkbflAX6boHuVb+3xj5OH4A0dZW8AQ4OgZECZa+1eXdXa2//nmn09wMjG3KHDOS4EQAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+YFBhQWEhVMTaAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAADElEQVQI12O4f/8+AAU+Ap5GJPuHAAAAAElFTkSuQmCC"
+                data-src="{{ trust_badge }}"
+                alt="{{ block.settings.product_form_trust_badge01_text | default: 'trust badge' | escape }}"
+                loading="lazy"
+                data-class="LazyLoad"
+              >
+          {% endif %}
+          <p>{{ block.settings.product_form_trust_badge01_text }}</p>
+        </div>
+      {% endif %}
+  
+      {% if block.settings.enable_trust_badge02 %}
+        <div class="trust-badge">
+          {% if block.settings.product_form_trust_badge02 != "" or block.settings.product_form_trust_badge02 != blank %}
+            {{ block.settings.product_form_trust_badge02 }}
+          {% elsif block.settings.product_form_trust_badge_svg02 != "" or block.settings.product_form_trust_badge_svg02 != blank %}
+              {% assign trust_badge = 'icon-' | append: block.settings.product_form_trust_badge_svg02 | append: '.svg' | asset_url %}
+              <img
+                width="{{ block.settings.trust_badge02_width }}"
+                height="{{ block.settings.trust_badge02_height }}"
+                class="cart-drawer__badge"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9Ta0UqDkYQcchQnSyIijhqFYpQIdQKrTqYXPohNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APE0clJ0UVK/F9SaBHrwXE/3t173L0DhFqJ6XbHGKAbjpVKxKVMdkUKvyKETojoh6gw25yV5STajq97BPh6F+NZ7c/9OXq0nM2AgEQ8w0zLIV4nntp0TM77xCIrKhrxOfGoRRckfuS66vMb54LHAs8UrXRqjlgklgotrLYwK1o68SRxVNMNyhcyPmuctzjrpQpr3JO/MJIzlpe4TnMICSxgETIkqKhgAyU4iNFqkGIjRfvxNv5Bzy+TSyXXBhg55lGGDsXzg//B727t/MS4nxSJA6EX1/0YBsK7QL3qut/Hrls/AYLPwJXR9JdrwPQn6dWmFj0CereBi+umpu4BlzvAwJOpWIonBWkK+TzwfkbflAX6boHuVb+3xj5OH4A0dZW8AQ4OgZECZa+1eXdXa2//nmn09wMjG3KHDOS4EQAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+YFBhQWEhVMTaAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAADElEQVQI12O4f/8+AAU+Ap5GJPuHAAAAAElFTkSuQmCC"
+                data-src="{{ trust_badge }}"
+                alt="{{ block.settings.product_form_trust_badge02_text | default: 'trust badge' | escape }}"
+                loading="lazy"
+                data-class="LazyLoad"
+              >
+          {% endif %}
+          <p>{{ block.settings.product_form_trust_badge02_text }}</p>
+        </div>
+      {% endif %}
+  
+      {% if block.settings.enable_trust_badge03 %}
+        <div class="trust-badge">
+          {% if block.settings.product_form_trust_badge03 != "" or block.settings.product_form_trust_badge03 != blank %}
+            {{ block.settings.product_form_trust_badge03 }}
+          {% elsif block.settings.product_form_trust_badge_svg03 != "" or block.settings.product_form_trust_badge_svg03 != blank %}
+              {% assign trust_badge = 'icon-' | append: block.settings.product_form_trust_badge_svg03 | append: '.svg' | asset_url %}
+              <img
+                width="{{ block.settings.trust_badge03_width }}"
+                height="{{ block.settings.trust_badge03_height }}"
+                class="cart-drawer__badge"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9Ta0UqDkYQcchQnSyIijhqFYpQIdQKrTqYXPohNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APE0clJ0UVK/F9SaBHrwXE/3t173L0DhFqJ6XbHGKAbjpVKxKVMdkUKvyKETojoh6gw25yV5STajq97BPh6F+NZ7c/9OXq0nM2AgEQ8w0zLIV4nntp0TM77xCIrKhrxOfGoRRckfuS66vMb54LHAs8UrXRqjlgklgotrLYwK1o68SRxVNMNyhcyPmuctzjrpQpr3JO/MJIzlpe4TnMICSxgETIkqKhgAyU4iNFqkGIjRfvxNv5Bzy+TSyXXBhg55lGGDsXzg//B727t/MS4nxSJA6EX1/0YBsK7QL3qut/Hrls/AYLPwJXR9JdrwPQn6dWmFj0CereBi+umpu4BlzvAwJOpWIonBWkK+TzwfkbflAX6boHuVb+3xj5OH4A0dZW8AQ4OgZECZa+1eXdXa2//nmn09wMjG3KHDOS4EQAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+YFBhQWEhVMTaAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAADElEQVQI12O4f/8+AAU+Ap5GJPuHAAAAAElFTkSuQmCC"
+                data-src="{{ trust_badge }}"
+                alt="{{ block.settings.product_form_trust_badge03_text | default: 'trust badge' | escape }}"
+                loading="lazy"
+                data-class="LazyLoad"
+              >
+          {% endif %}
+          <p>{{ block.settings.product_form_trust_badge03_text }}</p>
+        </div>
+      {% endif %}
+  
+      {% if block.settings.enable_trust_badge04 %}
+        <div class="trust-badge">
+          {% if block.settings.product_form_trust_badge04 != "" or block.settings.product_form_trust_badge04 != blank %}
+            {{ block.settings.product_form_trust_badge04 }}
+          {% elsif block.settings.product_form_trust_badge_svg04 != "" or block.settings.product_form_trust_badge_svg04 != blank %}
+              {% assign trust_badge = 'icon-' | append: block.settings.product_form_trust_badge_svg04 | append: '.svg' | asset_url %}
+              <img
+                width="{{ block.settings.trust_badge04_width }}"
+                height="{{ block.settings.trust_badge04_height }}"
+                class="cart-drawer__badge"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9Ta0UqDkYQcchQnSyIijhqFYpQIdQKrTqYXPohNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APE0clJ0UVK/F9SaBHrwXE/3t173L0DhFqJ6XbHGKAbjpVKxKVMdkUKvyKETojoh6gw25yV5STajq97BPh6F+NZ7c/9OXq0nM2AgEQ8w0zLIV4nntp0TM77xCIrKhrxOfGoRRckfuS66vMb54LHAs8UrXRqjlgklgotrLYwK1o68SRxVNMNyhcyPmuctzjrpQpr3JO/MJIzlpe4TnMICSxgETIkqKhgAyU4iNFqkGIjRfvxNv5Bzy+TSyXXBhg55lGGDsXzg//B727t/MS4nxSJA6EX1/0YBsK7QL3qut/Hrls/AYLPwJXR9JdrwPQn6dWmFj0CereBi+umpu4BlzvAwJOpWIonBWkK+TzwfkbflAX6boHuVb+3xj5OH4A0dZW8AQ4OgZECZa+1eXdXa2//nmn09wMjG3KHDOS4EQAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+YFBhQWEhVMTaAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAADElEQVQI12O4f/8+AAU+Ap5GJPuHAAAAAElFTkSuQmCC"
+                data-src="{{ trust_badge }}"
+                alt="{{ block.settings.product_form_trust_badge04_text | default: 'trust badge' | escape }}"
+                loading="lazy"
+                data-class="LazyLoad"
+              >
+          {% endif %}
+          <p>{{ block.settings.product_form_trust_badge04_text }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>

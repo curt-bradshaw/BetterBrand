@@ -1,0 +1,113 @@
+<!-- start pdp-breadcrumb.liquid (SNIPPET) -->
+{%- unless template == 'index' or template == 'cart' -%}
+  <div class="breadcrumbs wrapper" aria-label="breadcrumbs">
+    {% unless template == 'product' and collection.url %}
+      <a id="breadcrumbs__homepage" class="breadcrumbs__item breadcrumbs__link" href="/" title="Home">Home</a>
+      <span class="breadcrumbs__separator" aria-hidden="true"> {% render 'icon-arrow-left' %} </span>
+    {% endunless %}
+
+    {%- if template contains 'collection' and collection.handle -%}
+
+      {%- if current_tags -%}
+        <a id="breadcrumbs__collection" class="breadcrumbs__item breadcrumbs__link" href="{{ collection.url | default: '#' }}" title="{{ collection.title | strip_html | escape }}">{{ collection.title }}</a>
+        <span class="breadcrumbs__separator" aria-hidden="true"> {% render 'icon-arrow-left' %} </span>
+        <span class="breadcrumbs__item">{{ current_tags | join: " + " | replace: "-" , " " }}</span>
+      {%- else -%}
+        <span class="breadcrumbs__item">{{ collection.title }}</span>
+      {%- endif -%}
+    {%- elsif template == 'blog' -%}
+      {%- if current_tags -%}
+        <a id="breadcrumbs__blog" class="breadcrumbs__item breadcrumbs__link" href="{{ blog.url | default: '#' }}" title="{{ blog.title | strip_html | escape }}">{{ blog.title }}</a>
+        <span class="breadcrumbs__separator" aria-hidden="true"> {% render 'icon-arrow-left' %} </span>
+        <span class="breadcrumbs__item">{{ current_tags | join: " + " }}</span>
+      {%- else -%}
+        <span class="breadcrumbs__item">{{ blog.title }}</span>
+      {%- endif -%}
+    {%- elsif template == 'article' -%}
+      <a id="breadcrumbs__article" class="breadcrumbs__item breadcrumbs__link" href="{{ blog.url | default: '#' }}" title="{{ blog.title | strip_html | escape }}">{{ blog.title }}</a>
+      <span class="breadcrumbs__separator" aria-hidden="true"> {% render 'icon-arrow-left' %} </span>
+      <span class="breadcrumbs__item">{{ article.title }}</span>
+    {%- elsif template == 'product' -%}
+      {%- if collection.url -%} 
+        <a id="breadcrumbs__product-url" class="breadcrumbs__item breadcrumbs__link" href="{{ collection.url | default: '#' }}" title="{{ collection.title | strip_html | escape }}">{{ collection.title }}</a>
+        <span class="breadcrumbs__separator" aria-hidden="true"> {% render 'icon-arrow-left' %} </span>
+      {%- endif -%}
+        <span class="breadcrumbs__item">{{ product.title | default: page_title }}</span>
+      </span>
+    {%- else -%}
+      <span class="breadcrumbs__item">{{ page_title }}</span>
+    {%- endif -%}
+  </div>
+{%- endunless -%}
+
+<style scoped>
+  .breadcrumbs {
+    display: block;
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+
+  .breadcrumbs span {
+    color: var(--breadcrumbtextcolor, #234134);
+  }
+
+  .breadcrumbs__item {
+    letter-spacing: 0.6px;
+    font-family: "DM Sans", "Cardo";
+    font-size: 12px;
+    color: var(--breadcrumbtextcolor, #234134);
+  }
+
+  .product-page .breadcrumbs__item {
+    font-size: 12px;
+  }
+
+  .product-page .breadcrumbs .breadcrumbs__link {
+    color: var(--breadcrumbLinkColor, #234134);
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .breadcrumbs__separator {
+    display: inline-block;
+    height: fit-content;
+    margin: 0;
+    font-size: 12px;
+  }
+
+  .breadcrumbs__separator svg {
+    width: 4px;
+    height: 100%;
+  }
+
+  .breadcrumbs__separator svg path {
+    stroke: #234134;
+  }
+
+  @media (max-width: 1019px) {
+    .product-page .breadcrumbs .breadcrumbs__link{
+      font-size: 12px;
+    }
+    
+    .breadcrumbs__separator svg {
+      width: 4px;
+      padding-top: 0;
+    }
+
+    .breadcrumbs__item {
+      letter-spacing: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .breadcrumbs__separator svg {
+      width: 4px;
+    }
+    .breadcrumbs {
+      margin-bottom: 5px;
+    }
+  }
+
+</style>
+
+<!-- end pdp-breadcrumb.liquid (SNIPPET) -->

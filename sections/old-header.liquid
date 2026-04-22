@@ -1,0 +1,944 @@
+<!-- START old-header.liquid -->
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- if settings.predictive_search_enabled -%}
+  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+{%- if section.settings.menu_type_desktop == 'mega' -%}
+  <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript>{{ 'component-mega-menu.css' | asset_url | stylesheet_tag }}</noscript>
+{%- endif -%}
+
+{%- if settings.cart_type == "drawer" -%}
+  {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
+  {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+  {{ 'component-totals.css' | asset_url | stylesheet_tag }}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+<noscript>{{ 'component-list-menu.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-search.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-menu-drawer.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-cart-notification.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-cart-items.css' | asset_url | stylesheet_tag }}</noscript>
+
+<style>
+  header-drawer {
+    justify-self: start;
+    margin-left: -1.2rem;
+  }
+
+  {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
+    .scrolled-past-header .header__heading-logo-wrapper {
+      width: 75%;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.menu_type_desktop != "drawer" -%}
+    @media screen and (min-width: 990px) {
+      header-drawer {
+        display: none;
+      }
+    }
+  {%- endif -%}
+
+  .menu-drawer-container {
+    display: flex;
+  }
+
+  .list-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .list-menu--inline {
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  summary.list-menu__item {
+    padding-right: 2.7rem;
+  }
+
+  .list-menu__item {
+    display: flex;
+    align-items: center;
+    line-height: calc(1 + 0.3 / var(--font-body-scale));
+  }
+
+  .list-menu__item--link {
+    text-decoration: none;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    line-height: calc(1 + 0.8 / var(--font-body-scale));
+  }
+
+  @media screen and (min-width: 750px) {
+    .list-menu__item--link {
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+    }
+  }
+</style>
+
+{%- style -%}
+  .header {
+    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
+  }
+
+  .section-header {
+    position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-header {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .header {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<script src="{{ 'details-disclosure.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+{%- if settings.cart_type == "drawer" -%}
+  <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden">
+  <symbol id="icon-search" viewbox="0 0 18 19" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="icon-reset" class="icon icon-close"  fill="none" viewBox="0 0 18 18" stroke="currentColor">
+    <circle r="8.5" cy="9" cx="9" stroke-opacity="0.2"/>
+    <path d="M6.82972 6.82915L1.17193 1.17097" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 5)"/>
+    <path d="M1.22896 6.88502L6.77288 1.11523" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 5)"/>
+  </symbol>
+
+  <symbol id="icon-close" class="icon icon-close" fill="none" viewBox="0 0 18 17">
+    <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+  </symbol>
+</svg>
+
+{%- liquid
+  for block in section.blocks
+    if block.type == '@app'
+      assign has_app_block = true
+    endif
+  endfor
+-%}
+
+<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+  {%- liquid
+    assign social_links = false
+    assign localization_forms = false
+
+    if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank
+      assign social_links = true
+    endif
+
+    if localization.available_countries.size > 1 and section.settings.enable_country_selector or section.settings.enable_language_selector and localization.available_languages.size > 1
+      assign localization_forms = true
+    endif
+  -%}
+  <header class="header ntg-container header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} {% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+    {%- liquid
+      if section.settings.menu != blank
+        render 'header-drawer'
+      endif
+    -%}
+
+    <a href="#" role="button" aria-label="Perform action" tabindex="0" class="ntg-nav-opener"><span></span></a>
+
+    {%- if section.settings.logo_position != 'middle-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__heading ntg-logo-hold">
+      {%- endif -%}
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset ntg-logo-hold">
+            {%- if settings.logo != blank -%}
+              <div class="header__heading-logo-wrapper ">
+                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+
+                <img class="header__heading-logo" src="{{ settings.logo | img_url: '900x' }}" alt="{{ logo_alt }} preload="true">
+              </div>
+            {%- else -%}
+              <span class="h2">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- liquid
+      if section.settings.menu != blank
+        if section.settings.menu_type_desktop == 'dropdown'
+          render 'header-dropdown-menu'
+        elsif section.settings.menu_type_desktop != 'drawer'
+          render 'header-mega-menu'
+        endif
+      endif
+    %}
+
+    {%- if section.settings.logo_position == 'middle-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__heading">
+      {%- endif -%}
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+            {%- if settings.logo != blank -%}
+              <div class="header__heading-logo-wrapper">
+                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
+                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+
+                <img class="header__heading-logo" src="{{ settings.logo | img_url: '900x' }}" alt="{{ logo_alt }} preload="true">
+              </div>
+            {%- else -%}
+              <span class="h2">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
+      <div class="desktop-localization-wrapper">
+        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+          <noscript class="small-hide medium-hide">
+            {%- form 'localization', id: 'HeaderCountryMobileFormNoScript', class: 'localization-form' -%}
+              <div class="localization-form__select">
+                <h2 class="visually-hidden" id="HeaderCountryMobileLabelNoScript">{{ 'localization.country_label' | t }}</h2>
+                <select class="localization-selector link" name="country_code" aria-labelledby="HeaderCountryMobileLabelNoScript">
+                  {%- for country in localization.available_countries -%}
+                    <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
+                      {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+                    </option>
+                  {%- endfor -%}
+                </select>
+                {% render 'icon-caret' %}
+              </div>
+              <button class="button button--tertiary">{{ 'localization.update_country' | t }}</button>
+            {%- endform -%}
+          </noscript>
+
+          <localization-form class="small-hide medium-hide no-js-hidden">
+            {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {% endif %}
+
+        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+          <noscript class="small-hide medium-hide">
+            {%- form 'localization', id: 'HeaderLanguageMobileFormNoScript', class: 'localization-form' -%}
+              <div class="localization-form__select">
+                <h2 class="visually-hidden" id="HeaderLanguageMobileLabelNoScript">{{ 'localization.language_label' | t }}</h2>
+                <select class="localization-selector link" name="locale_code" aria-labelledby="HeaderLanguageMobileLabelNoScript">
+                  {%- for language in localization.available_languages -%}
+                    <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}" {%- if language.iso_code == localization.language.iso_code %} selected{% endif %}>
+                      {{ language.endonym_name | capitalize }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+                {% render 'icon-caret' %}
+              </div>
+              <button class="button button--tertiary">{{ 'localization.update_language' | t }}</button>
+            {%- endform -%}
+          </noscript>
+
+          <localization-form class="small-hide medium-hide no-js-hidden">
+            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+      </div>
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="
+        {% comment %}{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}{% endcomment %}
+        https://www.trybetterbrand.com/a/account/login
+        " class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
+          {% comment %}{% render 'icon-account' %}{% endcomment %}
+          <svg class="ntg-account-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.9815 18.7248C16.6121 16.9175 14.4424 15.75 12 15.75C9.55761 15.75 7.38789 16.9175 6.01846 18.7248M17.9815 18.7248C19.8335 17.0763 21 14.6744 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 14.6744 4.1665 17.0763 6.01846 18.7248M17.9815 18.7248C16.3915 20.1401 14.2962 21 12 21C9.70383 21 7.60851 20.1401 6.01846 18.7248M15 9.75C15 11.4069 13.6569 12.75 12 12.75C10.3431 12.75 9 11.4069 9 9.75C9 8.09315 10.3431 6.75 12 6.75C13.6569 6.75 15 8.09315 15 9.75Z" stroke="#234134" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="visually-hidden">
+            {%- liquid
+              if customer
+                echo 'customer.account_fallback' | t
+              else
+                echo 'customer.log_in' | t
+              endif
+            -%}
+          </span>
+        </a>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+        {% comment %}
+        {%- liquid
+          if cart == empty
+            render 'icon-cart-empty'
+          else
+            render 'icon-cart'
+          endif
+        -%}
+        {% endcomment %}
+
+        <svg class="ntg-cart-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_169_3000)">
+            <path d="M7.73254 15.5158H7.73364C7.73455 15.5158 7.73547 15.5156 7.73638 15.5156H20.4844C20.7982 15.5156 21.0741 15.3074 21.1604 15.0057L23.9729 5.16192C24.0335 4.94971 23.991 4.72156 23.8583 4.54541C23.7253 4.36926 23.5175 4.26562 23.2969 4.26562H6.11096L5.60833 2.00372C5.53674 1.68201 5.25146 1.45312 4.92187 1.45312H0.703125C0.314758 1.45312 0 1.76788 0 2.15625C0 2.54462 0.314758 2.85937 0.703125 2.85937H4.35791C4.4469 3.26019 6.76318 13.6836 6.89648 14.2833C6.14923 14.6081 5.625 15.3532 5.625 16.2187C5.625 17.3818 6.57129 18.3281 7.73437 18.3281H20.4844C20.8727 18.3281 21.1875 18.0134 21.1875 17.625C21.1875 17.2366 20.8727 16.9219 20.4844 16.9219H7.73437C7.34674 16.9219 7.03125 16.6064 7.03125 16.2187C7.03125 15.8317 7.34564 15.5167 7.73254 15.5158ZM22.3647 5.67187L19.9539 14.1094H8.29834L6.42334 5.67187H22.3647Z" fill="#234134"/>
+            <path d="M7.03125 20.4375C7.03125 21.6006 7.97754 22.5469 9.14062 22.5469C10.3037 22.5469 11.25 21.6006 11.25 20.4375C11.25 19.2744 10.3037 18.3281 9.14062 18.3281C7.97754 18.3281 7.03125 19.2744 7.03125 20.4375ZM9.14062 19.7344C9.52826 19.7344 9.84375 20.0499 9.84375 20.4375C9.84375 20.8251 9.52826 21.1406 9.14062 21.1406C8.75299 21.1406 8.4375 20.8251 8.4375 20.4375C8.4375 20.0499 8.75299 19.7344 9.14062 19.7344Z" fill="#234134"/>
+            <path d="M16.9688 20.4375C16.9688 21.6006 17.915 22.5469 19.0781 22.5469C20.2412 22.5469 21.1875 21.6006 21.1875 20.4375C21.1875 19.2744 20.2412 18.3281 19.0781 18.3281C17.915 18.3281 16.9688 19.2744 16.9688 20.4375ZM19.0781 19.7344C19.4658 19.7344 19.7812 20.0499 19.7812 20.4375C19.7812 20.8251 19.4658 21.1406 19.0781 21.1406C18.6905 21.1406 18.375 20.8251 18.375 20.4375C18.375 20.0499 18.6905 19.7344 19.0781 19.7344Z" fill="#234134"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_169_3000">
+              <rect width="24" height="24" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+        
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble">
+            {%- if cart.item_count < 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+    </div>
+  </header>
+</{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
+
+{% javascript %}
+  class StickyHeader extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.header = document.querySelector('.section-header');
+      this.headerIsAlwaysSticky = this.getAttribute('data-sticky-type') === 'always' || this.getAttribute('data-sticky-type') === 'reduce-logo-size';
+      this.headerBounds = {};
+
+      this.setHeaderHeight();
+
+      window.matchMedia('(max-width: 990px)').addEventListener('change', this.setHeaderHeight.bind(this));
+
+      if (this.headerIsAlwaysSticky) {
+        this.header.classList.add('shopify-section-header-sticky');
+      };
+
+      this.currentScrollTop = 0;
+      this.preventReveal = false;
+      this.predictiveSearch = this.querySelector('predictive-search');
+
+      this.onScrollHandler = this.onScroll.bind(this);
+      this.hideHeaderOnScrollUp = () => this.preventReveal = true;
+
+      this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.addEventListener('scroll', this.onScrollHandler, false);
+
+      this.createObserver();
+    }
+
+    setHeaderHeight() {
+      document.documentElement.style.setProperty('--header-height', `${this.header.offsetHeight}px`);
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.removeEventListener('scroll', this.onScrollHandler);
+    }
+
+    createObserver() {
+      let observer = new IntersectionObserver((entries, observer) => {
+        this.headerBounds = entries[0].intersectionRect;
+        observer.disconnect();
+      });
+
+      observer.observe(this.header);
+    }
+
+    onScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
+
+      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        this.header.classList.add('scrolled-past-header');
+        if (this.preventHide) return;
+        requestAnimationFrame(this.hide.bind(this));
+      } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        this.header.classList.add('scrolled-past-header');
+        if (!this.preventReveal) {
+          requestAnimationFrame(this.reveal.bind(this));
+        } else {
+          window.clearTimeout(this.isScrolling);
+
+          this.isScrolling = setTimeout(() => {
+            this.preventReveal = false;
+          }, 66);
+
+          requestAnimationFrame(this.hide.bind(this));
+        }
+      } else if (scrollTop <= this.headerBounds.top) {
+        this.header.classList.remove('scrolled-past-header');
+        requestAnimationFrame(this.reset.bind(this));
+      }
+
+      this.currentScrollTop = scrollTop;
+    }
+
+    hide() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
+      this.closeMenuDisclosure();
+      this.closeSearchModal();
+    }
+
+    reveal() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.add('shopify-section-header-sticky', 'animate');
+      this.header.classList.remove('shopify-section-header-hidden');
+    }
+
+    reset() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.remove('shopify-section-header-hidden', 'shopify-section-header-sticky', 'animate');
+    }
+
+    closeMenuDisclosure() {
+      this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
+      this.disclosures.forEach(disclosure => disclosure.close());
+    }
+
+    closeSearchModal() {
+      this.searchModal = this.searchModal || this.header.querySelector('details-modal');
+      this.searchModal.close(false);
+    }
+  }
+
+  customElements.define('sticky-header', StickyHeader);
+
+  // Update cart counter in real-time by observing the drawer element
+  (function() {
+    // Function to update the header counter based on the drawer counter value
+    function updateCartCountBubble(itemCount) {
+      const cartBubbles = document.querySelectorAll('.cart-count-bubble');
+      
+      cartBubbles.forEach((bubble) => {
+        const parentLink = bubble.closest('a');
+        if (!parentLink) return;
+
+        // Update or create the counter
+        if (itemCount > 0) {
+          // Ensure the bubble is visible
+          bubble.style.display = '';
+
+          // Update the visible number
+          let visibleSpan = bubble.querySelector('span[aria-hidden="true"]');
+          if (itemCount < 100) {
+            if (!visibleSpan) {
+              visibleSpan = document.createElement('span');
+              visibleSpan.setAttribute('aria-hidden', 'true');
+              bubble.insertBefore(visibleSpan, bubble.firstChild);
+            }
+            visibleSpan.textContent = itemCount;
+          } else {
+            // If >= 100, remove the visible span
+            if (visibleSpan) {
+              visibleSpan.remove();
+            }
+          }
+
+          // Update the accessible text
+          let hiddenSpan = bubble.querySelector('span.visually-hidden');
+          if (!hiddenSpan) {
+            hiddenSpan = document.createElement('span');
+            hiddenSpan.className = 'visually-hidden';
+            bubble.appendChild(hiddenSpan);
+          }
+          const countText = itemCount === 1 ? 'item' : 'items';
+          hiddenSpan.textContent = `${itemCount} ${countText}`;
+        } else {
+          // Hide the counter if the cart is empty
+          bubble.style.display = 'none';
+        }
+      });
+
+      // If no bubble exists, create one when necessary
+      if (itemCount > 0 && cartBubbles.length === 0) {
+        const cartLinks = document.querySelectorAll('a[href*="cart"], .ntg-cart-link');
+        cartLinks.forEach((link) => {
+          if (!link.querySelector('.cart-count-bubble')) {
+            const newBubble = document.createElement('div');
+            newBubble.className = 'cart-count-bubble';
+            
+            if (itemCount < 100) {
+              const visibleSpan = document.createElement('span');
+              visibleSpan.setAttribute('aria-hidden', 'true');
+              visibleSpan.textContent = itemCount;
+              newBubble.appendChild(visibleSpan);
+            }
+            
+            const hiddenSpan = document.createElement('span');
+            hiddenSpan.className = 'visually-hidden';
+            hiddenSpan.textContent = `${itemCount} ${itemCount === 1 ? 'item' : 'items'}`;
+            newBubble.appendChild(hiddenSpan);
+            
+            link.appendChild(newBubble);
+          }
+        });
+      }
+    }
+
+    // Function to get the counter value from the drawer
+    function getCartCountFromDrawer() {
+      const cartCountElement = document.querySelector('.amp-cart__header-cart-count');
+      if (!cartCountElement) return null;
+      
+      const text = cartCountElement.textContent?.trim() || '';
+      const count = parseInt(text, 10);
+      return isNaN(count) ? null : count;
+    }
+
+    // Observe changes in the amp-cart__header-cart-count element
+    function observeCartCount() {
+      const cartCountElement = document.querySelector('.amp-cart__header-cart-count');
+      
+      if (!cartCountElement) {
+        // Try again after a delay if the element doesn't exist yet
+        setTimeout(observeCartCount, 500);
+        return null;
+      }
+
+      // Update immediately with the current value
+      const currentCount = getCartCountFromDrawer();
+      if (currentCount !== null) {
+        updateCartCountBubble(currentCount);
+      }
+
+      // Create observer to detect changes
+      const observer = new MutationObserver(() => {
+        const newCount = getCartCountFromDrawer();
+        if (newCount !== null) {
+          updateCartCountBubble(newCount);
+        }
+      });
+
+      // Observe changes in text and attributes
+      observer.observe(cartCountElement, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: false
+      });
+
+      return observer;
+    }
+
+    // Initialize when DOM is ready
+    function initCartCounterObserver() {
+      observeCartCount();
+      
+      // Try again after a delay to ensure the element has loaded
+      setTimeout(() => {
+        observeCartCount();
+      }, 1000);
+      
+      // Try once more after 2 seconds (in case the APP loads later)
+      setTimeout(() => {
+        observeCartCount();
+      }, 2000);
+    }
+
+    // Execute when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCartCounterObserver);
+    } else {
+      initCartCounterObserver();
+    }
+  })();
+{% endjavascript %}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if settings.logo %}
+      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {% endif %}
+    "sameAs": [
+      {{ settings.social_twitter_link | json }},
+      {{ settings.social_facebook_link | json }},
+      {{ settings.social_pinterest_link | json }},
+      {{ settings.social_instagram_link | json }},
+      {{ settings.social_tiktok_link | json }},
+      {{ settings.social_tumblr_link | json }},
+      {{ settings.social_snapchat_link | json }},
+      {{ settings.social_youtube_link | json }},
+      {{ settings.social_vimeo_link | json }}
+    ],
+    "url": {{ request.origin | append: page.url | json }}
+  }
+</script>
+
+{%- if request.page_type == 'index' -%}
+  {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ request.origin | append: page.url | json }}
+    }
+  </script>
+{%- endif -%}
+
+
+
+
+<div class="ntg-nav-drop">
+    <div class="ntg-drop-top">
+        <div class="ntg-drop-header">
+            <div class="ntg-col">
+                <a href="#" role="button" aria-label="close nav" tabindex="0" class="ntg-nav-close"></a>
+            </div>
+            <div class="ntg-col">
+                <div class="ntg-logo">
+                    <a href="/">
+                        <!-- <img src="images/logo.svg" alt="image description" width="144" height="18"> -->
+                        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+                        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+                      
+                        {% comment %}
+                        {{ settings.logo | image_url: width: 600 | image_tag:
+                          class: 'header__heading-logo motion-reduce',
+                          widths: widths,
+                          height: logo_height,
+                          width: settings.logo_width,
+                          alt: logo_alt,
+                          sizes: sizes,
+                          preload: true
+                        }}
+                        {% endcomment %}
+                        <img class="header__heading-logo" src="{{ settings.logo | img_url: '900x' }}" alt="{{ logo_alt }} preload="true">
+                    </a>
+                </div>
+            </div>
+            <div class="ntg-col">
+                <div class="ntg-cart">
+                    <a href="{{ routes.cart_url }}" class="ntg-cart-link">
+                      <svg class="ntg-cart-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_169_3000)">
+                          <path d="M7.73254 15.5158H7.73364C7.73455 15.5158 7.73547 15.5156 7.73638 15.5156H20.4844C20.7982 15.5156 21.0741 15.3074 21.1604 15.0057L23.9729 5.16192C24.0335 4.94971 23.991 4.72156 23.8583 4.54541C23.7253 4.36926 23.5175 4.26562 23.2969 4.26562H6.11096L5.60833 2.00372C5.53674 1.68201 5.25146 1.45312 4.92187 1.45312H0.703125C0.314758 1.45312 0 1.76788 0 2.15625C0 2.54462 0.314758 2.85937 0.703125 2.85937H4.35791C4.4469 3.26019 6.76318 13.6836 6.89648 14.2833C6.14923 14.6081 5.625 15.3532 5.625 16.2187C5.625 17.3818 6.57129 18.3281 7.73437 18.3281H20.4844C20.8727 18.3281 21.1875 18.0134 21.1875 17.625C21.1875 17.2366 20.8727 16.9219 20.4844 16.9219H7.73437C7.34674 16.9219 7.03125 16.6064 7.03125 16.2187C7.03125 15.8317 7.34564 15.5167 7.73254 15.5158ZM22.3647 5.67187L19.9539 14.1094H8.29834L6.42334 5.67187H22.3647Z" fill="#234134"/>
+                          <path d="M7.03125 20.4375C7.03125 21.6006 7.97754 22.5469 9.14062 22.5469C10.3037 22.5469 11.25 21.6006 11.25 20.4375C11.25 19.2744 10.3037 18.3281 9.14062 18.3281C7.97754 18.3281 7.03125 19.2744 7.03125 20.4375ZM9.14062 19.7344C9.52826 19.7344 9.84375 20.0499 9.84375 20.4375C9.84375 20.8251 9.52826 21.1406 9.14062 21.1406C8.75299 21.1406 8.4375 20.8251 8.4375 20.4375C8.4375 20.0499 8.75299 19.7344 9.14062 19.7344Z" fill="#234134"/>
+                          <path d="M16.9688 20.4375C16.9688 21.6006 17.915 22.5469 19.0781 22.5469C20.2412 22.5469 21.1875 21.6006 21.1875 20.4375C21.1875 19.2744 20.2412 18.3281 19.0781 18.3281C17.915 18.3281 16.9688 19.2744 16.9688 20.4375ZM19.0781 19.7344C19.4658 19.7344 19.7812 20.0499 19.7812 20.4375C19.7812 20.8251 19.4658 21.1406 19.0781 21.1406C18.6905 21.1406 18.375 20.8251 18.375 20.4375C18.375 20.0499 18.6905 19.7344 19.0781 19.7344Z" fill="#234134"/>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_169_3000">
+                            <rect width="24" height="24" fill="white"/>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      
+                      <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+                      {%- if cart != empty -%}
+                        <div class="cart-count-bubble">
+                          {%- if cart.item_count < 100 -%}
+                            <span aria-hidden="true">{{ cart.item_count }}</span>
+                          {%- endif -%}
+                          <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+                        </div>
+                      {%- endif -%}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ul class="ntg-menu">
+          {%- for link in section.settings.menu.links -%}
+            {%- if link.links != blank -%}
+              <li class="ntg-drill-down">
+                  <a role="button" aria-label="Perform action" tabindex="0" href="#">{{ link.title }}</a>
+                  <ul class="ntg-drill-down-menu">
+                      <li class="ntg-drill-down-back">
+                          <button>{{ link.title }}</button>
+                      </li>
+                      {%- for childlink in link.links -%}
+                        {%- if childlink.links != blank -%}
+                          <li class="ntg-drill-down">
+                              <a href="#">
+                                {% if childlink.object.featured_image != blank %}
+                                  <span class="ntg-img"><img src="{{ childlink.object.featured_image | img_url: '350x350' | crop: 'center' }}" alt="" width="65" height="65"></span>
+                                {% endif %}
+                                  <span class="ntg-text">{{ childlink.title }}</span>
+                              </a>
+                              <ul class="ntg-drill-down-menu">
+                                  <li class="ntg-drill-down-back">
+                                      <a href="#">{{ childlink.title }}</a>
+                                  </li>
+                                  {%- for grandchildlink in childlink.links -%}
+                                  <li><a href="{{ grandchildlink.url }}"><span class="ntg-text">{{ grandchildlink.title }}</span></a></li>
+                                  {% endfor %}
+                              </ul>
+                          </li>
+                        {% else %}
+                          <li>
+                            <a href="{{ childlink.url }}">
+                                {% if childlink.object.featured_image != blank %}
+                                  <span class="ntg-img"><img src="{{ childlink.object.featured_image | img_url: '350x350' | crop: 'center' }}" alt="" width="65" height="65"></span>
+                                {% endif %}
+                                <span class="ntg-text">{{ childlink.title }}</span>
+                            </a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+                  </ul>
+              </li>
+            {% else %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+    </div>
+    <div class="ntg-drop-bottom">
+        <img src="{{ 'header-logos.svg' | asset_url }}" alt="logos" width="253" height="50">
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "section-header",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "logo_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.header.settings.logo_position.options__2.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.header.settings.logo_position.options__3.label"
+        },
+        {
+          "value": "middle-left",
+          "label": "t:sections.header.settings.logo_position.options__1.label"
+        },
+        {
+          "value": "middle-center",
+          "label": "t:sections.header.settings.logo_position.options__4.label"
+        }
+      ],
+      "default": "middle-left",
+      "label": "t:sections.header.settings.logo_position.label",
+      "info": "t:sections.header.settings.logo_help.content"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
+        },
+        {
+          "value": "mega",
+          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
+        }
+      ],
+      "default": "dropdown",
+      "label": "t:sections.header.settings.menu_type_desktop.label",
+      "info": "t:sections.header.settings.menu_type_desktop.info"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
+        },
+        {
+          "value": "always",
+          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "t:sections.header.settings.sticky_header_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__1.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "background-1"
+    },
+      {
+      "type": "color_scheme",
+      "id": "menu_color_scheme",
+      "label": "t:sections.header.settings.menu_color_scheme.label",
+      "default": "background-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__3.content",
+      "info": "t:sections.header.settings.header__4.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "t:sections.header.settings.enable_country_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__5.content",
+      "info": "t:sections.header.settings.header__6.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": false,
+      "label": "t:sections.header.settings.enable_language_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.mobile_layout.content"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.header.settings.mobile_logo_position.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.header.settings.margin_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

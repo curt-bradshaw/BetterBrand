@@ -1,0 +1,259 @@
+<!-- START best-sellers-section.liquid -->
+
+<div class="best-sellers-section">
+    <div class="bs-container">
+    <div class="bs-header">
+      <h2 class="best-sellers-title">{{ section.settings.heading }}</h2>
+      <a href="{{ section.settings.see_all_link }}" class="bs-link">
+        {{ section.settings.see_all_text }}
+        {% render 'see-all-vector' %}
+      </a>
+    </div>
+  
+    <div class="bs-products">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.product_url }}" class="bs-card">
+            {% if block.settings.badge != blank %}
+                <span class="bs-badge">{{ block.settings.badge }}</span>
+            {% endif %}
+          <div class="bs-image-wrapper">
+            <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.title }}" />
+          </div>
+  
+          <div class="bs-rating">
+            {% assign card_product = block.settings.product %}
+            <span class="bs-rating-text">
+              <div class="loox-rating" 
+                data-id="{{ card_product.id }}" 
+                data-rating="{{ card_product.metafields.loox.avg_rating }}" 
+                data-raters="{{ card_product.metafields.loox.num_reviews }}"
+                data-content-size="12"
+                data-pattern="[rating]&nbsp;([count])"
+              ></div>
+            </span>
+          </div>
+  
+          <p class="bs-product-title">{{ block.settings.title }}</p>
+        </a>
+      {% endfor %}
+    </div>
+    </div>
+  </div>
+  
+  {% style %}
+  .best-sellers-section {
+    background-color: #C2DEB466;
+    padding: 80px 0;
+  }
+
+  .best-sellers-section .loox-rating-label {
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  .best-sellers-section .loox-rating .loox-rating-content {
+    flex-wrap: wrap;
+  }
+
+  .bs-container {
+    max-width: 1220px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  
+  .bs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+  }
+  
+  .best-sellers-title {
+    font-size: 38px;
+    font-weight: 700;
+    font-family: var(--bookmaniaFont);
+    margin: 0;
+    max-width: 350px;
+    color: #234134;
+    line-height: 1.2;
+  }
+  
+  .bs-link {
+    font-size: 20px;
+    color: #5B734E;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bs-link:hover { text-decoration: underline; }
+  
+  .bs-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .bs-card {
+    background: #F0FFE9A3;
+    box-shadow: 0px 0px 12.1px -3px #5B5B5B33;
+    border-radius: 6px;
+    padding: 20px;
+    transition: transform 0.2s ease;
+    position: relative;
+  }
+
+  .bs-card:hover { transform: translateY(-4px); }
+  
+  .bs-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .bs-image-wrapper img {
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .bs-badge {
+    position: absolute;
+    top: 0px;
+    z-index: 1;
+    right: 0px;
+    background: #3F745D80;
+    color: white;
+    padding: 4px 10px;
+    font-size: 18px;
+    border-radius: 0 6px 0 14px;
+  }
+  
+  .bs-rating {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #3F745D;
+  }
+  
+  .bs-stars { color: #F4B400; font-size: 14px; }
+  
+  .bs-product-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    font-family: var(--bookmaniaFont);
+    color: #234134;
+  }
+
+  @media (max-width: 1019px) {
+    .best-sellers-section {
+      padding: 60px 0;
+    }
+    .best-sellers-title {
+      font-size: 28px;
+    }
+    .bs-link {
+      font-size: 16px;
+    }
+    .bs-badge {
+      font-size: 22px;
+    }
+    .bs-products {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    .bs-image-wrapper {
+      height: auto;
+    }
+    .bs-product-title {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .best-sellers-section {
+      padding: 40px 0;
+    }
+    .bs-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .best-sellers-title {
+      font-size: 24px;
+    }
+    .bs-badge {
+      font-size: 12px;
+    }
+    .bs-product-title {
+      font-size: 14px;
+    }
+    .bs-rating {
+      font-size: 10px;
+    }
+    .bs-products {
+      column-gap: 5px;
+      row-gap: 10px;
+    }
+    .bs-card {
+      padding: 11px;
+    }
+
+    .best-sellers-section .loox-rating-label {
+      font-size: 10px;
+    }
+
+    .best-sellers-section svg.loox-icon {
+      width: 0.9em;
+      height: 0.9em;
+    }
+  }
+  {% endstyle %}
+  
+  {% schema %}
+  {
+    "name": "Best Sellers Grid",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Our Best Sellers"
+      },
+      {
+        "type": "url",
+        "id": "see_all_link",
+        "label": "See All Link",
+        "default": "/collections/all"
+      },
+      {
+        "type": "text",
+        "id": "see_all_text",
+        "label": "See All Text",
+        "default": "See All Products"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product_item",
+        "name": "Product Item",
+        "settings": [
+          {"type": "product", "id": "product", "label": "Product"},
+          { "type": "image_picker", "id": "image", "label": "Product Image" },
+          { "type": "url", "id": "product_url", "label": "Product URL" },
+          { "type": "text", "id": "badge", "label": "Badge (Optional)", "default": "ON SALE" },
+          { "type": "text", "id": "title", "label": "Product Title", "default": "BetterLungs®" },
+          { "type": "text", "id": "rating", "label": "Rating", "default": "5.0" },
+          { "type": "text", "id": "reviews", "label": "Review Count", "default": "238" }
+        ]
+      }
+    ],
+    "max_blocks": 4,
+    "presets": [ { "name": "Best Sellers Grid" } ]
+  }
+  {% endschema %}
+  

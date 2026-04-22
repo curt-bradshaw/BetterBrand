@@ -1,0 +1,137 @@
+<script>
+  window.addEventListener('scroll', function() {
+      const header = document.querySelector('.header-wrapper');
+
+      if (window.scrollY > 100) {
+          header.classList.add('stickyNav');
+      } else {
+          header.classList.remove('stickyNav');
+      }
+  });
+</script>
+
+<style>
+    .stickyNav {
+      position: relative !important;
+      width: 100svw !important;
+      top: 0 !important;
+      border-bottom: 1px solid #224233;
+  }
+
+    .loop-selling-plan-selector-label {
+      transform: translateY(-10px) !important;
+    }
+
+    .loop-selling-plan-selector {
+      transform: translateY(-12px) !important;
+      font-size: 1.2rem !important;
+          background-color: transparent;
+      border: 1.5px solid black !important;
+      color: #0f1f17 !important;
+  }
+
+    @media only screen and (max-width: 700px) {
+      .loop-selling-plan-selector {
+          position: absolute !important;
+      transform: translate(98px, -74px) !important;
+      }
+
+      .loop-selling-plan-selector-description {
+        padding-top: 20px !important;
+      }
+
+      .loop-subscription-group-price-amount {
+        text-align: left !important;
+      }
+
+        .loop-selling-plan-selector-label {
+      transform: translateY(0px) !important;
+      }
+
+    }
+
+    #shopify-section-template--24378188071211__custom-main,
+  #shopify-section-template--24336816931115__custom-main,
+  #shopify-section-template--24396196577579__custom-main,
+  #shopify-section-template--24571104657707__custom-main
+  {
+      display: none !important;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Create the new element
+    const newElement = document.createElement('div');
+    newElement.className = 'new-element collapsible';
+
+    // Add the content based on the image you provided
+    newElement.innerHTML = `
+        <p class="title">FREE GIFT DETAILS</p>
+        <p>Sign up for a monthly or bi-monthly subscription and receive a Mystery gift ($35 value) with your subscription order!</p>
+        <p class="note">Free gift applies to every subscribe and save orders. Free gift recurs monthly. Available while supplies last.</p>
+    `;
+
+    // Append the new element right after the .ntg-offer-detail
+    const offerDetail = document.querySelector('.ntg-offer-detail');
+
+  if(offerDetail && offerDetail != undefined){
+    offerDetail.parentNode.insertBefore(newElement, offerDetail.nextSibling);
+
+    // Add click event listener to toggle the height of the hidden element
+    offerDetail.addEventListener('click', function() {
+        if (newElement.classList.contains('expanded')) {
+            newElement.classList.remove('expanded');
+            newElement.style.height = '0';
+        } else {
+            newElement.classList.add('expanded');
+            newElement.style.height = `${newElement.scrollHeight}px`;
+        }
+    });
+
+  }
+});
+</script>
+
+<style>
+    /* Style for the new element based on the image */
+  .new-element {
+    display: none; /* Start hidden */
+    background-color: #f5fff0; /* Light green background */
+    border: 1px solid #000000; /* Black border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding around the content */
+    margin-top: 10px; /* Space between the existing element and the new one */
+    font-family: 'Courier', monospace; /* Matching the font */
+  }
+
+  .new-element p {
+    margin: 0;
+  }
+
+  .new-element p.title {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .new-element p.note {
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  /* Transition for height change */
+  .collapsible {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+  }
+
+  .collapsible.expanded {
+    height: auto !important; /* Allows the element to expand */
+    display: block !important;
+  }
+
+  .ntg-offer-detail {
+    cursor: pointer;
+  }
+</style>

@@ -1,0 +1,316 @@
+<!-- START you-may-also-cta.liquid -->
+
+{% assign collection = collections[section.settings.collection] %}
+
+{% if collection != blank and collection.products.size > 0 %}
+<div class="you-may-also-cta-section">
+    <div class="yma-cta-container">
+    <div class="yma-cta-header">
+      <h2 class="you-may-also-cta-title">{{ section.settings.heading }}</h2>
+    </div>
+  
+    <div class="yma-cta-products">
+      {% for product in collection.products limit: section.settings.products_limit %}
+        <div class="yma-cta-card">
+            {% if product.tags contains 'onsale-badge' %}
+                <span class="yma-cta-badge">ON SALE</span>
+            {% elsif product.metafields.custom.badge_text != blank %}
+                <span class="yma-cta-badge">{{ product.metafields.custom.badge_text }}</span>
+            {% endif %}
+          <a href="{{ product.url }}" class="yma-cta-card-link">
+            <div class="yma-cta-image-wrapper">
+              <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title | escape }}" />
+            </div>
+    
+            <div class="yma-cta-rating">
+              <span class="yma-cta-stars">★★★★★</span>
+              {% assign rating = product.metafields.reviews.rating | default: section.settings.default_rating %}
+              {% assign reviews_count = product.metafields.reviews.rating_count | default: section.settings.default_reviews %}
+              <span class="yma-cta-rating-text">{{ rating.value }} ({{ reviews_count }})</span>
+            </div>
+    
+            <p class="yma-cta-product-title">{{ product.title }}</p>
+          </a>
+
+          <form action="/cart/add" method="post" enctype="multipart/form-data" class="yma-cta-atc-form">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="yma-cta-atc-button" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+              <span class="yma-cta-atc-text">ADD TO CART</span>
+              <span class="yma-cta-atc-divider">|</span>
+              <span class="yma-cta-atc-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+            </button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+    </div>
+  </div>
+{% endif %}
+  
+  {% style %}
+  .you-may-also-cta-section {
+    background-color: #C2DEB4;
+    padding: 80px 0;
+  }
+
+  .yma-cta-container {
+    max-width: 1220px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  
+  .yma-cta-header {
+    margin-bottom: 35px;
+  }
+  
+  .you-may-also-cta-title {
+    font-size: 38px;
+    font-weight: 700;
+    font-family: var(--bookmaniaFont);
+    margin: 0;
+    color: #234134;
+    text-align: center;
+    line-height: 1.2;
+  }
+  
+  .yma-cta-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .yma-cta-card {
+    background: #F0FFE9A3;
+    box-shadow: 0px 0px 12.1px -3px #5B5B5B33;
+    border-radius: 6px;
+    padding: 10px 10px 20px;
+    transition: transform 0.2s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .yma-cta-card-link:hover { 
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+  }
+  
+  .yma-cta-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .yma-cta-image-wrapper img {
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .yma-cta-badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: #3F745D80;
+    color: white;
+    padding: 4px 10px;
+    font-size: 18px;
+    border-radius: 0 6px 0 14px;
+  }
+  
+  .yma-cta-rating {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #3F745D;
+  }
+  
+  .yma-cta-stars { color: #F4B400; font-size: 14px; }
+  
+  .yma-cta-product-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #234134;
+    font-family: var(--bookmaniaFont);
+  }
+
+  .yma-cta-card-link {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+
+  .yma-cta-atc-form {
+    margin-top: 10px;
+  }
+
+  .yma-cta-atc-button {
+    width: 100%;
+    border: 1px solid #234134;
+    border-radius: 43px;
+    padding: 15px 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: 'SuisseIntlMono', sans-serif;
+  }
+
+  .yma-cta-atc-button:hover:not(:disabled) {
+    background: #F0FFE9A3;
+    transform: translateY(-2px);
+  }
+
+  .yma-cta-atc-button:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .yma-cta-atc-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .yma-cta-atc-text {
+    font-size: 18px;
+    font-weight: 400;
+    color: #252525;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .yma-cta-atc-divider {
+    color: #252525;
+    font-size: 16px;
+  }
+
+  .yma-cta-atc-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #252525;
+  }
+
+  @media (max-width: 1180px) {
+    .yma-cta-atc-text {
+      font-size: 14px;
+    }
+    .yma-cta-atc-divider {
+      font-size: 12px;
+    }
+    .yma-cta-atc-price {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 1019px) {
+    .you-may-also-cta-section {
+      padding: 60px 0;
+    }
+    .yma-cta-product-title {
+      font-size: 24px;
+    }
+    .you-may-also-cta-title {
+      font-size: 28px;
+    }
+    .yma-cta-products {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    .yma-cta-image-wrapper {
+      height: auto;
+    }
+    .yma-cta-atc-text {
+      font-size: 22px;
+    }
+    .yma-cta-atc-divider {
+      font-size: 20px;
+    }
+    .yma-cta-atc-price {
+      font-size: 22px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .you-may-also-cta-section {
+      padding: 40px 0;
+    }
+    .yma-cta-product-title {
+      font-size: 14px;
+    }
+    .you-may-also-cta-title {
+      font-size: 24px;
+      text-align: left;
+    }
+    .yma-cta-rating {
+      font-size: 10px;
+    }
+    .yma-cta-products {
+      column-gap: 5px;
+      row-gap: 10px;
+    }
+    .yma-cta-card {
+      padding: 5px 5px 10px;
+    }
+    .yma-cta-atc-button {
+      padding: 8px 5px;
+    }
+    .yma-cta-atc-text,
+    .yma-cta-atc-divider,
+    .yma-cta-atc-price {
+      font-size: 11px;
+    }
+  }
+  {% endstyle %}
+  
+  {% schema %}
+  {
+    "name": "You May Also CTA",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "You May Also Like"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "products_limit",
+        "label": "Products to show",
+        "min": 2,
+        "max": 12,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "Rating Settings"
+      },
+      {
+        "type": "text",
+        "id": "default_rating",
+        "label": "Default Rating",
+        "default": "5.0",
+        "info": "Used if product doesn't have rating metafield"
+      },
+      {
+        "type": "text",
+        "id": "default_reviews",
+        "label": "Default Review Count",
+        "default": "238",
+        "info": "Used if product doesn't have review count metafield"
+      }
+    ],
+    "presets": [ { "name": "You May Also CTA" } ]
+  }
+  {% endschema %}
+  

@@ -1,0 +1,72 @@
+<!-- start product-reviews.liquid (SNIPPET) -->
+
+{% comment %}
+  Codes from reviews apps widget must be inserted into
+  this file, ie. Stamped Rating badge.
+
+  Prefereably below the placeholder.
+{% endcomment %}
+
+{% comment %} Start Shopify ID Styles {% endcomment %}
+<style>
+   #shopify-section-{{ section.id }} .product-half__reviews svg path {
+   	fill: {{ settings.color_review_stars }};
+   }
+
+   #shopify-section-{{ section.id }} .product-half__reviews span {
+   	color: {{ block.settings.reviews_text_colors }};
+    line-height: 1.1;
+    font-weight: 400;
+   }
+</style>
+{% comment %} End Shopify ID Styles {% endcomment %}
+
+<style>
+  .product-half__reviews {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    line-height: 1;
+  }
+
+  .product-half__reviews svg {
+    width: 11px;
+    margin-right: 2.5px;
+    color: #F2CB49;
+  }
+
+  .product-half__reviews span {
+    text-transform: capitalize;
+  }
+
+  @media (max-width: 1019px) {
+    .product-half__reviews span {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .product-card__item-reviews-wrapper .loox-rating .loox-rating-content {
+      gap: 1px;
+    }
+
+    .product-half__reviews span {
+      font-size: 10px;
+    }
+    .product-half__reviews {
+      margin-bottom: 0;
+    }
+  }
+</style>
+
+{% comment %} PLACEHOLDER - Comment these reviews when app is installed {% endcomment %}
+ {% assign loox_pattern = pattern | default: '([rating] of [count] Reviews)' %}
+<div class="product-half__reviews">
+    <div class="loox-rating" 
+    data-id="{{ product.id }}" 
+    data-rating="{{ product.metafields.loox.avg_rating }}" 
+    data-raters="{{ product.metafields.loox.num_reviews }}"
+    data-content-size="16"
+    data-pattern="{{- loox_pattern -}}"
+  ></div>
+</div>

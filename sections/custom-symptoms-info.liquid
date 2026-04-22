@@ -1,0 +1,87 @@
+<div class="ntg-symptoms-section">
+    <div class="ntg-container">
+        <div class="ntg-heading-holder">
+            <h2 class="ntg-h2">{{ section.settings.heading }}</h2>
+            {{ section.settings.sub_text }}
+        </div>
+        <ul class="ntg-symptoms-list">
+          {% for block in section.blocks %}
+            <li>
+                <div class="ntg-symptom-box">
+                    <div class="ntg-img-holder">
+                        <img src="{{ block.settings.icon_image | img_url: 'master' }}" alt="{{ block.settings.icon_image.alt }}" width="{{ block.settings.icon_image.width }}" height="{{ block.settings.icon_image.height }}">
+                    </div>
+                    <div class="ntg-text-holder">
+                        <span class="ntg-title">{{ block.settings.icon_title }}</span>
+                        {{ block.settings.icon_text }}
+                    </div>
+                </div>
+            </li>
+          {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Symptoms Info",
+  "class": "custom-symptoms-info",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Signs Your Lungs Need a Boost"
+    },
+    {
+      "type": "richtext",
+      "id": "sub_text",
+      "label": "Sub text",
+      "default": "<p>If you resonate with any of these signs, it's time to give your lungs the support they need.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "icon_title",
+          "label": "Icon title"
+        },
+        {
+          "type": "richtext",
+          "id": "icon_text",
+          "label": "Icon text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Symptoms Info",
+      "category": "Custom Sections",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

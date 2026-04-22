@@ -1,0 +1,53 @@
+<!-- start collection-filter-icon.liquid (SNIPPET) -->
+<div class="collection-facets__icon-container">
+  <span class="collection-facets__icon">
+    {% render 'icon-sort-02' %}
+  </span>
+</div>
+
+<style scope>
+  .collection-facets__icon,
+  .collection-facets__icon-container {
+    display: none;
+  }
+
+  @media (max-width: 1019px) {
+    .collection-facets__icon-container {
+      display: block;
+      z-index: 2;
+      cursor: pointer;
+    }
+
+    .collection-facets__icon {
+      height: 39px;
+      border-radius: 10px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .collection-facets__item-fieldset-icon {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: none;
+      order: 1;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .collection-facets__icon {
+      margin-left: 5px;
+      height: 23.6px;
+      border-radius: 5px;
+      width: max-content;
+    }
+
+    .collection-facets__icon svg {
+      width: 13px;
+      height: 13px;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "parent": "header-group.json",
+  "context": {
+    "market": "us"
+  },
+  "sections": {
+    "shipping_bar_4LRaz": {
+      "type": "shipping_bar",
+      "disabled": false,
+      "settings": {
+        "header-dd0f50bb5a74092375c777d74174d44e": null,
+        "paragraph-7c813ceefd2ee88cb8805070a805b8d9": null,
+        "enable_link_shippingbar_text_email": true,
+        "disable_email_text_desktop": false,
+        "disable_email_text_tablet": true,
+        "enable_email_icon_mobile": true,
+        "paragraph-46b8619f1696e8cfbd08be0b99ca2365": null,
+        "enable_link_shippingbar_text_phone": true,
+        "disable_phone_text_desktop": false,
+        "disable_phone_text_tablet": true,
+        "enable_phone_icon_mobile": true,
+        "header-4bcf7b59850a902951e6f742c2ac29d0": null,
+        "background_color": "#183a63",
+        "text_color": "#ffffff",
+        "header-d4c00c92ab35b6d72449c2d10c752ed8": null,
+        "message_text_transform": "uppercase",
+        "shipping_bar_style": "info_style",
+        "position": true,
+        "enable_discount_in_cart": false,
+        "header-4ad0f4c69dc5b163466779cef842a672": null,
+        "font_size_desktop": 20,
+        "font_size_shipping_text_desktop": 16,
+        "font_size_tablet": 14,
+        "font_size_shipping_text_tablet": 16,
+        "font_size_mobile": 14,
+        "font_size_shipping_text_mobile": 12
+      },
+      "blocks": {
+        "info_style_63nVw": {
+          "type": "info-style",
+          "disabled": false,
+          "settings": {
+            "header-231d0868d6e3bd99ea8e7499d3c5d1f3": null,
+            "shipping_bar_info_text": "We Pay Shipping On Orders Over $100 in the USA"
+          }
+        }
+      },
+      "block_order": [
+        "info_style_63nVw"
+      ]
+    }
+  },
+  "order": [
+    "shipping_bar_4LRaz",
+    "header"
+  ]
+}

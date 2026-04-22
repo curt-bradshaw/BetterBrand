@@ -1,0 +1,1627 @@
+{% comment %}
+  BetterLungs Pre-lander — Shopify Liquid Page Template
+  Template: page.betterlungs-prelander.liquid
+  
+  SETUP INSTRUCTIONS:
+  1. Upload all files from the /assets/ folder to your Shopify theme's Assets directory.
+  2. In Shopify Admin → Online Store → Themes → Edit Code, create this file under Templates.
+  3. Create a new Page in Shopify Admin, then assign this template to it.
+  4. Update PRODUCT_URL below to your exact product variant URL.
+  
+  ASSETS REQUIRED (upload all to Shopify Assets):
+    bl-betterbrand-logo.png
+    bl-hero-man.webp
+    bl-dr-chris-branded.webp
+    bl-mullein-in-wild.webp
+    bl-tinc-with-dropper.webp
+    bl-mullein-over-glass.webp
+    bl-mullein-store-shelf.webp
+    bl-mullein-table-flatlay.webp
+    bl-avatar-dennis.webp
+    bl-avatar-laura.webp
+    bl-avatar-terry.webp
+    bl-avatar-jon.webp
+    bl-avatar-wilma.webp
+    bl-avatar-lecount.webp
+    bl-avatar-gary.webp
+    bl-avatar-susan.webp
+    bl-avatar-rachel.webp
+{% endcomment %}
+
+{% assign product_url = "https://www.trybetterbrand.com/products/betterlungs%C2%AE-mullein-chlorophyll?variant=50211235922219" %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       BETTERLUNGS PRE-LANDER — INLINE STYLES
+       Design: Newspaper advertorial (Rejuvacare-inspired)
+       - Georgia serif body, Merriweather headlines
+       - Teal masthead (#1a5276), white content, green CTAs (#27ae60)
+       - Two-column layout: 70% article + 30% sticky sidebar
+       - Skimmable: short paragraphs, bold callouts, images every 3-4 paragraphs
+       ============================================================ */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f5f5;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: #222;
+      line-height: 1.8;
+    }
+
+    /* ---- MASTHEAD ---- */
+    .bl-header {
+      background: #1a5276;
+      border-bottom: 2px solid #148f77;
+    }
+    .bl-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 40px;
+    }
+    .bl-header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      overflow: hidden;
+    }
+    .bl-publication-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      font-family: 'Inter', Arial, sans-serif;
+      letter-spacing: -0.3px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .bl-header-divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(255,255,255,0.3);
+      flex-shrink: 0;
+    }
+    .bl-header-nav {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .bl-header-nav a {
+      color: rgba(255,255,255,0.72);
+      font-size: 12px;
+      font-family: 'Inter', Arial, sans-serif;
+      font-weight: 500;
+      padding: 0 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      line-height: 40px;
+    }
+    .bl-advertorial-label {
+      font-size: 10px;
+      font-family: 'Inter', Arial, sans-serif;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ---- MAIN CONTENT ---- */
+    .bl-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .bl-breadcrumb {
+      padding: 10px 0;
+      font-size: 12px;
+      color: #666;
+      font-family: Arial, sans-serif;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* ---- TWO-COLUMN GRID ---- */
+    .bl-article-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      padding-top: 24px;
+    }
+    @media (max-width: 768px) {
+      .bl-article-grid {
+        grid-template-columns: 1fr;
+      }
+      .bl-sidebar {
+        display: none;
+      }
+    }
+
+    /* ---- ARTICLE ---- */
+    .bl-article { min-width: 0; }
+
+    .bl-headline {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 900;
+      line-height: 1.25;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    .bl-subheadline {
+      font-size: 17px;
+      color: #444;
+      font-style: italic;
+      border-left: 4px solid #1a5276;
+      padding-left: 14px;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    /* ---- BYLINE ---- */
+    .bl-byline {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+    }
+    .bl-byline-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .bl-byline-name {
+      font-weight: 700;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      color: #1a1a1a;
+    }
+    .bl-byline-meta {
+      font-size: 12px;
+      color: #666;
+      font-family: Arial, sans-serif;
+    }
+    .bl-social-icons {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .bl-social-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* ---- HERO IMAGE ---- */
+    .bl-hero-figure { margin: 0 0 24px 0; }
+    .bl-hero-img {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-radius: 4px;
+    }
+    .bl-figcaption {
+      font-size: 12px;
+      color: #666;
+      font-family: Arial, sans-serif;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ---- ARTICLE BODY ---- */
+    .bl-body { font-size: 17px; line-height: 1.8; color: #222; }
+    .bl-body p { margin-bottom: 14px; }
+
+    /* ---- PULL QUOTE ---- */
+    .bl-pullquote {
+      background: #f0f7ff;
+      border-left: 5px solid #1a5276;
+      margin: 24px 0;
+      padding: 18px 20px;
+      font-style: italic;
+      font-size: 19px;
+      color: #1a3a5c;
+      line-height: 1.6;
+      border-radius: 0 4px 4px 0;
+    }
+    .bl-pullquote footer {
+      font-size: 14px;
+      margin-top: 10px;
+      color: #555;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    /* ---- SECTION HEADERS ---- */
+    .bl-section-header {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin: 28px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #1a5276;
+      clear: both;
+    }
+
+    /* ---- FLOAT IMAGE (Dr. Chris) ---- */
+    .bl-float-right {
+      float: right;
+      margin: 0 0 16px 20px;
+      max-width: 260px;
+      width: 40%;
+    }
+    .bl-float-right img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+    @media (max-width: 480px) {
+      .bl-float-right {
+        float: none;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 0 16px 0;
+      }
+    }
+
+    /* ---- FULL-WIDTH FIGURE ---- */
+    .bl-figure { margin: 0 0 20px 0; }
+    .bl-figure img {
+      width: 100%;
+      height: auto;
+      max-height: 360px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border-radius: 4px;
+    }
+    .bl-figure-center { margin: 0 0 20px 0; text-align: center; }
+    .bl-figure-center img {
+      width: auto;
+      height: 340px;
+      max-width: 100%;
+      object-fit: contain;
+      display: inline-block;
+      border-radius: 4px;
+    }
+
+    /* ---- CALLOUT BOX: KEY FACTS ---- */
+    .bl-callout-facts {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 20px 22px;
+      margin: 24px 0;
+    }
+    .bl-callout-label {
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: #1a5276;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .bl-callout-facts ul {
+      margin: 0;
+      padding: 0 0 0 18px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    /* ---- TIMELINE CALLOUT ---- */
+    .bl-timeline {
+      background: linear-gradient(135deg, #1a5276 0%, #148f77 100%);
+      border-radius: 8px;
+      padding: 22px 24px;
+      margin: 24px 0;
+      color: white;
+    }
+    .bl-timeline-label {
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+    .bl-timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .bl-timeline-item {
+      background: rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .bl-timeline-week {
+      font-weight: 800;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      margin-bottom: 4px;
+    }
+    .bl-timeline-desc {
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    /* ---- CLINICAL STUDY BOX ---- */
+    .bl-clinical-box {
+      background: #fff;
+      border: 2px solid #1a5276;
+      border-radius: 8px;
+      padding: 22px 24px;
+      margin: 24px 0;
+    }
+    .bl-clinical-title {
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: #1a5276;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .bl-stat-row { margin-bottom: 14px; }
+    .bl-stat-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #333;
+    }
+    .bl-stat-ratio { font-weight: 700; color: #148f77; }
+    .bl-stat-bar-bg {
+      background: #e8f5e9;
+      border-radius: 4px;
+      height: 10px;
+      overflow: hidden;
+    }
+    .bl-stat-bar-fill {
+      background: linear-gradient(90deg, #148f77, #1a5276);
+      height: 100%;
+      border-radius: 4px;
+    }
+    .bl-stat-note {
+      font-size: 11px;
+      color: #888;
+      font-family: Arial, sans-serif;
+      margin-top: 3px;
+    }
+
+    /* ---- CTA BOXES ---- */
+    .bl-cta-box {
+      background: linear-gradient(135deg, #1a5276 0%, #148f77 100%);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 28px 0;
+      text-align: center;
+    }
+    .bl-cta-title {
+      color: white;
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .bl-cta-subtitle {
+      color: rgba(255,255,255,0.85);
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+    .bl-cta-btn {
+      display: inline-block;
+      background: #27ae60;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 14px 32px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .bl-cta-btn:hover { background: #219a52; }
+    .bl-cta-note {
+      color: rgba(255,255,255,0.7);
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    .bl-cta-box-final { padding: 28px 24px; }
+    .bl-cta-box-final .bl-cta-title { font-size: 22px; }
+    .bl-cta-box-final .bl-cta-btn { font-size: 18px; padding: 16px 40px; }
+
+    /* ---- TESTIMONIALS ---- */
+    .bl-testimonial {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .bl-testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .bl-testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .bl-testimonial-name {
+      font-weight: 700;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #1a1a1a;
+    }
+    .bl-testimonial-stars { color: #f39c12; font-size: 14px; }
+    .bl-verified-badge {
+      margin-left: auto;
+      font-size: 11px;
+      color: #27ae60;
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      background: #e8f5e9;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .bl-testimonial-text {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ---- FACEBOOK-STYLE COMMENTS ---- */
+    .bl-comments-section {
+      margin: 32px 0 0;
+      background: #e9ebee;
+      border-radius: 8px;
+      padding: 20px 18px 10px;
+      border: 1px solid #d8dadf;
+    }
+    .bl-comments-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #d8dadf;
+    }
+    .bl-comments-title {
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #1a1a1a;
+    }
+    .bl-comments-count {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #65676b;
+    }
+    .bl-comment-input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+    .bl-comment-input-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e4e6ea;
+      flex-shrink: 0;
+    }
+    .bl-comment-input-box {
+      flex: 1;
+      background: #f0f2f5;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #65676b;
+      cursor: text;
+      border: none;
+      outline: none;
+    }
+    /* Single comment */
+    .bl-comment { margin-bottom: 16px; }
+    .bl-comment-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .bl-comment-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .bl-comment-bubble {
+      background: #f0f2f5;
+      border-radius: 18px;
+      padding: 10px 14px;
+      display: inline-block;
+      max-width: 100%;
+    }
+    .bl-comment-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: #050505;
+      font-family: Arial, sans-serif;
+    }
+    .bl-comment-text {
+      font-size: 14px;
+      color: #050505;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+    .bl-comment-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+      padding-left: 12px;
+      align-items: center;
+    }
+    .bl-comment-action {
+      font-size: 12px;
+      font-weight: 600;
+      color: #65676b;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+    }
+    .bl-comment-likes {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 12px;
+      color: #65676b;
+      font-family: Arial, sans-serif;
+    }
+    .bl-like-badge {
+      background: #1877f2;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: white;
+    }
+    .bl-comment-time {
+      font-size: 12px;
+      color: #65676b;
+      font-family: Arial, sans-serif;
+    }
+    /* Replies */
+    .bl-replies { margin-left: 50px; margin-top: 8px; }
+    .bl-reply-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .bl-reply-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .bl-reply-bubble {
+      background: #f0f2f5;
+      border-radius: 18px;
+      padding: 8px 12px;
+      display: inline-block;
+      max-width: 100%;
+    }
+    .bl-reply-name {
+      font-weight: 700;
+      font-size: 13px;
+      color: #050505;
+      font-family: Arial, sans-serif;
+    }
+    .bl-reply-text {
+      font-size: 13px;
+      color: #050505;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+    .bl-view-more {
+      text-align: center;
+      padding: 12px 0;
+      border-top: 1px solid #e4e6ea;
+      margin-top: 8px;
+    }
+    .bl-view-more a {
+      color: #1877f2;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* ---- DISCLAIMER ---- */
+    .bl-disclaimer {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 16px 18px;
+      margin: 24px 0;
+      font-size: 11px;
+      color: #666;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ---- SIDEBAR ---- */
+    .bl-sidebar {
+      align-self: flex-start;
+      position: sticky;
+      top: 20px;
+    }
+    .bl-sidebar-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .bl-sidebar-card-header {
+      color: white;
+      padding: 10px 14px;
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .bl-sidebar-card-header.teal { background: #1a5276; }
+    .bl-sidebar-card-header.green { background: #148f77; }
+    .bl-sidebar-product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background: #fafafa;
+      padding: 10px;
+      display: block;
+    }
+    .bl-sidebar-card-body { padding: 14px; }
+    .bl-sidebar-product-name {
+      font-family: 'Merriweather', Georgia, serif;
+      font-weight: 800;
+      font-size: 15px;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .bl-sidebar-stars { color: #f39c12; font-size: 14px; margin-bottom: 6px; }
+    .bl-sidebar-product-desc {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .bl-sidebar-btn {
+      display: block;
+      background: #27ae60;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 11px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: center;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .bl-sidebar-btn:hover { background: #219a52; }
+    /* Sidebar stat rows */
+    .bl-sidebar-stat { margin-bottom: 12px; }
+    .bl-sidebar-stat-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #333;
+    }
+    .bl-sidebar-stat-ratio { font-weight: 700; color: #148f77; }
+    .bl-sidebar-stat-bar-bg {
+      background: #e8f5e9;
+      border-radius: 3px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .bl-sidebar-stat-bar-fill {
+      background: linear-gradient(90deg, #148f77, #1a5276);
+      height: 100%;
+      border-radius: 3px;
+    }
+    .bl-sidebar-stat-note {
+      font-size: 10px;
+      color: #999;
+      font-family: Arial, sans-serif;
+      margin-top: 8px;
+    }
+    /* Sidebar mini testimonials */
+    .bl-sidebar-mini-testimonial {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .bl-sidebar-mini-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .bl-sidebar-mini-name {
+      font-weight: 700;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #1a1a1a;
+      margin-bottom: 3px;
+    }
+    .bl-sidebar-mini-stars { color: #f39c12; font-size: 11px; margin-bottom: 4px; }
+    .bl-sidebar-mini-text {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #444;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    /* Dr. Chris sidebar */
+    .bl-sidebar-chris-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+    .bl-sidebar-chris-name {
+      font-family: Arial, sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+    .bl-sidebar-chris-bio {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* ---- FOOTER ---- */
+    .bl-footer {
+      background: #1a5276;
+      color: rgba(255,255,255,0.7);
+      padding: 24px 16px;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .bl-footer-inner { max-width: 1100px; margin: 0 auto; }
+    .bl-footer-logo {
+      height: 32px;
+      margin-bottom: 12px;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+    .bl-footer-text {
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* ---- STICKY CTA ---- */
+    #bl-sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 3px solid #27ae60;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      padding: 12px 16px;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 14px;
+    }
+    #bl-sticky-cta.visible { display: flex; }
+    .bl-sticky-product-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .bl-sticky-info { flex: 1; min-width: 0; }
+    .bl-sticky-name {
+      font-family: 'Merriweather', Georgia, serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: #1a1a1a;
+      line-height: 1.3;
+    }
+    .bl-sticky-tagline {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #555;
+    }
+    .bl-sticky-btn {
+      background: #27ae60;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .bl-sticky-btn:hover { background: #219a52; }
+    .bl-sticky-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #999;
+      cursor: pointer;
+      padding: 4px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+  </style>
+
+<!-- ============================================================
+     MASTHEAD
+     ============================================================ -->
+<header class="bl-header">
+  <div class="bl-header-inner">
+    <div class="bl-header-left">
+      <div class="bl-publication-name">The Wellness Tribune</div>
+      <div class="bl-header-divider"></div>
+      <nav class="bl-header-nav">
+        <a href="#">Health</a>
+        <a href="#">Nutrition</a>
+        <a href="#">Natural Remedies</a>
+        <a href="#">Supplements</a>
+      </nav>
+    </div>
+    <div class="bl-advertorial-label">Advertorial</div>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="bl-main">
+  <div class="bl-breadcrumb">Home &rsaquo; Natural Remedies &rsaquo; Lung Health</div>
+
+  <div class="bl-article-grid">
+
+    <!-- ==================== ARTICLE COLUMN ==================== -->
+    <article class="bl-article">
+
+      <!-- HEADLINE -->
+      <h1 class="bl-headline">
+        Tennessee Man, 58, Goes From Struggling to Breathe to Sleeping Through the Night After Pharmacist Reveals This Ancient Herb Combination
+      </h1>
+
+      <!-- SUBHEADLINE -->
+      <p class="bl-subheadline">
+        A pharmacist and US Army veteran formulated a tincture using two ancient botanicals. Thousands of Americans are now reporting that daily use is transforming how they feel every morning.
+      </p>
+
+      <!-- BYLINE -->
+      <div class="bl-byline">
+        <img src="{{ 'bl-avatar-rachel.webp' | asset_url }}" alt="Rachel Monroe" class="bl-byline-avatar" />
+        <div>
+          <div class="bl-byline-name">By Rachel Monroe</div>
+          <div class="bl-byline-meta">Health &amp; Wellness Contributor &nbsp;|&nbsp; March 12, 2026</div>
+        </div>
+        <div class="bl-social-icons">
+          <a href="#" class="bl-social-icon" style="background:#1877f2;">F</a>
+          <a href="#" class="bl-social-icon" style="background:#1da1f2;">T</a>
+          <a href="#" class="bl-social-icon" style="background:#0077b5;">IN</a>
+        </div>
+      </div>
+
+      <!-- HERO IMAGE -->
+      <figure class="bl-hero-figure">
+        <img src="{{ 'bl-hero-man.webp' | asset_url }}" alt="Gary Mitchell, 58, of Knoxville, Tennessee" class="bl-hero-img" />
+        <figcaption class="bl-figcaption">
+          Gary Mitchell, 58, of Knoxville, Tennessee, says he now sleeps through the night for the first time in years.
+        </figcaption>
+      </figure>
+
+      <!-- ARTICLE BODY -->
+      <div class="bl-body">
+
+        <!-- OPENING -->
+        <p>Gary Mitchell spent most of his adult life <strong>waking up at 3 a.m. unable to catch his breath.</strong></p>
+        <p>The 58-year-old Knoxville man had smoked for over two decades before quitting five years ago.</p>
+        <p>But even after quitting, the mornings were rough.</p>
+        <p>The tightness in his chest. The persistent cough. The feeling that his lungs simply weren't working the way they used to.</p>
+        <p>"I figured this was just what getting older felt like," Gary told us.</p>
+        <p>"I'd quit smoking, I was doing everything right, but every morning I'd wake up feeling like I was breathing through a wet blanket."</p>
+        <p>That changed about eight months ago, when Gary ran into a pharmacist at a local health expo in Knoxville.</p>
+        <p>The pharmacist had spent years researching traditional herbal remedies for respiratory wellness.</p>
+        <p><strong>What he told Gary that afternoon would change everything.</strong></p>
+
+        <!-- PULL QUOTE -->
+        <blockquote class="bl-pullquote">
+          "He told me that mullein has been used for lung support for thousands of years. But the key, he said, was pairing it with chlorophyll and taking it every single day. The results build over time."
+          <footer>— Gary Mitchell, Knoxville, TN</footer>
+        </blockquote>
+
+        <p>The pharmacist was Dr. Chris, PharmD, founder of Betterbrand.</p>
+        <p>He had spent years frustrated by the lack of high-quality, bioavailable herbal supplements on the market.</p>
+        <p>Most mullein products use dried leaf powder in capsule form. <strong>The problem is that the body absorbs liquid tinctures far more efficiently than powder.</strong></p>
+
+        <!-- DR. CHRIS PHOTO -->
+        <figure class="bl-float-right">
+          <img src="{{ 'bl-dr-chris-branded.webp' | asset_url }}" alt="Dr. Chris, PharmD, founder of Betterbrand" />
+          <figcaption class="bl-figcaption">
+            Dr. Chris, PharmD, founder of Betterbrand, spent years developing the BetterLungs&reg; formula.
+          </figcaption>
+        </figure>
+
+        <p>"The bioavailability difference is significant," Dr. Chris explained.</p>
+        <p>"When you take a tincture, the active compounds absorb directly into the bloodstream within minutes."</p>
+        <p>"A capsule has to survive digestion first. <strong>You're losing a large portion of the benefit before it even reaches where it needs to go.</strong>"</p>
+        <p>Dr. Chris spent two years perfecting the extraction ratio and the combination of mullein leaf with liquid chlorophyll before launching BetterLungs&reg;.</p>
+
+        <!-- SECTION: WHY MULLEIN -->
+        <h2 class="bl-section-header">Why Mullein Has Been Used for Centuries</h2>
+
+        <!-- MULLEIN PLANT IMAGE -->
+        <figure class="bl-figure">
+          <img src="{{ 'bl-mullein-in-wild.webp' | asset_url }}" alt="Mullein plant growing in the wild" />
+          <figcaption class="bl-figcaption">
+            Mullein (Verbascum thapsus) has been used in traditional herbal medicine for respiratory support for over 2,000 years.
+          </figcaption>
+        </figure>
+
+        <p><strong>Mullein leaf (Verbascum thapsus)</strong> has one of the longest documented histories of any botanical in traditional medicine.</p>
+        <p>Ancient Greek physicians used it. Native American tribes used it for lung support. European herbalists in the 17th and 18th centuries relied on it as a primary remedy for respiratory complaints.</p>
+        <p>Modern research has begun to catch up with this centuries-old wisdom.</p>
+        <p>Studies have identified several active compounds in mullein leaf, including <strong>saponins</strong>, which support the body's natural mucus-clearing mechanisms, and <strong>flavonoids</strong> with antioxidant properties.</p>
+        <p>What makes the BetterLungs&reg; formula different is the addition of liquid chlorophyll.</p>
+        <p>Chlorophyll, the green pigment found in plants, has been studied for its ability to support the body's natural detoxification pathways.</p>
+        <p><strong>When combined with mullein, the two work synergistically in a way neither does alone.</strong></p>
+
+        <!-- KEY FACTS CALLOUT -->
+        <div class="bl-callout-facts">
+          <div class="bl-callout-label">Key Facts About the BetterLungs&reg; Formula</div>
+          <ul>
+            <li><strong>Liquid tincture</strong> for superior absorption vs. capsule powder</li>
+            <li><strong>Mullein leaf extract</strong> standardized for active saponins and flavonoids</li>
+            <li><strong>Liquid chlorophyll</strong> from Alfalfa (Medicago sativa) for synergistic support</li>
+            <li><strong>Alcohol-free</strong> formula, suitable for daily use</li>
+            <li><strong>Results build over time</strong> with consistent daily use</li>
+            <li>Made in the USA in an FDA-registered, GMP-certified facility</li>
+          </ul>
+        </div>
+
+        <!-- TINCTURE WITH DROPPER IMAGE -->
+        <figure class="bl-figure-center">
+          <img src="{{ 'bl-tinc-with-dropper.webp' | asset_url }}" alt="BetterLungs® Mullein + Chlorophyll tincture with dropper" />
+          <figcaption class="bl-figcaption">
+            BetterLungs&reg; Mullein + Chlorophyll Tincture. The liquid delivery system is central to the formula's effectiveness.
+          </figcaption>
+        </figure>
+
+        <!-- SECTION: RESULTS BUILD -->
+        <h2 class="bl-section-header">"The Results Keep Building the Longer You Take It"</h2>
+
+        <p>Gary started taking BetterLungs&reg; the week after the health expo.</p>
+        <p>He followed the directions: <strong>one full dropper in a glass of water each morning, every single day.</strong></p>
+        <p>"The first week, honestly, I didn't notice much," he said.</p>
+        <p>"I was ready to write it off. But the pharmacist had told me to give it at least 30 days. So I kept going."</p>
+        <p>By week three, something shifted.</p>
+        <p>Gary woke up one morning and realized he hadn't coughed himself awake. He lay there for a moment, waiting for the familiar tightness.</p>
+        <p><strong>It didn't come.</strong></p>
+
+        <!-- TIMELINE CALLOUT -->
+        <div class="bl-timeline">
+          <div class="bl-timeline-label">What Users Typically Report Over Time</div>
+          <div class="bl-timeline-grid">
+            <div class="bl-timeline-item">
+              <div class="bl-timeline-week">Week 1&ndash;2</div>
+              <div class="bl-timeline-desc">Formula begins to build in the system. Some notice subtle changes.</div>
+            </div>
+            <div class="bl-timeline-item">
+              <div class="bl-timeline-week">Week 3&ndash;4</div>
+              <div class="bl-timeline-desc">Most users report the first noticeable shifts in how mornings feel.</div>
+            </div>
+            <div class="bl-timeline-item">
+              <div class="bl-timeline-week">Month 2</div>
+              <div class="bl-timeline-desc">Deeper, more consistent results. Many report better sleep quality.</div>
+            </div>
+            <div class="bl-timeline-item">
+              <div class="bl-timeline-week">Month 3+</div>
+              <div class="bl-timeline-desc">Sustained daily benefits. Results continue to compound with use.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MULLEIN OVER GLASS IMAGE -->
+        <figure class="bl-figure">
+          <img src="{{ 'bl-mullein-over-glass.webp' | asset_url }}" alt="BetterLungs® tincture being added to water" />
+          <figcaption class="bl-figcaption">
+            One full dropper in a glass of water each morning. That's the entire routine.
+          </figcaption>
+        </figure>
+
+        <p>"By the end of the first month, I was waking up and just... breathing," Gary said.</p>
+        <p>"Not fighting for it. Just breathing."</p>
+        <p>He kept going. Second month, the results deepened.</p>
+        <p><strong>The mornings got easier. The nights got quieter. The sleep got longer.</strong></p>
+
+        <!-- SECTION: CLINICAL STUDY -->
+        <h2 class="bl-section-header">What the Clinical Study Found</h2>
+
+        <p>Gary's experience isn't unique.</p>
+        <p>Betterbrand conducted a <strong>60-day placebo-controlled clinical study</strong> on BetterLungs&reg; with daily users.</p>
+        <p>The results were consistent across the board.</p>
+
+        <!-- CLINICAL STUDY BOX -->
+        <div class="bl-clinical-box">
+          <div class="bl-clinical-title">60-Day Clinical Study Results</div>
+
+          <div class="bl-stat-row">
+            <div class="bl-stat-labels">
+              <span>Experienced less frequent coughing</span>
+              <span class="bl-stat-ratio">4 in 5</span>
+            </div>
+            <div class="bl-stat-bar-bg"><div class="bl-stat-bar-fill" style="width:81%;"></div></div>
+            <div class="bl-stat-note">Based on a 60-day placebo-controlled clinical study</div>
+          </div>
+
+          <div class="bl-stat-row">
+            <div class="bl-stat-labels">
+              <span>Noticed clearer airways</span>
+              <span class="bl-stat-ratio">3 in 4</span>
+            </div>
+            <div class="bl-stat-bar-bg"><div class="bl-stat-bar-fill" style="width:77%;"></div></div>
+            <div class="bl-stat-note">Based on a 60-day placebo-controlled clinical study</div>
+          </div>
+
+          <div class="bl-stat-row">
+            <div class="bl-stat-labels">
+              <span>Had easier mucus clearance</span>
+              <span class="bl-stat-ratio">7 in 10</span>
+            </div>
+            <div class="bl-stat-bar-bg"><div class="bl-stat-bar-fill" style="width:73%;"></div></div>
+            <div class="bl-stat-note">Based on a 60-day placebo-controlled clinical study</div>
+          </div>
+
+          <div class="bl-stat-row">
+            <div class="bl-stat-labels">
+              <span>Reported improved sleep quality</span>
+              <span class="bl-stat-ratio">2 in 3</span>
+            </div>
+            <div class="bl-stat-bar-bg"><div class="bl-stat-bar-fill" style="width:68%;"></div></div>
+            <div class="bl-stat-note">Based on a 60-day placebo-controlled clinical study</div>
+          </div>
+
+          <div class="bl-stat-row">
+            <div class="bl-stat-labels">
+              <span>Reported easier, deeper breathing</span>
+              <span class="bl-stat-ratio">4 in 5</span>
+            </div>
+            <div class="bl-stat-bar-bg"><div class="bl-stat-bar-fill" style="width:79%;"></div></div>
+            <div class="bl-stat-note">Based on a 60-day placebo-controlled clinical study</div>
+          </div>
+        </div>
+
+        <!-- FIRST CTA -->
+        <div class="bl-cta-box">
+          <div class="bl-cta-title">Ready to Try BetterLungs&reg;?</div>
+          <div class="bl-cta-subtitle">Results build with consistent daily use. Give it at least 30 days.</div>
+          <a href="{{ product_url }}" target="_blank" rel="noopener noreferrer" class="bl-cta-btn">Check Availability Now</a>
+          <div class="bl-cta-note">Free shipping available. 30-day money-back guarantee.</div>
+        </div>
+
+        <!-- SECTION: DAILY USE -->
+        <h2 class="bl-section-header">Why Daily Use Is Non-Negotiable</h2>
+
+        <p>One of the most common mistakes people make with herbal supplements is inconsistency.</p>
+        <p>They take them for a few days, don't notice an immediate dramatic change, and stop.</p>
+        <p><strong>With BetterLungs&reg;, this is exactly the wrong approach.</strong></p>
+        <p>"The active compounds in mullein and chlorophyll need to accumulate in the body's tissues to reach effective levels," Dr. Chris explained.</p>
+        <p>"Think of it like watering a plant. One good watering doesn't transform it."</p>
+        <p><strong>"But water it every single day, and within a few weeks you see the difference."</strong></p>
+        <p>This is why Betterbrand recommends taking BetterLungs&reg; first thing every morning, at the same time each day, without skipping.</p>
+        <p>Building it into a morning routine, alongside coffee or breakfast, is the most reliable way to maintain consistency.</p>
+
+        <!-- STORE SHELF IMAGE -->
+        <figure class="bl-figure">
+          <img src="{{ 'bl-mullein-store-shelf.webp' | asset_url }}" alt="BetterLungs® Mullein + Chlorophyll on a pharmacy shelf" />
+          <figcaption class="bl-figcaption">
+            BetterLungs&reg; is available online through the Betterbrand website. Demand has been high and stock has been limited.
+          </figcaption>
+        </figure>
+
+        <p>Gary Mitchell now takes his BetterLungs&reg; every morning before his first cup of coffee.</p>
+        <p>"It's the first thing I do," he said. "I don't even think about it anymore. It's just part of my day."</p>
+        <p>He's now eight months in. The results, he says, have continued to improve even past the three-month mark.</p>
+        <p>"I went hiking last fall with my grandson. We did four miles."</p>
+        <p><strong>"I kept up with a 14-year-old. I couldn't have done that two years ago."</strong></p>
+        <p>"I genuinely feel like I got a piece of my life back."</p>
+
+        <!-- SECTION: WHAT MAKES BETTERBRAND DIFFERENT -->
+        <h2 class="bl-section-header">What Makes Betterbrand Different</h2>
+
+        <!-- FLAT LAY IMAGE -->
+        <figure class="bl-figure">
+          <img src="{{ 'bl-mullein-table-flatlay.webp' | asset_url }}" alt="BetterLungs® Mullein + Chlorophyll tincture with mullein leaves" />
+          <figcaption class="bl-figcaption">
+            The BetterLungs&reg; formula uses liquid chlorophyll from Alfalfa (Medicago sativa) alongside standardized mullein leaf extract.
+          </figcaption>
+        </figure>
+
+        <p>Most mullein supplements on the market are dried leaf powder in a capsule.</p>
+        <p>They're cheap to manufacture. They're easy to find. <strong>And they're far less bioavailable than a liquid tincture.</strong></p>
+        <p>Betterbrand took a different approach from the start.</p>
+        <p>Dr. Chris, a pharmacist who served as a Combat Medic and Infantry Officer in the US Army before earning his Doctor of Pharmacy degree, understood that delivery method matters as much as the ingredient itself.</p>
+        <p>"I've seen too many people spend money on supplements that their body barely absorbs," he said.</p>
+        <p>"We built BetterLungs&reg; as a tincture specifically because the science supports it."</p>
+        <p><strong>The formula is alcohol-free, made in the USA in an FDA-registered, GMP-certified facility, and designed for daily long-term use.</strong></p>
+        <p>It contains no fillers, no artificial ingredients, and no proprietary blends. The label shows exactly what's in it and how much.</p>
+
+        <!-- SECOND CTA -->
+        <div class="bl-cta-box">
+          <div class="bl-cta-title">See If BetterLungs&reg; Is Still Available</div>
+          <div class="bl-cta-subtitle">Stock has been limited. Check current availability below.</div>
+          <a href="{{ product_url }}" target="_blank" rel="noopener noreferrer" class="bl-cta-btn">Check Availability Now</a>
+        </div>
+
+        <!-- SECTION: WHAT CUSTOMERS ARE SAYING -->
+        <h2 class="bl-section-header">What Customers Are Saying</h2>
+
+        <!-- TESTIMONIALS -->
+        <div class="bl-testimonial">
+          <div class="bl-testimonial-header">
+            <img src="{{ 'bl-avatar-gary.webp' | asset_url }}" alt="Gary M." class="bl-testimonial-avatar" />
+            <div>
+              <div class="bl-testimonial-name">Gary M.</div>
+              <div class="bl-testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            </div>
+            <div class="bl-verified-badge">Verified Purchase</div>
+          </div>
+          <p class="bl-testimonial-text">I went hiking with my grandson last weekend. Four miles. I kept up with a 14-year-old. Two months ago I would have had to turn back after one.</p>
+        </div>
+
+        <div class="bl-testimonial">
+          <div class="bl-testimonial-header">
+            <img src="{{ 'bl-avatar-lecount.webp' | asset_url }}" alt="Lecount J." class="bl-testimonial-avatar" />
+            <div>
+              <div class="bl-testimonial-name">Lecount J.</div>
+              <div class="bl-testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            </div>
+            <div class="bl-verified-badge">Verified Purchase</div>
+          </div>
+          <p class="bl-testimonial-text">After 30 days I can honestly say mornings are different. Not perfect, but noticeably better. Going to keep taking it.</p>
+        </div>
+
+        <div class="bl-testimonial">
+          <div class="bl-testimonial-header">
+            <img src="{{ 'bl-avatar-susan.webp' | asset_url }}" alt="Susan M." class="bl-testimonial-avatar" />
+            <div>
+              <div class="bl-testimonial-name">Susan M.</div>
+              <div class="bl-testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            </div>
+            <div class="bl-verified-badge">Verified Purchase</div>
+          </div>
+          <p class="bl-testimonial-text">I just finished my second bottle and I feel better than I did on the first. The cumulative effect is real. I tell everyone I know about this.</p>
+        </div>
+
+        <!-- FACEBOOK-STYLE COMMENTS -->
+        <div class="bl-comments-section">
+          <div class="bl-comments-header">
+            <span class="bl-comments-title">Comments</span>
+            <span class="bl-comments-count">24 people commented</span>
+          </div>
+          <div class="bl-comment-input-row">
+            <div class="bl-comment-input-avatar"></div>
+            <div class="bl-comment-input-box">Add a comment...</div>
+          </div>
+
+          <!-- Comment 1: Dennis George -->
+          <div class="bl-comment">
+            <div class="bl-comment-row">
+              <img src="{{ 'bl-avatar-dennis.webp' | asset_url }}" alt="Dennis George" class="bl-comment-avatar" />
+              <div style="flex:1;">
+                <div class="bl-comment-bubble">
+                  <div class="bl-comment-name">Dennis George</div>
+                  <div class="bl-comment-text">I've been smoking since I was 13 years old. I'm 74 now. I've tried everything to feel better and nothing ever made a real difference. Started BetterLungs&reg; about 6 weeks ago and I genuinely feel like I can take a deeper breath than I have in years. My wife noticed before I did. Ordered two more bottles.</div>
+                </div>
+                <div class="bl-comment-actions">
+                  <a href="#" class="bl-comment-action">Like</a>
+                  <a href="#" class="bl-comment-action">Reply</a>
+                  <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 47</span>
+                  <span class="bl-comment-time">2 h</span>
+                </div>
+              </div>
+            </div>
+            <div class="bl-replies">
+              <div class="bl-reply-row">
+                <img src="{{ 'bl-avatar-wilma.webp' | asset_url }}" alt="Wilma Becker" class="bl-reply-avatar" />
+                <div style="flex:1;">
+                  <div class="bl-reply-bubble">
+                    <div class="bl-reply-name">Wilma Becker</div>
+                    <div class="bl-reply-text">Dennis, same story here. 61 years old, smoked for 30 years. This stuff is the real deal. Stick with it!</div>
+                  </div>
+                  <div class="bl-comment-actions">
+                    <a href="#" class="bl-comment-action">Like</a>
+                    <a href="#" class="bl-comment-action">Reply</a>
+                    <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 12</span>
+                    <span class="bl-comment-time">1 h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment 2: Laura D. -->
+          <div class="bl-comment">
+            <div class="bl-comment-row">
+              <img src="{{ 'bl-avatar-laura.webp' | asset_url }}" alt="Laura D." class="bl-comment-avatar" />
+              <div style="flex:1;">
+                <div class="bl-comment-bubble">
+                  <div class="bl-comment-name">Laura D.</div>
+                  <div class="bl-comment-text">I was honestly skeptical. I've bought so many supplements that did nothing. But after about 3 weeks I noticed I wasn't waking up with that heavy chest feeling anymore. I sleep through the night now. My husband started taking it too.</div>
+                </div>
+                <div class="bl-comment-actions">
+                  <a href="#" class="bl-comment-action">Like</a>
+                  <a href="#" class="bl-comment-action">Reply</a>
+                  <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 38</span>
+                  <span class="bl-comment-time">3 h</span>
+                </div>
+              </div>
+            </div>
+            <div class="bl-replies">
+              <div class="bl-reply-row">
+                <img src="{{ 'bl-avatar-susan.webp' | asset_url }}" alt="Susan M." class="bl-reply-avatar" />
+                <div style="flex:1;">
+                  <div class="bl-reply-bubble">
+                    <div class="bl-reply-name">Susan M.</div>
+                    <div class="bl-reply-text">Laura, how long before you noticed a difference? I just ordered mine.</div>
+                  </div>
+                  <div class="bl-comment-actions">
+                    <a href="#" class="bl-comment-action">Like</a>
+                    <a href="#" class="bl-comment-action">Reply</a>
+                    <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 5</span>
+                    <span class="bl-comment-time">2 h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment 3: Terry W. -->
+          <div class="bl-comment">
+            <div class="bl-comment-row">
+              <img src="{{ 'bl-avatar-terry.webp' | asset_url }}" alt="Terry W." class="bl-comment-avatar" />
+              <div style="flex:1;">
+                <div class="bl-comment-bubble">
+                  <div class="bl-comment-name">Terry W.</div>
+                  <div class="bl-comment-text">My son bought this for me after he saw it online. I was doubtful but I gave it a fair shot. By the end of the first bottle I felt noticeably better. Less congestion in the morning, easier to get going. Now I'm on my second bottle and I feel even better than the first. The improvement keeps building.</div>
+                </div>
+                <div class="bl-comment-actions">
+                  <a href="#" class="bl-comment-action">Like</a>
+                  <a href="#" class="bl-comment-action">Reply</a>
+                  <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 29</span>
+                  <span class="bl-comment-time">4 h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment 4: Jon H. -->
+          <div class="bl-comment">
+            <div class="bl-comment-row">
+              <img src="{{ 'bl-avatar-jon.webp' | asset_url }}" alt="Jon H." class="bl-comment-avatar" />
+              <div style="flex:1;">
+                <div class="bl-comment-bubble">
+                  <div class="bl-comment-name">Jon H.</div>
+                  <div class="bl-comment-text">I've been taking this for two months now. The first month I thought maybe it was working but I wasn't sure. The second month I was sure. There's a real cumulative effect. Don't give up after two weeks like I almost did.</div>
+                </div>
+                <div class="bl-comment-actions">
+                  <a href="#" class="bl-comment-action">Like</a>
+                  <a href="#" class="bl-comment-action">Reply</a>
+                  <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 22</span>
+                  <span class="bl-comment-time">5 h</span>
+                </div>
+              </div>
+            </div>
+            <div class="bl-replies">
+              <div class="bl-reply-row">
+                <img src="{{ 'bl-avatar-gary.webp' | asset_url }}" alt="Gary M." class="bl-reply-avatar" />
+                <div style="flex:1;">
+                  <div class="bl-reply-bubble">
+                    <div class="bl-reply-name">Gary M.</div>
+                    <div class="bl-reply-text">Jon, totally agree. The second month is when it really kicked in for me too.</div>
+                  </div>
+                  <div class="bl-comment-actions">
+                    <a href="#" class="bl-comment-action">Like</a>
+                    <a href="#" class="bl-comment-action">Reply</a>
+                    <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 8</span>
+                    <span class="bl-comment-time">4 h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment 5: Lecount J. -->
+          <div class="bl-comment">
+            <div class="bl-comment-row">
+              <img src="{{ 'bl-avatar-lecount.webp' | asset_url }}" alt="Lecount J." class="bl-comment-avatar" />
+              <div style="flex:1;">
+                <div class="bl-comment-bubble">
+                  <div class="bl-comment-name">Lecount J.</div>
+                  <div class="bl-comment-text">Bought this after seeing it recommended in a health group. I'm 62 and have had issues with congestion and morning coughing for years. After 30 days I can honestly say mornings are different. Not perfect, but noticeably better. Going to keep taking it.</div>
+                </div>
+                <div class="bl-comment-actions">
+                  <a href="#" class="bl-comment-action">Like</a>
+                  <a href="#" class="bl-comment-action">Reply</a>
+                  <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 19</span>
+                  <span class="bl-comment-time">6 h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comment 6: Wilma Becker -->
+          <div class="bl-comment">
+            <div class="bl-comment-row">
+              <img src="{{ 'bl-avatar-wilma.webp' | asset_url }}" alt="Wilma Becker" class="bl-comment-avatar" />
+              <div style="flex:1;">
+                <div class="bl-comment-bubble">
+                  <div class="bl-comment-name">Wilma Becker</div>
+                  <div class="bl-comment-text">Has anyone tried this for more than 3 months? I want to know if the results keep improving.</div>
+                </div>
+                <div class="bl-comment-actions">
+                  <a href="#" class="bl-comment-action">Like</a>
+                  <a href="#" class="bl-comment-action">Reply</a>
+                  <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 14</span>
+                  <span class="bl-comment-time">7 h</span>
+                </div>
+              </div>
+            </div>
+            <div class="bl-replies">
+              <div class="bl-reply-row">
+                <img src="{{ 'bl-avatar-terry.webp' | asset_url }}" alt="Terry W." class="bl-reply-avatar" />
+                <div style="flex:1;">
+                  <div class="bl-reply-bubble">
+                    <div class="bl-reply-name">Terry W.</div>
+                    <div class="bl-reply-text">Wilma, I'm at 3 months now and yes it keeps getting better. The improvement is gradual but it's real.</div>
+                  </div>
+                  <div class="bl-comment-actions">
+                    <a href="#" class="bl-comment-action">Like</a>
+                    <a href="#" class="bl-comment-action">Reply</a>
+                    <span class="bl-comment-likes"><span class="bl-like-badge">&#128077;</span> 9</span>
+                    <span class="bl-comment-time">6 h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bl-view-more"><a href="#">View more comments</a></div>
+        </div>
+
+        <!-- FINAL CTA -->
+        <div class="bl-cta-box bl-cta-box-final">
+          <div class="bl-cta-title">Try BetterLungs&reg; Mullein + Chlorophyll</div>
+          <div class="bl-cta-subtitle">Formulated by a pharmacist. Made in the USA. Results build with consistent daily use.</div>
+          <a href="{{ product_url }}" target="_blank" rel="noopener noreferrer" class="bl-cta-btn">Check Availability Now</a>
+          <div class="bl-cta-note">Free shipping available. 30-day money-back guarantee.</div>
+        </div>
+
+        <!-- DISCLAIMER -->
+        <div class="bl-disclaimer">
+          <strong>ADVERTISING DISCLOSURE:</strong> This article is a paid advertisement. The story and characters depicted are illustrative. Individual results will vary.
+          <br /><br />
+          <strong>FDA DISCLAIMER:</strong> These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. The information provided in this article is for educational and informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you have read in this article.
+          <br /><br />
+          Results mentioned are not typical. Testimonials reflect individual experiences and may not represent the results of all users. Betterbrand BetterLungs&reg; Mullein + Chlorophyll is a dietary supplement. Keep out of reach of children. Consult your healthcare provider before use if you are pregnant, nursing, taking medications, or have a medical condition.
+        </div>
+
+      </div><!-- /.bl-body -->
+    </article><!-- /.bl-article -->
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="bl-sidebar">
+
+      <!-- PRODUCT CARD -->
+      <div class="bl-sidebar-card">
+        <div class="bl-sidebar-card-header teal">Featured Product</div>
+        <img src="{{ 'bl-tinc-with-dropper.webp' | asset_url }}" alt="BetterLungs® Mullein + Chlorophyll" class="bl-sidebar-product-img" />
+        <div class="bl-sidebar-card-body">
+          <div class="bl-sidebar-product-name">BetterLungs&reg; Mullein + Chlorophyll Tincture</div>
+          <div class="bl-sidebar-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="bl-sidebar-product-desc">Pharmacist-formulated liquid tincture. 1 month supply. Results build with daily use.</div>
+          <a href="{{ product_url }}" target="_blank" rel="noopener noreferrer" class="bl-sidebar-btn">Check Availability</a>
+        </div>
+      </div>
+
+      <!-- CLINICAL STATS SIDEBAR -->
+      <div class="bl-sidebar-card">
+        <div class="bl-sidebar-card-header green">Customer Results at 60 Days</div>
+        <div class="bl-sidebar-card-body">
+          <div class="bl-sidebar-stat">
+            <div class="bl-sidebar-stat-labels"><span>Less morning coughing</span><span class="bl-sidebar-stat-ratio">8 in 10</span></div>
+            <div class="bl-sidebar-stat-bar-bg"><div class="bl-sidebar-stat-bar-fill" style="width:82%;"></div></div>
+          </div>
+          <div class="bl-sidebar-stat">
+            <div class="bl-sidebar-stat-labels"><span>Easier breathing</span><span class="bl-sidebar-stat-ratio">7 in 10</span></div>
+            <div class="bl-sidebar-stat-bar-bg"><div class="bl-sidebar-stat-bar-fill" style="width:74%;"></div></div>
+          </div>
+          <div class="bl-sidebar-stat">
+            <div class="bl-sidebar-stat-labels"><span>Better sleep</span><span class="bl-sidebar-stat-ratio">3 in 4</span></div>
+            <div class="bl-sidebar-stat-bar-bg"><div class="bl-sidebar-stat-bar-fill" style="width:76%;"></div></div>
+          </div>
+          <div class="bl-sidebar-stat">
+            <div class="bl-sidebar-stat-labels"><span>Less congestion</span><span class="bl-sidebar-stat-ratio">7 in 10</span></div>
+            <div class="bl-sidebar-stat-bar-bg"><div class="bl-sidebar-stat-bar-fill" style="width:71%;"></div></div>
+          </div>
+          <div class="bl-sidebar-stat-note">Based on customer survey of verified purchasers</div>
+        </div>
+      </div>
+
+      <!-- MINI TESTIMONIALS -->
+      <div class="bl-sidebar-card">
+        <div class="bl-sidebar-card-header teal">What People Are Saying</div>
+        <div class="bl-sidebar-card-body">
+          <div class="bl-sidebar-mini-testimonial">
+            <img src="{{ 'bl-avatar-lecount.webp' | asset_url }}" alt="Lecount J." class="bl-sidebar-mini-avatar" />
+            <div>
+              <div class="bl-sidebar-mini-name">Lecount J.</div>
+              <div class="bl-sidebar-mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="bl-sidebar-mini-text">"After 30 days I can honestly say mornings are different. Not perfect, but noticeably better."</div>
+            </div>
+          </div>
+          <div class="bl-sidebar-mini-testimonial">
+            <img src="{{ 'bl-avatar-susan.webp' | asset_url }}" alt="Susan M." class="bl-sidebar-mini-avatar" />
+            <div>
+              <div class="bl-sidebar-mini-name">Susan M.</div>
+              <div class="bl-sidebar-mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <div class="bl-sidebar-mini-text">"Just finished my second bottle and I feel even better than the first. The cumulative effect is real."</div>
+            </div>
+          </div>
+          <a href="{{ product_url }}" target="_blank" rel="noopener noreferrer" class="bl-sidebar-btn">Try BetterLungs&reg; Today</a>
+        </div>
+      </div>
+
+      <!-- DR. CHRIS SIDEBAR -->
+      <div class="bl-sidebar-card">
+        <div class="bl-sidebar-card-header green">About the Formulator</div>
+        <img src="{{ 'bl-dr-chris-branded.webp' | asset_url }}" alt="Dr. Chris, PharmD" class="bl-sidebar-chris-img" />
+        <div class="bl-sidebar-card-body">
+          <div class="bl-sidebar-chris-name">Dr. Chris, PharmD</div>
+          <div class="bl-sidebar-chris-bio">US Army veteran, Combat Medic, and Infantry Officer. After retiring from the military, he earned his Doctor of Pharmacy degree and founded Betterbrand with a personal mission rooted in his family's own respiratory health struggles.</div>
+        </div>
+      </div>
+
+    </aside><!-- /.bl-sidebar -->
+
+  </div><!-- /.bl-article-grid -->
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="bl-footer">
+  <div class="bl-footer-inner">
+    <img src="{{ 'bl-betterbrand-logo.png' | asset_url }}" alt="Betterbrand" class="bl-footer-logo" />
+    <div class="bl-footer-text">
+      &copy; 2026 The Wellness Tribune. This is a paid advertisement for Betterbrand. These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     STICKY BOTTOM CTA
+     ============================================================ -->
+<div id="bl-sticky-cta">
+  <img src="{{ 'bl-tinc-with-dropper.webp' | asset_url }}" alt="BetterLungs®" class="bl-sticky-product-img" />
+  <div class="bl-sticky-info">
+    <div class="bl-sticky-name">BetterLungs&reg; Mullein + Chlorophyll</div>
+    <div class="bl-sticky-tagline">Pharmacist-formulated. Results build with daily use.</div>
+  </div>
+  <a href="{{ product_url }}" target="_blank" rel="noopener noreferrer" class="bl-sticky-btn">Check Availability</a>
+  <button class="bl-sticky-close" id="bl-sticky-close" aria-label="Close">&times;</button>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT — Sticky CTA scroll trigger
+     ============================================================ -->
+<script>
+  (function() {
+    var stickyCTA = document.getElementById('bl-sticky-cta');
+    var closeBtn  = document.getElementById('bl-sticky-close');
+    var dismissed = false;
+
+    function onScroll() {
+      if (dismissed) return;
+      var scrolled = window.scrollY || document.documentElement.scrollTop;
+      var total    = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0 && (scrolled / total) >= 0.50) {
+        stickyCTA.classList.add('visible');
+      }
+    }
+
+    closeBtn.addEventListener('click', function() {
+      dismissed = true;
+      stickyCTA.classList.remove('visible');
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+

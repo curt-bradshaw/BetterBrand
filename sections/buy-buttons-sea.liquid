@@ -1,0 +1,656 @@
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{{ 'collapsible-content.css' | asset_url | stylesheet_tag }}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="collapsible-content collapsible-content-v2 collapsible-{{ section.settings.layout }}-layout isolate{% if section.settings.layout == 'section' %} page-width{% elsif section.settings.layout == 'none' %} content-container content-container--full-width{% endif %}">
+    <div class="collapsible-content__wrapper section-{{ section.id }}-padding{% if section.settings.layout == 'section' %} content-container color-{{ section.settings.container_color_scheme }} gradient{% endif %}">
+      <div class="on-desk-cu">
+        <div class="ntg-desktop-block desk-other-sec">
+          <p style="text-align: center;">
+            <span style="font-weight: bold; font-size: 18px; white-space: pre-wrap;"
+              ><span style="font-size: 14px; white-space: pre-wrap;"
+                ><meta charset="utf-8"> <span></span><span></span
+                ><span style="font-weight: bold; font-size: 16px; white-space: pre-wrap;"
+                  >YOUR ALL-IN-ONE SOLUTION!</span
+                ></span
+              ></span
+            >
+          </p>
+          <p style="text-align: center;">
+            <span style="font-weight: bold; font-size: 18px; white-space: pre-wrap;"
+              ><span style="font-size: 14px; white-space: pre-wrap;"
+                ><span style="font-weight: bold; font-size: 16px; white-space: pre-wrap;"
+                  ><meta charset="utf-8"> <span></span><span></span
+                  ><span style="font-size: 15px; white-space: pre-wrap;"
+                    >5 Products. One Solution. Zero Chemicals.</span
+                  ></span
+                ></span
+              ></span
+            >
+          </p>
+
+          <div class="flx-center">
+            <p>
+              <span style="font-weight: bold; font-size: 18px; white-space: pre-wrap;"
+                ><span style="font-size: 14px; white-space: pre-wrap;"
+                  ><span style="font-weight: bold; font-size: 16px; white-space: pre-wrap;"
+                    ><span style="font-size: 15px; white-space: pre-wrap;"
+                      ><img
+                        src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Third_Party_1_86c2e4a2-f8ca-4d2b-ab9a-b244f712d8d9.png?v=1760965767"
+                        alt=""></span></span></span
+              ></span>
+            </p>
+            <p>
+              <span style="font-weight: bold; font-size: 18px; white-space: pre-wrap;"
+                ><span style="font-size: 14px; white-space: pre-wrap;"
+                  ><span style="font-weight: bold; font-size: 16px; white-space: pre-wrap;"
+                    ><span style="font-size: 15px; white-space: pre-wrap;"
+                      ><img
+                        src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Group_1_1.png?v=1760965782"
+                        alt=""></span></span></span
+              ></span>
+            </p>
+            <p>
+              <span style="font-weight: bold; font-size: 18px; white-space: pre-wrap;"
+                ><span style="font-size: 14px; white-space: pre-wrap;"
+                  ><span style="font-weight: bold; font-size: 16px; white-space: pre-wrap;"
+                    ><span style="font-size: 15px; white-space: pre-wrap;"
+                      ><img
+                        src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/GMP_1_bfb62a8d-cd83-4f67-9190-cfc06258a88f.png?v=1760965780"
+                        alt=""
+                      > </span></span></span
+              ></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="sticky-form">
+  <div class="stk-itms">
+    
+    <div>
+      <span class="stk-items__item">Free Lung Detox Product of choice</span>
+      <span class="stk-items__item">with every Seasonal Wellness Box</span>
+    </div>
+  </div>
+  <product-form
+    class="product-form"
+    data-hide-errors="{{ gift_card_recipient_feature_active }}"
+    data-section-id="{{ section.id }}"
+  >
+    <div class="product-form__error-message-wrapper" role="alert" hidden>
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="icon icon-error"
+        viewBox="0 0 13 13"
+      >
+        <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+        <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+        <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+        <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+      </svg>
+      <span class="product-form__error-message"></span>
+    </div>
+          {%- assign product_form_id = 'product-form-' | append: section.id | append:  '-' | append: product.id -%}
+
+    {%- form 'product',
+      product,
+      id: product_form_id,
+      class: 'form',
+      novalidate: 'novalidate',
+      data-type: 'add-to-cart-form',
+      data-loop-product-id: product.id
+    -%}
+      <input
+        type="hidden"
+        name="id"
+        value="{{ product.selected_or_first_available_variant.id }}"
+        {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+          disabled
+        {% endif %}
+        class="product-variant-id"
+      >
+
+      {%- if gift_card_recipient_feature_active -%}
+        {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
+      {%- endif -%}
+
+      <div class="product-form__buttons">
+        {%- liquid
+          assign check_against_inventory = true
+          if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+            assign check_against_inventory = false
+          endif
+          if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+            assign quantity_rule_soldout = true
+          endif
+        -%}
+        <button
+           id="ProductSubmitButton-{{ section.id }}-{{ product.id }}"
+          type="button"
+          name="add"
+          onclick="delayedAddToCart('{{ section.id }}', '{{ product.id }}')"
+          class="product-form__submit button button--full-width ntg-btn"
+          {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+            disabled
+          {% endif %}
+        >
+          <span>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_1_85)">
+                <path d="M0.75 0.75H3.75L5.76 10.7925C5.82858 11.1378 6.01643 11.448 6.29066 11.6687C6.56489 11.8895 6.90802 12.0067 7.26 12H14.55C14.902 12.0067 15.2451 11.8895 15.5193 11.6687C15.7936 11.448 15.9814 11.1378 16.05 10.7925L17.25 4.5H4.5M7.5 15.75C7.5 16.1642 7.16421 16.5 6.75 16.5C6.33579 16.5 6 16.1642 6 15.75C6 15.3358 6.33579 15 6.75 15C7.16421 15 7.5 15.3358 7.5 15.75ZM15.75 15.75C15.75 16.1642 15.4142 16.5 15 16.5C14.5858 16.5 14.25 16.1642 14.25 15.75C14.25 15.3358 14.5858 15 15 15C15.4142 15 15.75 15.3358 15.75 15.75Z" stroke="#233F21" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_1_85">
+                  <rect width="18" height="18" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+            {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- else -%}
+              Add to cart
+            {%- endif -%}
+          </span>
+          {%- render 'loading-spinner' -%}
+        </button>
+
+        {%- if show_dynamic_checkout -%}
+          {{ form | payment_button }}
+        {%- endif -%}
+      </div>
+    {%- endform -%}
+  </product-form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    function checkScroll() {
+      const certainDiv = document.getElementById('shopify-section-{{ section.id }}');
+      const stickyBar = document.getElementById('sticky-form');
+
+      // Get the bottom position of the "certainDiv"
+      const certainDivBottom = certainDiv.offsetTop + certainDiv.offsetHeight;
+
+      // Check if scrolled past the "certainDiv"
+      if (window.scrollY > certainDivBottom) {
+        stickyBar.style.bottom = '0'; // Slide the bar in
+      } else {
+        stickyBar.style.bottom = '-116px'; // Hide the bar again
+      }
+    }
+    checkScroll();
+    window.addEventListener('scroll', function () {
+      checkScroll();
+    });
+  });
+</script>
+{%- style -%}
+
+
+.temp-product-seasonal-pdp .product-form__submit {
+margin-bottom: 0 !important;
+}
+
+@media screen and (max-width: 767px) {
+  .stk-items__item {
+    font-size: 12px !important;
+  }
+  #sticky-form .product-form__submit {
+    font-size: 12px !important;
+    padding: 7px 12px !important;
+  }
+}
+
+   #shopify-section-{{ section.id }}{
+     .collapsible-content-v2 {
+       padding:0;
+     }
+
+
+
+
+      #sticky-form {
+        position: fixed;
+        z-index: 11;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        font-family: Inter;
+        background: #fee876;
+        padding: 17px 0 21px;
+        transition: all 0.5s ease-in-out;
+        font-size: 24px;
+        font-weight: bold;
+        color: #234134;
+        line-height: 18px;
+        align-items: center;
+        gap: 5px;
+
+        @media screen and (min-width: 750px) {
+          
+          margin: auto;
+          padding: 20px 40px;
+          border-radius: 20px 20px 0px 0px;
+          /* left: 50%;
+          transform: translate(-50%, 0%); */
+          gap: 40px;
+        }
+
+        .ntg-btn {
+          padding: 8px 14px;
+          border-radius: 8px;
+          border: 1.5px solid #233F21;
+          background: #F0FFE9;
+          box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.10);
+          color: #233F21;
+          position: relative;
+          font-size: 16px;
+
+          span {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
+        }
+
+        .ntg-btn:before,
+        .ntg-btn:after{
+          display:none;
+        }
+
+        .stk-itms{
+          display:flex;
+          gap: 5px;
+          justify-content:center;
+          img{
+              width: 25px !important;
+              height: 25px !important;
+            }
+          div{
+            display:flex;
+            flex-direction:column;
+
+            strong{
+              font-family: Suisse_Intl_Mono !important;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: 25px; /* 178.571% */
+            }
+            span{
+              font-family: Inter;
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 130%; /* 130.769% */
+            }
+          }
+        }
+
+      }
+   }
+
+  .section-{{ section.id }}-padding {
+   padding: 0;
+   margin-top:0;
+
+    border-radius: 5px;
+
+
+   .collapsible-content__wrapper{
+       padding:0;
+   }
+
+
+    .buy_buttons_v2{
+     margin-top: 10px;
+    }
+
+    .ntg-add-form-no-margin{
+     margin:0 !important;
+    }
+
+    .ntg-btn {
+       border-radius: 8px;
+       border: 1.5px solid #233F21;
+       background: #FEE876;
+       box-shadow: 0 -1px 3px -1px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.10);
+       color: #233F21;
+       position: relative;
+       span {
+       display: flex;
+       align-items: center;
+       gap: 5px;
+       justify-content: center;
+       }
+   }
+
+   .ntg-btn:before,
+   .ntg-btn:after{
+     display:none;
+   }
+
+
+    .collapsible-content__heading{
+       color: #233F21;
+       font-family: Suisse_Intl_Mono !important;
+       text-shadow: 1px 0px 0px #ffd700;
+       font-size: 16px;
+       font-style: normal;
+       font-weight: 700;
+       line-height: 25px; /* 178.571% */
+       @media screen and (min-width: 750px) {
+        font-size: 24px;
+        line-height: 25px; /* 104.167% */
+       }
+    }
+     .progress-container-liner{
+         display: flex !important;
+         justify-content: center;
+         flex-direction: column;
+         position:relative;
+
+
+
+         .progress-bar {
+             margin-bottom: 0;
+             display:none;
+               position:relative;
+               background:#234134 !important;
+           }
+
+           .progress-bar-bg{
+               position: absolute;
+               content: "";
+               background:#FEE876;
+               width: 100%;
+               height: 10px;
+               z-index: 0;
+               top: 0;
+               border-radius: 8px;
+               display: block;
+           }
+
+           .percentage{
+             margin-top: 0;
+             margin-bottom: 10px;
+           }
+       }
+
+    @media screen and (min-width: 750px) {
+
+     .grid{
+       .grid__item:first-child{
+         padding-right:20px;
+       }
+       .grid__item:last-child{
+         padding-left:20px;
+       }
+     }
+
+        ul {
+            padding-left: 0 !important;
+            li{
+            font-size:16px !important;
+            line-height: 125% !important;
+            margin-bottom: 10px;
+            }
+        }
+
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+
+        .collapsible-content-wrapper-narrow{
+            max-width: 100%;
+        }
+
+        summary:hover .accordion__title{
+            text-decoration: none !important;
+        }
+
+        .grid__item {
+            display: flex;
+            flex-direction:column;
+            gap:20px;
+            justify-content: space-between;
+            position:relative;
+
+            .accordion{
+              max-width: 100%;
+              width: 100%;
+              border: none;
+              border-bottom: 2px solid #F2CB49;
+            }
+        }
+
+
+        .on-desk-cu{
+          max-width:750px;
+          margin:auto;
+          text-align:center;
+
+          .ntg-desktop-block.desk-other-sec{
+
+            p:first-of-type span{
+              color: #233F21;
+              font-family: Suisse_Intl_Mono !important;
+              font-size: 28px !important;
+              font-style: normal;
+              font-weight: 700;
+              line-height: 35px; /* 125% */
+              text-shadow: 1px 0px 0px #ffd700;
+            }
+
+
+
+           >  p:nth-of-type(2) span{
+              color: #233F21;
+              text-align: center;
+              font-family: Inter;
+              font-size: 24px !important;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 37px; /* 154.167% */
+              max-width: 312px;
+              display: flex;
+              margin: auto;
+            }
+
+            span:empty{
+              display:none !important;
+            }
+          }
+
+          .selection-itm-container{
+
+          }
+
+        }
+
+    }
+
+     @media screen and (max-width: 768px) {
+       .grid--2-col {
+         flex-direction: column-reverse;
+         .grid__item{
+           width:100%;
+           max-width:100%;
+
+           .img-change{
+             display:none;
+           }
+
+           .accordion{
+             margin-bottom:24px;
+           }
+        }
+       }
+
+
+     }
+
+    .collapsible-content-wrapper-narrow{
+      padding-right: 1rem;
+      padding-left: 1rem;
+    }
+
+    ul {
+      padding-left:0;
+
+        li{
+        color: #234134;
+        font-family: Inter;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 15px; /* 115.385% */
+      }
+    }
+
+
+
+
+
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Buy Btns seasonal",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:sections.collapsible_content.settings.caption.label"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "t:sections.collapsible_content.settings.heading.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.collapsible_content.settings.heading_alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.collapsible_content.settings.heading_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.collapsible_content.settings.heading_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.collapsible_content.settings.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.collapsible_content.settings.layout.label",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.collapsible_content.settings.layout.options__1.label"
+        },
+        {
+          "value": "row",
+          "label": "t:sections.collapsible_content.settings.layout.options__2.label"
+        },
+        {
+          "value": "section",
+          "label": "t:sections.collapsible_content.settings.layout.options__3.label"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "background-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "container_color_scheme",
+      "label": "t:sections.collapsible_content.settings.container_color_scheme.label",
+      "info": "t:sections.collapsible_content.settings.container_color_scheme.info",
+      "default": "background-2"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_collapsible_row",
+      "default": false,
+      "label": "t:sections.collapsible_content.settings.open_first_collapsible_row.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    },
+    {
+      "type": "image_picker",
+      "id": "main_img_p_s_1",
+      "label": "main image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Buy Btns seasonal"
+    }
+  ]
+}
+{% endschema %}

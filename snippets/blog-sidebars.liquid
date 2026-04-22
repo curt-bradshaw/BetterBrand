@@ -1,0 +1,639 @@
+<!-- start blog-sidebars.liquid (SNIPPET) -->
+<style>
+  {%- if section.settings.sidebar_left -%}
+    .grid.blog-grid {
+      flex-direction: row-reverse;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.fixed_sidebar != true -%}
+    .blog-grid > .sidebar {
+      position: static;
+    }
+  {%- else -%}
+    .blog-grid > .sidebar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 50px;
+    }
+  {%- endif -%}
+
+  .sidebar {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .title-recents {
+    padding-bottom: 16px;
+  }
+
+  .sidebar_list_item, 
+  .sidebarrow3 .row-text {
+    text-align: {{ section.settings.sidebar_text_align }};
+    font-size: 16px;
+  }
+  
+  .sidebar-title {
+    height: fit-content;
+    display: block;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.7px;
+    margin: 0;
+    padding: 0 0 17.6px 0;
+    color: {{ settings.color_bar_text_blog }};
+    background: transparent;
+    text-align: {{ section.settings.sidebar_text_align }};
+  }
+
+  .sidebar_list_item {
+    list-style: none;
+    border-top: 1px solid #000;
+    padding: 8px 0 6.5px;
+  }
+
+  .sidebar_list_item:last-child {
+    border-bottom: 1px solid #000;
+  }
+
+  .sidebar_list_item a{
+    color: {{ settings.color_bar_text_blog }};
+    font-size: 18px;
+    line-height: 25.2px;
+  }
+
+  .sidebarrow5 .sidebar_list_item a {
+    line-height: 25.6px;
+  }
+
+  .sidebarrow5 .sidebar-title {
+    padding-bottom: 18px;
+  } 
+
+  .sidebar_list_item .list-link {
+    color: {{ settings.color_bar_text_blog }};
+  }
+
+  .sidebarrow4 {
+    margin-bottom: 26px;
+  }
+
+  .sidebarrow4 .sidebar-title {
+    font-family: Bookmania, serif;
+    font-weight: 700;
+    color: #234134;
+    text-transform: none;
+    padding-bottom: 10px;
+  }
+
+  .sidebarrow5 {
+    margin-bottom: 26px;
+  }
+
+  .sidebarrow5 .sidebar-title {
+    font-family: Bookmania, serif;
+    font-weight: 700;
+    color: #234134;
+    text-transform: none;
+    padding-bottom: 10px;
+  }
+
+  .sidebar-recent-post {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .sidebar-recent-post__image-link {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .sidebar-recent-post__image-link img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .sidebar-recent-post__link {
+    color: #234134;
+    font-size: 16px;
+    line-height: 1.1;
+    text-decoration: none;
+    text-align: left;
+  }
+
+  .sidebar-recent-post__link:hover {
+    text-decoration: underline;
+  }
+  
+  .sidebarrow3 {
+    padding: 5px 0 5px 0;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .sidebarrow3 .sidebar-title {
+    padding: 0;
+    line-height: 1.2;
+    color: #234134;
+    font-family: Bookmania, serif;
+  }
+
+  .sidebarrow3 .row-text {
+    color: #234134;
+    margin-bottom: 9px;
+    word-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .sidebarrow3 .email-signup-form {
+    border-radius: 3px;
+    height: fit-content;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .sidebarrow3 .klaviyo_condensed_styling .klaviyo_inputs_wrapper {
+    height: fit-content;
+    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    display: flex;
+  }
+
+  .sidebarrow3 .klaviyo_condensed_styling .klaviyo_field_group {
+    flex: 1;
+  }
+
+  .sidebarrow3 .klaviyo_condensed_styling input[type=email] {
+    color: #234134;
+    height: 30px;
+    border: none;
+    background: transparent;
+    padding: 0 5px 0 9px;
+    letter-spacing: 0px;
+    font-size: 12px;
+  }
+
+  .sidebarrow3 .klaviyo_condensed_styling input[type=email]::placeholder {
+    color: #234134;
+    font-size: 12px;
+    letter-spacing: 0px;
+  }
+
+  .sidebarrow3 .klaviyo_form_actions {
+    width: fit-content;
+    float: left;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .sidebarrow3 .newsletter-klaviyo .email-signup-form {
+    max-width: 336px;
+  }
+
+  .sidebarrow3 .newsletter-klaviyo .email-signup-form .klaviyo_form_actions button {
+    font-size: 0;
+    height: 30px;
+    border-radius: 100px;
+    padding: 0;
+    background-color: #F2CB49;
+    border: none!important;
+    width: fit-content;
+    padding: 0 15px;
+  }
+
+  .sidebarrow3 .newsletter-klaviyo .email-signup-form .klaviyo_form_actions button::before {
+    content: 'SEND';
+    font-size: 12px;
+    color: #252525;
+    text-transform: uppercase;
+  }
+
+  .sidebarrow3 .newsletter-klaviyo form .klaviyo_messages .success_message {
+    margin-top: 5px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .sidebarrow3 .newsletter-klaviyo form .klaviyo_messages .success_message .thank_you {
+    color: #FFFFFF;
+    margin-bottom: 5px;
+  }
+
+  .sidebarrow3 .newsletter-klaviyo form .klaviyo_messages .success_message .coupon_text {
+    font-size: 16px;
+  }
+
+  .sidebarrow3 .newsletter-klaviyo form .klaviyo_messages .error_message {
+    margin-top: 5px; 
+    margin-bottom: 0;
+  }
+
+  .sidebarrow5 ul.no-bullets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sidebarrow5 .sidebar_list_item {
+    height: 26px;
+    padding: 0 12px;
+    border-radius: 4px;
+    border: none;
+    margin: 0;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #F0FFE9;
+    font-size: 14px;
+  }
+
+  .sidebarrow5 .sidebar_list_item:nth-child(1) {
+    background-color: #1a4d3a;
+  }
+
+  .sidebarrow5 .sidebar_list_item:nth-child(2) {
+    background-color: #3F745D;
+  }
+
+  .sidebarrow5 .sidebar_list_item:nth-child(3) {
+    background-color: #5A9A7A;
+  }
+  .sidebarrow5 .sidebar_list_item:last-child {
+    border-bottom: none;
+  }
+
+  .sidebarrow5 .sidebar_list_item a {
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+  }
+
+  .sidebarrow5 .sidebar_list_item:nth-child(1),
+  .sidebarrow5 .sidebar_list_item:nth-child(2),
+  .sidebarrow5 .sidebar_list_item:nth-child(3),
+  .sidebarrow5 .sidebar_list_item:nth-child(1) a,
+  .sidebarrow5 .sidebar_list_item:nth-child(2) a,
+  .sidebarrow5 .sidebar_list_item:nth-child(3) a {
+    color: #FFFFFF;
+  }
+
+  .sidebarrow5 .sidebar_list_item:nth-child(4) a,
+  .sidebarrow5 .sidebar_list_item:nth-child(5) a {
+    color: #402823;
+  }
+
+  .sidebarrow5 .sidebar_list_item a:hover {
+    text-decoration: underline;
+  }
+
+  .sidebarrow5 .sidebar_list_item--hidden {
+    display: none;
+  }
+
+  .sidebarrow5.show-all .sidebar_list_item--hidden {
+    display: flex;
+  }
+
+  .sidebarrow5__see-all-button {
+    height: 26px;
+    padding: 0 12px;
+    background-color: #F0FFE9;
+    border: none;
+    border-radius: 4px;
+    color: #402823;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    margin: 0;
+  }
+
+  .sidebarrow5__see-all-button:hover {
+    background-color: #3F745D;
+    color: #FFFFFF;
+    text-decoration: underline;
+  }
+
+  .sidebarrow5__see-all-button.hidden {
+    display: none;
+  }
+
+  @media (max-width: 1279px) {
+    .blog-page__grid-item.grid-item--three-quarters {
+      width: 74.9%;
+    }
+  }
+
+  @media (max-width: 1019px) {
+    .sidebar {
+      max-width: unset;
+    }
+
+    .sidebar-title {
+      padding-bottom: 17px;
+    }
+
+    .sidebarrow3, .sidebarrow4, .sidebarrow5 {
+      margin-left: 0;
+    }
+
+    .sidebarrow4, .sidebarrow5 {
+      width: 100%;
+    }
+
+    .sidebarrow4 .sidebar-title {
+      line-height: 1.3;
+      padding-bottom: 14.3px;
+      padding-top: 6.1px;
+    }
+
+    .sidebar_list_item {
+      line-height: 165%;
+      padding: 8.1px 0 5.5px;
+    }
+
+    .sidebar_list_item a {
+      letter-spacing: 0;
+      line-height: 140%;
+    }
+
+    .sidebarrow5 .sidebar-title {
+      line-height: 1.3;
+      padding-bottom: 14.3px;
+      padding-top: 6.1px;
+    }
+
+    .sidebarrow5 .sidebar_list_item { 
+      height: 26px;
+      padding: 0 10px;
+      line-height: 1.2;
+    }
+
+    .sidebarrow5 .sidebar_list_item a {
+      font-size: 14px;
+    }
+
+    .sidebar-recent-post {
+      gap: 10px;
+    }
+
+    .sidebar-recent-post__link {
+      font-size: 16px;
+      line-height: 22.4px;
+    }
+
+    .sidebarrow3 {
+      display: flex;
+    }
+    
+    .sidebarrow3 .full {
+      width: 336px;
+    }
+   
+    .sidebarrow3 .desktop-row3 {
+      flex: 1;
+    }
+
+  }
+
+  @media (max-width: 767px) {
+    .sidebar-title {
+      font-size: 18px;
+    }
+
+    .sidebarrow4 {
+      margin-bottom: 7px;
+    }
+
+    .sidebarrow4 .sidebar-title {
+      padding-bottom: 15px;
+      letter-spacing: 0.7px;
+      padding-top: 5px;
+    }
+
+    .sidebar_list_item {
+      font-size: 14px;
+      line-height: 1;
+      padding: 7px 0 8px;
+    }
+
+    .sidebar_list_item a {
+      line-height: 1.43;
+      font-size: 14px;
+      display: block;
+    }
+
+    .sidebarrow5 .sidebar_list_item {
+      height: 26px;
+      padding: 0 10px;
+      line-height: 1.2;
+    }
+
+    .sidebarrow5 .sidebar_list_item a {
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .sidebarrow5 {
+      margin-bottom: 7px;
+    }
+
+    .sidebarrow5 .sidebar-title {
+      padding-bottom: 15px;
+      letter-spacing: 0.7px;
+      padding-top: 5px;
+    }
+
+    .sidebarrow5 .sidebar_list_item {
+      height: 26px;
+      padding: 0 10px;
+      line-height: 1.2;
+    }
+
+    .sidebarrow5 .sidebar_list_item a {
+      font-size: 14px;
+    }
+
+    .sidebar-recent-post {
+      gap: 8px;
+    }
+
+    .sidebar-recent-post__link {
+      font-size: 16px;
+      line-height: 1.43;
+    }
+
+    .sidebarrow3 {
+      flex-direction: column;
+      padding-top: 15px;
+    }
+    
+    .sidebarrow3 .full {
+      width: 100%;
+    }
+   
+    .sidebarrow3 .desktop-row3 {
+      flex: 1;
+    }
+
+    .sidebarrow3 .newsletter-klaviyo .email-signup-form {
+      max-width: 100%;
+    }
+  }
+</style>
+
+{%- for block in section.blocks -%}
+  {%- if  block.type == "newsletter" and settings.enable_klaviyo_id -%}
+    <div class="sidebarrow3">
+      <div class="desktop-row3">
+        <h3 class="row-title sidebar-title"> {%- if block.settings.sidebar_title == blank -%}{{ shop.name }}{%- else -%}{{ block.settings.sidebar_title }}{%- endif -%}</h3>
+
+        <p class="row-text">{{ block.settings.sidebar_text }}</p>
+      </div> 
+
+      {%- if block.settings.select_newsletter == "klaviyo" and settings.enable_klaviyo_id -%}
+        {%- render "newsletter-form-klaviyo" with klaviyo_id: settings.klaviyo_id, section_id: section.id -%}
+      {%- elsif block.settings.select_newsletter == "newsletter-default" -%}
+        {%- render "newsletter-form", section_id: section.id -%}
+      {%- elsif block.settings.select_newsletter == "newsletter-custom" -%}
+        <div class="custom-html">{{ settings.custom_newsletter_html }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if block.type == "recent_posts" -%}
+    <div class="sidebarrow4">
+      <h3 class="title-recents sidebar-title">{{ 'blogs.sidebar.recent_articles' | t }}</h3>
+
+      {%- for article in blogs[blog.handle].articles limit: 1 -%}
+        <div class="sidebar-recent-post">
+          {%- if article.image -%}
+            <a
+              title="{{ article.title | strip_html | escape }}"
+              href="{{ article.url | default: '#' }}"
+              class="sidebar-recent-post__image-link"
+            >
+              <img
+                id="sidebar-recent-{{ forloop.index }}"
+                src="{{ article.image | image_url: width: 400 }}"
+                srcset="{{ article.image | image_url: width: 400 }} 400w,
+                        {{ article.image | image_url: width: 1000 }} 1000w"
+                sizes="(min-width: 768px) and (max-width: 1019px) 1000px, 400px"
+                alt="{{ article.title | escape }}"
+                class="responsive-image"
+                width="400"
+                height="{{ 400 | divided_by: article.image.aspect_ratio | round }}"
+                loading="lazy"
+              >
+            </a>
+          {%- endif -%}
+          <a
+            title="{{ article.title | strip_html | escape }}"
+            id="sidebar-row4-link-{{ forloop.index }}"
+            class="sidebar-recent-post__link"
+            href="{{ article.url | default: '#' }}"
+          >
+            {{ article.title }}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if block.type == "categories" -%}
+    {%- if block.settings.filter_by_tags == blank -%}
+      {%- if blog.all_tags.size > 0 -%}
+        <div class="sidebarrow5" id="sidebarrow5-{{ block.id }}">
+          <h3 class="title-recents sidebar-title">{{ 'blogs.sidebar.categories' | t }}</h3>
+          <ul class="no-bullets">
+            {%- for tag in blog.all_tags -%}
+              {%- comment -%} Separate PascalCase words by adding space before uppercase letters {%- endcomment -%}
+              {%- assign formated_tag = tag | replace: "-", " " | replace: "_", " " -%}
+              {%- assign formated_tag = formated_tag | replace: "A", " A" | replace: "B", " B" | replace: "C", " C" | replace: "D", " D" | replace: "E", " E" | replace: "F", " F" | replace: "G", " G" | replace: "H", " H" | replace: "I", " I" | replace: "J", " J" | replace: "K", " K" | replace: "L", " L" | replace: "M", " M" | replace: "N", " N" | replace: "O", " O" | replace: "P", " P" | replace: "Q", " Q" | replace: "R", " R" | replace: "S", " S" | replace: "T", " T" | replace: "U", " U" | replace: "V", " V" | replace: "W", " W" | replace: "X", " X" | replace: "Y", " Y" | replace: "Z", " Z" -%}
+              {%- assign formated_tag = formated_tag | split: " " | join: " " | strip -%}
+              {%- if current_tags contains tag -%}
+                <li id="sidebar-row5-item-{{ forloop.index }}" class="sidebar_list_item {% if forloop.index > 4 %}sidebar_list_item--hidden{% endif %}">{{ formated_tag }}</li>
+              {%- else -%}
+                <li id="sidebar-row5-link-{{ forloop.index }}" class="sidebar_list_item {% if forloop.index > 4 %}sidebar_list_item--hidden{% endif %}"><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ formated_tag }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if blog.all_tags.size > 4 -%}
+              {% comment %} <li class="sidebar_list_item"> {% endcomment %}
+                <button type="button" class="sidebarrow5__see-all-button" onclick="toggleCategories('sidebarrow5-{{ block.id }}')">
+                  See All
+                </button>
+              {% comment %} </li> {% endcomment %}
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      {%- if blog.all_tags.size > 0 -%}
+        {%- assign list_filter_tags =  block.settings.filter_by_tags | split: ";" -%}
+        {%- assign filtered_tags_count = 0 -%}
+        {%- for tag in blog.all_tags -%}
+          {%- if list_filter_tags contains tag -%}
+            {%- assign filtered_tags_count = filtered_tags_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if filtered_tags_count > 0 -%}
+          <div class="sidebarrow5" id="sidebarrow5-filtered-{{ block.id }}">
+            <h3 class="title-recents sidebar-title">{{ 'blogs.sidebar.categories' | t }}</h3>
+            <ul class="no-bullets"> 
+              {%- assign tag_count = 0 -%}
+              {%- for tag in blog.all_tags -%}
+                {%- if list_filter_tags contains tag -%}
+                  {%- assign tag_count = tag_count | plus: 1 -%}
+                  <li id="sidebar-row5-link-{{ tag_count }}" class="sidebar_list_item {% if tag_count > 4 %}sidebar_list_item--hidden{% endif %}">{{ tag | link_to_tag: tag }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if filtered_tags_count > 4 -%}
+                <li class="sidebar_list_item">
+                  <button type="button" class="sidebarrow5__see-all-button" onclick="toggleCategories('sidebarrow5-filtered-{{ block.id }}')">
+                    See All
+                  </button>
+                </li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<script>
+  function toggleCategories(containerId) {
+    const container = document.getElementById(containerId);
+    const button = container.querySelector('.sidebarrow5__see-all-button');
+    
+    if (container.classList.contains('show-all')) {
+      container.classList.remove('show-all');
+      button.textContent = 'See All';
+    } else {
+      container.classList.add('show-all');
+      button.textContent = 'See Less';
+    }
+  }
+</script>

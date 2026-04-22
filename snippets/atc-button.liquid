@@ -1,0 +1,50 @@
+<!-- START atc-button (SNIPPET) -->
+
+<div
+  class="product-form__buttons"
+  {% unless product.selected_or_first_available_variant.available %}
+    style="display: none"
+  {% endunless %}
+>
+  <button
+    type="submit"
+    class="{% if settings.disable_cartDrawer != true %} cart-icon {% endif %} btn btn-add-tocart "
+    id="AddToCart"
+    {% if product.selected_or_first_available_variant.available == false %}
+      disabled
+    {% endif %}
+  >
+    <div class="text-btn">
+      {%- if settings.enable_price_atc -%}
+        <span class="btn-money">{{ variant.price | money }}</span>
+        <span class="divisor">|</span>
+      {%- endif -%}
+      <span class="btn-label">{{ settings.add_to_cart_label }}</span>
+      <span class="btn-svg">{%- render 'icon-cart-fill' -%}</span>
+      <span class="btn-items">&#40;1 {{ 'products.product.item' | t }}&#41;</span>
+
+      {%- if settings.atc_progress_bar -%}
+        <span class="btn-progress"></span>
+      {%- endif -%}
+    </div>
+  </button>
+</div>
+
+<div id="truemed-instructions" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp"></div>
+<script src="https://static.truemed.com/widgets/product-page-widget.min.js" defer></script>
+
+<style>
+  .truemed-entry-box {
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 767px) {
+    .truemed-entry-text {
+      font-size: 11px;
+    }
+    .truemed-entry-box {
+        margin-top: 15px;
+    }
+  }
+</style>

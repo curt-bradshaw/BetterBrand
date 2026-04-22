@@ -1,0 +1,292 @@
+<!-- sections/image-with-text.liquid -->
+<section class="image-with-text-banner" {{ section.shopify_attributes }}>
+  <div class="image-with-text-banner__wrapper">
+    <div class="image-with-text-banner__container">
+      <div class="image-with-text-banner__content">
+        {% for block in section.blocks %}
+          {% if block.type == 'heading' %}
+            <h2 class="image-with-text-banner__heading" {{ block.shopify_attributes }}>
+              {{ block.settings.heading }}
+            </h2>
+          {% endif %}
+          
+          {% if block.type == 'text' %}
+            <div class="image-with-text-banner__text" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+      
+    <div class="image-with-text-banner__media">
+      {% if section.settings.image_desktop %}
+        {{ section.settings.image_desktop | image_url: width: 1240 | image_tag: class: 'image-with-text-banner__image image-with-text-banner__image-desktop' }}
+      {% endif %}
+      
+      {% if section.settings.image_tablet %}
+        {{ section.settings.image_tablet | image_url: width: 1536 | image_tag: class: 'image-with-text-banner__image image-with-text-banner__image-tablet' }}
+      {% endif %}
+
+      {% if section.settings.image_mobile %}
+        {{ section.settings.image_mobile | image_url: width: 750 | image_tag: class: 'image-with-text-banner__image image-with-text-banner__image-mobile' }}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .image-with-text-banner {
+    background-color: #234134;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .image-with-text-banner__wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .image-with-text-banner__container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    width: 50%;
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 1441px) {
+    .image-with-text-banner__content {
+      padding-left: 0 !important;
+    }
+    .image-with-text-banner__container {
+      margin: 0;
+    }
+  }
+
+  .image-with-text-banner__content {
+    padding-top: 90px;
+    padding-left: 12%;
+    padding-bottom: 90px;
+    max-width: 730px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .image-with-text-banner__heading {
+    font-family: var(--bookmaniaFont);
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 1;
+    color: #f0ffe9;
+    margin: 0;
+  }
+
+  .image-with-text-banner__text {
+    font-family: var(--copyBodyFont), sans-serif;
+    font-size: 22px;
+    line-height: 1.2;
+    color: #ffffff;
+    text-transform: capitalize;
+  }
+
+  .image-with-text-banner__text p {
+    margin: 0;
+  }
+
+  .image-with-text-banner__text p:not(:last-child) {
+    margin-bottom: 0;
+  }
+
+  .image-with-text-banner__text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .image-with-text-banner__media {
+    width: 50%;
+    max-width: 621px;
+  }
+
+  .image-with-text-banner__image-desktop {
+    max-width: 621px;
+  }
+
+  .image-with-text-banner__image-tablet {
+    display: none;
+  }
+
+  .image-with-text-banner__image-mobile {
+    display: none;
+  }
+
+  .image-with-text-banner__image {
+    aspect-ratio: 1.19193857965451;
+    max-width: none;
+    width: 100%;
+    height: 100%;    
+    object-fit: cover;
+  }
+
+  /* Tablet styles (<= 1023px) */
+  @media (max-width: 1023px) {
+    .image-with-text-banner {
+      min-height: auto;
+    }
+
+    .image-with-text-banner__container {
+      width: 100%;
+    }
+
+    .image-with-text-banner__wrapper {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .image-with-text-banner__container {
+      flex-direction: column;
+      min-height: auto;
+      text-align: center;
+    }
+
+    .image-with-text-banner__heading {
+      font-size: 28px;
+    }
+
+    .image-with-text-banner__content {
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      width: 100%;
+      padding: 40px 20px;
+      max-width: 100%;
+      gap: 20px;
+    }
+
+    .image-with-text-banner__text * {
+      font-size: 18px;
+    }
+
+    .image-with-text-banner__media {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-with-text-banner__image-wrapper--desktop {
+      display: none;
+    }
+
+    .image-with-text-banner__image-wrapper--tablet {
+      display: block;
+    }
+  }
+
+  /* Mobile styles (<= 767px) */
+  @media (max-width: 767px) {
+    .image-with-text-banner__image-wrapper--tablet {
+      display: none;
+    }
+
+    .image-with-text-banner__image-wrapper--mobile {
+      display: block;
+    }
+
+    .image-with-text-banner__content {
+      padding: 25px 20px;
+      gap: 25px;
+    }
+
+    .image-with-text-banner__text * {
+      font-size: 16px;
+    }
+
+    .image-with-text-banner__media {
+      min-height: 300px;
+    }
+  }
+
+  /* Large desktop adjustments */
+  @media (min-width: 1920px) {
+    .image-with-text-banner__container {
+      max-width: 1920px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Image with Text Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Side Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_tablet",
+      "label": "Side Image (Tablet)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Side Image (Mobile)"
+    },
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "About Us"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Dr. Chris has dedicated his life to helping people have clearer lungs so they can breathe better. As a former Army Combat Medic and later a Doctor of Pharmacy, he saw the limits of traditional medicine.</p><p>&nbsp;</p><p>\"When some family members, many of whom are smokers, asked for natural ways to improve lung health, I dove into the research and what I found was life-changing!\"</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Text Banner",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

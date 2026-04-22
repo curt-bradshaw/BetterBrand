@@ -1,0 +1,59 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "blog-template",
+      "blocks": {
+        "a436edb0-4065-44cb-8784-de0fab063d48": {
+          "type": "recent_posts",
+          "settings": {}
+        },
+        "31c41fce-9d2c-49d5-b432-ae50dfa05b9b": {
+          "type": "categories",
+          "settings": {
+            "filter_by_tags": ""
+          }
+        },
+        "1cb2e988-d4bb-46f6-afbc-43c32b8be3b5": {
+          "type": "newsletter",
+          "settings": {
+            "sidebar_title": "Newsletters",
+            "sidebar_text": "Subscribe for our newsletters",
+            "select_newsletter": "klaviyo"
+          }
+        }
+      },
+      "block_order": [
+        "a436edb0-4065-44cb-8784-de0fab063d48",
+        "31c41fce-9d2c-49d5-b432-ae50dfa05b9b",
+        "1cb2e988-d4bb-46f6-afbc-43c32b8be3b5"
+      ],
+      "settings": {
+        "blog_page_title": "Blog",
+        "blog_page_subtitle": "Discover our latest articles and insights",
+        "title_background_image": "shopify://shop_images/betterbrand-meditation-2.jpg",
+        "enable_sidebar": true,
+        "sidebar_left": true,
+        "fixed_sidebar": true,
+        "enable_auto_truncate_excerpt": false,
+        "truncate_word_limit": 43,
+        "blog_text_align": "left",
+        "blog_button_align": "center",
+        "button_background": "#d6664d",
+        "button_border_color": "#d6664d",
+        "sidebar_text_align": "left"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

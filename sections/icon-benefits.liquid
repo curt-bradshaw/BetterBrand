@@ -1,0 +1,184 @@
+<!-- START icon-benefits.liquid -->
+
+<section class="icon-benefits" role="region" aria-label="Store benefits">
+    <div class="icon-benefits__container">
+      <div class="icon-benefits__group">
+        {% for block in section.blocks %}
+          {% assign block_index = forloop.index0 %}
+          {% if block_index < 2 %}
+            <div class="icon-benefits__item" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <img
+                  class="icon-benefits__icon"
+                  src="{{ block.settings.icon | image_url: width: 64 }}"
+                  alt="{{ block.settings.text | escape }}"
+                  loading="lazy"
+                  width="32"
+                  height="32"
+                >
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <span class="icon-benefits__text">{{ block.settings.text |replace: '[BREAK_MOBILE]', '<br class="break-mobile">' }}</span>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="icon-benefits__group">
+        {% for block in section.blocks %}
+          {% assign block_index = forloop.index0 %}
+          {% if block_index >= 2 %}
+            <div class="icon-benefits__item" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <img
+                  class="icon-benefits__icon"
+                  src="{{ block.settings.icon | image_url: width: 64 }}"
+                  alt="{{ block.settings.text | escape }}"
+                  loading="lazy"
+                  width="32"
+                  height="32"
+                >
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <span class="icon-benefits__text">{{ block.settings.text |replace: '[BREAK_MOBILE]', '<br class="break-mobile">' }}</span>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% style %}
+  .icon-benefits {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0,0,0,.08);
+  }
+  
+  .icon-benefits__container {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .icon-benefits__group {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .icon-benefits__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .icon-benefits__icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+  
+  .icon-benefits__text {
+    font-size: 20px;
+    line-height: 1.2;
+    color: #234134;
+    white-space: nowrap;
+  }
+
+  .break-mobile {
+    display: none;
+  }
+
+  @media (max-width: 1280px) {
+    .icon-benefits__group {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 1019px) {
+    .icon-benefits__container {
+      padding: 15px 20px 40px;
+    }
+
+    .icon-benefits__icon {
+      width: 60px;
+      height: 60px;
+    }
+
+    .icon-benefits__text {
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .icon-benefits__container {
+      padding: 0px 20px 20px;
+    }
+    
+    .icon-benefits__container {
+      column-gap: 25px;
+      row-gap: 20px;
+    }
+
+    .icon-benefits__icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    .icon-benefits__text {
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .break-mobile {
+      display: block;
+    }
+  }
+  {% endstyle %}
+  
+  {% schema %}
+  {
+    "name": "Icon benefits row",
+    "tag": "section",
+    "class": "section-icon-benefits",
+    "max_blocks": 6,
+    "blocks": [
+      {
+        "type": "benefit",
+        "name": "Benefit",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "Made in USA"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon benefits row",
+        "blocks": [
+          { "type": "benefit", "settings": { "text": "Made in USA" } },
+          { "type": "benefit", "settings": { "text": "Made in GMP Facility" } },
+          { "type": "benefit", "settings": { "text": "Third-Party Tested" } },
+          { "type": "benefit", "settings": { "text": "Natural Ingredients" } }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

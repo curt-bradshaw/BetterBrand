@@ -1,0 +1,193 @@
+<!-- START subscription-bar.liquid -->
+
+<section class="subscription-bar-section" {{ section.shopify_attributes }}>
+  <div class="subscription-bar">
+    <div class="subscription-bar__bg subscription-bar__bg--desktop"
+         style="background-image: url({{ section.settings.background_image | image_url: width: 2000 }});">
+    </div>
+
+    {% if section.settings.background_image_mobile != blank %}
+      <div class="subscription-bar__bg subscription-bar__bg--mobile"
+           style="background-image: url({{ section.settings.background_image_mobile | image_url: width: 1000 }});">
+      </div>
+    {% endif %}
+
+    <div class="subscription-bar__content">
+      <div class="subscription-bar__inner">
+        {% if section.settings.text != blank %}
+          <p class="subscription-bar__text">{{ section.settings.text }}</p>
+        {% endif %}
+
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="subscription-bar__button">
+            {{ section.settings.button_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Subscription Bar",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image (Desktop & Tablet)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Better Breathing On Repeat"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "SUBSCRIBE TO SAVE 20%"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription Bar"
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+.subscription-bar {
+  position: relative;
+  overflow: hidden;
+  min-height: 106px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.subscription-bar__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.subscription-bar__bg--mobile {
+  display: none;
+}
+
+.subscription-bar__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 26px 60px;
+}
+
+.subscription-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.subscription-bar__text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  font-family: 'SuisseIntlMono', sans-serif;
+  line-height: 1.2;
+}
+
+.subscription-bar__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 336px;
+  height: 54px;
+  padding: 20px 32px;
+  border-radius: 34px;
+  border: 1px solid #F5F5F5;
+  color: #F5F5F5;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: 'SuisseIntlMono', sans-serif;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.subscription-bar__button:hover {
+  background: rgba(35, 65, 52, 0.5);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 1019px) {
+  .subscription-bar {
+    min-height: 70px;
+  }
+
+  .subscription-bar__content {
+    padding: 16px 53px;
+  }
+
+  .subscription-bar__text {
+    font-size: 14px;
+  }
+
+  .subscription-bar__button {
+    padding: 12px 20px;
+    font-size: 14px;
+    max-width: 232px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .subscription-bar {
+    min-height: 89px;
+  }
+
+  .subscription-bar__bg--desktop {
+    display: none;
+  }
+
+  .subscription-bar__bg--mobile {
+    display: block;
+  }
+
+  .subscription-bar__content {
+    padding: 16px 20px;
+  }
+
+  .subscription-bar__inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .subscription-bar__button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+{% endstyle %}
+

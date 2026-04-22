@@ -1,0 +1,522 @@
+{% assign section_data = product.metafields.pdp.how_to_use_section_data.value %}
+{% if section_data %}
+  <style>
+    .how-to-use {
+      padding: 80px 0;
+    }
+
+    .how-to-use__container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .how-to-use__header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .step-card:nth-child(3n + 1) .step-badge {
+      background: #234134;
+    }
+
+    .step-card:nth-child(3n + 2) .step-badge {
+      background: #3f745d;
+    }
+
+    .step-card:nth-child(3n + 3) .step-badge {
+      background: #5b734e;
+    }
+
+    .timeline__header {
+      text-align: center;
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1;
+      color: #252525;
+      font-family: var(--bookmaniaFont);
+    }
+
+    .how-to-use__header h2 {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 12.6px;
+      color: #252525;
+      font-family: var(--bookmaniaFont);
+      margin-bottom: 15px;
+    }
+
+    .how-to-use__header p {
+      font-size: 20px;
+      font-weight: 400;
+      color: #252525;
+    }
+
+    .timeline__header {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      gap: 5px;
+    }
+
+    .timeline__header h2 {
+      font-family: var(--bookmaniaFont);
+      font-size: 38px;
+    }
+
+    .how-to-use__steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-bottom: 96px;
+    }
+
+    .step-card {
+      background: #ffffffa6;
+      border-radius: 20px;
+      padding: 24px 17px;
+      position: relative;
+    }
+
+    .step-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .step-badge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 127px;
+      height: 109px;
+      background: #3f5f45;
+      border-bottom-right-radius: 20px;
+      border-top-left-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-weight: 400;
+    }
+
+    .step-badge-text {
+      font-size: 24px;
+    }
+
+    .step-badge span {
+      font-size: 40px;
+    }
+
+    .step-card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+      font-weight: 400;
+    }
+
+    .step-card__text {
+      font-size: 20px;
+      color: #424242;
+      font-weight: 400;
+    }
+
+    .timeline {
+      position: relative;
+      padding-top: 58px;
+    }
+
+    .timeline__line {
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      height: 9px;
+      background: #cfe3c3;
+      border-radius: 6px;
+    }
+
+    .timeline__items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .timeline__item {
+      text-align: center;
+      position: relative;
+    }
+
+    .timeline__dot {
+      border-radius: 50%;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-top: -16px;
+    }
+
+    .timeline__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .timeline__icon {
+      width: 90px;
+      height: 60px;
+      border-radius: 50%;
+      background: #e9f3e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0ffe98a;
+    }
+
+    .timeline__content h4 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #234134;
+    }
+
+    .timeline__content p {
+      font-size: 20px;
+      color: #17171a;
+      max-width: 275px;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    @media (max-width: 1019px) {
+      .how-to-use__steps {
+        margin-bottom: 60px;
+      }
+
+      .how-to-use {
+        padding: 60px 0;
+      }
+
+      .timeline__header h2 {
+        margin-bottom: 35px;
+        font-weight: 700;
+        margin-top: 0;
+        justify-content: flex-start;
+        gap: 8px;
+      }
+
+      .timeline__header {
+        margin-top: 0;
+      }
+
+      .timeline {
+        position: relative;
+        padding-top: 0;
+      }
+
+      .timeline__line {
+        position: absolute;
+        left: 20px;
+        width: 9px;
+        height: calc(100% - 24px);
+        top: 28px;
+        background: #cfe3c3;
+        border-radius: 6px;
+      }
+
+      .timeline__items {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        max-width: 100%;
+        margin: 0;
+      }
+
+      .timeline__item {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        align-items: start;
+        text-align: left;
+        justify-self: stretch;
+        padding: 0 !important;
+        gap: 35px;
+      }
+
+      .timeline__dot {
+        margin: 0;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+
+      .timeline__content {
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .timeline__content h4 {
+        font-size: 22px;
+      }
+
+      .timeline__content p {
+        font-size: 20px;
+        max-width: 100%;
+        text-align: left;
+      }
+
+      .step-badge {
+        width: 83px;
+        height: 68px;
+      }
+
+      .step-badge-text {
+        font-size: 16px;
+      }
+
+      .step-badge span {
+        font-size: 24px;
+      }
+
+      .step-card {
+        padding: 16px 9px;
+      }
+
+      .step-card h3 {
+        font-size: 20px;
+      }
+
+      .step-card__text {
+        font-size: 16px;
+      }
+      
+    }
+
+    /* Small mobile */
+    @media (max-width: 767px) {
+      .timeline__item {
+        grid-template-columns: 40px 1fr;
+        gap: 16px;
+      }
+
+      .how-to-use__header h2 {
+        font-size: 24px;
+      }
+
+      .how-to-use__header p {
+        font-size: 18px;
+      }
+
+      .timeline__header h2 {
+        font-size: 24px;
+      }
+
+      .how-to-use__steps {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+      }
+
+      .timeline__line {
+        left: 16px;
+      }
+
+      .timeline__content h4 {
+        font-size: 18px;
+      }
+
+      .timeline__content p {
+        font-size: 16px;
+      }
+
+      .timeline__icon {
+        min-width: 32px;
+        min-height: 32px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .timeline__icon svg  {
+        width: 17px;
+        height: 17px;
+      } 
+    }
+  </style>
+
+  {% assign background_color = section_data.background_color | default: section.settings.background %}
+  {% assign heading = section_data.heading | default: section.settings.heading %}
+  {% assign subheading = section_data.subheading | default: section.settings.subheading %}
+
+  {% assign timeline_heading = section_data.timeline_title | default: 'The Better Way to Breathe' %}
+
+  <section class="how-to-use" style="background: {{ background_color }}">
+    <div class="how-to-use__container">
+      <header class="how-to-use__header">
+        <h2>{{ heading }}</h2>
+        <p>{{ subheading }}</p>
+      </header>
+
+      <!-- STEPS -->
+      <div class="how-to-use__steps">
+        {% assign step_index = 1 %}
+        {% if section_data %}
+          {% for i in (1..3) %}
+            {% assign image_field = 'step_' | append: i | append: '_image' %}
+            {% assign title_field = 'step_' | append: i | append: '_title' %}
+            {% assign text_field = 'step_' | append: i | append: '_description' %}
+            {% render 'how-to-use-step-card', 
+              shopify_attributes: '',
+              step_index: i,
+              image: section_data[image_field],
+              title: section_data[title_field],
+              text: section_data[text_field]
+            %}
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}
+            {% if block.type == 'step' %}
+              {% render 'how-to-use-step-card', 
+                shopify_attributes: block.shopify_attributes, 
+                step_index: step_index, 
+                image: block.settings.image, 
+                title: block.settings.title, 
+                text: block.settings.text 
+              %}
+              {% assign step_index = step_index | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <!-- TIMELINE -->
+       {% unless section_data.timeline_title == blank %}
+      <div class="timeline__header">
+        <h2>{{ timeline_heading }}</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline__line"></div>
+
+        <div class="timeline__items">
+          {% if section_data %}
+            {% for i in (1..4) %}
+              {% case i %}
+                {% when 1 %}
+                  {% assign title = '1 Week' %}
+                  {% assign text = section_data.timeline_1_week %}
+                {% when 2 %}
+                  {% assign title = '1 Month' %}
+                  {% assign text = section_data.timeline_1_month %}
+                {% when 3 %}
+                  {% assign title = '3 Months' %}
+                  {% assign text = section_data.timeline_3_months %}
+                {% when 4 %}
+                  {% assign title = '6 Months' %}
+                  {% assign text = section_data.timeline_6_months %}
+              {% endcase %}
+              {% render 'how-to-use-timeline-item', 
+                shopify_attributes: '',
+                title: title,
+                text: text
+              %}
+            {% endfor %}
+          {% else %}
+            {% for block in section.blocks %}
+              {% if block.type == 'timeline' %}
+                {% render 'how-to-use-timeline-item', 
+                  shopify_attributes: block.shopify_attributes,
+                  title: block.settings.title,
+                  text: block.settings.text
+                %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      {% endunless %}
+    </div>
+  </section>
+{% endif %}
+{% assign step_blocks = section.blocks | where: "type", "step" %}
+{% if step_blocks.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How To Use {{ product.title }}",
+  "description": "{{ section.settings.subheading | default: 'Simple daily routine for better breathing.' }}",
+  "totalTime": "PT2M",
+  "supply": [
+    {
+      "@type": "HowToSupply",
+      "name": "{{ product.title }}"
+    },
+    {
+      "@type": "HowToSupply",
+      "name": "8 ounces of water"
+    }
+  ],
+  "step": [
+    {% for block in step_blocks %}
+      {
+        "@type": "HowToStep",
+        "position": {{ forloop.index }},
+        "name": {{ block.settings.title | json }},
+        "text": {{ block.settings.text | strip_html | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
+{% schema %}
+{
+  "name": "How To Use",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How To Use"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Neque, Pulvinar Vestibulum Non Aliquam."
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background color",
+      "default": "#E6F1DE"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 3,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Description" }
+      ]
+    },
+    {
+      "type": "timeline",
+      "limit": 4,
+      "name": "Timeline item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Description" },
+      ]
+    }
+  ],
+  "presets": [{ "name": "How To Use" }]
+}
+{% endschema %}

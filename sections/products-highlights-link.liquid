@@ -1,0 +1,1400 @@
+<!-- sections/products-highlights-link.liquid -->
+
+<style>
+      
+  /*Section custom css variables*/
+
+  #shopify-section-{{ section.id }} {
+    background: {{ section.settings.section_background }};
+    {% if section.settings.enable_custom_margins_paddings %}
+      margin-top: {{ section.settings.custom-margin-top }}px;
+      margin-bottom: {{ section.settings.custom-margin-bottom }}px;
+      padding-top: {{ section.settings.custom-padding-top }}px;
+      padding-bottom: {{ section.settings.custom-padding-bottom }}px;
+    {% else %}
+      margin: 20px 0;
+    {% endif %}
+    {% if section.settings.product1 != blank %}
+    --background-color1: {{ section.settings.product1_background }};
+    {% endif %}
+    {% if section.settings.product2 != blank %}
+    --background-color2: {{ section.settings.product2_background }};
+    {% endif %}
+    {% if section.settings.product3 != blank %}
+    --background-color3: {{ section.settings.product3_background }};
+    {% endif %}
+    --products-highlights-link--title: {{ section.settings.title_color }};
+    --products-highlights-link--texts: {{ section.settings.text_color }};
+    --products-highlights-link--links: {{ section.settings.links }};
+    --product-title-font-size__desktop: {{ section.settings.product_title_font_size_desktop }}px;
+    --product-title-font-size__tablet: {{ section.settings.product_title_font_size_tablet }}px;
+    --product-title-font-size__mobile: {{ section.settings.product_title_font_size_mobile }}px;
+    --short-description-font-size__desktop: {{ section.settings.short_description_font_size_desktop }}px;
+    --short-description-font-size__tablet: {{ section.settings.short_description_font_size_tablet }}px;
+    --short-description-font-size__mobile: {{ section.settings.short_description_font_size_mobile }}px;
+    --button-link-background: {{ section.settings.color_button_link_background }};
+    --button-link-text: {{ section.settings.color_button_link_text }};
+    --button-link-font-size__desktop: {{ section.settings.font_size_button_link_desktop }}px;
+    --button-link-font-size__tablet: {{ section.settings.font_size_button_link_tablet }}px;
+    --button-link-font-size__mobile: {{ section.settings.font_size_button_link_mobile }}px;
+    --button-link-background-hover: {{ section.settings.color_hover_button_link_background }};
+    --button-link-text-hover: {{ section.settings.color_hover_button_link_text }};
+    --product1-background-badge-background: {{ section.settings.product1_badge_background }};
+    --product1-background-badge-label: {{ section.settings.product1_badge_label }};
+    --product2-background-badge-background: {{ section.settings.product2_badge_background }};
+    --product2-background-badge-label: {{ section.settings.product2_badge_label }};
+    --drawer-description-height: {{ section.settings.drawer_description_height }}px;
+    --drawer-description-height-tablet: {{ section.settings.drawer_description_height_tablet }}px;
+    --drawer-description-height-mobile: {{ section.settings.drawer_description_height_mobile }}px;
+  }
+
+  #shopify-section-{{ section.id }} .products-highlights-link__title {
+    color: {{ section.settings.headings_color }};
+    margin-bottom: 35px;
+    font-weight: 400;
+  }
+
+  #shopify-section-{{ section.id }} .products-highlights-link__title p{
+    font-size: {{ section.settings.section_title_font_size_desktop }}px;
+  }
+  
+  #shopify-section-{{ section.id }} .products-highlights-link__product-title,
+  #shopify-section-{{ section.id }} .products-highlights-link__product-title *,
+  #shopify-section-{{ section.id }} .products-highlights-link__short-description,
+  #shopify-section-{{ section.id }} .products-highlights-link__short-description *,
+  #shopify-section-{{ section.id }} .products-highlights-link__more-details {
+    color: {{ section.settings.products_titles_color }};
+  }
+
+  #shopify-section-{{ section.id }} .products-highlights-link__product-title {
+    font-size: {{ section.settings.product_title_font_size_desktop }}px;
+  }
+  
+  #shopify-section-{{ section.id }} .products-highlights-link__short-description {
+    font-size: {{ section.settings.product_description_font_size_desktop }}px;
+  }
+
+  #shopify-section-{{ section.id }} .products-highlights-link__more-details {
+    font-size: {{ section.settings.product_link_font_size_desktop }}px;
+  }
+
+  .products-highlights-link {
+    position: relative;
+    padding: 45px 0;
+  }
+
+  .products-highlights-link__wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .products-highlights-link__product-title.customHeadline3 {
+    color: var(--products-highlights-link--title);
+    letter-spacing: 0;
+  }
+
+  .products-highlights-link__content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .products-highlights-link__item {
+    position: relative;
+    width: 28%;
+    max-width: 300px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .products-highlights-link__hero-product {
+    position: relative;
+    width: auto;
+    height: 100%;
+    display: flex;
+  }
+
+  .products-highlights-link__hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .products-highlights-link__product-title {
+    font-weight: 500;
+    font-size: var(--product-title-font-size__desktop);
+    line-height: 34px;
+  }
+
+  .products-highlights-link__metafield {
+    color: var(--products-highlights-link--title);
+    font-size: 16px;
+    line-height: 120%;
+  }
+
+  .products-highlights-link__more-details {
+    background: unset;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: var(--button-link-font-size__desktop);
+    line-height: 18px;
+  }
+
+  .products-highlights-link__hero-product-content,
+  .products-highlights-link__hero-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .products-highlights-link__hero-product-content {
+    gap: 20px;
+    width: 100%;
+  }
+
+  .products-highlights-link__headline {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+
+  .products-highlights-link__short-description {
+    color: var(--products-highlights-link--title);
+    font-size: var(--short-description-font-size__desktop);
+  }
+
+  .products-highlights-link__product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+
+  ..products-highlights-link__product-image-content,
+  ..products-highlights-link__product-image-content img {
+    border: 1px solid {{ section.settings.product_image_border_color }};
+    border-radius: 8px 8px 10px 10px;
+  }
+
+  .products-highlights-link__product-image-content {
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .products-highlights-link__product-image-content img {
+    width: 100%;
+  }
+
+  .products-highlights-link__product-badge {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: 11px;
+    top: 15px;
+  }
+  .products-highlights-link__product-badge img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .products-highlights-link__info-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .products-highlights-link__info-content--floating {
+    position: absolute;
+    top: 115px;
+    overflow: hidden;
+    width: 50%;
+    max-width: 536px;
+  }
+
+  .products-highlights-link__description,
+  .products-highlights-link__custom-description {
+    color: var(--products-highlights-link--texts);
+    font-weight: 400;
+    font-family: var(--auxiliarFont);
+    width: 100%;
+    font-size: 0.975rem;
+    margin-top: 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -moz-line-clamp: 4;
+    -o-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    -o-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+  }
+
+ .products-highlights-link__link {
+    margin: 15px 0 20px;
+    display: flex;
+    gap: 20px;
+  }
+
+  .products-highlights-link__link--mobile {
+    display: none;
+  }
+
+  .products-highlights-link__drawer .products-highlights-link__cta-link {
+    max-width: 130px;
+    width: 130px;
+    padding: 7px;
+    font-size: 16px;
+    line-height: 16px;
+    height: 34px;
+  }
+
+  .products-highlights-link__badge {
+    position: absolute;
+    bottom: 61px;
+    padding: 8.5px;
+    text-align: center;
+    min-width: 250px;
+    visibility: hidden;
+  }
+
+  .products-highlights-link__badge-label {
+    display: block;
+    max-width: 140px;
+    margin-left: 10px;
+    font-weight: 500;
+  }
+
+  .products-highlights-link__badge-product-1 {
+    background: var(--product1-background-badge-background);
+    color: var(--product1-background-badge-label);
+  }
+
+  .products-highlights-link__badge-product-2 {
+    background: var(--product2-background-badge-background);
+    color: var(--product2-background-badge-label);
+  }
+  
+  .products-highlights-link__badge-product-3 {
+    background: var(--product3-background-badge-background);
+    color: var(--product3-background-badge-label);
+  }
+  
+  .products-highlights-link__add-to-cart--mobile {
+    display: none;
+  }
+
+  @media screen and (min-width: 1280px) {
+    .products-highlights-link-drawer-item {
+      max-width: 100%;
+    }
+    .products-highlights-link__info-content--floating {
+      width: 100%;
+      max-width: 60%;
+    }
+  }
+
+  @media screen and (max-width: 1019px) {
+    #shopify-section-{{ section.id }} .products-highlights-link__title p {
+      font-size: {{ section.settings.section_title_font_size_desktop }}px;
+    }
+
+    #shopify-section-{{ section.id }} .products-highlights-link__product-title {
+      font-size: {{ section.settings.product_title_font_size_tablet }}px;
+    }
+  
+    #shopify-section-{{ section.id }} .products-highlights-link__short-description {
+      font-size: {{ section.settings.product_description_font_size_tablet }}px;
+    }
+
+    #shopify-section-{{ section.id }} .products-highlights-link__more-details {
+      font-size: {{ section.settings.product_link_font_size_tablet }}px;
+    }
+
+    .products-highlights-link {
+      padding: 45px 0;
+    }
+
+    .products-highlights-link__headline {
+      gap: 4px;
+    }
+    .products-highlights-link__item {
+      width: 30%;
+    }
+    .products-highlights-link__hero-product-content {
+      gap: 15.9px;
+    }
+    .products-highlights-link__product-badge {
+      width: 80px;
+      height: 80px;
+    }
+    .products-highlights-link__metafield {
+      font-size: 14px;
+      line-height: 87.8%;
+    }
+    .products-highlights-link__hero-product-content {
+      margin-top: 0
+    }
+    .products-highlights-link__product-title + .products-highlights-link__metafield {
+      margin-top: 3px;
+    }
+    .products-highlights-link__product-title {
+      font-size: var(--product-title-font-size__tablet);
+      line-height: 1.3;
+    }
+    .products-highlights-link__short-description {
+      font-size: var(--short-description-font-size__tablet);
+    }
+    .products-highlights-link__badge {
+      bottom: 47px;
+      min-width: 199px;
+      width: 199px;
+    }
+    .products-highlights-link__badge-label {
+      font-size: 14px;
+      line-height: 87.8%;
+      padding: 0 10px;
+    }
+    .products-highlights-link__link,
+    .products-highlights-link__link + .products-highlights-link__uvps {
+      margin-top: 23px;
+    }
+    .products-highlights-link__drawer .products-highlights-link__cta-link,
+    .products-highlights-link__add-to-cart {
+      max-width: 150px;
+      width: 120px;
+      height: 30px;
+      font-size: 14px;
+      line-height: 120%;
+      padding: 5px;
+    }
+    .products-highlights-link__cta-link-text {
+      text-align: center;
+      letter-spacing: -0.02em;
+      font-size: 16px;
+    }
+    .products-highlights-link__more-details {
+      margin-top: 0;
+      line-height: 120%;
+      font-size: var(--button-link-font-size__tablet);
+    }
+    .products-highlights-link__product-image {
+      width: 100%;
+      height: 100%;
+    }
+    .products-highlights-link-drawer-item__product-1 .products-highlights-link__info-content--floating {
+      padding-left: 0;
+    }
+    .products-highlights-link__info-content {
+      gap: 0;
+      justify-content: center;
+    }
+    .products-highlights-link__description,
+    .products-highlights-link__custom-description {
+      font-size: 14px;
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} .products-highlights-link__title p {
+      font-size: {{ section.settings.section_title_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .products-highlights-link__product-title {
+      font-size: {{ section.settings.product_title_font_size_mobile }}px;
+    }
+  
+    #shopify-section-{{ section.id }} .products-highlights-link__short-description {
+      font-size: {{ section.settings.product_description_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .products-highlights-link__more-details {
+      font-size: {{ section.settings.product_link_font_size_mobile }}px;
+    }
+
+    .products-highlights-link {
+      padding: 20px 0;
+    }
+
+    .products-highlights-link__content {
+      gap: 20px 0;
+    }
+
+    .products-highlights-link__item {
+      width: 35%;
+    }
+
+    .products-highlights-link__product-title {
+      font-size: var(--product-title-font-size__tablet);
+      line-height: 120%;
+      letter-spacing:0.3px;
+    }
+
+    .products-highlights-link__short-description {
+      font-size: var(--short-description-font-size__mobile);
+      line-height: 12.397px;
+    }
+
+    .products-highlights-link__product-image-content {
+      margin: 5px 0;
+    }
+
+    .products-highlights-link__product-badge {
+      width: 69px;
+      height: 70px;
+    }
+
+    .products-highlights-link__metafield {
+      font-size: 12px;
+    }
+
+    .products-highlights-link__headline {
+      gap: 3px;
+    }
+
+    .products-highlights-link__product-title {
+      font-size: var(--product-title-font-size__mobile);
+    }
+
+    .products-highlights-link__more-details {
+      font-size: var(--button-link-font-size__mobile);
+    }
+
+    .products-highlights-link__hero-product-content {
+      gap: 11px;
+    }
+
+    .products-highlights-link__product-image {
+      width: 281px;
+      height: 304px;
+    }
+
+    .products-highlights-link__info-content .products-highlights-link__description{
+      margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width:479px) {
+    .products-highlights-link__item {
+      width: 45%;
+    }
+  }
+</style>
+
+{% capture headlines %}
+  {% if section.settings.title != blank or section.settings.title != '' %}
+    <div class="products-highlights-link__headline">
+      <h2 class="products-highlights-link__title">
+        {{ section.settings.title }}
+      </h2>
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture contentView %}
+  {% if section.settings.product1 != blank or section.settings.product2 != blank or section.settings.product3 != blank %}
+    {% if section.settings.product1 != blank %}
+      <div class="products-highlights-link__item">
+        <div class="products-highlights-link__hero-product">
+          <div class="products-highlights-link__hero-product-content">
+            <div class="products-highlights-link__headline">
+              <h2 class="products-highlights-link__product-title">
+                <a href="{{ section.settings.product1.url }}?variant={{ section.settings.product1.variants[0].id }}">
+                  {% if section.settings.product1_custom_title != blank %}
+                    {{ section.settings.product1_custom_title }} 
+                  {% else %}
+                    {{ section.settings.product1.title }}
+                  {% endif %}
+                </a>
+              </h2>
+            
+              <p class="products-highlights-link__short-description">                
+                <a href="{{ section.settings.product1.url }}?variant={{ section.settings.product1.variants[0].id }}">
+                  {% if section.settings.product1_description_text != blank %}
+                    {{ section.settings.product1_description_text }}
+                  {% else %}
+                    {{ section.settings.product1.metafields.field.short_description }}
+                  {% endif %}
+                </a>
+              </p>
+            </div>      
+           
+            <div class="products-highlights-link__product-image-content">
+              <a href="{{ section.settings.product1.url }}?variant={{ section.settings.product1.variants[0].id }}">
+              {% if section.settings.product1_badge != blank %}
+                <div class="products-highlights-link__product-badge">
+                  {%-
+                    render 'responsive-image' with
+                    image: section.settings.product1_badge,
+                    active_lazy: lazy_load
+                  -%}
+                </div>
+              </a>
+              {% endif %} 
+              <a href="{{ section.settings.product1.url }}?variant={{ section.settings.product1.variants[0].id }}">
+                {% if section.settings.product1_image != blank %}
+                  {% assign product_image = section.settings.product1_image %}
+                {% else %}
+                  {% assign product_image = section.settings.product1.featured_image %}
+                {% endif %}
+                {%-
+                  render 'responsive-image' with
+                  image: product_image,
+                  image_class: 'products-highlights-link__product-image',
+                  active_lazy: lazy_load
+                -%}
+              </a>
+              <span class="grid_hero-image-shadow"></span>
+            </div>
+            
+            {% if section.settings.product1_toggle_content_label != blank %}
+              <a
+                source="{{ source }}"
+                class="products-highlights-link__more-details"
+                name="products-highlights-link__cta-open"
+                href="{{ section.settings.product1.url }}?variant={{ section.settings.product1.variants[0].id }}"
+              >
+                {{ section.settings.product1_toggle_content_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    
+    {% if section.settings.product2 != blank %}
+      <div class="products-highlights-link__item">
+        <div class="products-highlights-link__hero-product">
+          <div class="products-highlights-link__hero-product-content">
+            <div class="products-highlights-link__headline">
+              <h2 class="products-highlights-link__product-title">
+                <a href="{{ section.settings.product2.url }}?variant={{ section.settings.product2.variants[0].id }}">
+                  {% if section.settings.product2_custom_title != blank %}
+                    {{ section.settings.product2_custom_title }}
+                  {% else %}
+                    {{ section.settings.product2.title }}
+                  {% endif %}
+                </a>
+              </h2>
+            
+              <p class="products-highlights-link__short-description">
+                <a href="{{ section.settings.product2.url }}?variant={{ section.settings.product2.variants[0].id }}">
+                  {% if section.settings.product2_description_text != blank %}
+                    {{ section.settings.product2_description_text }}
+                  {% else %}
+                    {{ section.settings.product2.metafields.field.short_description }}
+                  {% endif %}
+                </a>
+              </p>
+            </div>      
+           
+            <div class="products-highlights-link__product-image-content">
+              {% if section.settings.product2_badge != blank %}
+                <div class="products-highlights-link__product-badge">
+                  <a href="{{ section.settings.product2.url }}?variant={{ section.settings.product2.variants[0].id }}">
+                    {%-
+                      render 'responsive-image' with
+                      image: section.settings.product2_badge,
+                      active_lazy: lazy_load
+                    -%}
+                  </a>
+                </div>
+              {% endif %}                  
+              <a href="{{ section.settings.product2.url }}?variant={{ section.settings.product2.variants[0].id }}">
+                {% if section.settings.product2_image != blank %}
+                  {% assign product_image = section.settings.product2_image %}
+                {% else %}
+                  {% assign product_image = section.settings.product2.featured_image %}
+                {% endif %}
+                {%-
+                  render 'responsive-image' with
+                  image: product_image,
+                  image_class: 'products-highlights-link__product-image',
+                  active_lazy: lazy_load
+                -%}
+              </a>
+              <span class="grid_hero-image-shadow"></span>
+            </div>
+            
+            {% if section.settings.product2_toggle_content_label != blank %}
+              <a
+                source="{{ source }}"
+                class="products-highlights-link__more-details"
+                name="products-highlights-link__cta-open"
+                href="{{ section.settings.product2.url }}?variant={{ section.settings.product2.variants[0].id }}"
+              >
+                {{ section.settings.product2_toggle_content_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.product3 != blank %}
+      <div class="products-highlights-link__item">
+        <div class="products-highlights-link__hero-product">
+          <div class="products-highlights-link__hero-product-content">
+            <div class="products-highlights-link__headline">
+              <h2 class="products-highlights-link__product-title">
+                <a href="{{ section.settings.product3.url }}?variant={{ section.settings.product3.variants[0].id }}">
+                  {% if section.settings.product3_custom_title != blank %}
+                    {{ section.settings.product3_custom_title }}
+                  {% else %}
+                    {{ section.settings.product3.title }}
+                  {% endif %}
+                </a>
+              </h2>
+            
+              <p class="products-highlights-link__short-description">
+                <a href="{{ section.settings.product3.url }}?variant={{ section.settings.product3.variants[0].id }}">
+                  {% if section.settings.product3_description_text != blank %}
+                    {{ section.settings.product3_description_text }}
+                  {% else %}
+                    {{ section.settings.product3.metafields.field.short_description }}
+                  {% endif %}
+                </a>
+              </p>
+            </div>      
+           
+            <div class="products-highlights-link__product-image-content">
+              {% if section.settings.product3_badge != blank %}
+                <div class="products-highlights-link__product-badge">
+                  <a href="{{ section.settings.product3.url }}?variant={{ section.settings.product3.variants[0].id }}">
+                    {%-
+                      render 'responsive-image' with
+                      image: section.settings.product3_badge,
+                      active_lazy: lazy_load
+                    -%}
+                  </a>
+                </div>
+              {% endif %} 
+              
+              <a href="{{ section.settings.product3.url }}?variant={{ section.settings.product3.variants[0].id }}">
+                {% if section.settings.product3_image != blank %}
+                  {% assign product_image = section.settings.product3_image %}
+                {% else %}
+                  {% assign product_image = section.settings.product3.featured_image %}
+                {% endif %}
+                {%-
+                  render 'responsive-image' with
+                  image: product_image,
+                  image_class: 'products-highlights-link__product-image',
+                  active_lazy: lazy_load
+                -%}
+              </a>
+              <span class="grid_hero-image-shadow"></span>
+            </div>
+            
+            {% if section.settings.product3_toggle_content_label != blank %}
+              <a
+                source="{{ source }}"
+                class="products-highlights-link__more-details"
+                name="products-highlights-link__cta-open"
+                href="{{ section.settings.product3.url }}?variant={{ section.settings.product3.variants[0].id }}"
+              >
+                {{ section.settings.product3_toggle_content_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    {% render 'standart-products-highlights-link' %}
+  {% endif %} 
+{% endcapture %}
+
+<section class="products-highlights-link {{ section.settings.custom_class }}">
+  {{ headlines }}
+
+  <div class="products-highlights-link__wrapper">
+    <div class="products-highlights-link__content {{ contentViewClass }} ">
+      {{ contentView }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Highlights (Link)",
+  "class": "products-highlights-link",
+  
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class",
+      "info": "Custom class to apply css styles for specific sections"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_custom_margins_paddings",
+      "label": "Enable Custom Margins and Paddings",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "custom-margin-top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    }, 
+    {
+      "type": "range",
+      "id": "custom-margin-bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    }, 
+    {
+      "type": "range",
+      "id": "custom-padding-top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    }, 
+    {
+      "type": "range",
+      "id": "custom-padding-bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    }, 
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "headings_color",
+      "label": "Headings Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "products_titles_color",
+      "label": "Products Titles Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "paragraph",
+      "content": "Section title"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Section Title"
+    },
+    {
+      "type": "range",
+      "id": "section_title_font_size_desktop",
+      "label": "Section Title on Desktop",
+      "min": 20,
+      "max": 50,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "section_title_font_size_tablet",
+      "label": "Section Title on Tablet",
+      "min": 20,
+      "max": 50,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "section_title_font_size_mobile",
+      "label": "Section Title on Mobile",
+      "min": 10,
+      "max": 50,
+      "default": 36
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom Metafield"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_metafield",
+      "label": "Enable Custom Metafield",
+      "default": false
+    },
+    {
+      "type": "paragraph",
+      "content": "Images pagespeed"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_lazy_load",
+      "label": "Enable Lazy Load",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Products Fontsizes"
+    },
+    {
+      "type": "range",
+      "id": "product_title_font_size_desktop",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "label": "Product Title Font Size on Desktop",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "product_description_font_size_desktop",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "label": "Product Description Font Size on Desktop",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "product_link_font_size_desktop",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "label": "Product link Font Size on Desktop",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "product_title_font_size_tablet",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "label": "Product Title Font Size on Tablet",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "product_description_font_size_tablet",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "label": "Product Description Font Size on Tablet",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "product_link_font_size_tablet",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "label": "Product link Font Size on Tablet",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "product_title_font_size_mobile",
+      "min": 8,
+      "max": 25,
+      "step": 1,
+      "label": "Product Title Font Size on Mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "product_description_font_size_mobile",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "label": "Product Description Font Size on Mobile",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "product_link_font_size_mobile",
+      "min": 10,
+      "max": 35,
+      "step": 1,
+      "label": "Product link Font Size on Mobile",
+      "default": 26
+    },
+    {
+      "type": "header",
+      "content": "Product 1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom background"
+    },
+    {
+      "type": "color",
+      "id": "product1_background",
+      "label": "Background Product Item",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "product1_background_svg",
+      "label": "Background Product Detatils"
+    },
+    {
+      "type": "paragraph",
+      "content": "Choose a product"
+    },
+    {
+      "type": "product",
+      "id": "product1",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "product1_custom_title",
+      "label": "Custom Title",
+      "info": "if empty, the name of the product will be used"
+    },
+    {
+      "type": "checkbox",
+      "id": "product1_enable_short_description",
+      "label": "Enable short description",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "short_description_font_size_desktop",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "label": "Short Description Font Size to Desktop",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "short_description_font_size_tablet",
+      "min": 8,
+      "max": 25,
+      "step": 1,
+      "label": "Short Description Font Size to Tablet",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "short_description_font_size_mobile",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "label": "Short Description Font Size to Mobile",
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "product1_description_text",
+      "label": "Short description",
+      "default": "Lorem Ipsum Dolor Sit Amet Consectetur"
+    },
+    {
+      "type": "text",
+      "id": "product1_toggle_content_label",
+      "label": "Link to see more details",
+      "default": "View details"
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product1_image",
+      "label": "Product Image",
+      "info": "if empty, the image of the product will be used"
+    },
+    {
+      "type": "paragraph",
+      "content": "Badge"
+    },
+    {
+      "type": "image_picker",
+      "id": "product1_badge",
+      "label": "Product badge"
+    },
+    {
+      "type": "color",
+      "id": "product1_badge_background",
+      "label": "Background",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "product1_badge_label",
+      "label": "Label",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Product 2"
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom background"
+    },
+    {
+      "type": "color",
+      "id": "product2_background",
+      "label": "Background Product Item",
+      "default": "#FAFAFA"
+    },
+    {
+      "type": "color",
+      "id": "product2_background_svg",
+      "label": "Background Product Detatils"
+    },
+    {
+      "type": "paragraph",
+      "content": "Choose a product"
+    },
+    {
+      "type": "product",
+      "id": "product2",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "product2_custom_title",
+      "label": "Custom Title",
+      "info": "if empty, the name of the product will be used"
+    },
+    {
+      "type": "checkbox",
+      "id": "product2_enable_short_description",
+      "label": "Enable short description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product2_description_text",
+      "label": "Short description",
+      "default": "Lorem Ipsum Dolor Sit Amet Consectetur"
+    },
+    {
+      "type": "text",
+      "id": "product2_toggle_content_label",
+      "label": "Link to see more details",
+      "default": "View details"
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product2_image",
+      "label": "Product Image",
+      "info": "if empty, the image of the product will be used"
+    },
+    {
+      "type": "paragraph",
+      "content": "Badge"
+    },
+    {
+      "type": "image_picker",
+      "id": "product2_badge",
+      "label": "Product badge"
+    },
+    {
+      "type": "color",
+      "id": "product2_badge_background",
+      "label": "Background",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "product2_badge_label",
+      "label": "Label",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Product 3"
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom background"
+    },
+    {
+      "type": "color",
+      "id": "product3_background",
+      "label": "Background Product Item",
+      "default": "#FAFAFA"
+    },
+    {
+      "type": "color",
+      "id": "product3_background_svg",
+      "label": "Background Product Detatils"
+    },
+    {
+      "type": "paragraph",
+      "content": "Choose a product"
+    },
+    {
+      "type": "product",
+      "id": "product3",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "product3_custom_title",
+      "label": "Custom Title",
+      "info": "if empty, the name of the product will be used"
+    },
+    {
+      "type": "checkbox",
+      "id": "product3_enable_short_description",
+      "label": "Enable short description",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product3_description_text",
+      "label": "Short description",
+      "default": "Lorem Ipsum Dolor Sit Amet Consectetur"
+    },
+    {
+      "type": "text",
+      "id": "product3_toggle_content_label",
+      "label": "Link to see more details",
+      "default": "View details"
+    },
+    {
+      "type": "paragraph",
+      "content": "Custom product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product3_image",
+      "label": "Product Image",
+      "info": "if empty, the image of the product will be used"
+    },
+    {
+      "type": "paragraph",
+      "content": "Badge"
+    },
+    {
+      "type": "image_picker",
+      "id": "product3_badge",
+      "label": "Product badge"
+    },
+    {
+      "type": "color",
+      "id": "product3_badge_background",
+      "label": "Background",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "product3_badge_label",
+      "label": "Label",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Drawer Product 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "product3_enable_description",
+      "label": "Enable product description",
+      "info": "It will show product description"
+    },
+    {
+      "type": "checkbox",
+      "id": "product3_enable_custom_description",
+      "label": "Enable custom description",
+      "info": "To insert a custom description on field 'Custom Description'"
+    },
+    {
+      "type": "text",
+      "id": "product3_custom_description",
+      "label": "Custom Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "product3_enable_link_label",
+      "label": "Enable product link button"
+    },
+    {
+      "type": "text",
+      "id": "product3_link_label",
+      "label": "Product Link",
+      "default": "View Product"
+    },
+    {
+      "type": "header",
+      "content": "Colors General"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Headline",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "links",
+      "label": "Links",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "icons_color",
+      "label": "Block Icon color",
+      "default": "#aaaaaa",
+      "info": "Only Icons SVG"
+    },
+    {
+      "type": "color",
+      "id": "product_image_border_color",
+      "label": "Product Image Border Color",
+      "default": "#e8e8e8"
+    },
+    {
+      "type": "header",
+      "content": "Drawer General"
+    },
+    {
+      "type": "paragraph",
+      "content": "Block Icon"
+    },
+    {
+      "type": "select",
+      "id": "icons_text_direction",
+      "label": "Block icon text direction",
+      "options": [
+        {
+          "label": "Right",
+          "value": "row-reverse"
+        },
+        {
+          "label": "Left",
+          "value": "revert"
+        },
+        {
+          "label": "Above",
+          "value": "column"
+        },
+        {
+          "label": "Below",
+          "value": "column-reverse"
+        }
+      ]
+    },
+    {
+      "id": "vasta_badges_size",
+      "type": "range",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Blocks icon per row for desktop",
+      "default": 4
+    },
+    {
+      "id": "vasta_badges_size_tablet",
+      "type": "range",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Blocks icon per row for tablet",
+      "default": 2
+    },
+    {
+      "id": "vasta_badges_size_mobile",
+      "type": "range",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Blocks icon per row for mobile",
+      "default": 2
+    },
+    {
+      "id": "drawer_description_height",
+      "type": "range",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 2,
+      "label": "Description Height",
+      "default": 104
+    },
+    {
+      "id": "drawer_description_height_tablet",
+      "type": "range",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 2,
+      "label": "Description Height Tablet",
+      "default": 120
+    },
+    {
+      "id": "drawer_description_height_mobile",
+      "type": "range",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 2,
+      "label": "Description Height Mobile",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Highlights (Link)",
+      "category": "Product Highlights"
+    }
+  ]
+}
+{% endschema %}

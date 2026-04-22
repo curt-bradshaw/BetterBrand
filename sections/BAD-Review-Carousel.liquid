@@ -1,0 +1,287 @@
+{% schema %}
+{
+  "name": "BAD Reviews Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "BAD_section_heading",
+      "label": "Section Heading",
+      "default": "Here’s What BetterLungs Users Are Saying:"
+    },{
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f0faeb"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "BAD_review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "BAD_user_image",
+          "label": "User Image"
+        },
+        {
+          "type": "text",
+          "id": "BAD_user_name",
+          "label": "User Name",
+          "default": "Lesly C."
+        },
+        {
+          "type": "text",
+          "id": "BAD_review_text",
+          "label": "Review Text",
+          "default": "This product is amazing!"
+        },
+        {
+          "type": "range",
+          "id": "BAD_star_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD Reviews Carousel",
+      "blocks": [
+        {
+          "type": "BAD_review"
+        },
+        {
+          "type": "BAD_review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="BAD-review-carousel">
+  <h2 class="BAD-heading page-width">{{ section.settings.BAD_section_heading }}</h2>
+  <div class="BAD-carousel-wrapper page-width">
+    <button class="BAD-carousel-btn BAD-prev">&lt;</button>
+    <div class="BAD-carousel">
+      {% for block in section.blocks %}
+        <div class="BAD-review-card">
+          <div class="BAD-review-header">
+            {% if block.settings.BAD_user_image %}
+              <img
+                class="BAD-user-image"
+                src="{{ block.settings.BAD_user_image | img_url: 'medium' }}"
+                alt="{{ block.settings.BAD_user_name }}"
+              >
+            {% endif %}
+            <div class="BAD-user-info">
+              <div style="display:flex; justify-content: space-between; flex-direction: column;">
+                <div style="display:flex;">
+                  <p class="BAD-user-name">{{ block.settings.BAD_user_name }}</p>
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Verified_Icon_85eb8b5f-1d3f-46cb-bb2e-71007803d4e5.png?v=1738864710"
+                    width="12px"
+                    height="12px"
+                    style="height:12px;width:12px;"
+                  >
+                </div>
+
+                <p class="BAD-star-rating">
+                  {% for i in (1..block.settings.BAD_star_rating) -%}
+                    ★
+                  {%- endfor %}
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="BAD-review-text">{{ block.settings.BAD_review_text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <button class="BAD-carousel-btn BAD-next">&gt;</button>
+  </div>
+</div>
+
+<style>
+    .BAD-review-carousel {
+      background-color: {{ section.settings.background_color }};
+      padding: 40px;
+    }
+
+    .BAD-user-info {
+      display:flex;
+      flex-direction: column;
+    }
+    .BAD-heading {
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 0px 2px 4px rgba(242, 203, 73, 0.43);
+      margin-bottom: 20px;
+      font-family: bookmania;
+    }
+
+      .BAD-carousel-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .BAD-carousel {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: #3A5F43 #DFF2D8; /* Thumb & Track colors */
+  }
+
+  /* Webkit (Chrome, Safari) */
+  .BAD-carousel::-webkit-scrollbar {
+      height: 6px; /* Thin scrollbar */
+  }
+
+  .BAD-carousel::-webkit-scrollbar-track {
+      background: #DFF2D8; /* Soft green track */
+      border-radius: 10px;
+  }
+
+  .BAD-carousel::-webkit-scrollbar-thumb {
+      background: #3A5F43; /* Darker green thumb */
+      border-radius: 10px;
+  }
+
+
+
+    .BAD-review-card {
+      flex: 0 0 auto;
+      width: 260px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      scroll-snap-align: center;
+    }
+    .BAD-review-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+
+    }
+    .BAD-user-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+    .BAD-user-name {
+      font-weight: bold;
+      font-family: "suisse_intl_mono";
+      font-size: 14px;
+       margin: 0 !important;
+    }
+    .BAD-star-rating {
+      color: gold;
+      margin: 0 !important;
+    }
+    .BAD-review-text {
+      margin-top: 10px;
+      text-align: left;
+      font-family: "suisse_intl_mono";
+      font-size: 12px;
+    }
+    .BAD-carousel-btn {
+      display: none;
+    }
+
+  @media (max-width: 768px) {
+     .BAD-review-carousel {
+      padding: 20px;
+    }
+    .BAD-review-card {
+      flex: 0 0 auto;
+      width: 240px;
+    }
+    .BAD-carousel{
+          overflow-x: auto;
+      justify-content: left;
+      scroll-snap-type: x mandatory;
+      flex-wrap: nowrap;
+    }
+      .BAD-carousel::-webkit-scrollbar {
+          display: none;
+      }
+      .BAD-carousel {
+          -ms-overflow-style: none; /* IE/Edge */
+          scrollbar-width: none; /* Firefox */
+      }
+
+     .BAD-heading {
+      text-align: center;
+    }
+
+        .BAD-carousel-btn {
+        display: block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        width: 30px;
+        height: 30px;
+        font-size: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 100;
+      }
+
+      .BAD-prev {
+        left: -10px;
+      }
+
+      .BAD-next {
+        right: -10px;
+      }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const carousel = document.querySelector(".BAD-carousel");
+    const prevBtn = document.querySelector(".BAD-prev");
+    const nextBtn = document.querySelector(".BAD-next");
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    carousel.addEventListener("mousedown", (e) => {
+      isDown = true;
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener("mouseleave", () => isDown = false);
+    carousel.addEventListener("mouseup", () => isDown = false);
+    carousel.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 2;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    prevBtn.addEventListener("click", () => {
+      carousel.scrollBy({ left: -320, behavior: "smooth" });
+    });
+
+    nextBtn.addEventListener("click", () => {
+      carousel.scrollBy({ left: 320, behavior: "smooth" });
+    });
+  });
+</script>

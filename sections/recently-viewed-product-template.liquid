@@ -1,0 +1,965 @@
+<!-- Start recently-viewed-products-template (SECTION) -->
+{%- comment -%} Start Shopify ID styles {%- endcomment -%}
+<style>
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color_recently_viewed_product }};
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  #shopify-section-{{ section.id }} .product-card__grid-item {
+    border-radius: {{section.settings.border_radius_recently_viewed_product }}px;
+    box-shadow: 0 0 12.1px -3px rgba(91, 91, 91, 0.20);
+  }
+
+  #shopify-section-{{ section.id }} .product-card__grid-item-link {
+    border-radius: {{ section.settings.border_radius_recently_viewed_product }}px;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .recently-viewed-produts__title {
+    font-size: {{ section.settings.title_recently_viewed_products_font_size}}px;
+    text-transform: {{ section.settings.text_transform_title }};
+    color: {{ section.settings.title_color }};
+    text-align: center;
+    font-family: var(--bookmaniaFont);
+    font-weight: 700;
+  }
+
+  #shopify-section-{{ section.id }} .product-card__item-title-span {
+    font-size: {{ section.settings.aside_product_card_title_font_size }}px;
+    text-transform: {{ section.settings.text_transform_product_title }};
+    font-family: var(--bookmaniaFont);
+  }
+
+  #shopify-section-{{ section.id }} .slick-center .product-card__item-title-span {
+    font-size: {{ section.settings.center_product_card_title_font_size }}px;
+    text-transform: {{ section.settings.text_transform_product_title }};
+  }
+
+  #shopify-section-{{ section.id }} .product-card__item-description-wrapper {
+    {% unless section.settings.show_description %}
+      display: none;
+    {% endunless %}
+  }
+
+  #shopify-section-{{ section.id }} .product-card__item-description {
+    font-size: {{ section.settings.aside_product_card_subtitle_font_size }}px;
+    text-transform: {{ section.settings.text_transform_product_description }};
+  }
+
+  #shopify-section-{{ section.id }} .slick-center .product-card__item-description {
+    font-size: {{ section.settings.center_product_card_subtitle_font_size }}px;
+    text-transform: {{ section.settings.text_transform_product_description }};
+  }
+
+  #shopify-section-{{ section.id }} .product-card__item-price-wrapper {
+    {% unless section.settings.show_price %}
+      display: none;
+    {% endunless %}
+  }
+
+  @media (max-width: 1019px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    #shopify-section-{{ section.id }} .recently-viewed-produts__title {
+      font-size: {{ section.settings.title_recently_viewed_products_font_size_tablet}}px;
+    }
+    #shopify-section-{{ section.id }} .product-card__item-title-span {
+      font-size: {{ section.settings.aside_product_card_title_font_size_tablet }}px;
+    }
+
+    #shopify-section-{{ section.id }} .slick-center .product-card__item-title-span {
+      font-size: {{ section.settings.center_product_card_title_font_size_tablet }}px;
+    }
+
+    #shopify-section-{{ section.id }} .product-card__item-description {
+      font-size: {{ section.settings.center_product_card_subtitle_font_size_tablet }}px;
+    }
+
+    #shopify-section-{{ section.id }} .slick-center .product-card__item-description {
+      font-size: {{ section.settings.aside_product_card_subtitle_font_size_tablet }}px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    #shopify-section-{{ section.id }} .recently-viewed-produts__title {
+      font-size: {{ section.settings.title_recently_viewed_products_font_size_mobile }}px;
+      letter-spacing: 0.2px;
+      text-align: left;
+      padding: 0 20px;
+    }
+
+    #shopify-section-{{ section.id }} .product-card__item-title-span {
+      font-size: {{ section.settings.aside_product_card_title_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .slick-slider .product-card__item-title-span {
+      font-size: {{ section.settings.center_product_card_title_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .product-card__item-description {
+      font-size: {{ section.settings.aside_product_card_subtitle_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .slick-center .product-card__item-description {
+      font-size: {{ section.settings.center_product_card_subtitle_font_size_mobile }}px;
+    }
+  }
+</style>
+{%- comment -%} End Shopify ID styles {%- endcomment -%}
+
+<style>
+  .recently-viewed-products {
+    margin-bottom: 0;
+  }
+
+  {% if section.settings.enable_slider_recently_viewed_product == true %}
+  .recently-viewed--wrapper {
+    padding: 0;
+  }
+  {% endif %}
+  .recently-viewed-products__list-class {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    position: relative;
+    margin-top: 35px;
+    float: left;
+    clear: both;
+    line-height: 0;
+    {% if template contains 'search' or template contains 'blog' or template contains 'article' %}
+      overflow: hidden;
+      padding: 0 50px 25px;
+    {% endif %}
+  }
+
+  .recently_viewed_products .product-card__grid-item {
+    line-height: 1;
+  }
+
+  .recently-viewed-products__list-class .slick-arrow {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    top: 40%;
+    z-index: 9;
+  }
+
+  .recently-viewed-products__list-class .slick-prev-slider {
+    left: 9.5%;
+  }
+
+  .recently-viewed-products__list-class .slick-next-slider {
+    right: 9.5%;
+  }
+
+  .recently-viewed-products__list-class .slick-next-slider::before,
+  .recently-viewed-products__list-class .slick-prev-slider::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  #shopify-section-{{ section.id }}  {
+    --sliders-to-show-desktop: {{ section.settings.recently_viewed_amount }};
+  }
+
+  .recently-viewed-products__list-no-slider {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.recently_viewed_amount }}, 1fr);
+    gap: 12px;
+  }
+
+  .recently-viewed-products__list-no-slider .product-card__grid-item {
+    height: 100%;
+  }
+
+  .recently-viewed-products__list-class .slick-prev-slider::before {
+    background-image: url("{{ 'prev-arrow.svg' | asset_url }}");
+  }
+
+  .recently-viewed-products__list-class .slick-next-slider::before {
+    background-image: url("{{ 'next-arrow.svg' | asset_url }}");
+  }
+
+  .recently-viewed-products__list-class .slick-track {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .recently-viewed-products__list-class .slick-slide {
+    margin: 0 32px;
+    transition: all 0.2s ease;
+    width: 325px;
+    height: auto;
+    max-height: 100%;
+  }
+
+  .recently-viewed-products__list-class .slick-slide:not(.slick-center) {
+    transform: scale(0.86728);
+  }
+
+  .recently-viewed-products__list-class .product-card__grid-item {
+    width: 100%;
+  }
+
+  .recently-viewed-products__list-class .product-card__grid-item-image-wrapper {
+    padding-top: 108.6%;
+  }
+
+  .recently-viewed-products__list-class .product-card__item-title {
+    font-family: var(--bookmaniaFont);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+
+  .recently-viewed-products__list-class .product-card__item-description-wrapper {
+    padding: 0 13px;
+  }
+
+  .recently-viewed-products__list-class .slick-center .product-card__item-description-wrapper {
+    padding: 0 14px;
+  }
+
+  .recently-viewed-products__list-class .product-card__item-description {
+    letter-spacing: 0.9px;
+  }
+
+  .recently-viewed-products__list-class .slick-center .grid__item-image {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .recently-viewed-products__list-class .product-card__reviews {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    gap: 8px;
+  }
+
+  .recently-viewed-products__list-class .product-card__reviews svg {
+    width: 77.5px;
+  }
+  .recently-viewed-products__list-class .product-card__reviews svg path {
+    fill: {{ section.settings.recently_viewed_stars_color }};
+  }
+
+  .recently-viewed-products__list-class .product-card__item-price-wrapper {
+    margin: 5px 0 10px;
+    padding: 0 13px;
+  }
+
+  .recently-viewed-products__list-class .product-card__item-price-wrapper span {
+    font-size: 20px;
+  }
+  .recently-viewed__top-wrapper.wrapper{
+    padding: 0;
+  }
+  .recently-viewed__loader-wrapper {
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    margin-top: 45px;
+    gap: 20px 95px;
+    padding: 40px 5px;
+  }
+  @media (max-width: 1019px) {
+    .recently-viewed-products {
+      padding: 0;
+    }
+
+    .recently-viewed-products__list-no-slider {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+    }
+
+    .recently-viewed-products__list-class .slick-arrow {
+      width: 20px;
+      height: 20px;
+    }
+
+    .recently-viewed-products__list-class .slick-prev-slider {
+      left: 20px;
+    }
+
+    .recently-viewed-products__list-class .slick-next-slider {
+      right: 20px;
+    }
+
+    .recently-viewed-products__list-class .slick-slide:not(.slick-center) {
+      margin-top: 1px;
+    }
+
+    .recently_viewed_products .product-card__grid-item {
+      line-height: 0.78;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-title {
+      line-height: 1.3;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__item-title {
+      margin-top: 21px;
+      letter-spacing: 0px;
+      line-height: 1.2;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-title-span {
+      letter-spacing: 1.1px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__item-title-span {
+      letter-spacing: 0.6px;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-description {
+      letter-spacing: 1.4px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__item-description {
+      letter-spacing: 0.9px;
+    }
+
+    .recently-viewed-products__list-class .product-card__reviews {
+      padding: 0 12px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__reviews {
+      margin: 0;
+      padding: 0 11px;
+    }
+
+    .recently-viewed-products__list-class .product-card__reviews span {
+      font-size: 16px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__reviews svg {
+      width: 79px;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-price-wrapper span {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .recently-viewed__loader-wrapper {
+      column-gap: 48px;
+    }
+
+    .recently-viewed-products__list-class {
+      margin-top: 25px;
+    }
+
+    .recently-viewed-products__list-class .slick-prev-slider {
+      left: 4.5%;
+    }
+
+    .recently-viewed-products__list-class .slick-next-slider {
+      right: 4.5%;
+    }
+
+    .recently-viewed-products__list-class .slick-slide {
+      width: 233px;
+      margin: 0 8px;
+    }
+
+    .recently_viewed_products .product-card__grid-item {
+      line-height: 0.78;
+    }
+
+    .recently-viewed-products__list-class .product-card__grid-item-image-wrapper {
+      padding-top: 106.8%;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-title {
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      font-size: 14px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__item-title {
+      margin: 14px 0 0 0;
+      padding: 0 10px;
+      letter-spacing: 1.1px;
+      line-height: 1.1;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__item-title-span {
+      letter-spacing: 0.6px;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-description-wrapper {
+      padding: 0 11px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__item-description-wrapper {
+      padding: 0 9px;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-description {
+      letter-spacing: 1px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__item-description {
+      letter-spacing: 0.8px;
+    }
+
+    .recently-viewed-products__list-class .product-card__reviews {
+      padding: 0 8px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__reviews {
+      padding: 0 9px;
+      gap: 3.6px;
+    }
+
+    .recently-viewed-products__list-class .product-card__reviews svg{
+      width: 70px;
+    }
+
+    .recently-viewed-products__list-class .slick-center .product-card__reviews svg{
+      width: 70px;
+    }
+
+    .recently-viewed-products__list-class .product-card__reviews span {
+      font-size: 12px;
+    }
+
+    .recently-viewed-products__list-class .product-card__item-price-wrapper span {
+      font-size: 18px;
+    }
+  }
+</style>
+
+{% assign extra_classes = '' %}
+{% if section.settings.enable_slider_recently_viewed_product == false %}
+  {% assign extra_classes = 'recently-viewed-products__list-no-slider' %}
+{% endif %}
+
+<div class="recently-viewed__top-wrapper wrapper">
+  <h2 class="recently-viewed-produts__title">{{ section.settings.title_recently_viewed_products }}</h2>
+  <div id="recently-viewed__loader" class="recently-viewed__loader-wrapper wrapper">
+    {% render 'skeleton-cards' %}
+  </div>
+</div>
+<div class="shopify-section recently-viewed-products" data-section-type="recently-viewed-products">
+  <div class="recently-viewed--wrapper wrapper">
+    <div id="recently-viewed-products__list" class="recently-viewed-products__list-class recently-wrapper {{ extra_classes }}"></div>
+  </div>
+</div>
+
+<script>
+  function addToCart(event, button) {
+    console.log('addToCart', event, button);
+    event.preventDefault(); 
+    event.stopPropagation();
+    if (button.hasAttribute('loading') || button.getAttribute('available') === 'false') return;
+
+    const variantId = button.dataset.variantId;
+    const soldOut = document.querySelector(`.product-card__item-sold-out[data-variant-id="${variantId}"]`);
+    button.setAttribute('disabled', '');
+    button.setAttribute('loading', '');
+
+    try {
+      fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: 1
+        }),
+      }).then(() => {
+        window.AMP_API.OPEN_CART();
+      }).catch((error) => {
+        console.error(error);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => {
+        button.removeAttribute('disabled');
+        button.removeAttribute('loading');
+      }, 800);
+    }
+  }
+</script>
+  <script>
+    document.addEventListener('DOMContentLoaded', initRecentlyViewed);
+
+    async function initRecentlyViewed() {
+      const selectors = {
+        wrapper: '.recently-viewed-products',
+        list: '#recently-viewed-products__list',
+        top: '.recently-viewed__top-wrapper',
+        loader: '.recently-viewed__loader-wrapper',
+      };
+
+      const elements = Object.fromEntries(
+        Object.entries(selectors).map(([key, sel]) => [key, document.querySelector(sel)])
+      );
+
+      const MAX_ITEMS = {{ section.settings.recently_viewed_amount }};
+      const currentPath = location.pathname.replace(/(.*)\/products/, '/products');
+      const storedHandles = getHandles();
+      updateHandles(storedHandles, currentPath, MAX_ITEMS);
+
+      const handles = getHandles();
+      if (!handles.length) {
+        toggleUI(elements, false);
+        return;
+      }
+
+      prepareUI(elements, handles.length);
+      const products = await fetchProducts(handles);
+      renderProducts(elements.list, products);
+      toggleUI(elements, true);
+    }
+
+    /* -------------------- helpers -------------------- */
+
+    function getHandles() {
+      try {
+        return JSON.parse(localStorage.getItem('@handles')) || [];
+      } catch (err) {
+        console.error('Failed to parse handles', err);
+        return [];
+      }
+    }
+
+    function updateHandles(handles, current, limit) {
+      if (!current.includes('/products')) return;
+      const filtered = handles.filter(h => h !== current && !h.includes('bundle-save'));
+      filtered.unshift(current);
+      localStorage.setItem('@handles', JSON.stringify(filtered.slice(0, limit)));
+    }
+
+    function toggleUI({ wrapper, loader, top }, show) {
+      if (wrapper) wrapper.hidden = !show;
+      if (top) top.hidden = !show;
+      if (loader) loader.style.display = show ? 'none' : 'none'; // escondido por padrão
+    }
+
+    function prepareUI({ list, loader }, count) {
+      document.documentElement.style.setProperty(
+        '--items-per-row-recently-viewed-products',
+        Math.min(count, 4)
+      );
+      if (list) list.innerHTML = '';
+      if (loader) loader.style.display = 'flex';
+    }
+
+    async function fetchProducts(urls) {
+      const parser = new DOMParser();
+      const fetches = urls.map(url =>
+        fetch(`${url}?view=ajax`)
+          .then(r => (r.ok ? r.text() : null))
+          .catch(() => null)
+      );
+
+      const results = await Promise.allSettled(fetches);
+      return results
+        .filter(r => r.status === 'fulfilled' && r.value)
+        .map(r => parser.parseFromString(r.value, 'text/html'))
+        .map(doc => doc.querySelector('#recently-viewed-products__product-item'))
+        .filter(Boolean);
+    }
+
+    function renderProducts(container, items) {
+      if (!container || !items.length) return;
+      const fragment = document.createDocumentFragment();
+      items.forEach(item => fragment.appendChild(item));
+      container.appendChild(fragment);
+    }
+  </script>
+
+{% schema %}
+{
+  "name": "Recently Viewed Products",
+  "class": "recently_viewed_products",
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "range",
+      "id": "recently_viewed_amount",
+      "label": "Products For Show",
+      "max": 4,
+      "min": 1,
+      "step": 1,
+      "default": 4,
+      "unit": "pts",
+      "info": "This is the maximum of products to would be saved"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_recently_viewed_product",
+      "label": "Enable Slider",
+      "default": false
+    },  
+    {
+      "type": "range",
+      "id": "slides_to_show_tablet",
+      "label": "Slides To Show on Tablet",
+      "max": 4,
+      "min": 1,
+      "step": 1,
+      "default": 1,
+      "unit": "pts",
+      "visible_if": "{{ section.settings.enable_slider_recently_viewed_product }}"
+    },
+    {
+      "type": "range",
+      "id": "slides_to_show_mobile",
+      "label": "Slides To Show on Mobile",
+      "max": 4,
+      "min": 1,
+      "step": 1,
+      "default": 1,
+      "unit": "pts",
+      "visible_if": "{{ section.settings.enable_slider_recently_viewed_product }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Product Description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Product Price",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "top_margin_featured_products",
+      "info": "Only works if section above is the banner",
+      "label": "Position On/Off Banner",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "title_recently_viewed_products",
+      "label": "Headline Text",
+      "default": "Recently Viewed Products"
+    },
+    {
+      "type": "range",
+      "id": "title_recently_viewed_products_font_size_tablet",
+      "info": "Only works if section above is the banner",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline Font Size on Tablet",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "title_recently_viewed_products_font_size_mobile",
+      "info": "Only works if section above is the banner",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline Font Size on Mobile",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "title_recently_viewed_products_font_size",
+      "info": "Only works if section above is the banner",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Headline Font Size on Desktop",
+      "default": 38
+    },
+    {
+      "type": "select",
+      "id": "text_transform_title",
+      "label": "Headline Text Transform",
+      "options": [
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "none",
+          "label": "Same as Input"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000"
+    },
+    {
+      "type": "select",
+      "id": "text_transform_product_title",
+      "label": "Product Title Text Transform",
+      "options": [
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "none",
+          "label": "Same as Input"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "text_transform_product_description",
+      "label": "Product Description Text Transform",
+      "options": [
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "none",
+          "label": "Same as Input"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Font Sizes"
+    },
+    {
+      "type": "paragraph",
+      "content": "Desktop"
+    },
+    {
+      "type": "range",
+      "id": "center_product_card_title_font_size",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "center_product_card_subtitle_font_size",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "aside_product_card_title_font_size",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "aside_product_card_subtitle_font_size",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 14
+    },
+    {
+      "type": "paragraph",
+      "content": "Tablet"
+    },
+    {
+      "type": "range",
+      "id": "center_product_card_title_font_size_tablet",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "center_product_card_subtitle_font_size_tablet",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "aside_product_card_title_font_size_tablet",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "aside_product_card_subtitle_font_size_tablet",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 20
+    },
+    {
+      "type": "paragraph",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "center_product_card_title_font_size_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "center_product_card_subtitle_font_size_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "aside_product_card_title_font_size_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "aside_product_card_subtitle_font_size_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Product Card title font size",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "range",
+      "id": "border_radius_recently_viewed_product",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "border_width_recently_viewed_product",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "bg_color_recently_viewed_product",
+      "label": "Featured Collection Background Color",
+      "default": "#FFF"
+    },
+    {
+      "type": "color",
+      "id": "recently_viewed_stars_color",
+      "label": "Review Stars Color",
+      "default": "#FFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently Viewed Products",
+      "category": "Recently"
+    }
+  ]
+}
+{% endschema %}

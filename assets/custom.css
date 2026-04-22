@@ -1,0 +1,423 @@
+@font-face {
+    font-family: 'Grotesque MT Condensed';
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.eot?v=1756433649.eot');
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.eot?v=1756433649.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.woff2?v=1756433649.woff2') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.woff?v=1756433649.woff') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.ttf?v=1756433649.ttf') format('truetype'),
+        url('GrotesqueMT-Condensed.svg#GrotesqueMT-Condensed') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Suisse Intl Bold';
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Bold.eot?v=1756536052.eot');
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Bold.eot?v=1756536052.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Bold.woff2?v=1756536050.woff2') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Bold.woff?v=1756536051.woff') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Bold.ttf?v=1756536052.ttf') format('truetype'),
+        url('SuisseIntl-Bold.svg#SuisseIntl-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Suisse Intl Regular';
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Regular.eot?v=1756536329.eot');
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Regular.eot?v=1756536329.eot?#iefix') format('embedded-opentype'),
+        url('SuisseIntl-Reghttps://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Regular.woff2?v=1756536329.woff2') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Regular.woff?v=1756536329.woff') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/SuisseIntl-Bold.ttf?v=1756536052.ttf') format('truetype'),
+        url('SuisseIntl-Regular.svg#SuisseIntl-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Bold.eot?v=1756536962.eot');
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Bold.eot?v=1756536962.eot?#iefix') format('embedded-opentype'),
+        url('IBMPlexMono-Bhttps://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Bold.woff2?v=1756536962.woff2') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Bold.woff?v=1756536961.woff') format('woff'),
+        url('IBMPlexMono-https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Bold.ttf?v=1756536961.ttf') format('truetype'),
+        url('IBMPlexMono-Bold.svg#IBMPlexMono-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Medium.eot?v=1756991283.eot');
+    src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Medium.eot?v=1756991283.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Medium.woff2?v=1756991283.woff2') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Medium.woff?v=1756991283.woff') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/IBMPlexMono-Medium.ttf?v=1756991283.ttf') format('truetype'),
+        url('IBMPlexMono-Medium.svg#IBMPlexMono-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+h2,h4,p {
+    margin: 0px;
+}
+h2 {
+ font-family: 'Grotesque MT Condensed' !Important;
+}
+h3{
+     font-family: 'Suisse Intl Bold';
+}
+p {
+ font-family: 'Suisse Intl Regular';
+}
+.rte {
+    font-family: 'Suisse Intl Regular';
+}
+
+.slide-content a.button{
+     font-size: 16px;
+}
+a.button {
+    font-family: 'IBM Plex Mono';
+    font-size: 18px;
+    font-weight: 700;
+}
+sup {
+    font-size: 20px;
+    position: absolute;
+        top: -20px;
+}
+.multicolumn.no-heading .title {
+    display: block !IMPORTANT;
+}
+/* announcement-bar */
+.announcement-bar__message.h5 {
+   font-family: 'Suisse Intl Bold';
+}
+/* announcement-bar */
+
+/* How to Join  */
+.how-cst .title-wrapper--no-top-margin {
+    justify-content: center;
+        text-align: center;
+}
+.how-cst .title {
+    font-family: 'Grotesque MT Condensed';
+    font-size: 56px;
+    line-height: 56px;
+    color: #234134;
+    padding-bottom:10px;
+}
+.how-cst h2.title.inline-richtext.h1 p {
+    font-family: 'Grotesque MT Condensed';
+    color: #234134;
+}
+.how-cst  a {
+    color: #1E73BE !important;
+    text-decoration: none !important;
+    font-weight: 600;
+}
+
+.multicolumn-card__info p {
+    font-size: 16px;
+    line-height: 26px;
+     color: #234134;
+}
+.how-cst .inline-richtext strong {
+    color: #234134;
+}
+.how-cst .p {
+    font-family: 'Suisse Intl Bold';
+}
+.how-cst .subtext-cst {
+    font-family: Suisse Intl Bold;
+    font-size: 56px;
+    line-height: 64px;
+    color:#234134;
+}
+.background-none .multicolumn-card__image-wrapper+.multicolumn-card__info {
+    padding-top: 32px !IMPORTANT;
+}
+.subtext-cst {
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 60px;
+    margin: 0px;
+    padding: 0px;
+}
+.submit-text {
+    text-align: center;
+}
+
+.submit-text {
+    text-align: center;
+    background: #fae8b5;
+    margin: auto;
+    padding: 14px 30px;
+    border-radius: 8px;
+    margin-top: 5rem;
+    IMAGE-RENDERING: auto;
+    width: max-content;
+    font-family: 'IBM Plex Mono' !important;
+    color: #234134;
+}
+.submit-text.step-text strong {
+    font-weight: 800;
+    font-family: 'IBM Plex Mono';
+}
+.submit-text p {
+    font-family: IBM Plex Mono;
+    font-size: 16px;
+    font-weight: 500;
+    margin:0px !important;
+}
+
+.submit-text a {
+    color: #1E73BE;
+    text-decoration: none;
+    font-family: 'IBM Plex Mono';
+}
+
+/* faq section */
+.faq-section .collapsible-content .accordion {
+    margin-top: 25px;
+}
+.faq-section .collapsible-content-wrapper-narrow {
+    max-width: 100rem;
+}
+.faq-section .accordion {
+    background: #E3EDDE;
+    border-radius: 12px;
+    padding: 17px;
+}
+.faq-section .accordion__title {
+    font-family: Suisse Intl Bold;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+}
+.announcement-bar__message p {
+    margin: 0;
+    font-weight: 700;
+    font-size: 15px;
+}
+.faq-section .accordion__content {
+    font-family: 'Suisse Intl Regular';
+}
+.faq-section .collapsible-content summary:hover {
+    background: none; 
+    text-decoration: none;
+}
+.faq-section .collapsible-content__heading {
+    font-family: 'Grotesque MT Condensed';
+    font-size: 56px;
+}
+.faq-section .collapsible-row-layout .accordion .accordion__content {
+    padding-top: 0;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+.faq-section .accordion__icon {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+.faq-section .accordion__icon::before,
+.faq-section .accordion__icon::after {
+  content: "";
+  position: absolute;
+  background: #000; /* icon color */
+  transition: 0.3s;
+}
+
+.faq-section .accordion__icon::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+.faq-section .collapsible-content summary:hover .accordion__title {
+    text-decoration: none;
+}
+.faq-section .accordion__icon::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+details[open] .accordion__icon::after {
+  opacity: 0; 
+}
+
+/* footer bottom */
+.footer-text{
+    margin-bottom:100px;
+}
+.footer-text p {
+    font-family: Suisse Intl Bold;
+    color: #234134;
+}
+.footer-text a {
+    text-decoration: none;
+    font-weight: 400;
+}
+svg.left-arrow {
+    margin-left: 10px;
+}
+.footer-text a.button.button--primary {
+    color: #234134;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'IBM Plex Mono';
+    padding: 18px 40px;
+    border-radius:9px;
+}
+.how-cst .multicolumn-list {
+    margin-bottom:40px;
+}
+/* border */
+.has-border-top {
+  border-top: 1px solid #ccc; /* color & size changeable */
+}
+
+.has-border-bottom {
+  border-bottom: 1px solid #ccc;
+}
+
+.footer-text .rich-text__text.rte a {
+    color: #1E73BE;
+    text-decoration: underline;
+}
+@media(max-width: 1400px) {
+.submit-text {
+    width: auto !important;
+    margin: 0 20px;
+}
+}
+.challenge.page-width.has-border-top {
+    border-bottom: 1px solid;
+}
+@media(max-width: 767px) {
+    .how-cst .title{ font-size:28px; line-height:35px; }
+    .accordion summary {
+    padding: 0 0 8px;
+}
+    .faq-section .accordion {
+    padding: 7px 16px;
+}
+    .footer-text{
+    margin-bottom:48px;
+}
+    .footer-text a.button.button--primary{
+        font-size:12px;
+    }
+    .rich-text__text.rte{
+        font-size: 12px;
+    }
+    .rich-text__wrapper:has(.rich-text__buttons-custom){
+  margin:0 auto;
+}
+    .testimonial-body h3 {
+    font-size: 13px !important;
+}
+button.cst-btn-my.button.button--primary {
+    width: 100%;
+    font-size: 14px !important;
+    line-height: 5px !important;
+}
+.win-big {
+    padding: 0 !important;
+}
+.win-big__card p{
+   padding: 5px !important;
+}
+.green-challenge__wrapper.page-width {
+    padding: 0 !important;
+}
+.green-des p {
+   
+    padding-right: 0 !important;
+}
+    .green-challenge__content {
+      
+        padding-left: 0 !important;
+    }
+    .green-challenge a.btn {
+    display: inline-block;
+    padding: 14px 12px !important;
+    }
+    .accordion__content.rte p {
+    font-size: 14px !important;
+    }
+    .win-big__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px !important;
+    }
+    .announcement-bar__message p {
+    letter-spacing:normal;
+    font-size: 10px !important;
+}
+.faq-section .collapsible-content__heading {
+    font-size: 32px;
+}
+.faq-section .accordion__title {
+    font-size: 14px;
+}
+.faq-section .accordion__content {
+    font-size: 14px;
+}
+.how-cst h2.title.inline-richtext.h1 p {
+    font-size: 28px;
+    line-height: 35px;
+    margin-bottom:0px;
+}
+.how-cst.multicolumn .title-wrapper-with-link{padding:0px;}
+.submit-text {
+    max-width: 95% !important;
+}
+.submit-text p {
+    font-size: 13px;
+}
+}
+button.cst-btn-my.button.button--primary {
+    background-color: #f1ca49!important;
+    color: #234134!important;
+    font-family: IBM Plex Mono;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    vertical-align: middle;
+    padding: 21px 13px;
+    max-width: 270px;
+    border-radius:9px;
+}
+button.cst-btn-my.button.button--primary:hover {
+    background-color: #234134 !important;
+    color: #F1CA49 !important;
+}
+
+@media(max-width:420px){
+    .footer-text a.button.button--primary{
+        padding: unset;
+    width: 100%;
+    }
+    .faq-section .accordion__title, .faq-section .accordion__content {
+        font-size: 12px;
+    }
+    .accordion__content.rte p {
+    font-size: 12px!important;
+}
+}

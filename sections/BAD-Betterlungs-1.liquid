@@ -1,0 +1,278 @@
+{% schema %}
+{
+  "name": "BAD-Betterlungs-1",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "text",
+      "id": "attention_text",
+      "label": "Attention Text",
+      "default": "⚠️ ATTENTION: Nearly 100% of smokers suffer the effects of residue accumulation in their lungs"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline",
+      "default": "HERE’S WHY A LUNG DETOX IS THE MOST IMPORTANT THING FOR SMOKERS"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product Image"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image",
+      "label": "Icons Under CTA"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_2",
+      "label": "Icons Under CTA 2"
+    },
+    {
+      "type": "text",
+      "id": "cta_lower_text_1",
+      "label": "Text Under CTA 1",
+      "default": "365-Day Money Back Guarantee*"
+    },
+    {
+      "type": "text",
+      "id": "cta_lower_text_2",
+      "label": "Text Under CTA 2",
+      "default": "Free Shipping*"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD-Betterlungs-1"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .BAD-lung-container {
+
+    background-size: cover;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .BAD-attention-text {
+    background:  rgba(242, 203, 73, 0.43);
+    font-weight: bold;
+    font-family: bookmania;
+    font-weight: 500;
+    padding: 10px;
+    display: inline-block;
+    color:  #234134;
+    text-align: center;
+  }
+
+  .BAD-headline {
+    font-size: 24px;
+    font-family: bookmania;
+    font-weight: 600;
+    color: #234134;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(255, 228, 193, 0.49);
+    -webkit-text-stroke-width: 1;
+    -webkit-text-stroke-color: var(--Color-2, #F0FFE9);
+  }
+
+  .BAD-product-image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .BAD-cta-button {
+    background: #187E52;
+    max-width: 600px;
+    height: 60px;
+    color: white;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: "suisse_intl_mono";
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .BAD-intro-logo {
+    padding: 20px 0;
+    max-width: 20svw !important;
+  }
+
+     .BAD-cta-info-text {
+     font-size: 12px !important;
+     margin: 0 !important;
+   }
+
+
+  .cta-icons {
+    height: 22px;
+    width: 22px;
+  }
+
+  .BAD-cta-wrapper {
+    display:flex;justify-content:center;margin-top:20px;flex-direction: column; z-index: 2;
+  }
+
+  .desktop-only {
+    display: flex;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+  @media screen and (max-width: 768px) {
+    .BAD-lung-container {
+      padding: 10px;
+    }
+
+        .BAD-cta-info-text {
+     font-size: 8px !important;
+     margin: 0 !important;
+   }
+
+    .desktop-only {
+      display: none;
+    }
+
+    .BAD-headline {
+      font-size: 20px;
+    }
+
+    .BAD-cta-button {
+      font-size: 21px;
+      border: 1px solid  #F0FFE9;
+      background: #187E52;
+      text-align: center;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      width: 320px;
+      font-family: bookmania;
+      font-weight: 800;
+      line-height: 18px; /* 112.5% */
+    }
+
+    .BAD-attention-text {
+      font-size: 13px;
+    }
+
+    .BAD-intro-logo {
+    max-width: 50svw !important;
+  }
+
+    .mobile-only {
+      display: block;
+    }
+
+
+  }
+</style>
+
+<script>
+  (function() {
+    var css_override = document.createElement("style");
+    document.getElementsByTagName("head")[0].appendChild(css_override);
+  })();
+
+  var css = 'iframe#preview-bar-iframe { display: none !important; }',
+  head = document.head || document.getElementsByTagName('head')[0],
+  style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+  head.appendChild(style);
+</script>
+
+<div class="BAD-lung-container page-width desktop-only">
+  {% if section.settings.logo_image != blank %}
+    <img src="{{ section.settings.logo_image | img_url: '1920x1080'}}" alt="introLogoImg" class="BAD-intro-logo">
+  {% endif %}
+  <div class="BAD-attention-text">{{ section.settings.attention_text }}</div>
+
+  <div style="display:flex;">
+    {% if section.settings.cta_text != blank %}
+      <div class="BAD-cta-wrapper page-width" style="align-items: center;">
+        <h2 class="BAD-headline" style="font-size: 35px;">{{ section.settings.headline }}</h2>
+        <a href="{{ section.settings.cta_url }}" class="BAD-cta-button" style="font-size: 25px;">
+          {{- section.settings.cta_text -}}
+        </a>
+        <div style="display:flex;justify-content:center;padding-top: 5px;gap:10px;">
+          <div style="display:flex;align-items:center;gap:5px;">
+            <img src="{{ section.settings.icon_image | img_url: '22x22' }}" alt="Product Image" class="cta-icons">
+            <p class="BAD-cta-info-text" style="margin:0;">{{ section.settings.cta_lower_text_1 }}</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;">
+            <img src="{{ section.settings.icon_image_2 | img_url: '22x22' }}" alt="Product Image" class="cta-icons">
+            <p class="BAD-cta-info-text" style="margin:0;">{{ section.settings.cta_lower_text_2 }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="BAD-product-image">
+      <img
+        src="{{ section.settings.product_image | img_url: '1920x1080' }}"
+        alt="Product Image"
+        style="width:1000px;"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</div>
+
+<div class="BAD-lung-container page-width mobile-only">
+  {% if section.settings.logo_image != blank %}
+    <img src="{{ section.settings.logo_image | img_url: '1920x1080'}}" alt="introLogoImg" class="BAD-intro-logo">
+  {% endif %}
+  <div class="BAD-attention-text">{{ section.settings.attention_text }}</div>
+  <h2 class="BAD-headline">{{ section.settings.headline }}</h2>
+  <div class="BAD-product-image">
+    <img src="{{ section.settings.product_image | img_url: '600x600' }}" alt="Product Image" loading="lazy">
+  </div>
+  {% if section.settings.cta_text != blank %}
+    <div class="BAD-cta-wrapper page-width">
+      <a href="{{ section.settings.cta_url }}" class="BAD-cta-button">
+        {{- section.settings.cta_text -}}
+      </a>
+      <div style="display:flex;justify-content:center;padding-top: 5px;gap:10px;">
+        <div style="display:flex;align-items:center;gap:5px;">
+          <img src="{{ section.settings.icon_image | img_url: '22x22' }}" alt="Product Image" class="cta-icons">
+          <p class="BAD-cta-info-text" style="margin:0;">{{ section.settings.cta_lower_text_1 }}</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <img src="{{ section.settings.icon_image_2 | img_url: '22x22' }}" alt="Product Image" class="cta-icons">
+          <p class="BAD-cta-info-text" style="margin:0;">{{ section.settings.cta_lower_text_2 }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,10 @@
+{
+  "layout": "theme.old-layout",
+  "sections": {
+    "main": {
+      "type": "lp-founders-story",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

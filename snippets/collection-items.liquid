@@ -1,0 +1,169 @@
+{%- if collection.products.size > 0 -%}
+  {%- assign collection_style = settings.collection_style | default: 'paginator' -%}
+  {%- assign items_per_row = custom_desktop_items_per_row_desktop | default: settings.products_per_row -%}
+
+  {%- assign grid_uniform_class_desktop = 'grid-uniform--s' | append: items_per_row -%}
+  {%- assign grid_uniform_class_tablet = 'grid-uniform--st' | append: settings.products_per_rows_collection_tablet -%}
+{%- assign grid_uniform_class_mobile = 'grid-uniform--sm' | append: settings.products_per_rows_collection_mobile -%}
+
+  {%- case items_per_row -%}
+    {%- when '2' -%}
+      {%- assign image_width = 600 -%}
+    {%- when '3' -%}
+      {%- assign image_width = 400 -%}
+    {%- when '4' -%}
+      {%- assign image_width = 200 -%}
+  {%- endcase -%}
+
+  {%- assign items_per_page = settings.products_amount | plus: 0 -%}
+  {% if template.suffix == 'bundle' %}
+    {%- assign items_per_page = 50 -%}
+  {% endif %}
+
+  {%- assign enable_soft_banner = section.settings.enable_soft_banner -%}
+  {%- assign banner_position = section.settings.banner_position | default: 2 | plus: 0 -%}
+
+  {% paginate collection.products by items_per_page %}
+    <div class="collection-page">
+      <div
+        style="position: relative"
+        id="collection-page-content"
+        class="collection-page__grid-products grid-uniform {{ grid_uniform_class_desktop }} {{ grid_uniform_class_tablet }} {{ grid_uniform_class_mobile }}"
+      >
+        <input
+          type="hidden"
+          value="{{ paginate.items }}"
+          class="product-count__all-collection-items"
+        >
+
+        {%- assign banner_inserted = false -%}
+        {%- assign current_index = 0 -%}
+
+        {%- for product in collection.products -%}
+          {% if product.handle == 'bundle-save' %}
+            {% continue %}
+          {% endif %}
+          {% if template.suffix == 'bundle' %}
+              {% render 'product-alternative-card', custom_product: product %}
+            {% else %}
+          {%- assign current_index = current_index | plus: 1 -%}
+
+          {%- render 'product-card',
+            prod: product,
+            enable_lazy: true,
+            max_width: image_width,
+            width_large: image_width,
+            width_mobile: image_width,
+            width_desk: image_width,
+            show_swatch: settings.enable_swatch_collection,
+            show_reviews: settings.collection_enabled_app_reviews,
+            show_price: true,
+            show_description: settings.collection_banner_description
+          -%}
+
+          {%- comment -%} Soft banner na posição definida — SOMENTE página 1 {%- endcomment -%}
+          {% comment %}
+            {%- if enable_soft_banner
+              and paginate.current_page == 1
+              and banner_inserted == false
+              and current_index == banner_position
+            -%}
+              {%- assign banner_inserted = true -%}
+              {% render 'soft-banner',
+                banner_image: section.settings.banner_image,
+                show_overlay: section.settings.show_overlay,
+                overlay_color: section.settings.overlay_color,
+                overlay_opacity: section.settings.overlay_opacity,
+                text_alignment: section.settings.text_alignment,
+                banner_text: section.settings.banner_text,
+                banner_subtext: section.settings.banner_subtext,
+                text_color: section.settings.text_color,
+                subtext_color: section.settings.subtext_color,
+                button_text: section.settings.button_text,
+                button_link: section.settings.button_link,
+                button_bg_color: section.settings.button_bg_color,
+                button_text_color: section.settings.button_text_color,
+                grid_uniform_class_desktop: grid_uniform_class_desktop,
+                grid_uniform_class_tablet: grid_uniform_class_tablet,
+                grid_uniform_class_mobile: grid_uniform_class_mobile
+              %}
+            {%- endif -%}
+          {% endcomment %}
+           {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment -%} Fallback: poucos produtos {%- endcomment -%}
+        {% comment %}
+          {%- if enable_soft_banner
+            and paginate.current_page == 1
+            and banner_inserted == false
+            and collection.products.size > 0
+          -%}
+            {% render 'soft-banner',
+              banner_image: section.settings.banner_image,
+              show_overlay: section.settings.show_overlay,
+              overlay_color: section.settings.overlay_color,
+              overlay_opacity: section.settings.overlay_opacity,
+              text_alignment: section.settings.text_alignment,
+              banner_text: section.settings.banner_text,
+              banner_subtext: section.settings.banner_subtext,
+              text_color: section.settings.text_color,
+              subtext_color: section.settings.subtext_color,
+              button_text: section.settings.button_text,
+              button_link: section.settings.button_link,
+              button_bg_color: section.settings.button_bg_color,
+              button_text_color: section.settings.button_text_color,
+              grid_uniform_class_desktop: grid_uniform_class_desktop,
+              grid_uniform_class_tablet: grid_uniform_class_tablet,
+              grid_uniform_class_mobile: grid_uniform_class_mobile
+            %}
+          {%- endif -%}
+        {% endcomment %}
+
+        {% unless template.suffix == 'bundle' %}
+          {%- if collection_style == 'paginator' -%}
+            {%- render 'pagination', paginate: paginate -%}
+
+          {%- elsif collection_style == 'loading-more' -%}
+            {%- if paginate.current_page < paginate.pages -%}
+              <div class="collection-page__loading-more-wrapper">
+                <div class="loading-more__progress-wrapper">
+                  <a
+                    href="#"
+                    class="collection-page__loading-more"
+                    data-pages="{{ paginate.pages }}"
+                  >
+                    Load More
+                  </a>
+                </div>
+              </div>
+            {%- else -%}
+              <div class="collection-page__loading-more-wrapper">
+                <span style="color:#234134 " class="collection-page__items--loaded"> All items have been loaded. </span>
+              </div>
+            {%- endif -%}
+
+          {%- elsif collection_style == 'infinite-loading' -%}
+            {%- if paginate.current_page < paginate.pages -%}
+              <span class="spinner-widget">
+                <span class="spinner-widget__spinner"></span>
+                <span class="spinner-widget__text">Loading</span>
+              </span>
+            {%- else -%}
+              <div class="collection-page__loading-more-wrapper">
+                <span style="color:#234134 " class="collection-page__items--loaded"> All items have been loaded. </span>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {% endunless %}
+      </div>
+    </div>
+  {% endpaginate %}
+
+{%- else -%}
+  <div class="collection-page">
+    <div id="collection-page-content" class="collection-page__grid-products">
+      <span class="collection__no-products-found"> No Products Found </span>
+    </div>
+  </div>
+{%- endif -%}

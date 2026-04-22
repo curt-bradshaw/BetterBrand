@@ -1,0 +1,19 @@
+<!-- START how-to-use-timeline-item.liquid -->
+<div class="timeline__item" {{ shopify_attributes }}>
+  <span class="timeline__dot">
+    {% render 'dot-icon' %}
+  </span>
+
+  <div class="timeline__content">
+    <div class="timeline__header">
+      <span class="timeline__icon">
+        {% render 'calendar-icon' %}
+      </span>
+
+      <h4>{{ title }}</h4>
+    </div>
+
+    <p>{{ text }}</p>
+  </div>
+</div>
+<!-- END how-to-use-timeline-item.liquid -->

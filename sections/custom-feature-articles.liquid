@@ -1,0 +1,59 @@
+<div class="ntg-article-section">
+    <div class="ntg-container">
+        <div class="ntg-heading-holder">
+            <h2 class="ntg-h2">{{ section.settings.heading }}</h2>
+        </div>
+        <ul class="ntg-article-list">
+          {% for article in section.settings.blog.articles limit: 3 %}
+            {% assign blog = block.settings.blog %}
+            <li>
+                <a href="{{ article.url }}">
+                    <div class="ntg-img-holder">
+                        <img src="{{ article.image | img_url: 'master' }}" alt="{{ article.title }}">
+                        {% if article.metafields.custom.custom_label == 'tips' %}
+                        <div class="ntg-category">tips</div>
+                        {% endif %}
+                    </div>
+                    <h3 class="ntg-h3">{{ article.title }}</h3>
+                    <span class="ntg-date">{{ article.published_at | time_tag: format: 'date' }}</span>
+                </a>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="ntg-btn-holder">
+            <a href="{{ blog.url }}" class="ntg-btn">read more</a>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom feature articles",
+  "class": "custom-feature-articles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Navigating Lung Health for a Vibrant Life"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom feature articles",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

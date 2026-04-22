@@ -1,0 +1,112 @@
+<style>
+
+  .hSaleM {
+    display: none;
+  }
+
+  .hSaleM2 {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .ntg-wrapper .ntg-price-holder {
+        margin: 0px 0 10px;
+    }
+}
+</style>
+
+<!-- countdown-timer.liquid -->
+<div id="countdown-timer">
+  <span>35% off Sitewide ends in: </span>
+  <span id="countdown"></span>
+</div>
+
+<script>
+  // Set the end date and time (12:00 PST on October 31st)
+  const endDate = new Date('November 26, {{ "now" | date: "%Y" }} 12:00:00 PST').getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = endDate - now;
+
+    if (distance < 0) {
+      document.getElementById("countdown-timer").innerHTML = "Sale has ended!";
+      clearInterval(countdownInterval);
+      return;
+    }
+
+    // Calculate time remaining
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Update the countdown text
+    document.getElementById("countdown").innerHTML =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  // Update the countdown every second
+  const countdownInterval = setInterval(updateCountdown, 1000);
+</script>
+
+<style>
+  #countdown-timer {
+    font-size: 1.1em;
+    padding: 10px;
+    text-align: center;
+    color: #3f654c;
+    background-color: #f2cb49; 
+    display: none;
+  }
+
+  #countdown {
+    font-weight: 600;
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Select all elements with the ntg-price-holder class
+  const priceElements = document.querySelectorAll('.ntg-price-holder');
+  
+  priceElements.forEach(priceElement => {
+    // Create a new div element for the discount message
+    const discountMessage = document.createElement('div');
+    discountMessage.textContent = "35% off applied at checkout";
+    discountMessage.classList.add('hSaleM');
+    
+    // Style the message (optional)
+    discountMessage.style.color = '#FF4500'; // Customize color
+    discountMessage.style.fontSize = '0.9em'; // Customize font size
+    discountMessage.style.marginBottom = '10px'; // Add some space from price
+    
+    // Insert the discount message after the price element
+    priceElement.insertAdjacentElement('afterend', discountMessage);
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Select all elements with the ntg-price-holder class
+  const priceElements = document.querySelectorAll('.ntg-cus-add-wrap');
+  
+  priceElements.forEach(priceElement => {
+    // Create a new div element for the discount message
+    const discountMessage = document.createElement('div');
+    discountMessage.textContent = "35% off applied at checkout";
+    discountMessage.classList.add('hSaleM2');
+    
+    // Style the message (optional)
+    discountMessage.style.color = '#FF4500'; // Customize color
+    discountMessage.style.fontSize = '0.9em'; // Customize font size
+    discountMessage.style.marginBottom = '10px'; // Add some space from price
+    
+    // Insert the discount message after the price element
+    priceElement.insertAdjacentElement('afterend', discountMessage);
+  });
+});
+</script>
+
+

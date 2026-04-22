@@ -1,0 +1,66 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "parent": "header-group.json",
+  "context": {
+    "market": "ca"
+  },
+  "sections": {
+    "shipping_bar_7zXd3": {
+      "type": "shipping_bar",
+      "disabled": false,
+      "settings": {
+        "header-2608e4c6869d63223e81bb9172624d03": null,
+        "paragraph-c37f4fa25393f77496d8047ae7235fa2": null,
+        "enable_link_shippingbar_text_email": true,
+        "disable_email_text_desktop": false,
+        "disable_email_text_tablet": true,
+        "enable_email_icon_mobile": true,
+        "paragraph-1b5bd45e7211cfa3a6e332a9307148cb": null,
+        "enable_link_shippingbar_text_phone": true,
+        "disable_phone_text_desktop": false,
+        "disable_phone_text_tablet": true,
+        "enable_phone_icon_mobile": true,
+        "header-6a74d7f2bec4739e37033c73beb40bf3": null,
+        "background_color": "#4b4b4b",
+        "text_color": "#ffffff",
+        "header-ed78e875e571fcb690747b7233589378": null,
+        "message_text_transform": "uppercase",
+        "shipping_bar_style": "info_style",
+        "position": false,
+        "enable_discount_in_cart": false,
+        "header-292cc0a7e12b540a8be8da4b66fd697f": null,
+        "font_size_desktop": 20,
+        "font_size_shipping_text_desktop": 16,
+        "font_size_tablet": 14,
+        "font_size_shipping_text_tablet": 16,
+        "font_size_mobile": 14,
+        "font_size_shipping_text_mobile": 12
+      },
+      "blocks": {
+        "info_style_33R6P": {
+          "type": "info-style",
+          "disabled": false,
+          "settings": {
+            "header-92983da639c82bfa1c706f35816aed2e": null,
+            "shipping_bar_info_text": "We Pay Shipping On Orders Over $100 in Canada"
+          }
+        }
+      },
+      "block_order": [
+        "info_style_33R6P"
+      ]
+    }
+  },
+  "order": [
+    "shipping_bar_7zXd3",
+    "header"
+  ]
+}

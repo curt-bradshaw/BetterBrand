@@ -1,0 +1,221 @@
+<script>
+    function addCart(id, selling_plan = null, event = null) {
+        if (event) event.preventDefault(); // Prevents button default behavior
+        const spinner = document.querySelector('.drawer__upsell-item[data-id="' + id + '"] .loading__spinner');
+        const button = document.querySelector('.drawer__upsell-item[data-id="' + id + '"] .drawer__upsell-item-button .button');
+      
+        if (spinner) {
+            spinner.classList.remove('hidden');
+        }
+
+        if (button) {
+            button.classList.add('is-loading');
+        }
+      
+      
+        let data = {
+            id: id,
+            quantity: 1,
+        };
+      
+        if (selling_plan !== null) {
+            data.selling_plan = selling_plan;
+        }
+      
+        // Send the add-to-cart request using XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/cart/add.js', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // Product added successfully, now refresh the cart drawer
+                    const refreshXhr = new XMLHttpRequest();
+                    refreshXhr.open('GET', `${routes.cart_url}?section_id=cart-drawer`, true);
+                    refreshXhr.onload = function () {
+                        if (refreshXhr.status === 200) {
+                            const html = new DOMParser().parseFromString(refreshXhr.responseText, 'text/html');
+      
+                            // Remove the `drawer__inner-empty` element if it exists
+                            const emptyElement = document.querySelector('.drawer__inner-empty');
+                            if (emptyElement) {
+                                emptyElement.remove();
+                                console.log('Removed drawer__inner-empty element.');
+                            }
+      
+                            // Remove the `is-empty` class from the `cart-drawer` element if it exists
+                            const cartDrawer = document.querySelector('cart-drawer');
+                            if (cartDrawer && cartDrawer.classList.contains('is-empty')) {
+                                cartDrawer.classList.remove('is-empty');
+                                console.log('Removed is-empty class from cart-drawer.');
+                            }
+      
+                            // Replace the content of the specified selectors
+                            const selectors = ['#CartDrawer'];
+                            for (const selector of selectors) {
+                                const targetElement = document.querySelector(selector);
+                                const sourceElement = html.querySelector(selector);
+                                if (targetElement && sourceElement) {
+                                    targetElement.replaceWith(sourceElement);
+                                    if(cartDrawer){
+                                      cartDrawer.classList.add('active');
+                                    }
+                                }
+                            }
+                        } else {
+                            console.error("Failed to refresh cart drawer:", refreshXhr.statusText);
+                        }
+                    };
+                    refreshXhr.onerror = function () {
+                        console.error("Error during cart drawer refresh.");
+                    };
+                    refreshXhr.send();
+                } else {
+                    console.error("Failed to add product to cart:", xhr.statusText);
+                    alert('Error adding product to cart!');
+                }
+            }
+        };
+        xhr.onerror = function () {
+            console.error("Error during add-to-cart request.");
+        };
+        xhr.send(JSON.stringify(data));
+    }
+
+    function upgradeToSubscription(button) {
+        let variantId = button.getAttribute("data-variant-id");
+        let sellingPlanId = button.getAttribute("data-selling-plan-id");
+        let quantity = button.getAttribute("data-quantity");
+    
+        if (!variantId || !sellingPlanId) {
+            console.error("Variant ID or Selling Plan ID is missing.");
+            return;
+        }
+    
+        // Disable the button & update text
+        button.disabled = true;
+        button.innerHTML = "Upgrading...";
+    
+        // Remove all other buttons
+        //document.querySelectorAll(".rebuy-button").forEach(btn => {
+        //    if (btn !== button) btn.remove();
+        //});
+    
+        // Fetch the cart to get the correct line item key
+        fetch("/cart.js")
+            .then(response => response.json())
+            .then(cart => {
+                let lineItem = cart.items.find(item => item.variant_id == variantId);
+                if (!lineItem) {
+                    console.error("Line item not found in the cart.");
+                    button.disabled = false;
+                    button.innerHTML = "Upgrade to Subscription";
+                    return;
+                }
+    
+                let lineItemKey = lineItem.key;
+    
+                // Send request to update the product to a subscription
+                fetch("/cart/change.js", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        id: lineItemKey,
+                        quantity: quantity,
+                        selling_plan: sellingPlanId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Cart updated successfully.", data);
+    
+                    // Change button text to "Upgraded!" after success
+                    button.innerHTML = "Upgraded!";
+    
+                    // Refresh the cart drawer
+                    fetch(`${routes.cart_url}?section_id=cart-drawer`)
+                        .then(response => response.text())
+                        .then(htmlString => {
+                            const html = new DOMParser().parseFromString(htmlString, "text/html");
+    
+                            // Remove empty state if present
+                            const emptyElement = document.querySelector(".drawer__inner-empty");
+                            if (emptyElement) emptyElement.remove();
+    
+                            // Update cart drawer content
+                            const cartDrawer = document.querySelector("cart-drawer");
+                            if (cartDrawer) {
+                                cartDrawer.classList.remove("is-empty");
+                                cartDrawer.classList.add("active");
+                            }
+    
+                            // Replace the cart drawer content
+                            const newCartDrawer = html.querySelector("#CartDrawer");
+                            if (newCartDrawer) {
+                                document.querySelector("#CartDrawer").replaceWith(newCartDrawer);
+                            }
+                        });
+                })
+                .catch(error => {
+                    console.error("Failed to upgrade product:", error);
+                    button.disabled = false;
+                    button.innerHTML = "Upgrade to Subscription";
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching cart data:", error);
+                button.disabled = false;
+                button.innerHTML = "Upgrade to Subscription";
+            });
+    }
+
+    function updateSellingPlan(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const variantId = selectedOption.getAttribute("data-variant-id");
+        const sellingPlanId = selectedOption.getAttribute("data-selling-plan-id");
+        const quantity = selectedOption.getAttribute("data-quantity");
+        
+        if (!variantId || !sellingPlanId) {
+            console.error("Missing variant ID or selling plan ID.");
+            return;
+        }
+    
+        // Prepare data for the update request
+        const requestData = {
+            id: variantId,
+            quantity: quantity,
+            selling_plan: sellingPlanId
+        };
+    
+        // Send AJAX request to update the cart
+        fetch(window.Shopify.routes.root + "cart/change.js", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json())
+        .then(cart => {
+            console.log("Selling plan updated successfully:", cart);
+            // Refresh cart drawer if needed
+            fetch(`${window.Shopify.routes.root}cart?section_id=cart-drawer`)
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const newDocument = parser.parseFromString(html, "text/html");
+                const updatedCartDrawer = newDocument.querySelector("#CartDrawer");
+    
+                if (updatedCartDrawer) {
+                    document.querySelector("#CartDrawer").replaceWith(updatedCartDrawer);
+                }
+            });
+        })
+        .catch(error => {
+            console.error("Error updating selling plan:", error);
+        });
+    }
+    
+    
+    
+</script>

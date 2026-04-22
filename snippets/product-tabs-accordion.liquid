@@ -1,0 +1,183 @@
+<!-- start product-tabs-accordion.liquid (SNIPPET) -->
+{% if section.settings.enabled_tabs %}
+  <section class="product-accordion">
+    <div class="accordion">
+      {% if section.settings.enabled_descp %}
+        <div class="accordion-item-product is-open">
+          <button class="accordion-header">
+            <span>{{ section.settings.product_description_title }}</span>
+            <span class="accordion-icon">−</span>
+          </button>
+          <div class="accordion-content" style="display:block;">
+            {{ product.description }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% for block in section.blocks %}
+        {% if block.type == 'tab' or block.type == 'tab-richtext' %}
+          {% assign show_tab = true %}
+          {% if block.settings.enable_tab_by_tag %}
+            {% unless product.tags contains block.settings.tag_name %}
+              {% assign show_tab = false %}
+            {% endunless %}
+          {% endif %}
+
+          {% if show_tab and block.settings.tab_title != blank and block.settings.tab_content != blank %}
+            <div class="accordion-item-product">
+              <button class="accordion-header">
+                <span>{{ block.settings.tab_title }}</span>
+                <span class="accordion-icon">+</span>
+              </button>
+              <div class="accordion-content">
+                {% if block.settings.wrap_content_in_p_tags %}
+                  <p>{{ block.settings.tab_content }}</p>
+                {% else %}
+                  {{ block.settings.tab_content   }}
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const headers = document.querySelectorAll('.accordion-header');
+
+    headers.forEach((header) => {
+      header.addEventListener('click', () => {
+        const item = header.closest('.accordion-item-product');
+        const content = item.querySelector('.accordion-content');
+        const icon = header.querySelector('.accordion-icon');
+
+        // Fecha todos os outros
+        document.querySelectorAll('.accordion-item-product').forEach((other) => {
+          if (other !== item) {
+            other.classList.remove('is-open');
+            other.querySelector('.accordion-content').style.maxHeight = '0';
+            other.querySelector('.accordion-icon').textContent = '+';
+          }
+        });
+
+        // Toggle atual
+        const isOpen = item.classList.contains('is-open');
+
+        if (isOpen) {
+          item.classList.remove('is-open');
+          content.style.maxHeight = '0';
+          icon.textContent = '+';
+        } else {
+          item.classList.add('is-open');
+          content.style.maxHeight = '300px';
+          icon.textContent = '−';
+        }
+      });
+    });
+  });
+</script>
+
+<style scoped>
+    :root {
+    --product-tab-text-transform: {{ section.settings.product_tab_text_transform }};
+    --active-tab-color: {{ section.settings.active_tab_color }};
+    --active-tab-bullet-color: {{ section.settings.active_tab_bullet_color }};
+    --active-tab-text-color: {{ section.settings.active_tab_text_color }};
+    --active-tab-border-color: {{ section.settings.active_tab_border_color }};
+    --inactive-tab-color: {{ section.settings.inactive_tab_color }};
+    --inactive-tab-bullet-color: {{ section.settings.inactive_tab_bullet_color }};
+    --inactive-tab-text-color: {{ section.settings.inactive_tab_text_color }};
+    --active-arrow-tab-color: {{ section.settings.active_arrow_tab_color }};
+    --inactive-arrow-tab-color: {{ section.settings.inactive_arrow_tab_color }};
+    --tab-max-height: {{ section.settings.tabs_max_height }}px;
+    --enable-bullet-points: inline-block;
+    {% unless section.settings.enabled_bullet_points %}
+      --enable-bullet-points: none;
+    {% endunless %}
+    }
+    .flex-control-paging li a {
+        display: initial;
+    }
+
+    .product-accordion {
+    width: 100%;
+    margin-bottom: 25px;
+    margin-top: 25px;
+  }
+
+  .accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .accordion-item-product {
+    border: 1px solid #3F745D;
+    border-radius: 37px;
+    padding: 10px 16px;
+  }
+
+  .accordion-item-product.is-open {
+    border-radius: 10px;
+  }
+
+  .accordion-header {
+    width: 100%;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .accordion-header span:first-child {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #234134;
+  }
+
+  .accordion-icon {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    color: #3F745D;
+  }
+
+  .accordion-content {
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.3s ease;
+  }
+
+  .accordion-content p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #234134;
+    margin-bottom: 0;
+      padding-top: 15px;
+  }
+
+  @media (max-width: 1019px) {
+    .product-accordion {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .accordion-header span:first-child{
+      font-size: 16px;
+    }
+
+    .accordion {
+      gap: 15px;
+    }
+  }
+</style>

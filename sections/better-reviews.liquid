@@ -1,0 +1,368 @@
+<!-- START better-reviews.liquid -->
+
+<section class="better-reviews-section" {{ section.shopify_attributes }}>
+  <div class="better-reviews__inner">
+    <div class="better-reviews__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="better-reviews__title">{{ section.settings.heading | replace: '[BREAK_MOBILE]', '<br class="mobile-break">' }}</h2>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <p class="better-reviews__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div class="better-reviews__grid">
+      {% for block in section.blocks %}
+        <div class="better-reviews__card" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <div class="better-reviews__image-wrapper">
+              {{ block.settings.image | image_url: width: 400 | image_tag: alt: block.settings.name, class: 'better-reviews__image', loading: 'lazy' }}
+            </div>
+          {% endif %}
+          
+          <div class="better-reviews__content">
+            <div class="better-reviews__info">
+              <p class="better-reviews__name">{{ block.settings.name }}</p>
+              <p class="better-reviews__location">{{ block.settings.location }}</p>
+            </div>
+            
+            <div class="better-reviews__stars">
+              {% for i in (1..5) %}
+                <span class="better-reviews__star">{% render 'better-review-stars' %}</span>
+              {% endfor %}
+            </div>
+            
+            {% if block.settings.review_title != blank %}
+              <h3 class="better-reviews__review-title">{{ block.settings.review_title }}</h3>
+            {% endif %}
+            
+            {% if block.settings.review_text != blank %}
+              <p class="better-reviews__review-text">{{ block.settings.review_text }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_label != blank %}
+      <div class="better-reviews__button-wrapper">
+        <a href="{{ section.settings.button_link }}" class="better-reviews__button">
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Better Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Meet The Betterbrand Community"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Lorem Ipsum Dolor Sit Amet Consectetur"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Show All Reviews"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Reviewer image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Michelle C."
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "United States"
+        },
+        {
+          "type": "text",
+          "id": "review_title",
+          "label": "Review title",
+          "default": "Better Lungs is an amazing product"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review text",
+          "default": "It is good for overall good health. This product gives you energy and helps you breath better. I love Better Lungs!"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Better Reviews",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+.better-reviews-section {
+  padding: 80px 20px 40px;
+}
+
+.better-reviews__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.better-reviews__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.better-reviews__title {
+  font-size: 38px;
+  font-weight: 700;
+  margin-bottom: 0;
+  color: #252525;
+  font-family: var(--bookmaniaFont);
+  line-height: 1.2;
+}
+
+.better-reviews__subtitle {
+  font-size: 20px;
+  color: #555555;
+  line-height: 1.2;
+}
+
+.better-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.better-reviews__card {
+  background: #F0FFE9;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-width: 369px;
+}
+
+.better-reviews__image-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.better-reviews__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.better-reviews__content {
+  padding: 13px 15px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.better-reviews__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.better-reviews__name {
+  font-size: 20px;
+  color: #234134;
+  line-height: 1;
+  margin: 0;
+}
+
+.better-reviews__location {
+  font-size: 16px;
+  color: #234134;
+  margin: 0;
+  line-height: 1;
+}
+
+.better-reviews__stars {
+  display: flex;
+  gap: 3px;
+  color: #FF9400;
+  font-size: 14px;
+  line-height: 1;
+  padding: 6px 0 25px;
+}
+
+.better-reviews__review-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #234134;
+  margin: 0;
+  padding-bottom: 12px;
+  font-family: var(--bookmaniaFont);
+}
+
+.better-reviews__review-text {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #234134;
+  margin: 0;
+}
+
+.better-reviews__button-wrapper {
+  text-align: center;
+}
+
+.better-reviews__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 271px;
+  width: 100%;
+  height: 70px;
+  padding: 28px 25px;
+  border-radius: 40px;
+  border: 1px solid #234134;
+  color: #234134;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.better-reviews__button:hover {
+  background: #234134;
+  color: #FFFFFF;
+}
+
+.mobile-break {
+  display: none;
+}
+
+@media (max-width: 1019px) {
+  .better-reviews-section {
+    padding: 60px 20px 35px;
+  }
+
+  .better-reviews__content {
+    padding: 12px 14px 22px;
+  } 
+
+  .better-reviews__title {
+    font-size: 32px;
+  }
+
+  .better-reviews__subtitle {
+    font-size: 18px;
+  }
+
+  .better-reviews__grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 35px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .better-reviews__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .better-reviews__card {
+    min-width: calc(45% - 5px);
+    scroll-snap-align: start;
+  }
+
+  .better-reviews__button {
+    max-width: 251px;
+    font-size: 18px;
+  }
+
+  .better-reviews__name {
+    font-size: 18px;
+  }
+
+  .better-reviews__location {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .better-reviews-section {
+    padding: 40px 20px 35px;
+  }
+
+  .better-reviews__title {
+    font-size: 24px;
+  }
+
+  .better-reviews__subtitle {
+    font-size: 16px;
+  }
+
+  .better-reviews__grid {
+    gap: 16px;
+  }
+
+  .better-reviews__card {
+    min-width: calc(90% - 8px);
+  }
+
+  .better-reviews__name {
+    font-size: 18px;
+  }
+
+  .better-reviews__location {
+    font-size: 14px;
+  }
+
+  .better-reviews__review-title {
+    font-size: 16px;
+  }
+
+  .better-reviews__review-text {
+    font-size: 14px;
+  }
+
+  .mobile-break {
+    display: block;
+  }
+}
+{% endstyle %}
+
+

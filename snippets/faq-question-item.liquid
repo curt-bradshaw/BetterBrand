@@ -1,0 +1,19 @@
+<!-- START faq-question-item.liquid -->
+<div class="faq-item" {{ shopify_attributes }}>
+  <button class="faq-question" aria-expanded="false">
+    <span>{{ question }}</span>
+    <span class="faq-icon">
+      +
+    </span>
+  </button>
+  <div class="faq-answer">
+    <div>
+      {% if is_metafield %}
+        {{ answer | metafield_tag }}
+      {% else %}
+        {{ answer }}
+      {% endif %}
+    </div>
+  </div>
+</div>
+<!-- END faq-question-item.liquid -->

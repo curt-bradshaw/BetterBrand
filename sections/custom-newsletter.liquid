@@ -1,0 +1,114 @@
+<div class="ntg-email-section">
+    <div class="ntg-cols">
+        <div class="ntg-col">
+            <div class="ntg-text-holder">
+                <h2 class="ntg-h2">{{ section.settings.title }}</h2>
+
+                {%- form 'customer', class: 'ntg-email-form' -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <div class="ntg-form-wrap">
+                      <div class="ntg-input-holder">
+                        <input type="email" placeholder="Email" name="contact[email]" 
+                          value="{{ form.email }}"
+                          aria-required="true"
+                          autocorrect="off"
+                          autocapitalize="off"
+                          autocomplete="email"
+                          {% if form.errors %}
+                            autofocus
+                            aria-invalid="true"
+                            aria-describedby="ContactFooter-error"
+                          {% elsif form.posted_successfully? %}
+                            aria-describedby="ContactFooter-success"
+                          {% endif %}
+                          required
+                        >
+                      </div>
+                      <button type="submit">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14.8">
+                              <path d="M20 7.4c0-.2-.1-.4-.2-.6L13.2.2c-.2-.1-.4-.2-.6-.2-.2 0-.4.1-.6.2-.1.1-.2.3-.2.6 0 .2.1.4.2.6l5.3 5.3H.8c-.2 0-.4.1-.6.2-.1.1-.2.3-.2.5s.1.4.2.6c.1.1.3.2.6.2h16.6l-5.3 5.3c-.1.1-.2.2-.2.4v.5c.1.1.2.3.3.4.1.1.3.1.4.1.1 0 .2 0 .3-.1.1 0 .2-.1.3-.2L19.8 8c.1-.2.2-.4.2-.6z" fill="#231f20"/>
+                          </svg>
+                      </button>
+                  </div>
+                  {%- if form.errors -%}
+                    <small class="newsletter-form__message form__message" id="ContactFooter-error">
+                      {%- render 'icon-error' -%}
+                      {{- form.errors.translated_fields.email | capitalize }}
+                      {{ form.errors.messages.email -}}
+                    </small>
+                  {%- endif -%}
+                  {%- if form.posted_successfully? -%}
+                    <h3
+                      class="newsletter-form__message newsletter-form__message--success form__message"
+                      id="ContactFooter-success"
+                      tabindex="-1"
+                      style="color: #fff;"
+                      autofocus
+                    >
+                      {% render 'icon-success' -%}
+                      {{- 'newsletter.success' | t }}
+                    </h3>
+                  {%- endif -%}
+                {%- endform -%}
+
+                                  
+                <div class="ntg-text">
+                    {{ section.settings.content }}
+                </div>
+            </div>
+        </div>
+        <div class="ntg-col">
+            <div class="ntg-img-holder{% if section.settings.image_mobile != blank %} ntg-has-mobile-img{% endif %}">
+                <div class="ntg-desktop-img">
+                    <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.image.alt }}">
+                </div>
+                <div class="ntg-mobile-img">
+                    <img src="{{ section.settings.image_mobile | img_url: 'master' }}" alt="{{ section.settings.image_mobile.alt }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Newsletter",
+  "class": "custom-newsletter",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "The Exclusive Lung Health Email Club"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Be the first to know about new Products,  Lung health tips and exclusive offers.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Newsletter",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

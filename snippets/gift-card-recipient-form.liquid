@@ -1,0 +1,285 @@
+{% comment %}
+  Renders gift card recipient form.
+  Accepts:
+  - product: {Object} product object.
+  - form: {Object} the product form object.
+  - section: {Object} section to which this snippet belongs.
+
+  Usage:
+  {% render 'gift-card-recipient-form', product: product, form: form, section: section %}
+{% endcomment %}
+
+<style>
+  @keyframes animateMenuOpen {
+    0% {
+      opacity: 0;
+      transform: translateY(-1.5rem);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .recipient-checkbox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+    margin: 12px 0;
+    cursor: pointer;
+  }
+
+  .icon-checkmark {
+    visibility: hidden;
+    position: absolute;
+    left: 0.18rem;
+    z-index: 5;
+    top: 0.3rem;
+    width: 12px;
+    height: 15px;
+  }
+
+  .checkbox__label {
+    font-weight: 400;
+  }
+
+  #Recipient-checkbox-{{ section.id }} {
+    display: none;
+  }
+
+  #Recipient-message-{{ section.id }} {
+    min-height: 90px;
+  }
+
+  .recipient-form > input[type='checkbox']:not(:checked) + label .icon-checkmark {
+    visibility: hidden;
+  }
+
+  .recipient-form > input[type='checkbox']:checked + label .icon-checkmark {
+    visibility: visible;
+  }
+
+  .recipient-form > input[type='checkbox']:checked ~ .recipient-fields {
+    animation: animateMenuOpen 0.3s ease;
+  }
+
+  .recipient-form > input[type='checkbox']:not(:checked, :disabled) ~ .recipient-fields,
+  .recipient-email-label {
+    display: none;
+  }
+
+  .recipient-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .divider {
+    width: 100%;
+    border: 1px solid black;
+    margin: 8px 0;
+  }
+
+  .recipient-input {
+    background-color: transparent;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    border: 1px solid #838383;
+    height: 40px;
+    width: 100%;
+    border-radius: 4px;
+    resize: none;
+  }
+
+  .recipient-label {
+    font-weight: 700;
+    width: 88px;
+    text-align: left;
+  }
+
+  .form__label {
+    font-weight: 700;
+    width: 100%;
+    text-align: left;
+  }
+
+  .recipient__form-error-heading {
+    font-size: 2rem;
+  }
+
+  .recipient__form-error-list {
+    font-size: 1.3rem;
+  }
+
+  .recipient-field-max-chars {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.1rem;
+  }
+
+  .recipient-field-max-chars > span {
+    font-size: 12px;
+  }
+
+  .text-area-field > .field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .icon-error {
+    width: 20px;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+<div class="product-form-send-gift-card">
+  {%- assign gift_card_recipient_control_flag = 'properties[__shopify_send_gift_card_to_recipient]' -%}
+  <div
+    class="recipient-form"
+    data-section-id="{{ section.id }}"
+    data-product-variant-id="{{ product.selected_or_first_available_variant.id }}"
+  >
+    <!-- Checkbox to enable recipient form -->
+    <input
+      id="Recipient-checkbox-{{ section.id }}"
+      type="checkbox"
+      name="{{ gift_card_recipient_control_flag }}"
+    >
+    <label class="recipient-checkbox" for="Recipient-checkbox-{{ section.id }}">
+      <svg width="16px" height="16px" viewBox="0 0 16 16">
+        <rect width="16" height="16" fill="none" stroke="currentColor"/>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-checkmark" viewBox="0 0 12 9">
+        <path fill="currentColor" fill-rule="evenodd" d="M11.35.643a.5.5 0 0 1 .006.707l-6.77 6.886a.5.5 0 0 1-.719-.006L.638 4.845a.5.5 0 1 1 .724-.69l2.872 3.011 6.41-6.517a.5.5 0 0 1 .707-.006z" clip-rule="evenodd"/>
+      </svg>
+      <span>{{ section.settings.checkbox_label }}</span>
+    </label>
+
+    <!-- Recipient Form Fields -->
+    <div class="recipient-fields">
+      <div class="divider"></div>
+      <div class="recipient-fields__field">
+        <div class="field">
+          <label class="form__label field__label" for="Recipient-email-{{ section.id }}"> Recipient email </label>
+          <input
+            class="field__input recipient-input recipient-input-email"
+            id="Recipient-email-{{ section.id }}"
+            type="email"
+            placeholder="example@example.com"
+            name="properties[Recipient email]"
+            value="{{ form.email }}"
+          >
+        </div>
+      </div>
+
+      <div class="recipient-fields__field">
+        <div class="field">
+          <label class="form__label field__label" for="Recipient-name-{{ section.id }}"
+            >Recipient name (optional)</label
+          >
+          <input
+            class="field__input recipient-input"
+            autocomplete="name"
+            type="text"
+            id="Recipient-name-{{ section.id }}"
+            name="properties[Recipient name]"
+            value="{{ form.name }}"
+          >
+        </div>
+      </div>
+
+      <div class="recipient-fields__field text-area-field">
+        {%- assign max_chars_message = 200 -%}
+        {%- assign max_chars_message_rendered = '200 characters max' -%}
+        {%- assign message_label_rendered = 'Message (optional)' -%}
+        <div class="field">
+          <label class="form__label field__label" for="Recipient-message-{{ section.id }}">
+            {{ message_label_rendered }}
+          </label>
+          <textarea
+            rows="10"
+            id="Recipient-message-{{ section.id }}"
+            class="text-area field__input recipient-input"
+            name="properties[Message]"
+            maxlength="{{ max_chars_message }}"
+            aria-label="{{ message_label_rendered }}"
+          >{{ form.message }}</textarea>
+        </div>
+
+        <label class="recipient-form-field-label recipient-field-max-chars">
+          <span>{{ max_chars_message_rendered }}</span>
+        </label>
+      </div>
+
+      <div class="recipient-fields__field">
+        <div class="field">
+          <label class="form__label field__label" for="Recipient-send-on-{{ section.id }}">
+            {{ 'Send on (optional)' }}
+          </label>
+          <input
+            class="field__input recipient-input"
+            text-body
+            autocomplete="send_on"
+            type="date"
+            min="{{ 'now' | date: '%Y-%m-%d' }}"
+            id="Recipient-send-on-{{ section.id }}"
+            name="properties[Send on]"
+            pattern="\d{4}-\d{2}-\d{2}"
+            value="{{ form.send_on }}"
+          >
+        </div>
+      </div>
+    </div>
+    <input
+      type="hidden"
+      name="{{ gift_card_recipient_control_flag }}"
+      value="if_present"
+      class="recipient-control-input"
+      id="Recipient-control-{{ section.id }}"
+    >
+    <input
+      type="hidden"
+      name="properties[__shopify_offset]"
+      value=""
+      id="Recipient-timezone-offset-{{ section.id }}"
+      class="recipient-offset-input"
+      disabled
+    >
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const hiddenControlInput = document.querySelector('.recipient-control-input');
+    if (hiddenControlInput) {
+      hiddenControlInput.disabled = true;
+    }
+
+    const offsetInput = document.querySelector('.recipient-offset-input');
+    if (offsetInput) {
+      offsetInput.value = new Date().getTimezoneOffset().toString();
+    }
+
+    const recipientCheckbox = document.querySelector('.recipient-checkbox');
+    const emailInput = document.querySelector('.recipient-input-email');
+
+    recipientCheckbox.addEventListener('click', function () {
+      if (emailInput.required) {
+        emailInput.required = false;
+        offsetInput.disabled = true;
+      } else {
+        emailInput.required = true;
+        offsetInput.disabled = false;
+      }
+    });
+  });
+</script>

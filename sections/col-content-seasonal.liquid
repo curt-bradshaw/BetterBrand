@@ -1,0 +1,666 @@
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+{{ 'collapsible-content.css' | asset_url | stylesheet_tag }}
+
+
+
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="collapsible-content collapsible-content-v2 {% if section.settings.image_right == true %}image_right {% endif %} collapsible-{{ section.settings.layout }}-layout isolate{% if section.settings.layout == 'section' %} page-width{% elsif section.settings.layout == 'none' %} content-container content-container--full-width{% endif %}">
+    <div class="collapsible-content__wrapper section-{{ section.id }}-padding{% if section.settings.layout == 'section' %} content-container color-{{ section.settings.container_color_scheme }} gradient{% endif %}">
+      <div class="{% if section.settings.image == blank %}collapsible-content-wrapper-narrow{% else %}page-width{% endif %}">
+        <div
+          class="collapsible-content__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          style="text-align: {{ section.settings.heading_alignment }};"
+        >
+          
+          {%- if section.settings.heading != blank -%}
+            <h2 class="collapsible-content__heading inline-richtext {{ section.settings.heading_size }}">
+              {{ section.settings.heading }}
+            </h2>
+          {%- else -%}
+            <h2 class="visually-hidden">{{ 'accessibility.collapsible_content_title' | t }}</h2>
+          {% endif %}
+
+          {%- if section.settings.caption != blank -%}
+            <p class="caption-with-letter-spacing">
+              {{ section.settings.caption | escape }}
+            </p>
+          {% endif %}
+        </div>
+        <div class="grid grid--1-col grid--2-col-tablet collapsible-content__grid{% if section.settings.desktop_layout == 'image_second' %} collapsible-content__grid--reverse{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {%- if section.settings.image != blank -%}
+            <div class="grid__item collapsible-content__grid-item">
+              <div
+                class="collapsible-content__media collapsible-content__media--{{ section.settings.image_ratio }} media global-media-settings gradient"
+                {% if section.settings.image_ratio == 'adapt' %}
+                  style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
+                {% endif %}
+              >
+                {%- liquid
+                  assign padding_multiplier = 1
+                  if section.settings.layout == 'section'
+                    assign padding_multiplier = 2
+                  endif
+                  assign desktop_tablet_padding = 100 | times: padding_multiplier | append: 'px'
+                  assign mobile_padding = 30 | times: padding_multiplier | append: 'px'
+                -%}
+                {%- capture sizes -%}
+                  (min-width: {{ settings.page_width }}px) calc(({{ settings.page_width }}px - {{ desktop_tablet_padding }}) / 2),
+                  (min-width: 750px) calc((100vw - {{ desktop_tablet_padding }}) / 2),
+                  calc(100vw - {{ mobile_padding }})
+                {%- endcapture -%}
+                {{
+                  section.settings.image
+                  | image_url: width: 3200
+                  | image_tag:
+                    sizes: sizes,
+                    widths: '50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3200'
+                }}
+              </div>
+            </div>
+          {% endif %}
+          <div class="grid__item">
+            {%- for block in section.blocks -%}
+              <div
+                class="accordion{% if section.settings.layout == 'row' %} content-container color-{{ section.settings.container_color_scheme }} gradient{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <details
+                  id="Details-{{ block.id }}-{{ section.id }}"
+                  
+                   {% if section.settings.open_first_collapsible_row and forloop.first %}
+                    open
+                  {% endif %}
+                 
+                >
+                  <summary id="Summary-{{ block.id }}-{{ section.id }}">
+                     {% if block.settings.image != blank %}
+                      <img class="collapsible-icon-v2" style="width: {{block.settings.image_width}}px;" src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
+                    {% endif %}
+                    <h3 class="accordion__title inline-richtext h4">
+                      {{ block.settings.heading | default: block.settings.page.title }}
+                    </h3>
+                    <svg width="15" height="14" class="icon icon-caret" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.875 4.66675L3.125 4.66675L7.5 11.0834L11.875 4.66675Z" fill="#234134"/>
+                    </svg>
+                  </summary>
+                  <div
+                    class="accordion__content rte"
+                    id="CollapsibleAccordion-{{ block.id }}-{{ section.id }}"
+                    role="region"
+                    aria-labelledby="Summary-{{ block.id }}-{{ section.id }}"
+                  >
+                    {{ block.settings.row_content }}
+                    {{ block.settings.page.content }}
+                  </div>
+                </details>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+
+    
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+
+    .collapsible-content-wrapper-narrow{
+      padding-right: 1.6rem;
+      padding-left: 1.6rem;
+    }
+
+    @media (min-width: 1200px) {
+      max-width: 1390px;
+      margin-right: auto;
+      margin-left: auto;
+      .collapsible-content-wrapper-narrow{
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+
+    img{
+      border:none;
+    }
+
+    .icon-caret{
+        width: 20px;
+        height: 20px;
+        top:calc(50% - 1rem);
+         @media screen and (min-width: 750px) {
+          display:none;
+         }
+    }
+
+
+    @media screen and (min-width: 750px) {
+        summary{
+          pointer-events: none;
+    }
+  }
+
+    
+
+    .caption-with-letter-spacing{
+      color: #233F21;
+      text-align: center;
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 20px; /* 142.857% */     
+      text-transform:unset;
+      @media screen and (min-width: 750px) {
+        text-align: left;
+        font-size: 20px;
+        max-width: 600px;
+        display: block;
+        line-height: 140%;
+      }
+    }
+
+    .accordion__content{
+      padding-left: 36px;
+      @media screen and (min-width: 750px) {
+         padding-left: 50px;
+      }
+      padding-right: 0;
+        p,span{
+          color: #233F21;
+          font-family: Inter;
+          font-size: 14px !important;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px; /* 163.636% */
+        }
+
+        span:empty{
+          display:none;
+        }
+        
+    }
+
+    .accordion{
+          border-radius: 6px;
+          border: 1.5px solid #234134 !important;
+          background: #FFF;
+          box-shadow: 5px 4px 8px 0 rgba(0, 0, 0, 0.09);
+          margin-bottom: 25px;
+       }
+        .accordion summary{
+          border-radius: 6px;
+        }
+
+    ul {
+       padding-left: 0 ;
+       padding-top:0;
+
+        li {
+        color: #234134;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 115.385% */
+        margin-bottom:10px;
+        list-style:disc;
+
+      }
+    }
+    
+    .accordion__content h6{
+        color: #234134;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px; /* 115.385% */
+        padding-left:0;
+        margin: -6px 0 -12px;
+    }
+
+    .accordion{
+      margin-top:0;
+    }
+    
+
+    .accordion summary{
+      position:relative;
+      background:white !important;
+      height: 80px;
+      
+      h3{
+        color: #233F21;
+        text-align: center;
+        font-family: suisse_intl_mono,Arial,Helvetica Neue,Helvetica,sans-serif !important;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 32px; /* 177.778% */
+          @media screen and (min-width: 750px) {
+            padding-left: 50px;
+            font-size: 20px;
+          }
+       
+      }
+
+      align-items: center;
+      gap: 10px;
+
+
+      
+
+      .collapsible-icon-v2{
+        width:26px;
+        margin: -14px 0 -14px;
+        @media screen and (min-width: 750px) {
+          top: 55%;
+          transform: translate(0, -50%);
+          position: absolute;
+          margin:0;
+          
+        }
+      }
+          
+    }
+
+    [open] summary:after{
+      position: absolute;
+      width: calc(100% - 40px);
+      content: "";
+      bottom: 11px;
+      height: 1px;
+      background: #fee876;
+      left: 30px;
+      @media screen and (min-width: 750px) {
+         left: 44px;
+      }
+    }
+
+    
+  }
+
+  .collapsible-content-v2:not(.image_right){
+    padding: 0 20px;
+    .collapsible-content-wrapper-narrow{
+      border-radius: 5px;
+      background: #FFF;
+      box-shadow: 5px 4px 16px 0 rgba(0, 0, 0, 0.17);
+      backdrop-filter: blur(13.5px);
+      padding: 30px;
+      details{
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      
+
+    }
+  }
+
+  .image_right{
+    .section-{{ section.id }}-padding{
+       details{
+          padding-left: 10px;
+          padding-right: 10px;
+       }
+       .accordion__content{
+        padding:0;
+       }
+        .accordion summary{
+          
+          .icon-caret{
+            position:unset;
+          }
+            img{
+              position: absolute;
+              height: 130px;
+              right: -54px;
+              width: auto;
+              top: -36px;
+
+              @media screen and (min-width: 750px) {
+                height: 146px;
+                right: -64px;
+                width: auto;
+                top: -20px;
+                
+              }
+            }
+          }
+
+           summary:after{
+            width: 100%;
+            left: 0;
+           }
+     }
+
+     @media screen and (min-width: 750px) {
+      .accordion summary .collapsible-icon-v2{
+        top: 8px !important;
+        
+      }
+    }
+  }
+
+  .accordion__title {
+    text-decoration: none !important;
+    text-underline-offset: .3rem;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  @media screen and (min-width: 750px) {
+
+    ul {
+        padding-left: 0 ;
+
+        li{
+          font-size:16px !important;
+          line-height: 140% !important; 
+          font-size:16px !important;
+        }
+    }
+
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: 0;
+
+      .collapsible-content-wrapper-narrow{
+        max-width: 100%;
+      }
+
+      
+      .grid__item {
+        display: flex;
+        width: 100%;
+        gap:60px;
+        justify-content: space-between;
+        align-items:flex-start;
+
+        .accordion{
+          max-width: calc(20% - 60px * 1 / 5);
+          width: calc(20% - 60px * 1 / 5);
+          border: none;
+          border-bottom: 2px solid #F2CB49;
+        }
+      }
+    }
+  }
+
+
+  .section-{{ section.id }}-padding {
+
+    @media screen and (min-width: 750px) {
+
+        .grid__item {
+          gap: 24px;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-top: 20px;
+          .accordion {
+            max-width: calc(32% - 4px * 1 / 3);
+            width: calc(32% - 4px * 1 / 3);
+            min-height: 305px;
+          }
+        }
+      }
+  }
+{%- endstyle -%}
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.innerWidth > 768) {
+        
+
+          let els = document.querySelectorAll(".section-{{ section.id }}-padding details");
+          if(els.length) {
+            els.forEach((el) => {
+              el.setAttribute('open', '');
+            });
+          }
+
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collapsible Content V2",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "image_right",
+      "default": false,
+      "label": "Image on right"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:sections.collapsible_content.settings.caption.label"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "t:sections.collapsible_content.settings.heading.label",
+      "default": "Collapsible content"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.collapsible_content.settings.heading_alignment.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.collapsible_content.settings.heading_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.collapsible_content.settings.heading_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.collapsible_content.settings.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.collapsible_content.settings.layout.label",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.collapsible_content.settings.layout.options__1.label"
+        },
+        {
+          "value": "row",
+          "label": "t:sections.collapsible_content.settings.layout.options__2.label"
+        },
+        {
+          "value": "section",
+          "label": "t:sections.collapsible_content.settings.layout.options__3.label"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "background-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "container_color_scheme",
+      "label": "t:sections.collapsible_content.settings.container_color_scheme.label",
+      "info": "t:sections.collapsible_content.settings.container_color_scheme.info",
+      "default": "background-2"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_collapsible_row",
+      "default": false,
+      "label": "t:sections.collapsible_content.settings.open_first_collapsible_row.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collapsible_content.settings.header.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.collapsible_content.settings.image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.collapsible_content.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.collapsible_content.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.collapsible_content.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.collapsible_content.settings.image_ratio.label"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "options": [
+        {
+          "value": "image_first",
+          "label": "t:sections.collapsible_content.settings.desktop_layout.options__1.label"
+        },
+        {
+          "value": "image_second",
+          "label": "t:sections.collapsible_content.settings.desktop_layout.options__2.label"
+        }
+      ],
+      "default": "image_second",
+      "label": "t:sections.collapsible_content.settings.desktop_layout.label",
+      "info": "t:sections.collapsible_content.settings.desktop_layout.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collapsible_row",
+      "name": "t:sections.collapsible_content.blocks.collapsible_row.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Collapsible row",
+          "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.heading.label",
+          "info": "t:sections.collapsible_content.blocks.collapsible_row.settings.heading.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "image_width",
+          "label": "width"
+        },
+        {
+          "type": "richtext",
+          "id": "row_content",
+          "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.row_content.label"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "t:sections.collapsible_content.blocks.collapsible_row.settings.page.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible Content V2",
+      "blocks": [
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

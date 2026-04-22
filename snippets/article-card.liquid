@@ -1,0 +1,103 @@
+<!-- start article-card.liquid (SNIPPET) -->
+<link rel="stylesheet" data-href="{{ 'component-card.css' | asset_url }}">
+
+{%- assign article_image = article.image | default: settings.recently_viewed_product_without_image -%}
+{%- assign id = 'Image' | append: variant.id -%}
+
+<div class="grid__item">
+  <div class="grid__item-image-wrapper">
+    <a
+      href="{{ article.url | default: '#' }}"
+      title="{{- article.title | strip_html | escape -}}"
+      class="grid__item-link"
+    >
+      {%-
+        render 'responsive-image' with
+        id: id,
+        image: article_image,
+        width: 300,
+        class: 'grid__item-image',
+        lazyload: enable_lazy
+      -%}
+    </a>
+  </div>
+
+  {% if article.tags.size > 0 %}
+    <div class="blog-page__article-tags">
+      {% for tag in article.tags limit: 2 %}
+        {% assign tag_handle = tag | handle %}
+        {% assign tag_color = blank %}
+        
+        {% comment %} Busca cor no metafield JSON de mapeamento de tags {% endcomment %}
+        {% if article.metafields.custom.tag_colors != blank %}
+          {% assign tag_colors_json = article.metafields.custom.tag_colors %}
+          {% if tag_colors_json[tag_handle] != blank %}
+            {% assign tag_color = tag_colors_json[tag_handle] %}
+          {% endif %}
+        {% endif %}
+        
+        {% comment %} Se não encontrou no JSON, busca no metafield de mapeamento de texto (formato: "tag1:color1,tag2:color2") {% endcomment %}
+        {% if tag_color == blank and article.metafields.custom.tag_colors_map != blank %}
+          {% assign tag_colors_map = article.metafields.custom.tag_colors_map | split: ',' %}
+          {% for color_mapping in tag_colors_map %}
+            {% assign mapping_parts = color_mapping | split: ':' %}
+            {% if mapping_parts.size == 2 %}
+              {% assign mapped_tag = mapping_parts[0] | strip | handle %}
+              {% if mapped_tag == tag_handle %}
+                {% assign tag_color = mapping_parts[1] | strip %}
+                {% break %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+        
+        {% comment %} Se não encontrou, busca metafield específico da tag (custom.tag_color_[handle]) {% endcomment %}
+        {% if tag_color == blank %}
+          {% assign tag_color_metafield = 'tag_color_' | append: tag_handle %}
+          {% assign tag_color = article.metafields.custom[tag_color_metafield] %}
+        {% endif %}
+        
+        <a 
+          href="{{ blog.url }}/tagged/{{ tag | handle }}" 
+          class="blog-page__article-tag"
+          {% if tag_color != blank %}
+            style="background-color: {{ tag_color }};"
+          {% endif %}
+        >
+          {{ tag }}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <h3 class="grid__item-title">
+    <a
+      href="{{ article.url | default: '#' }}"
+      title="{{- article.title | strip_html | escape -}}"
+      class="grid__item-title-link"
+    >
+      {{- article.title -}}
+    </a>
+  </h3>
+
+  <div class="blog-page__article-contents">
+    {% if article.excerpt.size > 0 %}
+      {{ article.excerpt }}
+    {% else %}
+      {% assign article_content = article.content | strip_html | split: '<!--split-->' | last %}
+      {{ article_content | truncatewords: 40 }}
+    {% endif %}
+  </div>
+
+  <div class="blog-page__article-button-wrapper">
+    <a
+      title="{{ article.title | strip_html | escape }}"
+      href="{{ article.url | default: '#' }}"
+      rel="bookmark"
+      id="blog-button-{{ forloop.index }}"
+      class="blog-page__article-button"
+    >
+      {{- 'blogs.article.read_more' | t -}}
+    </a>
+  </div>
+</div>

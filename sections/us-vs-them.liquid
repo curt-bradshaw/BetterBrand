@@ -1,0 +1,866 @@
+{% schema %}
+  {
+    "name": "US vs Them",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Title",
+        "default": "US Vs. THEM"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subtitle",
+        "default": "Lorem Ipsum Dolor Sit Amet Consectetur."
+      },
+      {
+        "type": "image_picker",
+        "id": "background",
+        "label": "Background image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "feature",
+        "name": "Comparison line",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Line text"
+          }
+        ]
+      },
+      {
+        "type": "brand",
+        "name": "Brand",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Brand logo (optional)"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Brand name"
+          },
+          {
+            "type": "select",
+            "id": "highlight",
+            "label": "Highlight",
+            "options": [
+              { "value": "false", "label": "Normal" },
+              { "value": "true", "label": "Destacada" }
+            ],
+            "default": "false"
+          },
+          {
+            "type": "textarea",
+            "id": "values",
+            "label": "Values (1 per line)",
+            "info": "check | x | stars:5 | texto"
+          }
+        ]
+      }
+    ],
+    "presets": [{ "name": "US vs Them" }]
+  }
+  {% endschema %}
+  
+  <section
+    class="comparison"
+    {% if section.settings.background %}
+      style="background-image:url({{ section.settings.background | image_url: width: 2000 }});"
+    {% endif %}
+  >
+    <div class="comparison__overlay"></div>
+  
+    <div class="comparison__container">
+      <header class="comparison__header">
+        <h2>{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.subheading }}</p>
+      </header>
+  
+      <div class="comparison__wrapper">
+        <div class="comparison__table">
+          <div class="comparison__features">
+            <div class="comparison__features-header"></div>
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                {% assign label = block.settings.label | strip | downcase %}
+                <div class="comparison__cell feature {% if label == 'approach' %}feature--rounded{% endif %}">
+                  {{ block.settings.label }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+  
+          <div class="comparison__brands-container">
+            {% for block in section.blocks %}
+              {% if block.type == 'brand' %}
+                {% assign values = block.settings.values | newline_to_br | split: '<br />' %}
+                <div class="comparison__brand {% if block.settings.highlight == 'true' %}is-highlight{% endif %}">
+                  <div class="comparison__brand-title">
+                    {% if block.settings.logo %}
+                      <img src="{{ block.settings.logo | image_url: width: 160 }}" alt="" width="" height="">
+                    {% else %}
+                      {{ block.settings.title }}
+                    {% endif %}
+                  </div>
+  
+                  {% for value in values %}
+                    <div class="comparison__cell">
+                      {% if value contains 'check' %}
+                        {% if block.settings.highlight == 'true' %}
+                          <span class="check-icon"> {% render 'icon-check-highlight' %} </span>
+                        {% else %}
+                          ✓
+                        {% endif %}
+                      {% elsif value == 'x' %}
+                        ✕
+                      {% elsif value contains 'stars' %}
+                        {% assign star_count = value | split: ':' | last | plus: 0 %}
+                        <span class="stars">
+                          {% for i in (1..star_count) -%}
+                            <span class="star">★</span>
+                          {%- endfor %}
+                        </span>
+                      {% else %}
+                        {{ value }}
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+  
+        <!-- Paginador para mobile/tablet -->
+        <div class="comparison__pagination">
+          <span class="comparison__pagination-dot active"></span>
+          <span class="comparison__pagination-dot"></span>
+          <span class="comparison__pagination-dot comparison__pagination-dot-3"></span>
+          <span class="comparison__pagination-dot comparison__pagination-dot-4"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <style>
+      .comparison {
+        position: relative;
+        padding: 60px 24px;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+      }
+      .comparison__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+      }
+      .comparison__container {
+        position: relative;
+        max-width: 1300px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .comparison__header {
+        text-align: center;
+        margin-bottom: 72px;
+      }
+      .comparison__header h2 {
+        font-family: var(--bookmaniaFont);
+        font-size: 38px;
+        color: #fff;
+        line-height: 1;
+        font-weight: 700;
+      }
+      .comparison__header p {
+        font-size: 20px;
+        color: #fff;
+        line-height: 1;
+        font-weight: 400;
+        text-align: center;
+      }
+  
+      .comparison__wrapper {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+      }
+  
+      .comparison__table {
+        display: grid;
+        grid-template-columns: 231px repeat(4, 1fr);
+        gap: 5px;
+        overflow: visible;
+      }
+  
+      .comparison__brands-container {
+        display: contents;
+      }
+  
+      .comparison__features,
+      .comparison__brand {
+        color: #000;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+  
+      .comparison__features,
+      .comparison__brand {
+        display: grid;
+        grid-template-rows: 72px repeat(auto-fit, minmax(0, 1fr));
+      }
+  
+      .comparison__features {
+        max-width: 231px;
+        width: 100%;
+        border-bottom-left-radius: 16px;
+        border-top-left-radius: 16px;
+        background: rgba(0, 0, 0, 0.1);
+      }
+  
+      .comparison__brand {
+        max-width: 206px;
+        width: 100%;
+        border-top: 1px solid #ffffff;
+        background: rgba(0, 0, 0, 0.1);
+        border-bottom-right-radius: 16px;
+        border-top-right-radius: 16px;
+      }
+  
+      .comparison__cell:first-child {
+        border-top-left-radius: 16px;
+      }
+  
+      .check-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+      .comparison__features-header {
+        height: 72px;
+        background: rgba(0, 0, 0, 0.1);
+      }
+  
+      .feature {
+        font-family: var(--bookmaniaFont);
+        font-size: 18px;
+        color: #ffffff;
+        padding: 18px 6px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.45);
+      }
+  
+      .feature:last-child {
+        border-bottom: none;
+      }
+  
+      .comparison__brand-title {
+        min-height: 72px;
+        padding: 10px;
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: 0.6px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.45);
+        text-align: center;
+      }
+  
+      .comparison__brand-title.is-highlight {
+        background: #3f745d;
+        color: #fff;
+      }
+      .comparison__brand-title img {
+        max-height: 32px;
+      }
+      .comparison__cell {
+        padding: 18px 6px;
+        border-top: 1px solid #f5f5f5;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 120%;
+        color: #ffffff;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70px;
+      }
+  
+      .comparison__features .comparison__cell:last-child,
+      .comparison__brand .comparison__cell:last-child {
+        border-bottom: none;
+      }
+      .stars {
+        color: #ffffff;
+        font-size: 20px;
+      }
+      .is-highlight .stars {
+        color: #f2c94c;
+      }
+      .is-highlight {
+        background: #3f745d;
+        color: #fff;
+        border-radius: 16px;
+        border: none;
+      }
+      .is-highlight .comparison__cell,
+      .is-highlight .comparison__brand-title {
+        border-color: #0000001A;
+        background: #3f745d;
+        color: #f2cb49;
+      }
+  
+      .is-highlight .comparison__cell,
+      .is-highlight .comparison__brand-title:first {
+        padding-top: 0;
+      }
+  
+      .comparison__pagination {
+        display: none;
+        justify-content: center;
+        gap: 3px;
+        margin-top: 32px;
+      }
+  
+      .comparison__pagination-dot {
+        width: 30px;
+        height: 5px;
+        border-radius: 6px;
+        background: #e9e9e9;
+        cursor: pointer;
+      }
+  
+      .comparison__pagination-dot.active {
+        background: #3f745d;
+      }
+  
+      .comparison__features-header {
+        background: transparent;
+      }
+  
+      .feature--rounded {
+        border-top-left-radius: 16px;
+      }
+  
+      .feature:not(.feature--rounded) {
+        border-top-left-radius: 0;
+      }
+  
+      @media (max-width: 1023px) {
+        .comparison {
+          position: relative;
+          padding: 80px 24px;
+          background-size: cover;
+          background-position: center;
+          color: #fff;
+        }
+        .comparison__overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.55);
+        }
+        .comparison__container {
+          position: relative;
+          max-width: 1300px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .comparison__header {
+          text-align: center;
+          margin-bottom: 72px;
+        }
+        .comparison__header h2 {
+          font-family: var(--bookmaniaFont);
+          font-size: 38px;
+          color: #fff;
+          line-height: 12.6px;
+          font-weight: 700;
+          margin-bottom: 12px;
+        }
+        .comparison__header p {
+          font-size: 20px;
+          color: #fff;
+          line-height: 1;
+          font-weight: 400;
+        }
+  
+        .comparison__wrapper {
+          width: 100%;
+          align-items: center;
+          justify-content: center;
+          display: flex;
+        }
+  
+        .comparison__table {
+          display: grid;
+          grid-template-columns: 231px repeat(4, 1fr);
+          gap: 5px;
+          overflow: visible;
+        }
+  
+        .comparison__brands-container {
+          display: contents;
+        }
+  
+        .comparison__brand.is-highlight {
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 16px;
+      }
+  
+  
+  
+        .comparison__features,
+        .comparison__brand {
+          color: #000;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+  
+        .comparison__features,
+        .comparison__brand {
+          display: grid;
+          grid-template-rows: 72px repeat(auto-fit, minmax(0, 1fr));
+        }
+  
+        .comparison__features {
+          max-width: 231px;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.1);
+          margin-right: 5px;
+        }
+  
+        .comparison__brand {
+          max-width: 200px;
+          width: 100%;
+          border-top: 1px solid #ffffff;
+          background: rgba(0, 0, 0, 0.1);
+        }
+  
+        .comparison__cell:first-child {
+          border-top-left-radius: 16px;
+        }
+  
+        .check-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+  
+        .comparison__features-header {
+          height: 72px;
+          background: rgba(0, 0, 0, 0.1);
+        }
+  
+        .feature {
+          font-family: var(--bookmaniaFont);
+          font-size: 18px;
+          color: #ffffff;
+          padding: 18px 6px;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.45);
+        }
+  
+        .feature:last-child {
+          border-bottom: none;
+        }
+  
+        .comparison__brand-title {
+          min-height: 72px;
+          padding: 20px;
+          font-size: 18px;
+          line-height: 22px;
+          letter-spacing: 0.6px;
+          font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          background: rgba(0, 0, 0, 0.45);
+          font-family: 'Roboto', sans-serif;
+          text-align: center;
+        }
+  
+        .comparison__brand-title.is-highlight {
+          background: #3f745d;
+          color: #fff;
+        }
+        .comparison__brand-title img {
+          max-height: 32px;
+        }
+        .comparison__cell {
+          padding: 24px;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 120%;
+          color: #ffffff;
+          text-align: center;
+          background: rgba(0, 0, 0, 0.45);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 70px;
+        }
+  
+        .comparison__features .comparison__cell:last-child,
+        .comparison__brand .comparison__cell:last-child {
+          border-bottom: none;
+        }
+        .stars {
+          color: #ffffff;
+          font-size: 20px;
+          display: flex;
+          gap: 4px;
+        }
+  
+        .star {
+          display: inline-block;
+        }
+  
+        .is-highlight .stars .star {
+          color: #f2c94c;
+        }
+        .is-highlight {
+          background: #3f745d;
+          color: #fff;
+          border-radius: 16px;
+          border: none;
+        }
+        .is-highlight .comparison__cell,
+        .is-highlight .comparison__brand-title {
+          border-color: rgba(255, 255, 255, 0.25);
+          background: #3f745d;
+          color: #f2cb49;
+          padding: 0;
+        }
+  
+        .is-highlight .comparison__brand-title{
+          height: 100px;
+        }
+  
+        .is-highlight .comparison__brand {
+          border-color: rgba(255, 255, 255, 0.25);
+          background: #3f745d;
+          color: #f2cb49;
+        }
+  
+        .is-highlight .comparison__cell,
+        .is-highlight .comparison__brand-title:first {
+          padding-top: 0;
+        }
+  
+        .comparison__pagination {
+          display: none;
+          justify-content: center;
+          gap: 3px;
+          margin-top: 32px;
+        }
+  
+        .comparison__pagination-dot {
+          width: 30px;
+          height: 5px;
+          border-radius: 6px;
+          background: #e9e9e9;
+          cursor: pointer;
+        }
+  
+        .comparison__pagination-dot-3 {
+          display: none;
+        }
+  
+        .comparison__pagination-dot-4 {
+          display: none;
+        }
+  
+  
+  
+        .comparison__pagination-dot.active {
+          background: #3f745d;
+        }
+  
+        .comparison__features-header {
+          background: transparent;
+        }
+        .comparison {
+          padding: 80px 24px;
+        }
+  
+        .comparison__wrapper {
+          display: block;
+        }
+  
+        .comparison__header {
+          margin-bottom: 48px;
+        }
+  
+        .comparison__header h2 {
+          font-size: 32px;
+        }
+  
+        .comparison__header p {
+          font-size: 18px;
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.3;
+        }
+  
+        .comparison__table {
+          display: flex;
+          overflow: visible;
+          gap: 0;
+        }
+  
+        .comparison__features {
+          position: relative;
+          flex: 0 0 auto;
+          width: 231px;
+          min-width: 231px;
+          max-width: 231px;
+          z-index: 2;
+        }
+  
+        .comparison__brands-container {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          gap: 5px;
+          padding-bottom: 10px;
+        }
+  
+        .comparison__brands-container::-webkit-scrollbar {
+          display: none;
+        }
+  
+        .comparison__brand {
+          flex: 0 0 auto;
+          width: 200px;
+          min-width: 200px;
+          max-width: 200px;
+          scroll-snap-align: start;
+          margin-top: 0;
+        }
+  
+        .comparison__brand.is-highlight {
+          margin-top: 0;
+          margin-bottom: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+  
+        .comparison__pagination {
+          display: flex;
+        }
+      }
+  
+        @media (max-width: 1023px) {
+        }
+  
+        @media (max-width: 767px) {
+          .comparison {
+            padding: 60px 16px;
+          }
+  
+          .comparison__brands-container{
+            padding-bottom: 0;
+            padding-top: 1px;
+          }
+  
+          .comparison__brand{
+            margin-top: -1px;
+          }
+  
+          .comparison__header {
+            margin-bottom: 32px;
+            padding-left: 5px;
+            padding-right: 5px;
+          }
+  
+          .comparison__header h2 {
+            font-size: 28px;
+          }
+  
+          .comparison__header p {
+            font-size: 18px;
+            margin: 0;
+            line-height: 1.3;
+          }
+  
+          .comparison__features {
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
+            padding-top: 1px;
+          }
+  
+          .comparison__brand {
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+          }
+  
+          .comparison__brand-title {
+            height: 64px;
+            padding: 16px;
+            font-size: 16px;
+          }
+  
+          .comparison__cell {
+            padding: 16px 6px;
+            font-size: 14px;
+          }
+  
+          .feature {
+            padding: 16px 6px;
+            font-size: 14px;
+          }
+  
+          .stars {
+            font-size: 18px;
+          }
+        }
+  
+        @media (max-width: 690px) {
+          .comparison__pagination-dot-3 {
+            display: block;
+          }
+        }
+  
+        @media (max-width: 479px) {
+          .comparison__header h2 {
+            font-size: 24px;
+          }
+  
+          .comparison__pagination-dot-4 {
+            display: block;
+          }
+  
+          .comparison__features {
+            width: 160px;
+            min-width: 160px;
+            max-width: 160px;
+          }
+  
+          .comparison__brand {
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+          }
+  
+          .comparison__brand-title {
+            height: 60px;
+            padding: 14px;
+            font-size: 15px;
+          }
+  
+          .comparison__cell {
+            padding: 14px 20px;
+            font-size: 14px;
+          }
+  
+          .stars {
+            font-size: 16px;
+          }
+        }
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const paginationDots = document.querySelectorAll('.comparison__pagination-dot');
+      const brandCards = document.querySelectorAll('.comparison__brand');
+  
+      if (paginationDots.length === 0 || brandCards.length === 0) return;
+  
+      let activeIndex = Array.from(paginationDots).findIndex((dot) => dot.classList.contains('active'));
+      if (activeIndex === -1) activeIndex = 0;
+  
+      function activateBrand(index) {
+        const brandsContainer = document.querySelector('.comparison__brands-container');
+        if (brandsContainer) {
+          brandsContainer.style.scrollSnapType = 'none';
+        }
+  
+        paginationDots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+  
+        if (brandCards[index] && brandsContainer) {
+          const cardLeft = brandCards[index].offsetLeft;
+          const containerLeft = brandsContainer.offsetLeft;
+          const scrollLeft = cardLeft - containerLeft - 5; 
+  
+          brandsContainer.scrollTo({
+            left: scrollLeft,
+            behavior: 'smooth',
+          });
+  
+          setTimeout(() => {
+            if (brandsContainer) {
+              brandsContainer.style.scrollSnapType = 'x mandatory';
+            }
+          }, 500);
+        }
+  
+        activeIndex = index;
+      }
+  
+      paginationDots.forEach((dot, index) => {
+        dot.addEventListener('click', function () {
+          activateBrand(index);
+        });
+      });
+  
+      const brandsContainer = document.querySelector('.comparison__brands-container');
+      if (brandsContainer) {
+        brandsContainer.addEventListener('scroll', function () {
+          clearTimeout(brandsContainer.scrollTimeout);
+          brandsContainer.scrollTimeout = setTimeout(() => {
+            const scrollLeft = brandsContainer.scrollLeft;
+            const cardWidth = brandCards[0]?.offsetWidth || 200;
+            const gap = 5;
+            const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+  
+            if (newIndex >= 0 && newIndex < paginationDots.length && newIndex !== activeIndex) {
+              paginationDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === newIndex);
+              });
+              activeIndex = newIndex;
+            }
+          }, 100);
+        });
+      }
+  
+      activateBrand(activeIndex);
+    });
+  </script>
+  

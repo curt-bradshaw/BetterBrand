@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "article-template",
+      "blocks": {
+        "f41ad184-c675-46de-b3b4-19152e7e2680": {
+          "type": "recent_posts",
+          "settings": {}
+        },
+        "d504b9b6-5c22-42a9-9154-7e25d008b097": {
+          "type": "categories",
+          "settings": {
+            "filter_by_tags": ""
+          }
+        },
+        "fed1b819-a28a-4ca0-a468-4bc939cfb078": {
+          "type": "newsletter",
+          "settings": {
+            "sidebar_title": "Newsletters",
+            "sidebar_text": "Subscribe for our newsletters",
+            "select_newsletter": "klaviyo"
+          }
+        }
+      },
+      "block_order": [
+        "f41ad184-c675-46de-b3b4-19152e7e2680",
+        "d504b9b6-5c22-42a9-9154-7e25d008b097",
+        "fed1b819-a28a-4ca0-a468-4bc939cfb078"
+      ],
+      "settings": {
+        "enable_custom_margins_paddings": true,
+        "custom-margin-top": 0,
+        "custom-margin-bottom": 0,
+        "custom-padding-top": 0,
+        "custom-padding-bottom": 0,
+        "article_title_fontsize": 38,
+        "article_title_fontsize_tablet": 32,
+        "article_title_fontsize_mobile": 28,
+        "display_author": false,
+        "sidebar_width": 243,
+        "enable_sidebar": true,
+        "sidebar_left": false,
+        "fixed_sidebar": true,
+        "sidebar_text_align": "left"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

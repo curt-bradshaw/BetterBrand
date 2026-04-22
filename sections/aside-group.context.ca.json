@@ -1,0 +1,98 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "parent": "aside-group.json",
+  "context": {
+    "market": "ca"
+  },
+  "sections": {
+    "cart_drawer_TQMXf": {
+      "type": "cart-drawer",
+      "disabled": false,
+      "settings": {
+        "header-ddc6fc91974df9d249be337879f8ac67": null,
+        "enable_free_return_shipping_box": false,
+        "text__head_cartDrawer": "AN ITEM WAS ADDED TO CART!",
+        "cupom_enable": false,
+        "disable_proceed": false,
+        "drawer_cuopon_text": "<strong>Use Code <span style=\"color:blue;\">GET5NOW <\/span>to save 5% <\/strong>",
+        "paypal_enable": false,
+        "header-d38a1ceb4b2ed28acca9933d82de01da": null,
+        "enable_dynamic_free_shipping": true,
+        "title_block_free_shipping": "Free Shipping \/ Free Returns",
+        "color_free_shipping_bar": "#9dcfa3",
+        "text_color_free_shipping_bar": "#fff",
+        "bg_color_price_free_shipping_bar": "#26b522",
+        "text_color_price_free_shipping_bar": "#ffffff",
+        "text_transform_free_shipping_bar_message": "capitalize",
+        "header-a82428b26091b3a43b999bf33f909765": null,
+        "review_style_drawer": "below_reviews",
+        "enable_button_style": false,
+        "header-5e4202c5c741e73fade761588771334d": null,
+        "enable_continue_shopping": true,
+        "action_link_continue_shopping": "link",
+        "href_continue_shopping": "",
+        "text_continue_shopping": "Continue Shopping",
+        "header-d4e02050925cc28b543b7769d7f2050d": null,
+        "enable_view_cart": true,
+        "text_view_cart": "",
+        "header-f490629ebbf6fb74f6f15763e2a8a436": null,
+        "enable_html_area_drawer": false,
+        "drawer_html_area": "",
+        "enable_cart_drawer_divider": false,
+        "header-4c04d70f267b177665595ebf9c252023": null,
+        "background_color_cartDrawer": "#fff",
+        "header_bg_color": "#000000",
+        "header_title_color": "#FFFFFF",
+        "product_title_color": "#171520",
+        "font_color_cartDrawer": "#444",
+        "color_price_cartDrawer": "#953838",
+        "color_font_meta_product": "#656565",
+        "color_proceed_to_checkout_text": "#fff",
+        "background_color_button_proceed": "#26b522",
+        "color_proceed_to_checkout_text_hover": "#fff",
+        "background_color_button_proceed_hover": "#45910d",
+        "color_to_continue_shopping": "#2b80d8",
+        "header-e37b988593525a1d9b3256048bcc4d62": null,
+        "section_reviews_title": "",
+        "enable-reviews-drawer": false,
+        "review_style": "600",
+        "header-8185b435351c8b16540de2ae4e052dea": null,
+        "trustBadges_enable": true,
+        "enable_trust_badge_title": false,
+        "disable_trust_badges_bottom": false,
+        "vasta_badges_size": 6
+      },
+      "blocks": {
+        "trust_badges_cart_QrBWQ": {
+          "type": "trust_badges_cart",
+          "disabled": false,
+          "settings": {
+            "title": "",
+            "svg_trust_badge_cart": "amazon",
+            "title_trust_badges": "<p>Trust Badge<\/p>",
+            "enable_custom_trust_badge_svg": false,
+            "custom_trust_badge_svg_html": "",
+            "enable_img_trust_badge_cart": false,
+            "img_trust_badges_cart": null
+          }
+        }
+      },
+      "block_order": [
+        "trust_badges_cart_QrBWQ"
+      ]
+    }
+  },
+  "order": [
+    "cart-drawer",
+    "menu-mobile",
+    "cart_drawer_TQMXf"
+  ]
+}

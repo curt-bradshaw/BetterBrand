@@ -1,0 +1,137 @@
+{% comment %}
+  This snippet contains the Add to Cart handler that must be executed immediately,
+  without waiting for the lazy loading of other scripts.
+  This ensures that the cart drawer opens even if the user clicks the ATC button
+  before any interaction with the page.
+{% endcomment %}
+
+<script>
+  (function() {
+    'use strict';
+
+    // Handler the form ATC submit event
+    document.addEventListener('submit', async function(e) {
+      const form = e.target;
+      
+      // Check if the form is an add to cart form
+      if (!form.action || !form.action.includes('/cart/add')) {
+        return;
+      }
+
+      // Mark the event as already handled to avoid duplication with the lazy handler
+      if (e._cartDrawerHandled) {
+        return;
+      }
+      e._cartDrawerHandled = true;
+
+      e.preventDefault();
+      e.stopImmediatePropagation(); // Prevent other handlers from being executed
+
+      // === CRITICAL OPERATION: Add to cart ===
+      try {
+        const formData = new FormData(form);
+        
+        // Add the item to the cart via fetch
+        const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.description || 'Error adding to cart');
+        }
+
+        // If we got here, the product was added successfully!
+        // Open the cart drawer immediately
+        document.body.classList.add('cart-drawer--opened');
+
+      } catch (error) {
+        // CRITICAL ERROR: Failed to add to cart
+        console.error('Error adding to cart:', error);
+        const errorContainer = document.getElementById('add-to-cart-error');
+        if (errorContainer) {
+          const isOosError = error.message && error.message.toLowerCase().includes('required parameter missing or invalid');
+          errorContainer.textContent = isOosError ? 'Out of stock. Please try again later.' : (error.message || 'Error adding to cart. Please try again.');
+          errorContainer.classList.remove('hide');
+          errorContainer.style.display = 'block';
+        }
+        return; // Stop here if there was a critical error
+      }
+
+      // === SECONDARY OPERATIONS: Update UI ===
+      // These operations are done in the background, errors here should not show a message to the user
+
+      // Update the cart when CartAPI is available
+      const updateCartUI = async function() {
+        try {
+          if (window.CartAPI && typeof window.CartAPI.buildCart === 'function') {
+            await window.CartAPI.buildCart();
+          }
+        } catch (err) {
+          console.warn('Error updating cart drawer:', err);
+        }
+      };
+
+      // If CartAPI is already available, update it now
+      if (window.CartAPI) {
+        updateCartUI();
+      } else {
+        // If it doesn't exist, wait until it loads
+        const waitForCartAPI = setInterval(function() {
+          if (window.CartAPI) {
+            clearInterval(waitForCartAPI);
+            updateCartUI();
+          }
+        }, 100);
+
+        // Security timeout
+        setTimeout(function() {
+          clearInterval(waitForCartAPI);
+        }, 5000);
+      }
+
+      // Update the cart counter in the header (in background)
+      try {
+        const cartResponse = await fetch(window.Shopify.routes.root + 'cart.js');
+        const cartData = await cartResponse.json();
+        
+        document.querySelectorAll('.header__item-cart-number').forEach(function(el) {
+          el.textContent = cartData.item_count;
+        });
+
+        // Check stock to show/hide buttons
+        const choosedVariant = document.querySelector('.all-variant option:selected');
+        if (choosedVariant) {
+          const variantId = choosedVariant.value;
+          const quantityInStock = choosedVariant.dataset.inventory;
+          
+          const itemInCart = cartData.items.find(function(item) {
+            return item.variant_id == variantId;
+          });
+
+          const productFormButtons = document.querySelector('.product-form__buttons');
+          const buttonOutOfStock = document.getElementById('button-out-of-stock');
+
+          if (itemInCart && quantityInStock && itemInCart.quantity >= parseInt(quantityInStock)) {
+            if (productFormButtons) productFormButtons.style.display = 'none';
+            if (buttonOutOfStock) buttonOutOfStock.style.display = 'flex';
+          } else {
+            if (productFormButtons) productFormButtons.style.display = 'flex';
+            if (buttonOutOfStock) buttonOutOfStock.style.display = 'none';
+          }
+        }
+      } catch (err) {
+        console.warn('Error updating cart counter:', err);
+      }
+
+      // Scroll to the top of the cart drawer
+      const cartDrawerBox = document.querySelector('.cart-drawer__box');
+      if (cartDrawerBox) {
+        cartDrawerBox.scrollTop = 0;
+      }
+
+    }, true); // Use capture to ensure it is executed first
+
+  })();
+</script>

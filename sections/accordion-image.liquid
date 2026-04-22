@@ -1,0 +1,541 @@
+<!-- START asections/ccordion-image.liquid -->
+
+{% assign section_data = product.metafields.pdp.image_with_accordion_section.value %}
+
+{% if section_data != blank %}
+  {% assign data_source_metafields = true %}
+{% endif %}
+
+{% comment %} Product metafields (custom.additional_info_*) override metaobject/settings when present {% endcomment %}
+{% assign use_product_custom_accordions = false %}
+{% if product.metafields.custom.additional_info_accordions_first_tab_title != blank or product.metafields.custom.additional_info_accordions_second_tab_title != blank or product.metafields.custom.additional_info_accordions_third_tab_title != blank or product.metafields.custom.additional_info_accordions_first_tab_content != blank or product.metafields.custom.additional_info_accordions_second_tab_content != blank or product.metafields.custom.additional_info_accordions_third_tab_content != blank %}
+  {% assign use_product_custom_accordions = true %}
+{% endif %}
+
+{% if product.metafields.custom.additional_info_title != blank %}
+  {% assign title = product.metafields.custom.additional_info_title.value %}
+{% else %}
+  {% assign title = section_data.title | default: section.settings['title-header'] %}
+{% endif %}
+
+{% if product.metafields.custom.additional_info_sub_title != blank %}
+  {% assign subtitle = product.metafields.custom.additional_info_sub_title.value %}
+{% else %}
+  {% assign subtitle = section_data.subtitle | default: section.settings['subtitle-header'] %}
+{% endif %}
+
+{% if product.metafields.custom.additional_info_accordions_main_title != blank %}
+  {% assign accordion_title = product.metafields.custom.additional_info_accordions_main_title.value %}
+{% else %}
+  {% assign accordion_title = section_data.accordion_title | default: section.settings.heading %}
+{% endif %}
+
+{% if product.metafields.custom.additional_info_accordions_first_image != blank %}
+  {% assign image = product.metafields.custom.additional_info_accordions_first_image.value %}
+{% else %}
+  {% assign image = section_data.image | default: section.settings.image %}
+{% endif %}
+
+{% if product.metafields.custom.additional_info_accordions_second_image != blank %}
+  {% assign our_story_image = product.metafields.custom.additional_info_accordions_second_image.value %}
+{% else %}
+  {% assign our_story_image = nil %}
+{% endif %}
+
+{% if product.metafields.custom.additional_info_box_title != blank %}
+  {% assign box_title = product.metafields.custom.additional_info_box_title.value %}
+{% else %}
+  {% assign box_title = nil %}
+{% endif %}
+
+{% if product.metafields.custom.additional_info_box_content != blank %}
+  {% assign box_content = product.metafields.custom.additional_info_box_content %}
+{% else %}
+  {% assign box_content = nil %}
+{% endif %}
+
+{% unless use_product_custom_accordions %}
+  {% assign accordions = section_data.accordions.value | default: section.blocks %}
+{% endunless %}
+
+<section class="accordion-image">
+  {% if title != blank %}
+    <div class="accordion-image__header">
+      <h2 class="accordion-image__title">{{ title }}</h2>
+      <p class="accordion-image__subtitle">{{ subtitle }}</p>
+    </div>
+  {% endif %}
+  <div class="accordion-image__container">
+    <div class="accordion-image__content">
+      {% if accordion_title != blank %}
+        <h2 class="accordion-image__heading">
+          {{ accordion_title }}
+        </h2>
+      {% endif %}
+
+      <div class="accordion-image__accordion">
+        {% if use_product_custom_accordions %}
+          {% for i in (1..3) %}
+            {% case i %}
+              {% when 1 %}
+                {% assign tab_title = product.metafields.custom.additional_info_accordions_first_tab_title.value | default: product.metafields.custom.additional_info_accordions_first_tab_title %}
+                {% assign tab_content = product.metafields.custom.additional_info_accordions_first_tab_content %}
+              {% when 2 %}
+                {% assign tab_title = product.metafields.custom.additional_info_accordions_second_tab_title.value | default: product.metafields.custom.additional_info_accordions_second_tab_title %}
+                {% assign tab_content = product.metafields.custom.additional_info_accordions_second_tab_content %}
+              {% when 3 %}
+                {% assign tab_title = product.metafields.custom.additional_info_accordions_third_tab_title.value | default: product.metafields.custom.additional_info_accordions_third_tab_title %}
+                {% assign tab_content = product.metafields.custom.additional_info_accordions_third_tab_content %}
+            {% endcase %}
+            {% if tab_title != blank or tab_content != blank %}
+              <div class="accordion-item">
+                <button class="accordion-trigger" aria-expanded="false" type="button">
+                  <span>{{ tab_title }}</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-panel">
+                  <div class="accordion-panel__inner">
+                    {{ tab_content | metafield_tag }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% for accordion in accordions %}
+            <div class="accordion-item" {{ accordion.shopify_attributes }}>
+              <button class="accordion-trigger" aria-expanded="false" type="button">
+                {% if data_source_metafields %}
+                  <span>{{ accordion.title }}</span>
+                {% else %}
+                  <span>{{ accordion.settings.title }}</span>
+                {% endif %}
+                <span class="accordion-icon">+</span>
+              </button>
+              <div class="accordion-panel">
+                <div class="accordion-panel__inner">
+                  {% if data_source_metafields %}
+                    {{ accordion.description | metafield_tag }}
+                  {% else %}
+                    {{ accordion.settings.content }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="accordion-image__media">
+      {% if image != blank %}
+        <img
+          src="{{ image | image_url: width: 800 }}"
+          alt="{{ image.alt | default: title | escape }}"
+          loading="lazy"
+        >
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if our_story_image != blank or box_title != blank or box_content != blank %}
+  <div class="our-story__section">
+    {% if box_title != blank or box_content != blank %}
+      <div class="our-story__content">
+        {% if box_title != blank %}
+          <h2 class="our-story__heading">{{ box_title }}</h2>
+        {% endif %}
+        {% if box_content != blank %}
+          <div class="our-story__text">{{ box_content | metafield_tag }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if our_story_image != blank %}
+      <div class="our-story__media">
+        <img
+          src="{{ our_story_image | image_url: width: 800 }}"
+          alt="{{ our_story_image.alt | default: box_title | escape }}"
+          loading="lazy"
+        >
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% style %}
+  #shopify-section-{{section.id}} {
+    --font-size-accordion-heading-desk: {{ section.settings.font_size_accordion_heading_desk }}px;
+    --font-size-accordion-heading-tablet: {{ section.settings.font_size_accordion_heading_tablet }}px;
+    --font-size-accordion-heading-mobile: {{ section.settings.font_size_accordion_heading_mobile }}px;
+  }
+
+  .accordion-image {
+    padding: {{ section.settings.padding_top_desktop }}px 20px {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  .accordion-image__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 35px;
+  }
+
+  .accordion-image__title {
+    text-align: center;
+    font-size: 38px;
+    font-weight: 700;
+    color: #252525;
+    font-family: var(--bookmaniaFont);
+    line-height: 1;
+  }
+
+  .accordion-image__subtitle {
+    text-align: center;
+    font-size: 20px;
+    color: #252525;
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  .accordion-image__container {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 108px;
+    align-items: center;
+  }
+
+  .accordion-image__heading {
+    font-size: var(--font-size-accordion-heading-desk);
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: var(--bookmaniaFont);
+    color: #252525;
+    line-height: 1.2;
+  }
+
+  .accordion-image__accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .accordion-image__media {
+    min-width: 512px;
+  }
+
+  .accordion-item {
+    background: #f0ffe9;
+    color: #252525;
+    border-radius: 22px;
+    overflow: hidden;
+    transition: border-radius 0.25s ease;
+  }
+
+  .accordion-item.is-open {
+    border-radius: 22px;
+  }
+
+  .accordion-trigger {
+    font-size: 20px;
+    width: 100%;
+    padding: 14px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+    color: #234134;
+  }
+
+  .accordion-icon {
+    font-size: 20px;
+    transition: transform 0.25s ease;
+  }
+
+  .accordion-item.is-open .accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  .accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .accordion-panel__inner * {
+    display: block;
+    padding: 0 22px 18px;
+    font-size: 15px;
+    line-height: 1.2;
+    color: #234134;
+  }
+
+  .accordion-image__media img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    display: block;
+  }
+
+  .our-story__section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 108px;
+    align-items: center;
+  }
+
+  .our-story__heading {
+    font-size: 38px;
+    font-weight: 700;
+    font-family: var(--bookmaniaFont);
+    color: #252525;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .our-story__text {
+    font-size: 15px;
+    line-height: 1.2;
+    color: #234134;
+  }
+
+  .our-story__text p {
+    margin: 0 0 1em;
+  }
+
+  .our-story__media img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    display: block;
+  }
+
+  @media (max-width: 1019px) {
+    .accordion-image {
+      padding: {{ section.settings.padding_top_tablet }}px 20px {{ section.settings.padding_bottom_tablet }}px;
+    }
+    .accordion-image__heading {
+      font-size: var(--font-size-accordion-heading-tablet);
+    }
+    .accordion-image__container {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .accordion-panel__inner * {
+      font-size: 16px;
+    }
+    .our-story__section {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+  @media (max-width: 767px) {
+    .accordion-image__title {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+    .accordion-image__subtitle {
+      font-size: 18px;
+    }
+    .accordion-image {
+      padding: {{ section.settings.padding_top_mobile }}px 20px {{ section.settings.padding_bottom_mobile }}px;
+    }
+    .accordion-image__heading {
+      font-size: var(--font-size-accordion-heading-mobile);
+    }
+    .accordion-image__media {
+      min-width: 100%;
+    }
+    .accordion-trigger {
+      font-size: 16px;
+      text-align: left;
+      padding: 10px 16px;
+    }
+    .accordion-icon {
+      font-size: 18px;
+    }
+    .accordion-panel__inner * {
+      font-size: 14px;
+    }
+    .our-story__heading {
+      font-size: 24px;
+    }
+  }
+{% endstyle %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const accordions = document.querySelectorAll('.accordion-image');
+
+    accordions.forEach((section) => {
+      const items = section.querySelectorAll('.accordion-item');
+
+      items.forEach((item) => {
+        const trigger = item.querySelector('.accordion-trigger');
+        const panel = item.querySelector('.accordion-panel');
+
+        trigger.addEventListener('click', () => {
+          const isOpen = item.classList.contains('is-open');
+
+          items.forEach((i) => {
+            i.classList.remove('is-open');
+            i.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+            i.querySelector('.accordion-panel').style.maxHeight = null;
+          });
+
+          if (!isOpen) {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Accordion + Image",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title-header",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle-header",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lorem ipsum dolor"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Right image"
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_tablet",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Tablet)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_tablet",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Tablet)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "font_size_accordion_heading_desk",
+      "label": "Font Size Accordion Heading (Desktop)",
+      "default": 38
+    },
+    {
+      "type": "number",
+      "id": "font_size_accordion_heading_tablet",
+      "label": "Font Size Accordion Heading (Tablet)",
+      "default": 32
+    },
+    {
+      "type": "number",
+      "id": "font_size_accordion_heading_mobile",
+      "label": "Font Size Accordion Heading (Mobile)",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion_item",
+      "name": "Accordion item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Lorem ipsum dolor sit"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion with image",
+      "blocks": [{ "type": "accordion_item" }, { "type": "accordion_item" }, { "type": "accordion_item" }]
+    }
+  ]
+}
+{% endschema %}

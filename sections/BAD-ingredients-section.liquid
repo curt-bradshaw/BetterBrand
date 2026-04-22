@@ -1,0 +1,367 @@
+{% schema %}
+{
+  "name": "BAD Ingredients Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "BAD_section_heading",
+      "label": "Section Heading",
+      "default": "BetterLungs Formula Is Hands Down the Most Powerful Lung Detox On the Planet"
+    },
+    { 
+      "type": "color",
+      "id": "BAD_background_color",
+      "label": "Background Color",
+      "default": "#F0FAEB"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image",
+      "label": "Icons Under CTA"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_2",
+      "label": "Icons Under CTA 2"
+    },
+    {
+      "type": "text",
+      "id": "cta_lower_text_1",
+      "label": "Text Under CTA 1",
+      "default": "365-Day Money Back Guarantee*"
+    },
+    {
+      "type": "text",
+      "id": "cta_lower_text_2",
+      "label": "Text Under CTA 2",
+      "default": "Free Shipping*"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "BAD_ingredient",
+      "name": "BAD Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "BAD_ingredient_name",
+          "label": "Ingredient Name",
+          "default": "Mullein"
+        },
+        {
+          "type": "text",
+          "id": "BAD_ingredient_tagline",
+          "label": "Ingredient Tagline",
+          "default": "The Lung Draino"
+        },
+        {
+          "type": "image_picker",
+          "id": "BAD_ingredient_image",
+          "label": "Ingredient Image"
+        },
+        {
+          "type": "text",
+          "id": "BAD_benefit_1",
+          "label": "Benefit 1",
+          "default": "Loosens and expels mucus from the lungs and airways"
+        },
+        {
+          "type": "text",
+          "id": "BAD_benefit_2",
+          "label": "Benefit 2",
+          "default": "Soothes inflammation in airways"
+        },
+        {
+          "type": "text",
+          "id": "BAD_benefit_3",
+          "label": "Benefit 3",
+          "default": "Moisturizes and protects airways"
+        },
+        {
+          "type": "text",
+          "id": "BAD_benefit_4",
+          "label": "Benefit 4",
+          "default": "Reduces coughing and promotes immune health"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD Ingredients Section",
+      "blocks": [
+        {
+          "type": "BAD_ingredient"
+        },
+        {
+          "type": "BAD_ingredient"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="BAD-ingredients-section" style="background-color: {{ section.settings.BAD_background_color }};">
+  <h2 class="BAD-section-heading">{{ section.settings.BAD_section_heading }}</h2>
+
+  <div class="page-width">
+    <div class="BAD-ingredients-container {% if section.blocks.size > 1 %} bd-mo {% endif %}"> 
+        <div class="swiper-wrapper">
+
+          {% for block in section.blocks %}
+            <div class="swiper-slide ingredient-slide">
+              <div class="BAD-ingredient-block ">
+                <div class="BAD-ingredient-header">
+                  <p class="BAD-ingredient-name">{{ block.settings.BAD_ingredient_name }}</p>
+                  <p class="BAD-ingredient-tagline">{{ block.settings.BAD_ingredient_tagline }}</p>
+                </div>
+                <div class="BAD-ingredient-content">
+                  <div class="BAD-ingredient-benefits" style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img
+                        src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/bullet_point.png?v=1743605638"
+                        alt="bullet point"
+                        width="8"
+                        height="8"
+                      >
+                      <div>{{ block.settings.BAD_benefit_1 }}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img
+                        src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/bullet_point.png?v=1743605638"
+                        alt="bullet point"
+                        width="8"
+                        height="8"
+                      >
+                      <div>{{ block.settings.BAD_benefit_2 }}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img
+                        src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/bullet_point.png?v=1743605638"
+                        alt="bullet point"
+                        width="8"
+                        height="8"
+                      >
+                      <div>{{ block.settings.BAD_benefit_3 }}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img
+                        src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/bullet_point.png?v=1743605638"
+                        alt="bullet point"
+                        width="8"
+                        height="8"
+                      >
+                      <div>{{ block.settings.BAD_benefit_4 }}</div>
+                    </div>
+                  </div>
+                  <img
+                    class="BAD-ingredient-image"
+                    src="{{ block.settings.BAD_ingredient_image | img_url: 'medium' }}"
+                    alt="{{ block.settings.BAD_ingredient_name }}"
+                  >
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+
+          {% if section.blocks.size > 1 %}
+          <div class="swiper-nav nav-ingredient">
+              <div class="swiper-button-prev swiper-buttons">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="9" height="15" viewBox="0 0 9 15" fill="none">
+                    <g clip-path="url(#clip0_1749_2)">
+                    <path d="M0.928928 6.82542C0.538408 7.21594 0.538408 7.84911 0.928928 8.23963L7.29289 14.6036C7.68342 14.9941 8.31658 14.9941 8.70711 14.6036C9.09763 14.2131 9.09763 13.5799 8.70711 13.1894L3.05025 7.53253L8.70711 1.87569C9.09763 1.48519 9.09763 0.851988 8.70711 0.461488C8.31658 0.0708878 7.68342 0.0708878 7.29289 0.461488L0.928928 6.82542ZM2.63604 6.53253L1.63604 6.53253V8.53253H2.63604V6.53253Z" fill="black"></path>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_1749_2">
+                    <rect width="9" height="15" fill="white"></rect>
+                    </clipPath>
+                    </defs>
+                  </svg>
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-next swiper-buttons">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M8.70711 8.24037C9.09763 7.84985 9.09763 7.21668 8.70711 6.82616L2.34315 0.462196C1.95262 0.071672 1.31946 0.071672 0.928932 0.462196C0.538408 0.852721 0.538408 1.48589 0.928932 1.87641L6.58579 7.53326L0.928932 13.1901C0.538408 13.5806 0.538408 14.2138 0.928932 14.6043C1.31946 14.9949 1.95262 14.9949 2.34315 14.6043L8.70711 8.24037ZM7 8.53326H8V6.53326H7V8.53326Z" fill="black"></path></svg>
+              </div>
+          </div>
+          {% endif %}
+    </div>
+  </div>
+  {% if section.settings.cta_text != blank %}
+    <div class="BAD-cta-wrapper page-width">
+      <a href="{{ section.settings.cta_url }}" class="BAD-cta-button">{{ section.settings.cta_text }}</a>
+      <div style="display:flex;justify-content:center;padding-top: 5px;gap:10px;">
+        <div style="display:flex;align-items:center;gap:5px;">
+          <img src="{{ section.settings.icon_image | img_url: '600x600' }}" alt="Product Image" class="cta-icons">
+          <p class="BAD-cta-info-text">{{ section.settings.cta_lower_text_1 }}</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <img src="{{ section.settings.icon_image_2 | img_url: '600x600' }}" alt="Product Image" class="cta-icons">
+          <p class="BAD-cta-info-text">{{ section.settings.cta_lower_text_2 }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+    .BAD-ingredient-name,
+  .BAD-ingredient-tagline {
+    margin: 0 !important;
+  }
+      .BAD-ingredients-section {
+        padding: 40px;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        display:flex;
+        margin-top: 40px;
+
+
+        .swiper-nav.nav-ingredient {
+            bottom: 0;
+            left: 50%;
+            top: auto;
+            transform: translate(-50%,0);
+            width: 100%;
+            justify-content: center;
+
+            .swiper-pagination{
+              position: relative;
+              pointer-events: all;
+            }
+          }
+      }
+
+      .swiper-nav.nav-ingredient:not(:has(.swiper-buttons:not(.swiper-button-disabled))) {
+          display: none !important;
+        }
+
+      .swiper-nav.nav-ingredient{
+          .swiper-buttons{
+            background: transparent;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin: 0 10px;
+
+          }
+
+           
+      }
+      .BAD-section-heading {
+        font-size: 27px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        font-family: bookmania;
+      }
+      .BAD-ingredients-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 60px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+
+      .BAD-ingredient-block {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid black;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        /* padding: 20px; */
+      }
+      .BAD-ingredient-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-weight: bold;
+        font-size: 16px;
+        background: #203b2d;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px 20px 0 0;
+      }
+      .BAD-ingredient-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 25px;
+        flex: calc(100% - 60px);
+      }
+      .BAD-ingredient-image {
+        width: 120px;
+        height: auto;
+        border-radius: 10px;
+      }
+      .BAD-ingredient-benefits {
+        text-align: left;
+        list-style: none;
+        padding: 0;
+      }
+      .BAD-ingredient-benefits div {
+        font-size: 14px;
+        padding-left: 5px;
+        position: relative;
+      }
+
+      .swiper-slide.ingredient-slide{
+        height:auto;
+      }
+
+      @media (max-width: 768px) {
+        .BAD-ingredient-header {
+          font-size: 13px;
+        }
+
+       .BAD-ingredient-benefits div {
+          font-size: 11px;
+          padding-left: 0;
+        }
+
+        .BAD-ingredient-image{
+           width: 75px;
+        }
+
+
+        .BAD-ingredients-section {
+              padding: 6px;
+
+              .page-width{
+                max-width:100vw;
+              }
+        }
+        .BAD-ingredient-content {
+          flex-direction: row-reverse;
+          align-items: center;
+          text-align: center;
+          margin: 15px 5px;
+        }
+        .BAD-ingredient-block {
+          width: auto;
+        }
+
+        .BAD-section-heading {
+          font-size: 20px;
+          padding: 0 20px;
+        }
+      }
+</style>

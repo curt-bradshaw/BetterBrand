@@ -1,0 +1,192 @@
+{% schema %}
+{
+  "name": "BAD N-ingredients Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Here’s Why I Prescribe Natural Ingredients to Family and Friends"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f7eb"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#d4d4d4"
+    },
+    {
+      "type": "range",
+      "id": "border_size",
+      "label": "Border Size (px)",
+      "min": 0,
+      "max": 10,
+      "default": 2,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "border_style",
+      "label": "Border Style",
+      "options": [
+        { "value": "solid", "label": "Solid" },
+        { "value": "dashed", "label": "Dashed" },
+        { "value": "dotted", "label": "Dotted" },
+        { "value": "double", "label": "Double" }
+      ],
+      "default": "solid"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_item",
+      "name": "Text Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Boosts immune system"
+        }
+      ]
+    },
+    {
+      "type": "image_item",
+      "name": "Image with Label",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Mullein"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD N-Ingredients Section"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .BAD-container {
+    background-color: {{ section.settings.background_color }};
+    border: {{ section.settings.border_size }}px {{ section.settings.border_style }} {{ section.settings.border_color }};
+    padding: 20px;
+    border-radius: 10px;
+    margin:  0 auto;
+  }
+
+  .BAD-container h2 {
+    font-family: 'Bookmania', serif;
+    text-shadow: 0px 4px 4px rgba(242, 203, 73, 0.14);
+    font-size: 27px;
+    text-align: center;
+  }
+
+  .BAD-text-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+    .BAD-text-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 1180px) {
+    .BAD-container {
+      margin: 0px 20px 20px 20px;
+    }
+
+    .BAD-container h2 {
+    font-family: 'Bookmania', serif;
+    text-shadow: 0px 4px 4px rgba(242, 203, 73, 0.14);
+    font-size: 20px;
+    text-align: center;
+  }
+
+    .BAD-text-item {
+    justify-content: left;
+
+  }
+
+      .BAD-text-list {
+    justify-content: left;
+  }
+  }
+
+
+
+
+  .BAD-image-list {
+    display: flex;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  .BAD-image-item {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+</style>
+
+<div class="BAD-container page-width">
+  <h2>{{ section.settings.heading }}</h2>
+  <div class="BAD-text-list">
+    {% for block in section.blocks %}
+      {% if block.type == 'text_item' %}
+        <div class="BAD-text-item">
+          {% if section.settings.logo_image %}
+            <img src="{{ section.settings.logo_image | img_url: 'small' }}" style="width:19px;height:19px;" alt="Logo">
+          {% endif %}
+          <p style="margin:0;">{{ block.settings.text }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="BAD-image-list">
+    {% for block in section.blocks %}
+      {% if block.type == 'image_item' %}
+        <div class="BAD-image-item">
+          {% if block.settings.image %}
+            <img
+              src="{{ block.settings.image | img_url: 'medium' }}"
+              alt="{{ block.settings.label }}"
+              style="width:60px;"
+            >
+          {% endif %}
+          <p style="text-align:center;max-width: 150px;">{{ block.settings.label }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

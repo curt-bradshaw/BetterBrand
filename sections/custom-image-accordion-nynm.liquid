@@ -1,0 +1,132 @@
+<div class="ntg-quality-section ntg-quality-section-enhanced">
+    <div class="ntg-container-nynm">
+        <div class="ntg-cols">
+            
+            <div class="ntg-col">
+                <div class="ntg-text-holder">
+                    <h2 class="ntg-h2 ">{{ section.settings.heading }}</h2>
+                    <div class="accordion-container">
+                      {% for block in section.blocks %}
+                        <div class="ac">
+                            <div class="ac-header">
+                                <button type="button" class="ac-trigger">
+                                    <div class="ntg-opener-text">{{ block.settings.title }}</div>
+                                    <div class="ntg-icon"></div>
+                                </button>
+                            </div>
+                            <div class="ac-panel">
+                                <div class="ntg-accordion-content">
+                                    {{ block.settings.content }}
+                                </div>
+                            </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="ntg-col ntg-col-img">
+                <div class="ntg-img-holder-images">
+                  {% if section.settings.image != blank %}
+                    <div class="ntg-img-wrap">
+                        <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.image.alt }}" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}">
+                     </div>
+                   {% endif %}  
+                    {% if section.settings.bottom_image != blank %}
+                      <div class="ntg-img-wrap">
+                            <div class="ntg-info-image">
+                                <img src="{{ section.settings.bottom_image | img_url: 'master' }}" alt="{{ section.settings.bottom_image.alt }}"  >
+                            </div>
+                    </div>
+
+                  {% endif %}
+                    
+
+
+                </div>
+            </div>
+        </div>
+
+      
+      
+    </div>
+</div>
+
+<script>
+document.getElementById('ac-0')?.click();
+
+
+</script>
+
+{% schema %}
+{
+  "name": "image accordion new",
+  "class": "custom-image-accordion",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Setting the Quality Bar"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main image"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_group",
+      "label": "Logo group image"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_group_mob",
+      "label": "Logo group image (Mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "image accordion new",
+      "category": "Custom Sections",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

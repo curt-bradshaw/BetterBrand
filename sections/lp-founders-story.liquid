@@ -1,0 +1,1347 @@
+{%- comment -%}
+  ============================================================
+  BetterLungs® — Founder's Story Pre-lander  (v2 — FINAL)
+  ============================================================
+  File: sections/lp-founders-story.liquid
+  Paired with: templates/page.lp-founders-story.json
+
+  INSTALLATION:
+  1. Go to Online Store > Themes > Edit code.
+  2. Under sections/, click "Add a new section" → name it: lp-founders-story
+  3. Paste this file's contents and save.
+  4. Under templates/, click "Add a new template" → type: page → name: lp-founders-story
+  5. Paste the contents of page.lp-founders-story.json and save.
+  6. Go to Online Store > Pages > Add page.
+  7. Set the URL handle to: lp-founders-story
+  8. Under "Theme template", select: lp-founders-story
+  9. Save and preview.
+  ============================================================
+{%- endcomment -%}
+
+{%- assign product_url = 'https://www.trybetterbrand.com/collections/lung-detox-supplements/products/betterlungs%C2%AE-mullein-chlorophyll?variant=50211235922219' -%}
+
+<style>
+  /* ── Google Fonts — MUST be first in stylesheet ── */
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  /* ══════════════════════════════════════════════════════════════
+     THEME CHROME SUPPRESSION
+  ══════════════════════════════════════════════════════════════ */
+
+  /* Klaviyo popups */
+  .klaviyo-form-container,
+  [class*="klaviyo-form"],
+  klaviyo-onsite-component,
+  [data-testid*="klaviyo"],
+  #klaviyo-ios-sms-consent-modal,
+  .needsclick.kl-private-reset-css-Xuajs1,
+  [class*="kl-private"] { display: none !important; }
+
+  /* Octane AI quiz */
+  octane-ai-quiz,
+  [class*="octane-quiz"],
+  [id*="octane-quiz"],
+  .octane-quiz-container { display: none !important; }
+
+  /* Just Uno popups */
+  #ju-root,
+  [id*="justuno"],
+  [class*="justuno"],
+  .ju-container { display: none !important; }
+
+  /* ── Shipping / Announcement bar ── */
+  .essential_annoucement_bar_wrapper,
+  [class*="essential_annoucement_bar"],
+  [class*="essential_announcement_bar"],
+  announcement-bar,
+  .announcement-bar,
+  .announcement-bar-section,
+  #shopify-section-announcement-bar,
+  [id*="announcement"],
+  [class*="announcement-bar"],
+  /* This theme's actual shipping bar section class */
+  .shopify-section.shipping-bar,
+  [class*="shipping-bar"],
+  [id*="shipping_bar"],
+  [id*="shipping-bar"] { display: none !important; }
+
+  /* ── Header ── */
+  header.header-content,
+  .site-header,
+  .header-content,
+  #shopify-section-header,
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper,
+  /* This theme's actual header section classes */
+  .shopify-section.section-header,
+  .shopify-section-header-sticky,
+  [class*="section-header"],
+  [id*="section-header"] { display: none !important; }
+
+  /* ── Footer ── */
+  footer.footer-content,
+  .site-footer,
+  .footer-content,
+  #shopify-section-footer,
+  [class*="site-footer"],
+  /* This theme's actual footer section class */
+  .shopify-section .ntg-footer,
+  .ntg-footer { display: none !important; }
+
+  /* Hide the entire shopify-section wrapper for header and shipping bar */
+  #shopify-section-sections--26199536337195__shipping_bar_4LRaz,
+  #shopify-section-sections--26199536337195__header,
+  #shopify-section-sections--26199536304427__footer { display: none !important; }
+
+  /* Remove theme padding around section */
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     NAMESPACE RESET — scope all styles to .prl-wrap
+  ══════════════════════════════════════════════════════════════ */
+  .prl-wrap,
+  .prl-wrap * {
+    box-sizing: border-box !important;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     CSS CUSTOM PROPERTIES
+  ══════════════════════════════════════════════════════════════ */
+  .prl-wrap {
+    --green:       #2D6A4F;
+    --green-light: #40916C;
+    --green-bg:    #F0FAF4;
+    --green-dark:  #1B4332;
+    --green-mid:   #52B788;
+    --gold:        #F5C800;
+    --gold-light:  #FFD700;
+    --gold-bg:     #FFF9E6;
+    --text:        #1A1A1A;
+    --text-light:  #4A4A4A;
+    --text-muted:  #777;
+    --bg:          #FAFAF8;
+    --white:       #FFFFFF;
+    --border:      #E5E5E3;
+    --card-bg:     #F7F7F5;
+    --highlight:   #FFF9E6;
+    --max-w:       680px;
+    --radius:      10px;
+
+    font-family: 'Lora', Georgia, 'Times New Roman', serif !important;
+    color: var(--text) !important;
+    background: var(--bg) !important;
+    line-height: 1.78 !important;
+    -webkit-font-smoothing: antialiased !important;
+    font-size: 17px !important;
+    padding-bottom: 80px !important;
+  }
+
+  /* ── MASTHEAD ── */
+  .prl-wrap .prl-masthead {
+    background: #1a3a5c !important;
+    border-bottom: none !important;
+    padding: 0 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 50px !important;
+    position: relative !important;
+  }
+  .prl-wrap .prl-masthead-hamburger {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    flex-shrink: 0 !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .prl-wrap .prl-masthead-wordmark {
+    font-family: 'Lora', Georgia, serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    letter-spacing: -0.01em !important;
+    color: #fff !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    flex: 1 !important;
+  }
+  .prl-wrap .prl-masthead-subscribe {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: rgba(255,255,255,0.75) !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    letter-spacing: 0.01em !important;
+    transition: color 0.15s !important;
+  }
+  .prl-wrap .prl-masthead-subscribe:hover { color: #fff !important; }
+
+  /* ── CATEGORY LABEL ── */
+  .prl-wrap .prl-category-label {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--green) !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+  }
+
+  /* ── ARTICLE CONTAINER ── */
+  .prl-wrap .prl-article {
+    max-width: var(--max-w) !important;
+    margin: 0 auto !important;
+    padding: 28px 20px 60px !important;
+  }
+
+  /* ── HEADLINE ── */
+  .prl-wrap .prl-headline {
+    font-family: 'Lora', Georgia, serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1.28 !important;
+    color: var(--text) !important;
+    margin-bottom: 8px !important;
+    letter-spacing: -0.01em !important;
+  }
+  @media (min-width: 600px) { .prl-wrap .prl-headline { font-size: 26px !important; } }
+
+  /* ── AUTHOR BLOCK ── */
+  .prl-wrap .prl-author-block {
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    margin-bottom: 8px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .prl-wrap .prl-author-avatar {
+    width: 28px !important; height: 28px !important; border-radius: 50% !important;
+    object-fit: cover !important; flex-shrink: 0 !important;
+    border: none !important;
+  }
+  .prl-wrap .prl-author-info { flex: 1 !important; min-width: 0 !important; }
+  .prl-wrap .prl-author-name {
+    font-family: 'Inter', sans-serif !important; font-size: 11px !important; font-weight: 700 !important;
+    color: var(--text) !important; line-height: 1.2 !important; white-space: nowrap !important;
+  }
+  .prl-wrap .prl-author-title { font-family: 'Inter', sans-serif !important; font-size: 9px !important; color: var(--text-muted) !important; line-height: 1.3 !important; }
+  .prl-wrap .prl-byline-meta {
+    font-family: 'Inter', sans-serif !important; font-size: 9px !important; color: var(--text-muted) !important;
+    text-align: right !important; flex-shrink: 0 !important; line-height: 1.4 !important;
+  }
+
+  /* ── SOCIAL SHARE BAR ── */
+  .prl-wrap .prl-share-bar {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-bottom: 18px !important;
+    padding-bottom: 14px !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .prl-wrap .prl-share-label {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: var(--text-muted) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    flex-shrink: 0 !important;
+  }
+  .prl-wrap .prl-share-icons { display: flex !important; gap: 5px !important; align-items: center !important; }
+  .prl-wrap .prl-share-btn {
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    width: 22px !important; height: 22px !important; border-radius: 50% !important;
+    text-decoration: none !important; transition: opacity 0.2s, transform 0.15s !important;
+    cursor: default !important; flex-shrink: 0 !important;
+  }
+  .prl-wrap .prl-share-btn:hover { opacity: 0.85 !important; transform: scale(1.08) !important; }
+  .prl-wrap .prl-share-btn svg { display: block !important; width: 10px !important; height: 10px !important; }
+  .prl-wrap .prl-share-btn.prl-facebook { background: #1877F2 !important; }
+  .prl-wrap .prl-share-btn.prl-twitter  { background: #000000 !important; }
+  .prl-wrap .prl-share-btn.prl-pinterest { background: #E60023 !important; }
+  .prl-wrap .prl-share-btn.prl-email    { background: #6B7280 !important; }
+  .prl-wrap .prl-share-btn.prl-link     { background: var(--card-bg) !important; border: 1px solid var(--border) !important; }
+
+  /* ── BODY COPY ── */
+  .prl-wrap .prl-article p { margin-bottom: 1.1em !important; font-size: 17px !important; }
+  .prl-wrap .prl-article p strong { font-weight: 700 !important; }
+  .prl-wrap .prl-article p em { font-style: italic !important; }
+
+  /* ── SECTION DIVIDERS ── */
+  .prl-wrap .prl-divider { width: 48px !important; height: 2px !important; background: var(--green-mid) !important; margin: 32px 0 !important; border-radius: 2px !important; }
+  .prl-wrap .prl-divider-full { width: 100% !important; height: 1px !important; background: var(--border) !important; margin: 36px 0 !important; }
+
+  /* ── SECTION LABELS ── */
+  .prl-wrap .prl-section-label-wrap { display: flex !important; align-items: center !important; gap: 10px !important; margin-bottom: 10px !important; }
+  .prl-wrap .prl-section-badge {
+    font-family: 'Inter', sans-serif !important; font-size: 10px !important; font-weight: 700 !important;
+    color: #fff !important; background: var(--green) !important; width: 24px !important; height: 24px !important;
+    border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important;
+    flex-shrink: 0 !important; letter-spacing: 0 !important;
+  }
+  .prl-wrap .prl-section-label-text {
+    font-family: 'Inter', sans-serif !important; font-size: 10px !important; font-weight: 700 !important;
+    text-transform: uppercase !important; letter-spacing: 0.12em !important; color: var(--text-muted) !important;
+  }
+
+  /* ── H2 SECTION HEADINGS ── */
+  .prl-wrap h2.prl-section-heading {
+    font-family: 'Lora', Georgia, serif !important; font-size: 22px !important; font-weight: 700 !important;
+    line-height: 1.3 !important; margin-bottom: 18px !important; color: var(--text) !important;
+  }
+
+  /* ── IMAGES ── */
+  .prl-wrap .prl-img-block { margin: 20px 0 !important; }
+  .prl-wrap .prl-img-block img {
+    width: 100% !important; display: block !important;
+    border-radius: 10px !important;
+    cursor: zoom-in !important;
+    transition: opacity 0.15s !important;
+  }
+  .prl-wrap .prl-img-block img:hover { opacity: 0.92 !important; }
+  .prl-wrap .prl-img-caption {
+    font-family: 'Lora', Georgia, serif !important;
+    font-size: 11px !important;
+    color: #aaa !important;
+    padding: 4px 4px 0 !important;
+    font-style: italic !important;
+    font-weight: 300 !important;
+    text-align: center !important;
+    background: none !important;
+    border-top: none !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  /* ── SYMPTOM CHECKLIST ── */
+  .prl-wrap .prl-symptom-box {
+    background: var(--highlight) !important; border: 1px solid #F0E080 !important;
+    border-radius: var(--radius) !important; padding: 20px 20px 14px !important; margin: 20px 0 !important;
+  }
+  .prl-wrap .prl-symptom-item { display: flex !important; align-items: flex-start !important; gap: 10px !important; margin-bottom: 10px !important; font-size: 16px !important; line-height: 1.55 !important; }
+  .prl-wrap .prl-symptom-item:last-child { margin-bottom: 0 !important; }
+  .prl-wrap .prl-symptom-check { color: var(--green) !important; font-size: 17px !important; flex-shrink: 0 !important; margin-top: 2px !important; font-weight: 700 !important; }
+
+  /* ── PULL QUOTE ── */
+  .prl-wrap .prl-pull-quote {
+    border-left: 3px solid var(--green-mid) !important; padding: 6px 0 6px 18px !important;
+    margin: 24px 0 !important; font-size: 18px !important; font-weight: 600 !important; font-style: italic !important;
+    color: var(--text) !important; line-height: 1.5 !important;
+  }
+
+  /* ── STAT BOXES ── */
+  .prl-wrap .prl-stat-row { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; margin: 28px 0 !important; }
+  @media (max-width: 400px) { .prl-wrap .prl-stat-row { gap: 6px !important; } }
+  .prl-wrap .prl-stat-box {
+    background: var(--white) !important; border: 1px solid var(--border) !important; border-radius: var(--radius) !important;
+    padding: 18px 10px !important; text-align: center !important; box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+  }
+  .prl-wrap .prl-stat-number { font-family: 'Inter', sans-serif !important; font-size: 32px !important; font-weight: 800 !important; color: var(--green) !important; line-height: 1 !important; margin-bottom: 5px !important; }
+  @media (max-width: 400px) { .prl-wrap .prl-stat-number { font-size: 25px !important; } }
+  .prl-wrap .prl-stat-label { font-family: 'Inter', sans-serif !important; font-size: 10px !important; color: var(--text-light) !important; font-weight: 500 !important; line-height: 1.3 !important; }
+  .prl-wrap .prl-stat-badge {
+    background: var(--green-bg) !important; border: 1px solid #C8E6D5 !important; border-radius: var(--radius) !important;
+    padding: 13px 18px !important; text-align: center !important; margin: 0 0 28px !important;
+    font-family: 'Inter', sans-serif !important; font-size: 12px !important; font-weight: 600 !important; color: var(--green-dark) !important;
+  }
+
+  /* ── RESULT CHECKLIST ── */
+  .prl-wrap .prl-result-list { margin: 20px 0 !important; }
+  .prl-wrap .prl-result-item { display: flex !important; align-items: flex-start !important; gap: 10px !important; margin-bottom: 12px !important; font-size: 16px !important; line-height: 1.55 !important; }
+  .prl-wrap .prl-result-check { color: var(--green) !important; font-size: 17px !important; flex-shrink: 0 !important; margin-top: 2px !important; }
+
+  /* ── CTA BUTTONS ── */
+  .prl-wrap .prl-cta-wrap { margin: 32px 0 !important; text-align: center !important; }
+  .prl-wrap .prl-cta-btn {
+    display: block !important; width: 100% !important; background: var(--green) !important; color: #fff !important;
+    font-family: 'Inter', sans-serif !important; font-size: 15px !important; font-weight: 700 !important;
+    padding: 18px 24px !important; border-radius: 8px !important; text-decoration: none !important;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s !important;
+    letter-spacing: 0.01em !important; text-align: center !important; border: 2px solid transparent !important;
+    box-shadow: 0 4px 14px rgba(45,106,79,0.25) !important;
+  }
+  .prl-wrap .prl-cta-btn:hover { background: var(--green-light) !important; transform: translateY(-1px) !important; box-shadow: 0 6px 20px rgba(45,106,79,0.3) !important; }
+  .prl-wrap .prl-cta-btn:active { transform: translateY(0) !important; }
+  @media (min-width: 600px) { .prl-wrap .prl-cta-btn { display: inline-block !important; width: auto !important; padding: 18px 40px !important; } }
+  .prl-wrap .prl-cta-sub {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11px !important; color: var(--text-muted) !important; margin-top: 6px !important; text-align: center !important; line-height: 1.6 !important;
+  }
+  .prl-wrap .prl-cta-trust { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 8px !important; margin-top: 12px !important; }
+  .prl-wrap .prl-trust-pill {
+    font-family: 'Inter', sans-serif !important; font-size: 10px !important; font-weight: 600 !important;
+    color: var(--green-dark) !important; background: var(--green-bg) !important; border: 1px solid #C8E6D5 !important;
+    padding: 4px 10px !important; border-radius: 20px !important; display: flex !important; align-items: center !important; gap: 4px !important;
+  }
+
+  /* ── TESTIMONIAL CARDS ── */
+  .prl-wrap .prl-testimonial-card {
+    background: var(--white) !important; border: 1px solid var(--border) !important; border-radius: var(--radius) !important;
+    padding: 22px 20px !important; margin-bottom: 14px !important; box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+  }
+  .prl-wrap .prl-testimonial-stars { color: var(--gold) !important; font-size: 14px !important; margin-bottom: 8px !important; letter-spacing: 2px !important; }
+  .prl-wrap .prl-testimonial-title { font-family: 'Lora', Georgia, serif !important; font-weight: 700 !important; font-size: 15px !important; margin-bottom: 8px !important; color: var(--text) !important; line-height: 1.35 !important; }
+  .prl-wrap .prl-testimonial-body { font-family: 'Lora', Georgia, serif !important; font-size: 14px !important; color: var(--text-light) !important; line-height: 1.65 !important; margin-bottom: 10px !important; font-style: italic !important; }
+  .prl-wrap .prl-testimonial-meta { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 8px !important; }
+  .prl-wrap .prl-testimonial-author { font-family: 'Inter', sans-serif !important; font-size: 11px !important; color: var(--text-muted) !important; font-weight: 500 !important; }
+  .prl-wrap .prl-verified-badge { font-family: 'Inter', sans-serif !important; font-size: 10px !important; color: var(--green) !important; font-weight: 600 !important; display: flex !important; align-items: center !important; gap: 3px !important; }
+
+  /* ── 3-STEP MODULE ── */
+  .prl-wrap .prl-step-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 14px !important; margin: 24px 0 !important; }
+  @media (min-width: 600px) { .prl-wrap .prl-step-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+  .prl-wrap .prl-step-card { background: var(--white) !important; border: 1px solid var(--border) !important; border-radius: var(--radius) !important; padding: 20px 18px !important; box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important; }
+  .prl-wrap .prl-step-num { font-family: 'Inter', sans-serif !important; font-size: 10px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; color: var(--green) !important; margin-bottom: 5px !important; }
+  .prl-wrap .prl-step-title { font-family: 'Lora', Georgia, serif !important; font-weight: 700 !important; font-size: 17px !important; margin-bottom: 7px !important; }
+  .prl-wrap .prl-step-body { font-size: 13px !important; color: var(--text-light) !important; line-height: 1.6 !important; }
+  .prl-wrap .prl-step-stat { font-family: 'Inter', sans-serif !important; font-size: 11px !important; font-weight: 700 !important; color: var(--green) !important; margin-top: 10px !important; background: var(--green-bg) !important; padding: 4px 8px !important; border-radius: 4px !important; display: inline-block !important; }
+
+  /* ── USAGE STEPS ── */
+  .prl-wrap .prl-usage-steps { background: var(--white) !important; border: 1px solid var(--border) !important; border-radius: var(--radius) !important; padding: 22px 20px !important; margin: 20px 0 !important; box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important; }
+  .prl-wrap .prl-usage-step { display: flex !important; align-items: flex-start !important; gap: 14px !important; margin-bottom: 14px !important; }
+  .prl-wrap .prl-usage-step:last-child { margin-bottom: 0 !important; }
+  .prl-wrap .prl-usage-step-num { font-family: 'Inter', sans-serif !important; font-size: 11px !important; font-weight: 700 !important; color: #fff !important; background: var(--green) !important; width: 26px !important; height: 26px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; margin-top: 2px !important; }
+  .prl-wrap .prl-usage-step-text { font-size: 15px !important; color: var(--text-light) !important; line-height: 1.55 !important; }
+
+  /* ── GUARANTEE BOX ── */
+  .prl-wrap .prl-guarantee-box { background: var(--white) !important; border: 2px solid var(--green-mid) !important; border-radius: var(--radius) !important; padding: 28px 22px !important; margin: 28px 0 !important; text-align: center !important; box-shadow: 0 2px 12px rgba(45,106,79,0.1) !important; }
+  .prl-wrap .prl-guarantee-number { font-family: 'Inter', sans-serif !important; font-size: 56px !important; font-weight: 900 !important; color: var(--green) !important; line-height: 1 !important; margin-bottom: 2px !important; }
+  .prl-wrap .prl-guarantee-label { font-family: 'Inter', sans-serif !important; font-size: 13px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; color: var(--green-dark) !important; margin-bottom: 14px !important; }
+  .prl-wrap .prl-guarantee-body { font-size: 14px !important; color: var(--text-light) !important; line-height: 1.65 !important; text-align: left !important; }
+
+  /* ── FAQ ── */
+  .prl-wrap .prl-faq-item { border-bottom: 1px solid var(--border) !important; }
+  .prl-wrap .prl-faq-item:last-child { border-bottom: none !important; }
+  .prl-wrap details summary {
+    font-family: 'Inter', sans-serif !important; font-weight: 600 !important; font-size: 14px !important;
+    color: var(--text) !important; cursor: pointer !important; padding: 18px 0 !important; list-style: none !important;
+    display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 12px !important; user-select: none !important;
+  }
+  .prl-wrap details summary::-webkit-details-marker { display: none !important; }
+  .prl-wrap details summary::after { content: '+' !important; font-size: 19px !important; color: var(--green) !important; font-weight: 400 !important; flex-shrink: 0 !important; transition: transform 0.2s !important; }
+  .prl-wrap details[open] summary::after { content: '−' !important; }
+  .prl-wrap .prl-faq-a { font-size: 14px !important; color: var(--text-light) !important; line-height: 1.65 !important; padding-bottom: 18px !important; }
+  .prl-wrap .prl-faq-a a { color: var(--green) !important; }
+
+  /* ── SOCIAL PROOF BAR ── */
+  .prl-wrap .prl-social-proof-bar { background: var(--green-dark) !important; color: #fff !important; padding: 16px 20px !important; border-radius: var(--radius) !important; margin: 28px 0 !important; text-align: center !important; }
+  .prl-wrap .prl-social-proof-bar .prl-big-num { font-family: 'Inter', sans-serif !important; font-size: 32px !important; font-weight: 900 !important; line-height: 1 !important; margin-bottom: 4px !important; }
+  .prl-wrap .prl-social-proof-bar .prl-big-label { font-family: 'Inter', sans-serif !important; font-size: 11px !important; font-weight: 600 !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; opacity: 0.85 !important; }
+
+  /* ── TIMELINE ── */
+  .prl-wrap .prl-timeline { margin: 24px 0 !important; padding-left: 0 !important; }
+  .prl-wrap .prl-timeline-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 0 !important;
+    position: relative !important;
+    padding-bottom: 24px !important;
+  }
+  .prl-wrap .prl-timeline-item:last-child { padding-bottom: 0 !important; }
+  /* Vertical connector line drawn on the dot column */
+  .prl-wrap .prl-timeline-item:not(:last-child)::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 7px !important;
+    top: 20px !important;
+    bottom: 0 !important;
+    width: 2px !important;
+    background: var(--border) !important;
+    z-index: 0 !important;
+  }
+  .prl-wrap .prl-timeline-dot {
+    display: block !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    background: var(--green) !important;
+    border: 2px solid var(--green-mid) !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+    margin-top: 4px !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  .prl-wrap .prl-timeline-content { flex: 1 !important; min-width: 0 !important; }
+  .prl-wrap .prl-timeline-label { font-family: 'Inter', sans-serif !important; font-size: 12px !important; font-weight: 700 !important; color: var(--green) !important; margin-bottom: 4px !important; display: block !important; }
+  .prl-wrap .prl-timeline-text { font-size: 14px !important; color: var(--text-light) !important; line-height: 1.6 !important; margin: 0 !important; }
+
+  /* ── STICKY BOTTOM CTA ── */
+  .prl-wrap .prl-sticky-cta {
+    position: fixed !important; bottom: 14px !important; left: 50% !important; transform: translateX(-50%) translateY(120px) !important;
+    width: calc(100% - 28px) !important; max-width: 560px !important;
+    background: var(--green-dark) !important;
+    padding: 10px 16px !important;
+    border-radius: 14px !important;
+    z-index: 200 !important;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.14) !important;
+    transition: transform 0.38s cubic-bezier(0.4,0,0.2,1) !important;
+  }
+  .prl-wrap .prl-sticky-cta.prl-visible { transform: translateX(-50%) translateY(0) !important; }
+  .prl-wrap .prl-sticky-cta-inner { display: flex !important; align-items: center !important; gap: 12px !important; justify-content: space-between !important; }
+  .prl-wrap .prl-sticky-cta-text { font-family: 'Inter', sans-serif !important; font-size: 10px !important; color: rgba(255,255,255,0.85) !important; line-height: 1.3 !important; }
+  .prl-wrap .prl-sticky-cta-text strong { color: #fff !important; font-size: 11px !important; }
+  .prl-wrap .prl-sticky-cta-price {
+    display: inline-block !important; font-family: 'Inter', sans-serif !important; font-size: 13px !important; font-weight: 800 !important;
+    color: var(--gold-light) !important; line-height: 1 !important; margin-top: 1px !important;
+  }
+  .prl-wrap .prl-sticky-cta-price-label { font-size: 9px !important; font-weight: 500 !important; color: rgba(255,255,255,0.6) !important; display: block !important; margin-top: 1px !important; }
+  .prl-wrap .prl-sticky-cta-btn {
+    display: inline-block !important; background: var(--gold) !important; color: #1A1A1A !important;
+    font-family: 'Inter', sans-serif !important; font-size: 12px !important; font-weight: 800 !important;
+    padding: 7px 13px !important; border-radius: 6px !important; text-decoration: none !important;
+    white-space: nowrap !important; flex-shrink: 0 !important; letter-spacing: 0.01em !important;
+    box-shadow: 0 2px 8px rgba(212,160,23,0.35) !important;
+    transition: background 0.2s, transform 0.15s !important;
+    border: 1.5px solid rgba(255,255,255,0.2) !important;
+  }
+  .prl-wrap .prl-sticky-cta-btn:hover { background: var(--gold-light) !important; transform: scale(1.03) !important; }
+
+  /* ── FOOTER DISCLAIMERS ── */
+  .prl-wrap .prl-footer-disclaimers { background: var(--card-bg) !important; border-top: 1px solid var(--border) !important; padding: 28px 20px 40px !important; font-family: 'Inter', sans-serif !important; font-size: 10px !important; color: var(--text-muted) !important; line-height: 1.6 !important; text-align: center !important; }
+  .prl-wrap .prl-footer-disclaimers p { margin-bottom: 8px !important; }
+  .prl-wrap .prl-footer-disclaimers p:last-child { margin-bottom: 0 !important; }
+
+  /* ── IMAGE LIGHTBOX ── */
+  #prl-lb-overlay {
+    display: none !important;
+    position: fixed !important; inset: 0 !important;
+    background: rgba(0,0,0,0.88) !important;
+    z-index: 9999 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px !important;
+  }
+  #prl-lb-overlay.prl-active { display: flex !important; }
+  #prl-lb-overlay img {
+    max-width: 100% !important; max-height: 90vh !important;
+    border-radius: 6px !important;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5) !important;
+    cursor: zoom-out !important;
+    object-fit: contain !important;
+  }
+
+  /* ── PRINT ── */
+  @media print { .prl-wrap .prl-sticky-cta { display: none !important; } }
+</style>
+
+<!-- ── Theme chrome suppression via JS (belt-and-suspenders) ── -->
+<script>
+  (function() {
+    /* Hide shipping bar, header, and footer by their Shopify section IDs */
+    var hideIds = [
+      'shopify-section-sections--26199536337195__shipping_bar_4LRaz',
+      'shopify-section-sections--26199536337195__header',
+      'shopify-section-sections--26199536304427__footer'
+    ];
+    /* Also hide by class patterns */
+    var hideClasses = ['shipping-bar', 'section-header', 'shopify-section-header-sticky', 'ntg-footer'];
+
+    function hideChrome() {
+      hideIds.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.setProperty('display', 'none', 'important');
+      });
+      hideClasses.forEach(function(cls) {
+        document.querySelectorAll('.' + cls).forEach(function(el) {
+          /* Only hide if it's a shopify-section wrapper (not our own elements) */
+          if (el.id && el.id.indexOf('shopify-section') === 0) {
+            el.style.setProperty('display', 'none', 'important');
+          }
+        });
+      });
+      /* Also hide Just Uno / Klaviyo */
+      var popupSelectors = [
+        '[iswrapper="true"]', '[justunologo]', '#inob',
+        '[id*="justuno"]', '[class*="justuno"]', '#ju-root',
+        '[id*="klaviyo-modal"]', '[class*="kl-private"]'
+      ];
+      popupSelectors.forEach(function(sel) {
+        document.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+      });
+    }
+
+    hideChrome();
+    document.addEventListener('DOMContentLoaded', hideChrome);
+
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        m.addedNodes.forEach(function(node) {
+          if (node.nodeType !== 1) return;
+          /* Hide shipping bar / header if they appear after load */
+          if (node.id && hideIds.indexOf(node.id) > -1) {
+            node.style.setProperty('display', 'none', 'important');
+          }
+          /* Hide Just Uno */
+          var isJU = node.hasAttribute && (
+            node.hasAttribute('iswrapper') ||
+            node.hasAttribute('justunologo') ||
+            (node.id && node.id.toLowerCase().indexOf('justuno') > -1) ||
+            (node.id && node.id === 'inob')
+          );
+          if (isJU) node.remove();
+        });
+      });
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  })();
+</script>
+
+<div class="prl-wrap">
+
+<!-- ═══ MASTHEAD ═══ -->
+<header class="prl-masthead">
+  <div class="prl-masthead-hamburger" aria-label="Menu" role="button">
+    <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect y="0" width="20" height="2" rx="1" fill="white"/>
+      <rect y="6" width="20" height="2" rx="1" fill="white"/>
+      <rect y="12" width="20" height="2" rx="1" fill="white"/>
+    </svg>
+  </div>
+  <div class="prl-masthead-wordmark"><em>DocInsider</em></div>
+  <span class="prl-masthead-subscribe">Subscribe</span>
+</header>
+
+<!-- ═══ ARTICLE ═══ -->
+<article class="prl-article">
+
+  <!-- ── CATEGORY LABEL ── -->
+  <span class="prl-category-label">Family</span>
+
+  <!-- ── HEADLINE ── -->
+  <h1 class="prl-headline">I Lost Three Women I Loved to the Same Disease. So I Became a Pharmacist and Spent 10&nbsp;Years Looking for Something That Could Have Saved&nbsp;Them.</h1>
+
+  <!-- ── AUTHOR BLOCK ── -->
+  <div class="prl-author-block">
+    <img
+      class="prl-author-avatar"
+      src="data:image/webp;base64,UklGRuIeAABXRUJQVlA4INYeAAAQfQCdASrIAMgAPjEWiEMiISET+e9kIAMEsrUbqmaGJXRf93XlDcl97vb+4vmnPff9T19bg/zVeah6kfNL6rz0T/1V65mvxP1nhT5Z/mf7/xy+vfMr+c/ljIkzneeOWLgRYl8fHiwet+wX5QH+t5P/2T/g+wX+avY/9H1C7rxmwdQjbuixQdd91aIrTtqeGTdQDVjk2qRJGTwGUCTw6jXkfmoDFeauwAvuKiPI7Nf6eXIM9+pjT32Glm1I+u8DYLcDpZ79VofCs6SbBBbO1UAki0h0L2Yu4eGO+2zIQAjLOonadk63xx3BoGs8GdkEYKrkoT8A3lzmOgU4BGl4UKazQ7FR1S2J4g6QrDxLUqm98WGbsNU6yVqHw+TFQD/eW+crW2/hOr1VTsoyYLwAX3gnRUVo+cMpTra40E1yBOX4E4egzKMeixYadwRaDYlhwL5zI2z2MjVYETRus0KjI41l+1A4JjVe3vuTu3LcohFSblOG3DvaVfD1tKtmMS8D9qb7FP+fAxRILreU3m12e6VWS8CRgiJN2cGBJ/J/JlNCFaR5dmQUiI+VOrjhuuh+Ju9rthwoki9RDzanjEdiwsP1cA75BTpLl0u4/L+R9ab1yEhRp3IE+17mbSBMpWeJp8xCczIBl3ExdluizlitcbFUGbklyceMUnuwhB1bd1Z2UZgFjimg3ie5Wl7Ck83sIA249kzng7bhxEwrxPF0wBvNrL2fURT6QPRNXwp+LV/XLj+HYjO55MEufXW/bU3owuF1rcAQFK64tOt+1U1JkX28F/GPrb6BQxnGezw3JA+OKMZZZ1Zt85UZtWFzYK9Gxqmigo2B9WeoBvG5JiKwxFK8dbGtNTth1ba5CNlQgVtjiKbj5OCZeCGFAaFwGjgnjNi6Dy6FIpdlDAXvAoPgcqR52APrqTlwoNemJ44ofnPpT1j68BPkMfzZzCjkJ70DobswVjutPug9fuEXVPkGZo6n1QnE8f+BNy7/wuqlqX/kVsP8fWYyLMIE2cj1aWO6IzD6btQIwNkHTwZCHmnt1DOuFa+exBSJ2xtc1n0Ez30e6dZDdBAohBCvU14zFNIf84mrUjbKyPpsfaqIYyiO9NU28r9jm/B+ZwA7xLoYpjHtm+Zg/oy41cw/t5Z0EHm3mAPh4CCPaLVoF4bvaLMFZVWDNOjZ0AY9063oRe6Fh0RXKWRbz2ODEYbN7IMyud0G6u6wIyHql8mZplPpPgkREkat17yn6qYQLyfeL50NvA65JsDOq+gR74jGupUTttjbs7sh6uTKbdx0wesHdBbDBSL+eja+Qw2yjhQbYwACrHF0wGp/BI8z/PmbHu7B14KXKzvAAP7/akncTJf/zxd9xF/u89UkvuyOBLZyi5ZPo0mUk8v+a/amn6NAjC2WvmeN2c+QjAKSGiIl8iwHN7SuNHSaf1wpKEUtsHNMPFP+fXfHVN9YRR3kALgRF9SI8Xn+uHG4UcPvqVmrvtOaNuuVKi9KPzCKnVa+NvHQmcQiKOFkGL7FFbo3EamxiebrLrEOOir3RzseztIy4Kwfx/+vtJkqJHkwMbNV3ZRk0xGX2c2o2NGKx+TNcGD1JrFeHLb0eW9e1TxStovxRyNr5T88JjoElLz3YISXoZOX/4IHx5rHwugT/74d0o8vMIsh01EDJwK6FGuqwt4pqKgEpCk3Oe/q3x0EDIBHHgAA"
+      alt="Dr. Chris Jackson, PharmD"
+    />
+    <div class="prl-author-info">
+      <div class="prl-author-name">Dr. Chris Jackson, PharmD</div>
+      <div class="prl-author-title">Pharmacist &amp; Former Army Combat Medic</div>
+    </div>
+    <div class="prl-byline-meta">Published<br/>February 2026<br/>7-min read</div>
+  </div>
+
+  <!-- ── SOCIAL SHARE BAR ── -->
+  <div class="prl-share-bar">
+    <span class="prl-share-label">Share:</span>
+    <div class="prl-share-icons">
+      <span class="prl-share-btn prl-facebook" title="Share on Facebook" role="img" aria-label="Share on Facebook">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </span>
+      <span class="prl-share-btn prl-twitter" title="Share on X" role="img" aria-label="Share on X">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </span>
+      <span class="prl-share-btn prl-pinterest" title="Share on Pinterest" role="img" aria-label="Share on Pinterest">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+      </span>
+      <span class="prl-share-btn prl-email" title="Share via Email" role="img" aria-label="Share via Email">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </span>
+      <span class="prl-share-btn prl-link" title="Copy link" role="img" aria-label="Copy link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- ── IMAGE 1: Dr. Chris Hero Portrait ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/58182c55-9a57-4994-a568-fa8849f55192"
+      alt="Dr. Chris Jackson, PharmD, Pharmacist and founder of BetterLungs®"
+      loading="eager"
+    />
+  </div>
+
+  <div class="prl-divider"></div>
+
+  <!-- ═══ SECTION 1: THE EMOTIONAL HOOK ═══ -->
+  <p>I was seven years old the first time I watched someone I loved struggle to breathe.</p>
+
+  <p>My grandma Shugy (her real name was Charlotte, but to me she was just Shugy) had a tube running into her nose and a cough that sounded like it came from somewhere deep and broken.</p>
+
+  <p>I didn't know what emphysema was. I just knew she always smelled like smoke, always had butterscotch candies in her purse, and always seemed tired.</p>
+
+  <p><strong>And then one morning, she was gone.</strong></p>
+
+  <p>I didn't get to say goodbye. I was too young to understand what had happened. All I knew was that the woman who held me on her lap every Sunday was never coming back.</p>
+
+  <p>I thought it was a one-time tragedy. Something that just happened to our family.</p>
+
+  <p><strong>I was wrong.</strong></p>
+
+  <div class="prl-divider"></div>
+
+  <!-- ── IMAGE 2: Grandma Shugy ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/5df22432-8c44-4d5a-8cff-42a9c86f651e"
+      alt="Family photo, Grandma Shugy"
+      loading="lazy"
+    />
+  </div>
+
+  <p><strong>Then I lost my Aunt Theresa.</strong></p>
+
+  <p>Same cause. Decades of cigarettes. A chronic cough that turned into chronic bronchitis, and lungs that slowly gave up.</p>
+
+  <p>I was older this time. Old enough to notice the pattern. Old enough to be angry.</p>
+
+  <!-- ── IMAGE 3: Aunt Theresa ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/e223925d-5c03-4174-9943-035bec856eea"
+      alt="Family photo, Aunt Theresa"
+      loading="lazy"
+    />
+  </div>
+
+  <p><strong>Then I lost my Aunt Deb.</strong></p>
+
+  <p>Emphysema. Then a stroke. The same slow, suffocating decline I'd already watched twice.</p>
+
+  <!-- ── IMAGE 4: Aunt Deb ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/62102243-44ad-48fe-a269-7bb9af4841b6"
+      alt="Family photo, Aunt Deb"
+      loading="lazy"
+    />
+  </div>
+
+  <p>Three women. Three funerals. Three times standing in a room full of people who didn't know what to say.</p>
+
+  <p><strong>Same cause every single time.</strong></p>
+
+  <!-- ── CTA 1 ── -->
+  <div class="prl-cta-wrap">
+    <a href="{{ product_url }}" class="prl-cta-btn">See What Dr.&nbsp;Chris Discovered After a Decade of Research&nbsp;→</a>
+    <div class="prl-cta-trust">
+      <span class="prl-trust-pill">🛡️ 365-Day Guarantee</span>
+      <span class="prl-trust-pill">🚚 Free Shipping Over $50</span>
+    </div>
+  </div>
+
+  <div class="prl-divider-full"></div>
+
+  <!-- ═══ SECTION 2: THE DECISION ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">01</span>
+    <span class="prl-section-label-text">The Decision</span>
+  </div>
+
+  <p><strong>After Aunt Deb's funeral, something shifted.</strong></p>
+
+  <p>I was already in pharmacy school. But now I had a reason that went beyond the textbook.</p>
+
+  <p>I wasn't going to stand behind a counter and staple bags. I was going to figure out <em>why this kept happening</em>, and what could actually be done about it.</p>
+
+  <p><strong>I became a pharmacist because three women I loved couldn't breathe.</strong></p>
+
+  <p>For the next decade, I worked directly with smokers and vapers. I helped people quit. Guided them through relapses. Celebrated the ones who stuck with it.</p>
+
+  <p>But here's the thing nobody warned me about, the thing I kept seeing over and over again:</p>
+
+  <div class="prl-pull-quote">People would quit smoking… and still couldn't breathe.</div>
+
+  <div class="prl-divider"></div>
+
+  <!-- ═══ SECTION 3: THE UNCOMFORTABLE TRUTH ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">02</span>
+    <span class="prl-section-label-text">The Uncomfortable Truth</span>
+  </div>
+
+  <p>Let me be blunt about something most people don't want to hear.</p>
+
+  <p><strong>Quitting is only half the battle.</strong></p>
+
+  <p>Your lungs don't just spring back because you threw out your last pack. After years, sometimes decades, of filtering tar, chemicals, and toxins, the damage sits there.</p>
+
+  <p>The mucus is still trapped. The tiny cleaning hairs in your airways (called cilia) are still flattened. The inflammation is still simmering.</p>
+
+  <p><strong>That's why you still:</strong></p>
+
+  <div class="prl-symptom-box">
+    <div class="prl-symptom-item"><span class="prl-symptom-check">✔</span><span>Wake up every morning with that wet, rattling cough.</span></div>
+    <div class="prl-symptom-item"><span class="prl-symptom-check">✔</span><span>Get winded walking up a flight of stairs.</span></div>
+    <div class="prl-symptom-item"><span class="prl-symptom-check">✔</span><span>Feel a tightness in your chest that never fully goes away.</span></div>
+    <div class="prl-symptom-item"><span class="prl-symptom-check">✔</span><span>Lie in bed wondering if your lungs will ever feel normal again.</span></div>
+  </div>
+
+  <p>It's not in your head. It's not "just getting older."</p>
+
+  <p><strong>Your lungs are still buried under years of damage, with no support to recover.</strong></p>
+
+  <div class="prl-divider"></div>
+
+  <!-- ═══ SECTION 4: WHY NOTHING ELSE HAS WORKED ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">03</span>
+    <span class="prl-section-label-text">Why Nothing Else Has Worked</span>
+  </div>
+
+  <p>I spent years watching my patients try everything.</p>
+
+  <p>Over-the-counter expectorants that masked the cough for a few hours and did nothing about the underlying buildup.</p>
+
+  <p>Supplements packed with 15 different ingredients at doses too low to matter, designed by marketing teams and not pharmacists.</p>
+
+  <p>Breathing exercises and steam inhalation that felt nice in the moment but didn't move the needle.</p>
+
+  <p>And the most common advice of all, the one I got so sick of hearing that it's practically burned into my brain:</p>
+
+  <div class="prl-pull-quote">"Just give it time."</div>
+
+  <p>Time. That's what they told my grandma. That's what they told my aunts.</p>
+
+  <p>I watched three people run out of time.</p>
+
+  <p><strong>I was done waiting.</strong></p>
+
+  <!-- ── CTA 2 ── -->
+  <div class="prl-cta-wrap">
+    <a href="{{ product_url }}" class="prl-cta-btn">See the Research That Changed Everything&nbsp;→</a>
+    <div class="prl-cta-trust">
+      <span class="prl-trust-pill">💊 Pharmacist Formulated</span>
+      <span class="prl-trust-pill">🔬 Clinically Studied</span>
+      <span class="prl-trust-pill">🇺🇸 Made in USA</span>
+    </div>
+  </div>
+
+  <div class="prl-divider-full"></div>
+
+  <!-- ═══ SECTION 5: THE DISCOVERY ═══ -->
+  <!-- STICKY CTA TRIGGER POINT — bar appears after user scrolls past this -->
+  <div id="prl-sticky-trigger"></div>
+
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">04</span>
+    <span class="prl-section-label-text">What Nobody's Talking About</span>
+  </div>
+
+  <p>So I did what I was trained to do. I went back to the research.</p>
+
+  <p>Not the headlines. Not the wellness blogs. The actual peer-reviewed literature on respiratory support.</p>
+
+  <p>And I found something that kept showing up, a plant that had been used for lung conditions since ancient Greece, but had been largely overlooked by modern medicine.</p>
+
+  <p><strong>Mullein leaf.</strong></p>
+
+  <p>Specifically, the saponins in mullein. They do two critical things most remedies don't:</p>
+
+  <p><strong>First</strong>, they decrease mucus viscosity, making the thick, sticky buildup in your airways thinner and easier to move.</p>
+
+  <p><strong>Second</strong>, they increase cilia activity, waking up those tiny cleaning hairs that have been flattened by years of smoke, so your lungs can actually start expelling what's been trapped.</p>
+
+  <p>Most lung supplements throw 12 ingredients at the wall and hope something sticks. But the research kept pointing me back to this one plant, and to one companion ingredient that made it work even harder:</p>
+
+  <p><strong>Chlorophyll.</strong></p>
+
+  <p>Not the trendy wellness drink version. The real thing, shown to support oxygenation at the cellular level and deliver antioxidant properties that help combat the oxidative damage smoking leaves behind.</p>
+
+  <p>Two ingredients. Working on two different pathways. One clears the wreckage. The other helps rebuild.</p>
+
+  <p><strong>This wasn't complicated. It was overlooked.</strong></p>
+
+  <!-- ── IMAGE: Mullein + Chlorophyll ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/be3fc2ac-e8f9-4587-82b6-8d61672b847e"
+      alt="Mullein plant and chlorophyll leaves, the two key ingredients in BetterLungs®"
+      loading="lazy"
+    />
+    <p class="prl-img-caption">Two ingredients. Two pathways. Thousands of years of traditional use, now clinically studied.</p>
+  </div>
+
+  <div class="prl-divider"></div>
+
+  <!-- ═══ SECTION 6: THE PROOF PROBLEM ═══ -->
+  <p>Here's where most supplement companies would stop.</p>
+
+  <p>They'd slap these ingredients in a bottle, write some marketing copy about "ancient herbs," and call it a day.</p>
+
+  <p><strong>I couldn't do that.</strong></p>
+
+  <p>Not after what I'd been through. Not with the faces of Shugy, Theresa, and Deb in my mind every single day.</p>
+
+  <p>I needed to know, not believe, not hope, but truly <em>know</em> that this actually worked.</p>
+
+  <p>So I did something most supplement companies won't do.</p>
+
+  <p>Won't. Not can't. <strong>Won't.</strong></p>
+
+  <div class="prl-divider-full"></div>
+
+  <!-- ═══ SECTION 7: THE CLINICAL STUDY ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">05</span>
+    <span class="prl-section-label-text">The Clinical Study</span>
+  </div>
+
+  <h2 class="prl-section-heading">We Put This Formula Through a Real Clinical Trial. Here's&nbsp;What&nbsp;Happened.</h2>
+
+  <p>We partnered with <strong>Citruslabs</strong>, an independent third-party contract research organization based in Las Vegas, and commissioned a formal clinical trial.</p>
+
+  <p>Not "based on studies." Not "clinically inspired." Not ingredients that were studied individually 30 years ago.</p>
+
+  <p><strong>A randomized, triple-blind, placebo-controlled study on the actual finished product.</strong></p>
+
+  <p>100 participants. 60 days. All of them dealing with mucus buildup, breathlessness, and low energy.</p>
+
+  <p>Triple-blind means nobody knew who got the real formula and who got the placebo. Not the participants. Not the coordinators. <strong>Not even the data analysts.</strong></p>
+
+  <p>This is the gold standard of clinical research. The same methodology used in pharmaceutical drug trials.</p>
+
+  <p><strong>And we applied it to a supplement.</strong></p>
+
+  <p>Because you deserve to know if something works before you spend a dollar on it.</p>
+
+  <!-- ── CTA 3 ── -->
+  <div class="prl-cta-wrap">
+    <a href="{{ product_url }}" class="prl-cta-btn">See the Full Study Results&nbsp;→</a>
+  </div>
+
+  <div class="prl-divider"></div>
+
+  <!-- ═══ SECTION 8: THE RESULTS ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">06</span>
+    <span class="prl-section-label-text">60-Day Results</span>
+  </div>
+
+  <h2 class="prl-section-heading">Here's What Happened After 60&nbsp;Days</h2>
+
+  <!-- ── Clinical Study Infographic ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/019da308-276d-466b-b246-d31af4bd9eaf"
+      alt="BetterLungs® clinical study results, 81% less coughing, 79% deeper breaths, 77% improved lung health"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="prl-result-list">
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>Statistically significant reduction in fatigue</strong> compared to placebo (P&lt;0.05), the gold standard threshold</span></div>
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>8 in 10</strong> participants experienced less frequent coughing</span></div>
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>Nearly 8 in 10</strong> reported being able to take deeper breaths</span></div>
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>Nearly 8 in 10</strong> reported clearer airways</span></div>
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>More than 3 in 4</strong> felt their lung health had improved</span></div>
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>More than 3 in 4</strong> found it easier to clear chest mucus</span></div>
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>More than 3 in 4</strong> experienced less breathlessness during daily activities</span></div>
+    <div class="prl-result-item"><span class="prl-result-check">✅</span><span><strong>More than 3 in 4</strong> reported more calm and relaxed breathing</span></div>
+  </div>
+
+  <!-- ── STAT BOXES ── -->
+  <div class="prl-stat-row">
+    <div class="prl-stat-box">
+      <div class="prl-stat-number">8/10</div>
+      <div class="prl-stat-label">Less Frequent Coughing</div>
+    </div>
+    <div class="prl-stat-box">
+      <div class="prl-stat-number">8/10</div>
+      <div class="prl-stat-label">Deeper Breaths</div>
+    </div>
+    <div class="prl-stat-box">
+      <div class="prl-stat-number">3/4</div>
+      <div class="prl-stat-label">Improved Lung Health</div>
+    </div>
+  </div>
+  <div class="prl-stat-badge">⚡ Statistically Significant Fatigue Reduction vs. Placebo (P&lt;0.05)</div>
+
+  <p><strong>This isn't marketing copy.</strong> This is IRB-approved methodology. Real participants. Measured outcomes. Published by an independent third party.</p>
+
+  <p>We did the work so you don't have to wonder.</p>
+
+  <div class="prl-divider-full"></div>
+
+  <!-- ═══ SECTION 9: TESTIMONIALS ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">07</span>
+    <span class="prl-section-label-text">What Real People Are Saying</span>
+  </div>
+
+  <h2 class="prl-section-heading">The study gave me confidence. But these messages? That's what told me we'd built something that&nbsp;mattered.</h2>
+
+  <div class="prl-testimonial-card">
+    <div class="prl-testimonial-stars">★★★★★</div>
+    <div class="prl-testimonial-title">"I am currently ordering my third bottle."</div>
+    <div class="prl-testimonial-body">"What I notice is that after a couple of days, sometimes even after the first day, it becomes easier for me to catch a deep breath, and it only improves with continued use."</div>
+    <div class="prl-testimonial-meta">
+      <span class="prl-testimonial-author">- R. Parkins, Verified Buyer</span>
+      <span class="prl-verified-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Verified Purchase</span>
+    </div>
+  </div>
+
+  <div class="prl-testimonial-card">
+    <div class="prl-testimonial-stars">★★★★★</div>
+    <div class="prl-testimonial-title">"Pleased with the results."</div>
+    <div class="prl-testimonial-body">"That improvement has helped him sleep better at night and stay more active during the day."</div>
+    <div class="prl-testimonial-meta">
+      <span class="prl-testimonial-author">- Cathy R., Verified Buyer</span>
+      <span class="prl-verified-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Verified Purchase</span>
+    </div>
+  </div>
+
+  <div class="prl-testimonial-card">
+    <div class="prl-testimonial-stars">★★★★★</div>
+    <div class="prl-testimonial-title">"This stuff is simply AMAZING!"</div>
+    <div class="prl-testimonial-body">"I noticed a difference the very first time I took two droppers full of this stuff. I cannot recommend it enough, and I will be a customer for life!"</div>
+    <div class="prl-testimonial-meta">
+      <span class="prl-testimonial-author">- Shawn S., Verified Buyer</span>
+      <span class="prl-verified-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Verified Purchase</span>
+    </div>
+  </div>
+
+  <div class="prl-testimonial-card">
+    <div class="prl-testimonial-stars">★★★★★</div>
+    <div class="prl-testimonial-title">"Absolutely love this product!"</div>
+    <div class="prl-testimonial-body">"It has changed my life! I can now walk up two flights of steps without losing my breath."</div>
+    <div class="prl-testimonial-meta">
+      <span class="prl-testimonial-author">- Dorothy C., Verified Buyer</span>
+      <span class="prl-verified-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Verified Purchase</span>
+    </div>
+  </div>
+
+  <!-- ── UGC Collage ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/151d34b1-388a-446e-990f-d78e1b1ddb26"
+      alt="Real BetterLungs® customers sharing their results"
+      loading="lazy"
+    />
+    <p class="prl-img-caption">Real customers. Real results. 836,000+ people trust BetterLungs® for daily respiratory support.</p>
+  </div>
+
+  <!-- ── CTA 4 ── -->
+  <div class="prl-cta-wrap">
+    <a href="{{ product_url }}" class="prl-cta-btn">Try BetterLungs® Risk-Free for 365&nbsp;Days&nbsp;→</a>
+    <div class="prl-cta-trust">
+      <span class="prl-trust-pill">🚚 Free Shipping Over $50</span>
+      <span class="prl-trust-pill">↩️ Cancel Anytime</span>
+    </div>
+  </div>
+
+  <div class="prl-divider-full"></div>
+
+  <!-- ═══ SECTION 10: THE FORMULA ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">08</span>
+    <span class="prl-section-label-text">The Formula</span>
+  </div>
+
+  <p>That formula is called <strong>BetterLungs®.</strong></p>
+
+  <p>It's a mullein and chlorophyll tincture, liquid not pills, designed for faster absorption and higher bioavailability. Trusted by over 836,000 customers and stocked at major retailers nationwide.</p>
+
+  <p>Two ingredients. Two pathways. One purpose: <strong>give your lungs what they need to start recovering.</strong></p>
+
+  <!-- ── Product Hero Shot ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/d25e7dd5-c2f9-4235-bec1-339f7f42be52"
+      alt="BetterLungs® Mullein + Chlorophyll tincture bottle"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- ── Social Proof Bar ── -->
+  <div class="prl-social-proof-bar">
+    <div class="prl-big-num">836,000+</div>
+    <div class="prl-big-label">Customers Trust BetterLungs® for Daily Respiratory Support</div>
+  </div>
+
+  <!-- ── 3-STEP MODULE ── -->
+  <div class="prl-step-grid">
+    <div class="prl-step-card">
+      <div class="prl-step-num">1, Clear</div>
+      <div class="prl-step-title">Clear</div>
+      <div class="prl-step-body">Mullein's saponins decrease mucus viscosity and increase cilia activity, helping your body expel the buildup trapped in your airways.</div>
+      <div class="prl-step-stat">3 in 4, easier mucus clearance</div>
+    </div>
+    <div class="prl-step-card">
+      <div class="prl-step-num">2, Soothe</div>
+      <div class="prl-step-title">Soothe</div>
+      <div class="prl-step-body">Natural anti-inflammatory properties calm irritated lung tissue and support comfortable breathing.</div>
+      <div class="prl-step-stat">3 in 4, calmer breathing</div>
+    </div>
+    <div class="prl-step-card">
+      <div class="prl-step-num">3, Breathe</div>
+      <div class="prl-step-title">Breathe</div>
+      <div class="prl-step-body">Chlorophyll supports oxygenation while the formula works with your respiratory system's natural recovery process.</div>
+      <div class="prl-step-stat">Nearly 8 in 10, deeper breaths</div>
+    </div>
+  </div>
+
+  <p>No drugs. No steroids. No junk. No 15-ingredient kitchen sink formula.</p>
+
+  <p><strong>Two ingredients. Clinically studied. Pharmacist formulated.</strong></p>
+
+  <div class="prl-divider"></div>
+
+  <!-- ═══ SECTION 11: HOW TO USE ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">09</span>
+    <span class="prl-section-label-text">How to Use</span>
+  </div>
+
+  <h2 class="prl-section-heading">Every morning, with your first&nbsp;meal:</h2>
+
+  <div class="prl-usage-steps">
+    <div class="prl-usage-step">
+      <div class="prl-usage-step-num">1</div>
+      <div class="prl-usage-step-text">Shake the bottle well.</div>
+    </div>
+    <div class="prl-usage-step">
+      <div class="prl-usage-step-num">2</div>
+      <div class="prl-usage-step-text">Fill the dropper completely, <strong>twice</strong> (2 full droppers).</div>
+    </div>
+    <div class="prl-usage-step">
+      <div class="prl-usage-step-num">3</div>
+      <div class="prl-usage-step-text">Drop into 8 ounces of water or juice. Done in 30&nbsp;seconds.</div>
+    </div>
+  </div>
+
+  <p><strong>For best results, use consistently for 60+ days.</strong> That's the duration of our clinical study that led to the results above.</p>
+
+  <!-- ── Product lifestyle shot ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/b4641b27-c4db-442c-889f-7d2033c0dff8"
+      alt="BetterLungs® dropper being used in morning routine"
+      loading="lazy"
+    />
+    <p class="prl-img-caption">Two full droppers in water or juice, done in 30 seconds.</p>
+  </div>
+
+  <!-- ── TIMELINE ── -->
+  <div class="prl-timeline">
+    <div class="prl-timeline-item">
+      <div class="prl-timeline-dot"></div>
+      <div class="prl-timeline-content">
+        <div class="prl-timeline-label">Weeks 1-2</div>
+        <div class="prl-timeline-text">Most people notice their first changes within the first 1-2 weeks: a lighter feeling in the chest, a slightly easier morning.</div>
+      </div>
+    </div>
+    <div class="prl-timeline-item">
+      <div class="prl-timeline-dot"></div>
+      <div class="prl-timeline-content">
+        <div class="prl-timeline-label">Weeks 4-6</div>
+        <div class="prl-timeline-text">The cough starts to quiet down. The breathing deepens. The energy shifts.</div>
+      </div>
+    </div>
+    <div class="prl-timeline-item">
+      <div class="prl-timeline-dot"></div>
+      <div class="prl-timeline-content">
+        <div class="prl-timeline-label">Day 60</div>
+        <div class="prl-timeline-text">By day 60, you'll know.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA 5 ── -->
+  <div class="prl-cta-wrap">
+    <a href="{{ product_url }}" class="prl-cta-btn">Start Your 60-Day Lung Reset&nbsp;→</a>
+    <p class="prl-cta-sub" style="font-size:9px !important; letter-spacing:0.01em !important;">💰 Subscribe &amp; Save 20% &nbsp;·&nbsp; 📦 Ships Every 90 Days &nbsp;·&nbsp; ↩️ Cancel Anytime</p>
+  </div>
+
+  <div class="prl-divider-full"></div>
+
+  <!-- ═══ SECTION 12: GUARANTEE ═══ -->
+  <div class="prl-guarantee-box">
+    <div class="prl-guarantee-number">365</div>
+    <div class="prl-guarantee-label">Day Money-Back Guarantee</div>
+    <p class="prl-guarantee-body">If you don't feel a difference, if your mornings aren't better, if the cough doesn't quiet down, if you don't notice your breathing getting easier, we'll refund your most recent order. No questions. No hassle. We can offer this because we have the clinical data to back&nbsp;it&nbsp;up.</p>
+  </div>
+
+  <div class="prl-divider"></div>
+
+  <!-- ═══ SECTION 13: FAQ ═══ -->
+  <div class="prl-section-label-wrap">
+    <span class="prl-section-badge">10</span>
+    <span class="prl-section-label-text">Frequently Asked Questions</span>
+  </div>
+
+  <div class="prl-faq-item">
+    <details>
+      <summary>Can I take this if I'm still smoking?</summary>
+      <div class="prl-faq-a">Yes. While quitting is always the goal, this formula can support your lungs even while you're still working on it. Many of our customers use it as part of their journey to quit, not&nbsp;after.</div>
+    </details>
+  </div>
+
+  <div class="prl-faq-item">
+    <details>
+      <summary>How long until I notice results?</summary>
+      <div class="prl-faq-a">In our clinical study, participants showed statistically significant improvements in fatigue by Day 20. By Day 60, 8 in 10 reported less frequent coughing and nearly 8 in 10 could take deeper breaths. We recommend consistent daily use for at least 60&nbsp;days.</div>
+    </details>
+  </div>
+
+  <div class="prl-faq-item">
+    <details>
+      <summary>Who conducted the clinical study?</summary>
+      <div class="prl-faq-a">Citruslabs, an independent contract research organization based in Las Vegas, NV. They specialize in randomized, placebo-controlled clinical trials. Unlike brands that cite ingredient-level studies, we tested our actual finished product using gold-standard methodology.</div>
+    </details>
+  </div>
+
+  <div class="prl-faq-item">
+    <details>
+      <summary>What makes this different from other lung supplements?</summary>
+      <div class="prl-faq-a">Two things: simplicity and proof. Most competitors use 10-15 ingredients at low doses with zero clinical testing. We use two ingredients at effective doses, and put the final product through a 60-day triple-blind, placebo-controlled clinical trial.</div>
+    </details>
+  </div>
+
+  <div class="prl-faq-item">
+    <details>
+      <summary>Is it safe with my medications?</summary>
+      <div class="prl-faq-a">BetterLungs® is made with natural ingredients, but if you're on prescription medications, especially for respiratory conditions, we always recommend consulting your doctor or pharmacist first. Dr. Chris Jackson, the formulator, is available to answer questions at <a href="mailto:hello@betterbrandhealth.com">hello@betterbrandhealth.com</a>.</div>
+    </details>
+  </div>
+
+  <div class="prl-faq-item">
+    <details>
+      <summary>What's the return policy?</summary>
+      <div class="prl-faq-a">You're covered by a full 365-day money-back guarantee. Use it for as long as you need. If you don't feel a real difference in your breathing, contact our team for a complete refund on your most recent order, no questions, no hassle.</div>
+    </details>
+  </div>
+
+  <div class="prl-divider-full"></div>
+
+  <!-- ═══ SECTION 14: THE CLOSE ═══ -->
+  <p>I couldn't save my grandma Shugy.</p>
+
+  <p>I couldn't save Aunt Theresa or Aunt Deb.</p>
+
+  <p>But I spent ten years making sure their deaths meant something.</p>
+
+  <p><strong>Every bottle of this formula carries their names with it.</strong> Every person who tells me they can breathe again, every message from a dad who can play with his grandkids, every email from an ex-smoker whose mornings are finally quiet, that's for them.</p>
+
+  <p>Your lungs have carried you this far. Through every cigarette, every vape hit, every year of damage.</p>
+
+  <p>They're not done. They're waiting for support.</p>
+
+  <div class="prl-pull-quote">It's time.</div>
+
+  <!-- ── Final Product Shot ── -->
+  <div class="prl-img-block">
+    <img
+      src="https://assets.replocdn.com/projects/6bf67db6-09d6-4705-bab2-a1af9067f5a3/f83438e9-22b8-465c-993f-514cf9123463"
+      alt="BetterLungs® Mullein + Chlorophyll, the complete formula"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- ── FINAL CTA ── -->
+  <div class="prl-cta-wrap">
+    <a href="{{ product_url }}" class="prl-cta-btn" style="font-size:14px !important; padding:14px 28px !important;">Try BetterLungs® Risk-Free&nbsp;→</a>
+    <p class="prl-cta-sub" style="font-size:9px !important; letter-spacing:0.01em !important;">🚚 Same-Day Shipping &nbsp;·&nbsp; 🛡️ 365-Day Guarantee &nbsp;·&nbsp; 🔬 Clinically Studied &nbsp;·&nbsp; 👨‍⚕️ Pharmacist Formulated &nbsp;·&nbsp; ✅ Third-Party Tested</p>
+  </div>
+
+</article>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="prl-footer-disclaimers">
+  <p><strong>ADVERTISING DISCLOSURE</strong></p>
+  <p>This page is an advertorial, meaning it is a paid advertisement presented in the format of an editorial article. It is produced and sponsored by Betterbrand, the manufacturer of BetterLungs®. The content on this page, including the personal narrative, clinical study references, and product claims, was written for marketing and promotional purposes. It is not an independent news article, journalistic investigation, or editorial content produced by DocInsider or any third-party media organization. The DocInsider name and format are used solely for presentation purposes.</p>
+  <p>The story of Dr. Chris Jackson, PharmD is based on real events and experiences as described by the subject. Individual results referenced in testimonials may not be typical. Results will vary based on individual health status, lifestyle, and consistency of use.</p>
+  <p>Clinical study data referenced on this page is derived from a 60-day randomized, triple-blind, placebo-controlled trial conducted by Citruslabs, an independent contract research organization, on 100 participants. Statistically significant improvements in fatigue were observed compared to placebo (P&lt;0.05). Participant-reported outcomes included: 81% less frequent coughing, 79% ability to take deeper breaths, 79% clearer airways, 77% improved lung health, 77% easier mucus clearance, and 77% less breathlessness during daily activities.</p>
+  <p>These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Consult your physician or licensed healthcare provider before beginning any new supplement regimen, particularly if you are pregnant, nursing, taking prescription medications, or have a pre-existing medical condition.</p>
+  <p>© 2026 Betterbrand Health, Inc. All rights reserved. BetterLungs® is a registered trademark of Betterbrand Health, Inc.</p>
+</div>
+
+<!-- ═══ STICKY MOBILE CTA (scroll-triggered) ═══ -->
+<div class="prl-sticky-cta" id="prl-sticky-cta">
+  <div class="prl-sticky-cta-inner">
+    <div class="prl-sticky-cta-text">
+      <strong>BetterLungs®</strong><br/>
+      <span class="prl-sticky-cta-price">$34.95</span>
+      <span class="prl-sticky-cta-price-label">30-day supply · 365-day guarantee</span>
+    </div>
+    <a href="{{ product_url }}" class="prl-sticky-cta-btn">Try Risk-Free →</a>
+  </div>
+</div>
+
+</div><!-- /.prl-wrap -->
+
+<!-- ═══ LIGHTBOX OVERLAY ═══ -->
+<div id="prl-lb-overlay" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <img id="prl-lb-img" src="" alt="" />
+</div>
+
+<script>
+(function() {
+  /* ── Sticky CTA scroll trigger (fires after 25% page scroll) ── */
+  var bar = document.getElementById('prl-sticky-cta');
+  if (bar) {
+    var shown = false;
+    function checkScroll() {
+      var scrolled = window.scrollY || document.documentElement.scrollTop;
+      var docHeight = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight
+      ) - window.innerHeight;
+      var pct = docHeight > 0 ? scrolled / docHeight : 0;
+      if (!shown && pct >= 0.25) {
+        bar.classList.add('prl-visible');
+        shown = true;
+        window.removeEventListener('scroll', checkScroll, { passive: true });
+      }
+    }
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    /* Do NOT call checkScroll() on load — only trigger on actual scroll */
+  }
+
+  /* ── Image lightbox ── */
+  var overlay = document.getElementById('prl-lb-overlay');
+  var lbImg   = document.getElementById('prl-lb-img');
+  if (overlay && lbImg) {
+    document.querySelectorAll('.prl-img-block img').forEach(function(img) {
+      img.addEventListener('click', function() {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        overlay.classList.add('prl-active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    overlay.addEventListener('click', function() {
+      overlay.classList.remove('prl-active');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        overlay.classList.remove('prl-active');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+      }
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Founders Story Pre-lander",
+  "settings": []
+}
+{% endschema %}

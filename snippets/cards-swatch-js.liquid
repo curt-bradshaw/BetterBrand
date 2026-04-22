@@ -1,0 +1,163 @@
+<!-- START cards-swatch-js (SNIPPET)-->
+
+<script>
+  const allSwatchWrappers = document.querySelectorAll('.product-card__grid-item .swatch__color-wrapper, .product-card__grid-item .swatch__size-wrapper, .product-card__grid-item .swatch__standard-wrapper');
+
+  allSwatchWrappers.forEach((wrapper) => {
+    const parentWrapper = wrapper.closest('.product-card__item-swatch-wrapper');
+    const clientWidth = parentWrapper.clientWidth;
+    
+    const leftBtn = wrapper.querySelector('.left-btn');
+    const rightBtn = wrapper.querySelector('.right-btn');
+    const swatchElements = wrapper.querySelector('.swatch-elements-wrapper');
+
+    let currentTranslateX = 0;
+
+    function updateButtonVisibility() {
+      const scrollWidth = swatchElements.scrollWidth;
+      const maxTranslateX = -(scrollWidth - clientWidth);
+      
+      leftBtn.style.display = (currentTranslateX < 0) ? 'block' : 'none';
+      rightBtn.style.display = (currentTranslateX > maxTranslateX) ? 'block' : 'none';
+    }
+
+    updateButtonVisibility();
+
+    function scrollTo(targetTranslateX) {
+      const animationDuration = 300;
+      const startTranslateX = currentTranslateX;
+      const scrollWidth = swatchElements.scrollWidth;
+      const maxTranslateX = -(scrollWidth - clientWidth);
+      targetTranslateX = Math.max(targetTranslateX, (maxTranslateX - 14));
+      targetTranslateX = Math.min(targetTranslateX, 0);
+      const distance = targetTranslateX - startTranslateX;
+      const startTime = performance.now();
+
+      function animateScroll(currentTime) {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / animationDuration, 1);
+
+        currentTranslateX = startTranslateX + distance * easeInOutQuad(progress);
+        swatchElements.style.transform = `translateX(${currentTranslateX}px)`;
+
+        updateButtonVisibility();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateScroll);
+        }
+      }
+
+      requestAnimationFrame(animateScroll);
+    }
+
+    leftBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const scrollAmount = 150; 
+      scrollTo(currentTranslateX + scrollAmount);
+    });
+
+    rightBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const scrollAmount = 150;
+      scrollTo(currentTranslateX - scrollAmount);
+    });
+  });
+
+  function easeInOutQuad(t) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  }
+</script>
+
+
+{% if settings.enable_card_atc %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const productCards = document.querySelectorAll('.product-card__grid-item-fullsize');
+      console.log(productCards);
+  
+      productCards.forEach(function(card) {
+        const colorSwatches = card.querySelectorAll('.swatch-element-color');
+        const sizeSwatches = card.querySelectorAll('.swatch-element-standard');
+        const hiddenInput = card.querySelector('input.variant_option'); 
+  
+        function updateHiddenInput() {
+          const selectedColorSwatch = card.querySelector('.swatch-element-color.selected');
+          const selectedSizeSwatch = card.querySelector('.swatch-element-standard.selected');
+          let newVariantId = null;
+  
+          if (selectedColorSwatch && selectedSizeSwatch) {
+            const selectedColor = selectedColorSwatch.getAttribute('aria-label').replace('Swatch for ', '').trim();
+            const selectedSize = selectedSizeSwatch.querySelector('.swatch-value').textContent.trim();
+  
+            let variantKey = `${selectedColor} / ${selectedSize}`;
+            let matchingVariant = card.querySelector(`input[name="${variantKey}"]`);
+  
+            if (!matchingVariant) {
+              variantKey = `${selectedSize} / ${selectedColor}`;
+              matchingVariant = card.querySelector(`input[name="${variantKey}"]`);
+            }
+  
+            if (matchingVariant) {
+              newVariantId = matchingVariant.getAttribute('data-variant-id');
+            }
+          } else if (selectedColorSwatch) { 
+            const variantInput = selectedColorSwatch.querySelector('input[type="radio"]');
+            if (variantInput) {
+              newVariantId = variantInput.value;
+            }
+          } else if (selectedSizeSwatch) { 
+            const variantInput = selectedSizeSwatch.querySelector('input[type="radio"]');
+            if (variantInput) {
+              newVariantId = variantInput.value;
+            }
+          }
+  
+          if (newVariantId) {
+            hiddenInput.value = newVariantId;
+          }
+        }
+  
+        function manageSelection(swatches) {
+          swatches.forEach(function(swatch) {
+            swatch.addEventListener('click', function() {
+              if (!swatch.classList.contains('selected')) {
+                swatches.forEach(function(s) {
+                  s.classList.remove('selected');
+                });
+                swatch.classList.add('selected');
+  
+                const variantInput = swatch.querySelector('input[type="radio"]');
+                if (variantInput) {
+                  variantInput.checked = true;
+                }
+  
+                updateHiddenInput();
+              }
+            });
+          });
+        }
+  
+        manageSelection(colorSwatches);
+        manageSelection(sizeSwatches);
+  
+        if (colorSwatches.length > 0 && !card.querySelector('.swatch-element-color.selected')) {
+          colorSwatches[0].classList.add('selected');
+          const firstColorInput = colorSwatches[0].querySelector('input[type="radio"]');
+          if (firstColorInput) {
+            firstColorInput.checked = true;
+          }
+        }
+  
+        if (sizeSwatches.length > 0 && !card.querySelector('.swatch-element-standard.selected')) {
+          sizeSwatches[0].classList.add('selected');
+          const firstSizeInput = sizeSwatches[0].querySelector('input[type="radio"]');
+          if (firstSizeInput) {
+            firstSizeInput.checked = true;
+          }
+        }
+  
+        updateHiddenInput();
+      });
+    });
+  </script>  
+{% endif %}

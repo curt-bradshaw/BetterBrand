@@ -1,0 +1,216 @@
+<!-- START better-benefits.liquid -->
+
+<div class="benefits-section">
+    <div class="bs-title-container">
+      <h2 class="bs-heading">{{ section.settings.heading }}</h2>
+      <p class="bs-subheading">{{ section.settings.subheading }}</p>
+    </div>
+    <div class="bs-grid">
+      {% for block in section.blocks %}
+        <div class="bs-item">
+          <div class="bs-icon-wrapper">
+            <img src="{{ block.settings.icon | img_url: '200x' }}" alt="{{ block.settings.title }}">
+          </div>
+          <div class="bs-content">
+            <h3 class="bs-title">{{ block.settings.title }}</h3>
+            <p class="benefits-text">{{ block.settings.text }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+  {% style %}
+  .ntg-wrapper p {
+    margin: 0 0 35px;
+  }
+
+  #shopify-section-{{ section.id }} .benefits-section {
+    text-align: center;
+    max-width: 1220px;
+    margin: {{ section.settings.margin_top }}px auto 80px;
+    padding: 0 20px;
+  }
+  
+  .bs-heading {
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-family: var(--bookmaniaFont);
+    color: #252525;
+    line-height: 1.2;
+  }
+  
+  .bs-subheading {
+    font-size: 20px;
+    color: #252525;
+  }
+
+  .bs-title-container {
+    margin-bottom: 35px;
+  }
+  
+  .bs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 52px;
+  }
+  
+  .bs-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: #F0FFE95C;
+    border-radius: 16px;
+    padding: 15px;
+  }
+
+  .bs-icon-wrapper {
+    flex-shrink: 0;
+  }
+  
+  .bs-icon-wrapper img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .bs-title {
+    color: #252525;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 22px;
+  }
+  
+  .benefits-text {
+    font-size: 18px;
+    color: #252525;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 1019px) {
+    .benefits-section {
+      margin: 0px auto 50px;
+    }
+    .bs-grid {
+      grid-template-columns: repeat(2, 256px);
+      row-gap: 35px;
+      column-gap: 20px;
+      justify-content: center;
+    }
+    .bs-heading {
+      font-size: 28px;
+    }
+    .bs-subheading {
+      font-size: 18px;
+    }
+    .bs-title {
+      font-size: 20px;
+    }
+    .benefits-text {
+      font-size: 16px;
+    }
+    .ntg-wrapper p {
+      margin: 0;
+    }
+    .bs-title-container {
+      margin-bottom: 35px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .benefits-section {
+      margin: {{ section.settings.mobile_margin_top }}px auto 50px;
+    }
+    .bs-grid {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 20px;
+    }
+    .bs-item {
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+    }
+    .bs-content {
+      text-align: left;
+    }
+    .bs-title {
+      font-size: 16px;
+    }
+    .bs-heading {
+      text-align: center;
+      font-size: 24px;
+    }
+    .bs-subheading {
+      text-align: center;
+      font-size: 18px;
+    }
+    .benefits-text {
+      font-size: 14px;
+    }
+  }
+  {% endstyle %}
+  
+  {% schema %}
+  {
+    "name": "Benefits Grid",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Better From Within"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "Pure Benefits Designed For Everyday Wellness"
+      },
+      {
+        "type": "number",
+        "id": "margin_top",
+        "label": "Margin Top",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "mobile_margin_top",
+        "label": "Mobile Margin Top",
+        "default": 0
+      },
+    ],
+    "blocks": [
+      {
+        "type": "benefit",
+        "name": "Benefit Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Clean Science"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Description",
+            "default": "Trusted Ingredients For Real Results"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 4,
+    "presets": [
+      {
+        "name": "Benefits Grid"
+      }
+    ]
+  }
+  {% endschema %}
+  

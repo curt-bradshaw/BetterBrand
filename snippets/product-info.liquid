@@ -1,0 +1,17 @@
+{% assign icon = block.settings.product_info_icon %}
+{% assign text = block.settings.product_info_text %}
+{% if item != blank %}
+  {% assign icon = item.product_info_icon %}
+  {% assign text = item.product_info_text %}
+{% endif %}
+
+<div class="product-info">
+  <div class="product-info-item">
+    {% if icon %}
+      <img src="{{ icon | image_url: width: 62 }}" alt="Info Icon">
+    {% endif %}
+    {% if text != blank %}
+      <span>{{ text }}</span>
+    {% endif %}
+  </div>
+</div>

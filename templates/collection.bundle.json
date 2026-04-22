@@ -1,0 +1,249 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+  "sections": {
+    "main": {
+      "type": "collection-template-bundle",
+      "blocks": {
+        "uvp_item_bA4jJX": {
+          "type": "uvp_item",
+          "settings": {
+            "uvp_image": "shopify://shop_images/Avatar_9fd474f8-fb03-46e8-858c-d3c0030e5ddf.png",
+            "uvp_text": "Made in USA" 
+          }
+        },
+        "uvp_item_bLKMFq": {
+          "type": "uvp_item",
+          "settings": {
+            "uvp_image": "shopify://shop_images/fi_16780038.png",
+            "uvp_text": "Third-Party Tested"
+          }
+        },
+        "uvp_item_A6p4Lb": { 
+          "type": "uvp_item",
+          "settings": {
+            "uvp_image": "shopify://shop_images/Avatar_1_33967714-97c1-4875-a56c-7827b10072cb.png",
+            "uvp_text": "GMP Made"
+          }
+        },
+        "uvp_item_3VkhEc": {
+          "type": "uvp_item",
+          "settings": {
+            "uvp_image": "shopify://shop_images/fi_14748972.png",
+            "uvp_text": "Natural Ingredients"
+          }
+        },
+        "buy_box_zfqmaR": {
+          "type": "buy_box",
+          "settings": {
+            "buy_box_title": "Your Bundle",
+            "buy_box_title_color": "#1a7b96",
+            "buy_box_subtitle": "Add more products to save",
+            "buy_box_subtitle_color": "#ffffff",
+            "show_progress_line": true,
+            "progress_bar_color": "#969696",
+            "progress_bar_color_filled": "#3f745d",
+            "enable_tier_1": true,
+            "tier_1_title": "10% Off",
+            "tier_1_type": "quantity",
+            "tier_1_min": 2,
+            "tier_1_discount_value": 10,
+            "enable_tier_2": true,
+            "tier_2_title": "20% Off",
+            "tier_2_type": "quantity",
+            "tier_2_min": 3,
+            "tier_2_discount_value": 20,
+            "enable_tier_3": true,
+            "tier_3_title": "30% Off",
+            "tier_3_type": "quantity",
+            "tier_3_min": 4,
+            "tier_3_discount_value": 30,
+            "enable_tier_4": false,
+            "tier_4_title": "30% Off",
+            "tier_4_type": "quantity",
+            "tier_4_min": 4,
+            "tier_4_discount_value": 30,
+            "first_uvp_text": "Satisfaction Guarantee",
+            "second_uvp_text": "Secure Payments",
+            "footer_type": "Image",
+            "footer_text": "Absolutely love this product! It has changed my life! I can now walk up two flights of steps without losing my breath."
+          }
+        },
+        "collection_nav_item_b6p7Lb": {
+          "type": "collection_nav_item",
+          "settings": {
+            "collection_nav_item_title": "Shop All",
+            "collection_nav_item_tag": "all"
+          }
+        },
+        "collection_nav_item_b6p7Lc": {
+          "type": "collection_nav_item",
+          "settings": {
+            "collection_nav_item_title": "Lung Health Support",
+            "collection_nav_item_tag": "bundle-lung-detox",
+          }
+        },
+        "collection_nav_item_b6p7Ld": {
+          "type": "collection_nav_item",
+          "settings": {
+            "collection_nav_item_title": "Seasonal Wellness Support",
+            "collection_nav_item_tag": "bundle-seasonal",
+          }
+        }
+      },
+      "block_order": [
+        "uvp_item_bA4jJX",
+        "uvp_item_bLKMFq",
+        "uvp_item_A6p4Lb",
+        "uvp_item_3VkhEc",
+        "buy_box_zfqmaR",
+        "collection_nav_item_b6p7Lb",
+        "collection_nav_item_b6p7Lc",
+        "collection_nav_item_b6p7Ld"
+      ],
+      "settings": {
+        "default_collection_banner": "shopify://shop_images/aff86614f5440f5458d5c0f3ee901d44bba61383.png",
+        "trusted_image": "shopify://shop_images/Avatars_9d947c6c-4ef0-4ee5-b30e-4a9a3f5b564f.png",
+        "trusted_text": "Trusted by +836,000 Customers",
+        "enable_soft_banner": true,
+        "banner_position": 2,
+        "banner_image": "shopify://shop_images/a7a570916be09fc252c371e34b3b5215b864f9d3_1197a5a8-d507-4496-9f16-dc58a50ed9cf.png",
+        "show_overlay": true,
+        "overlay_color": "#000000",
+        "overlay_opacity": 50,
+        "banner_text": "Subscribe",
+        "banner_subtext": "To Save 20%",
+        "button_text": "Shop Now",
+        "button_link": "",
+        "text_alignment": "bottom",
+        "text_color": "#ffffff",
+        "subtext_color": "#f2cb49",
+        "button_bg_color": "#ffffff",
+        "button_text_color": "#000000",
+        "show_uvp_banner": true,
+        "font_size_title_desktop": 60,
+        "font_size_subtitle_desktop": 20,
+        "font_size_title_tablet": 32,
+        "font_size_subtitle_tablet": 20,
+        "font_size_title_mobile": 28,
+        "font_size_subtitle_mobile": 14,
+        "align_by_right_margin_desktop": true,
+        "align_by_bottom_margin_desktop": true,
+        "titles_position_horizontal_desktop": 0,
+        "titles_position_vertical_desktop": 32,
+        "text_box_width_desktop": 70,
+        "align_by_right_margin_tablet": true,
+        "align_by_bottom_margin_tablet": true,
+        "titles_position_horizontal_tablet": 24,
+        "titles_position_vertical_tablet": 27,
+        "text_box_width_tablet": 47,
+        "align_by_right_margin_mobile": true,
+        "align_by_bottom_margin_mobile": false,
+        "titles_position_horizontal_mobile": 9,
+        "titles_position_vertical_mobile": 21,
+        "text_box_width_mobile": 80,
+        "width_titles": 70,
+        "collection_banner_image_checkbox": false,
+        "collection_banner_image": 75,
+        "img_banner": true,
+        "product_card_title_font_size_desktop": 18,
+        "product_card_title_font_size_tablet": 21,
+        "section_background_color": "#ffffff",
+        "title_collection_color": "#ffffff",
+        "subtitle_collection_color": "#ffffff",
+        "review_stars_color": "#ffbc11",
+        "product_card_title_font_size_mobile": 13
+      }
+    },
+    "banner_with_text_bb3cLc": {
+      "type": "banner-with-text",
+      "name": "Banner with text",
+      "settings": {
+        "image": "shopify://shop_images/a7a570916be09fc252c371e34b3b5215b864f9d3.png",
+        "svg": true,
+        "heading": "Our Story",
+        "text": "<p>Immediately started clearing lungs of old mucus and making breathing so much easier. My pulmonologist has advised me to continue taking the Better Lungs indefinitely!</p><p><br/>Thank you Betterbrand for my life, literally</p>",
+        "link_text": "Learn More",
+        "link_url": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 40,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 35,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "faq_section_tyi7Be": {
+      "type": "faq-section",
+      "blocks": {
+        "faq_item_mypRpw": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Does This Help With COPD, Asthma, Bronchitis, Or The Common Cold?",
+            "answer": "<p>We designed BetterLungs® to support healthy respiratory and immune systems while keeping everyone in mind. Our ingredients have been studied extensively in many settings! With that said, no supplement can make claims regarding any diagnosis. As always, we recommend that you check with your doctor or pharmacist before starting any new dietary supplement as they have your full medical history available</p>"
+          }
+        },
+        "faq_item_irJfnF": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Is It Safe To Take COPD And/Or Asthma Medication With BetterLungs?",
+            "answer": "<p>While all of our formulations are pieced together by a Doctor of Pharmacy, we recommend that you check with your doctor or pharmacist before starting any new dietary supplement as they have your full medical history available.</p>"
+          }
+        },
+        "faq_item_cMX9wh": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Does This Help My Lungs If I Vape Or Smoke?",
+            "answer": "<p>The ingredients in BetterLungs were selected with smokers, and their lung health, in mind. The idea for the product came from our Chief Scientist who wanted to help the smokers in his family and those with chronic bronchitis and COPD.</p>"
+          }
+        },
+        "faq_item_cB6dyi": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Can I Take This For Extended Periods Of Time?",
+            "answer": "<p>Most of the ingredients work better the longer you take them, so definitely!</p>"
+          }
+        },
+        "faq_item_rXhgiL": {
+          "type": "faq-item",
+          "settings": {
+            "question": "How Long Does It Take For This Product To Work?",
+            "answer": "<p>While some customers notice positive effects in the first few days, we tell our customers to give the product 4 weeks for maximum effect.</p>"
+          }
+        },
+        "faq_item_kBE63E": {
+          "type": "faq-item",
+          "settings": {
+            "question": "How can I get in touch with the team?",
+            "answer": "<p>If you have questions, you can give us a call at <a href=\"tel:18778518979\" target=\"_blank\">1-877-851-8979</a> or email us at <a href=\"mailto:hello@betterbrandhealth.com\" target=\"_blank\" title=\"hello@betterbrandhealth.com\">hello@betterbrandhealth.com</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_mypRpw",
+        "faq_item_irJfnF",
+        "faq_item_cMX9wh",
+        "faq_item_cB6dyi",
+        "faq_item_rXhgiL",
+        "faq_item_kBE63E"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "text": "<p>Any Questions? We got you!</p>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "banner_with_text_bb3cLc",
+    "faq_section_tyi7Be"
+  ]
+}

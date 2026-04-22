@@ -1,0 +1,1478 @@
+{%- comment -%}
+  ============================================================
+  ALLERGY RELIEF PROTOCOL — Shopify OS 2.0 Section File
+  ============================================================
+  File: sections/allergy-relief-protocol.liquid
+  Paired with: templates/page.allergy-relief-protocol.json
+
+  INSTALLATION:
+  1. Upload all 7 .webp files from /assets/ to your Shopify
+     theme's Assets folder (Edit code > Assets > Upload file).
+  2. Copy this file into your theme's sections/ folder.
+  3. Copy page.allergy-relief-protocol.json into templates/.
+  4. Go to Online Store > Pages > Add page.
+  5. Under "Theme template", select allergy-relief-protocol.
+  6. Save. Preview via Themes > three-dot menu > Preview,
+     then navigate to /pages/your-page-handle.
+
+  IMAGE ASSETS (upload to Assets folder):
+    arp-hero-bundle.webp
+    arp-dr-chris.webp
+    arp-reset-sticks.webp
+    arp-betterlungs.webp
+    arp-nightstand.webp
+    arp-lifestyle-reset.webp
+    arp-lifestyle-capsules.webp
+
+  CTA LINK: Update the assign below with your bundle URL.
+  ============================================================
+{%- endcomment -%}
+
+{%- assign product_url = 'https://www.trybetterbrand.com/products/allergy-support-kit' -%}
+
+<style>
+  /* ── Google Fonts — MUST be first in stylesheet ── */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  /* ══════════════════════════════════════════════════════════════
+     THEME CHROME SUPPRESSION
+     Hides announcement bar, header, footer injected by the theme.
+     Uses high-specificity selectors to cover common theme patterns.
+  ══════════════════════════════════════════════════════════════ */
+  /* ── Suppress Klaviyo popups ── */
+  .klaviyo-form-container,
+  [class*="klaviyo-form"],
+  klaviyo-onsite-component,
+  [data-testid*="klaviyo"],
+  #klaviyo-ios-sms-consent-modal,
+  .needsclick.kl-private-reset-css-Xuajs1,
+  [class*="kl-private"] { display: none !important; }
+
+  /* ── Suppress Octane AI quiz popup ── */
+  octane-ai-quiz,
+  [class*="octane-quiz"],
+  [id*="octane-quiz"],
+  .octane-quiz-container { display: none !important; }
+
+  /* ── Suppress Just Uno popups ── */
+  #ju-root,
+  [id*="justuno"],
+  [class*="justuno"],
+  .ju-container { display: none !important; }
+
+  /* Hide announcement bar — Essential Apps widget sits directly on <body> */
+  .essential_annoucement_bar_wrapper,
+  [class*="essential_annoucement_bar"],
+  [class*="essential_announcement_bar"],
+  /* Fallback for any other announcement bar implementations */
+  announcement-bar,
+  .announcement-bar,
+  .announcement-bar-section,
+  #shopify-section-announcement-bar,
+  [id*="announcement"],
+  [class*="announcement-bar"] { display: none !important; }
+
+  /* Hide header — exact class from BetterBrand theme */
+  header.header-content,
+  header,
+  .header,
+  .site-header,
+  .header-content,
+  #shopify-section-header,
+  [id*="section-header"],
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper { display: none !important; }
+
+  /* Hide footer — exact class from BetterBrand theme */
+  footer.footer-content,
+  footer,
+  .footer,
+  .site-footer,
+  .footer-content,
+  #shopify-section-footer,
+  [id*="section-footer"],
+  [class*="site-footer"] { display: none !important; }
+
+  /* Remove any theme padding/margin added around the section */
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     FONT & BUTTON OVERRIDE
+     Forces DM Sans / Playfair Display and our button styles,
+     overriding any theme global font or button rules.
+  ══════════════════════════════════════════════════════════════ */
+  .arp-wrap,
+  .arp-wrap * {
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+    box-sizing: border-box !important;
+  }
+  .arp-wrap h2,
+  .arp-wrap h3,
+  .arp-wrap h4,
+  .arp-wrap .arp-section-title,
+  .arp-wrap .arp-final-cta__title,
+  .arp-wrap .arp-together-box__title,
+  .arp-wrap .arp-lifestyle-item__title,
+  .arp-wrap .arp-faq-contact__title {
+    font-family: 'Playfair Display', Georgia, serif !important;
+  }
+  /* Hero h1 uses DM Sans (sans-serif) only */
+  .arp-wrap h1,
+  .arp-wrap .arp-h1,
+  .arp-wrap .arp-hero__headline {
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+  }
+
+  /* Button resets — prevent theme from restyling our CTAs */
+  .arp-wrap a,
+  .arp-wrap button {
+    text-decoration: none !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    border-radius: 0 !important;
+  }
+  .arp-btn-yellow,
+  .arp-btn-yellow:hover,
+  .arp-btn-yellow:focus,
+  .arp-btn-yellow:visited {
+    display: inline-block !important;
+    background: #f5c518 !important;
+    color: #1a1a1a !important;
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    padding: 1rem 2.25rem !important;
+    border-radius: 0.5rem !important;
+    border: 1.5px solid #1a1a1a !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18) !important;
+  }
+  .arp-btn-gold,
+  .arp-btn-gold:hover,
+  .arp-btn-gold:focus,
+  .arp-btn-gold:visited {
+    display: inline-block !important;
+    background: #c8a84b !important;
+    color: #fff !important;
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+  .arp-btn-ghost,
+  .arp-btn-ghost:hover,
+  .arp-btn-ghost:focus,
+  .arp-btn-ghost:visited {
+    display: inline-block !important;
+    background: transparent !important;
+    color: #fff !important;
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid rgba(255,255,255,0.5) !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+  .arp-hero__cta-secondary,
+  .arp-hero__cta-secondary:hover,
+  .arp-hero__cta-secondary:focus,
+  .arp-hero__cta-secondary:visited {
+    display: inline-block !important;
+    background: transparent !important;
+    color: #2a5426 !important;
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    padding: 0.85rem 2rem !important;
+    border-radius: 0.5rem !important;
+    border: 2px solid #2a5426 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+  #arp-sticky-cta a,
+  #arp-sticky-cta a:hover,
+  #arp-sticky-cta a:visited {
+    display: block !important;
+    background: #f5c518 !important;
+    color: #1a1a1a !important;
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    text-align: center !important;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+    border: none !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18) !important;
+  }
+  /* FAQ button override */
+  .arp-faq-btn {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 1rem !important;
+    padding: 1.1rem 1.5rem !important;
+    background: none !important;
+    border: none !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+  .arp-faq-btn__q {
+    font-family: 'DM Sans', system-ui, sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #1a1a1a !important;
+    line-height: 1.4 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+  }
+
+  /* ── Reset & base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  .arp-wrap {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #f7f4ef;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+  }
+  .arp-wrap img { max-width: 100%; display: block; }
+  .arp-wrap a { color: inherit; }
+  .arp-wrap sup { font-size: 0.75em; vertical-align: baseline; position: relative; top: -0.1em; }
+
+
+  /* ── Design tokens ── */
+  .arp-wrap {
+    --forest:      #2a5426;
+    --sage:        #b5c9a4;
+    --sage-light:  #d4e3c9;
+    --sage-section:#edf4e8;
+    --gold:        #c8a84b;
+    --yellow:      #f5c518;
+    --cream:       #f7f4ef;
+    --cream-dark:  #faf7f2;
+    --white:       #ffffff;
+    --text:        #1a1a1a;
+    --muted:       #555555;
+  }
+
+  /* ── Progress bar ── */
+  #arp-progress-track {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px; background: #d4e3c9; z-index: 60;
+  }
+  #arp-progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(to right, #2a5426, #c8a84b);
+    transition: width 0.2s ease;
+  }
+
+  /* ── Announcement bar ── */
+  .arp-announce {
+    background: #2a5426; color: #fff;
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.05em; text-align: center;
+    padding: 0.5rem 1rem;
+  }
+
+  /* ── Section wrappers ── */
+  .arp-section { padding: 3.5rem 1.1rem; }
+  .arp-section--sm { padding: 2.5rem 1.1rem; }
+  .arp-inner { max-width: 1100px; margin: 0 auto; }
+  .arp-inner--narrow { max-width: 800px; margin: 0 auto; }
+  .arp-inner--660 { max-width: 660px; margin: 0 auto; }
+
+  /* ── Typography helpers ── */
+  .arp-label {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #2a5426; display: block; margin-bottom: 0.5rem;
+  }
+  .arp-label--light { color: #d4e3c9; }
+  .arp-wrap h2, .arp-wrap h3 { font-family: 'Playfair Display', Georgia, serif; }
+  .arp-wrap h1, .arp-h1, .arp-hero__headline { font-family: 'DM Sans', system-ui, sans-serif; }
+  .arp-h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700; color: #1a1a1a; line-height: 1.15;
+    margin-bottom: 0.25rem;
+  }
+  .arp-h2 {
+    font-size: clamp(1.7rem, 5vw, 2.8rem);
+    font-weight: 700; color: #1a1a1a; line-height: 1.2;
+    margin-bottom: 0.9rem;
+  }
+  .arp-h2--white { color: #fff; }
+  .arp-h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: #1a1a1a; margin-bottom: 0.65rem;
+  }
+  .arp-body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 1rem; color: #555555; line-height: 1.75;
+  }
+  .arp-body--sm { font-size: 0.9rem; }
+  .arp-body--xs { font-size: 0.88rem; }
+  .arp-body--light { color: #d4e3c9; }
+  .arp-body--dark { color: #333; }
+  .arp-center { text-align: center; }
+
+  /* ── Hero ── */
+  .arp-hero { background: #f2ecdc; }
+  .arp-hero__image img {
+    width: 100%; object-fit: contain;
+    max-height: 480px; background: #f2ecdc;
+  }
+  .arp-hero__text { padding: 2rem 1.1rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+  .arp-hero__headline { margin-bottom: 0.25rem; }
+  .arp-hero__headline span {
+    text-decoration: underline;
+    text-decoration-color: #1a1a1a;
+    text-underline-offset: 4px;
+  }
+  .arp-hero__body { max-width: 540px; margin-bottom: 1.75rem; }
+  .arp-hero__btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  /* ── Buttons ── */
+  .arp-btn-primary {
+    display: inline-block;
+    background: #f5c518; color: #1a1a1a;
+    font-family: 'DM Sans', system-ui, sans-serif; font-weight: 700;
+    font-size: 1rem; letter-spacing: 0.04em;
+    padding: 0.9rem 1.75rem; border-radius: 0.375rem;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(245,197,24,0.4);
+  }
+  .arp-btn-outline {
+    display: inline-block;
+    padding: 0.9rem 1.25rem; font-size: 1rem;
+    background: transparent;
+    border: 2px solid #2a5426; color: #2a5426;
+    border-radius: 0.375rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', system-ui, sans-serif;
+    text-decoration: none;
+  }
+  .arp-btn-yellow {
+    display: inline-block;
+    background: #f5c518; color: #1a1a1a;
+    font-family: 'DM Sans', system-ui, sans-serif; font-weight: 700;
+    font-size: 1.05rem; letter-spacing: 0.04em;
+    padding: 1rem 2.25rem; border-radius: 0.375rem;
+    text-decoration: none;
+    border: 1.5px solid #1a1a1a;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  }
+  .arp-btn-gold {
+    background: #c8a84b; color: #1a1a1a;
+    font-weight: 600; font-size: 0.9rem;
+    padding: 0.6rem 1.25rem; border-radius: 0.375rem;
+    text-decoration: none; display: inline-block;
+  }
+  .arp-btn-ghost {
+    background: transparent; color: #d4e3c9;
+    font-weight: 600; font-size: 0.9rem;
+    padding: 0.6rem 1.25rem; border-radius: 0.375rem;
+    text-decoration: none; display: inline-block;
+    border: 1px solid #d4e3c9;
+  }
+
+  /* ── Allergy causes 2x2 grid ── */
+  .arp-causes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; max-width: 600px; margin: 0 auto 2rem;
+  }
+  .arp-cause-card {
+    background: #f7f4ef; border-radius: 0.625rem;
+    padding: 1.25rem; text-align: center;
+  }
+  .arp-cause-card__icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
+  .arp-cause-card__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1rem; font-weight: 700;
+    color: #1a1a1a; margin-bottom: 0.35rem;
+  }
+  .arp-histamine-box {
+    background: #d4e3c9; border-radius: 0.75rem;
+    padding: 1.5rem 2rem; max-width: 700px; margin: 0 auto;
+  }
+
+  /* ── Comparison table ── */
+  .arp-compare-wrap {
+    /* Adds breathing room so the Protocol column is never flush to the edge */
+    padding: 0 0.5rem;
+  }
+  .arp-comparison-table {
+    width: 100%; border-collapse: collapse; table-layout: fixed;
+    min-width: 280px; /* prevents squish on very small screens */
+  }
+  /* Row label column: 38% on mobile, auto on wider screens */
+  .arp-comparison-table col:first-child { width: 38%; }
+  .arp-comparison-table col { width: 15.33%; }
+  .arp-comparison-table th {
+    padding: 0.5rem 0.15rem; text-align: center;
+    font-size: 0.6rem; font-weight: 700;
+    color: #d4e3c9;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .arp-comparison-table th:first-child {
+    text-align: left; padding-left: 0.5rem;
+  }
+  .arp-comparison-table th.arp-highlight {
+    background: #f5c518; color: #1a1a1a;
+    border-radius: 0.375rem 0.375rem 0 0;
+    border-bottom: none;
+  }
+  .arp-comparison-table td {
+    padding: 0.55rem 0.15rem; text-align: center;
+    font-size: 1rem; line-height: 1; vertical-align: middle;
+  }
+  .arp-comparison-table td:first-child {
+    padding-left: 0.5rem; text-align: left;
+    font-size: 0.72rem; color: #d4e3c9;
+    font-weight: 500; line-height: 1.3;
+  }
+  .arp-comparison-table td.arp-highlight-col {
+    background: rgba(245,197,24,0.12);
+  }
+  .arp-comparison-table tr:nth-child(odd) { background: rgba(255,255,255,0.04); }
+  .arp-comparison-table tr:nth-child(even) { background: rgba(255,255,255,0.07); }
+  .arp-col-icon { font-size: 1.1rem; line-height: 1; margin-bottom: 0.2rem; }
+  /* On very small phones (< 360px) allow horizontal scroll as last resort */
+  @media (max-width: 359px) {
+    .arp-compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
+
+  /* ── Dr. Chris ── */
+  .arp-dr-grid {
+    display: flex; flex-wrap: wrap;
+    gap: 2.5rem; align-items: center;
+  }
+  .arp-dr-grid__img { flex: 1 1 260px; min-width: 0; }
+  .arp-dr-grid__img img {
+    width: 100%; border-radius: 0.75rem;
+    object-fit: cover;
+    box-shadow: 0 8px 32px rgba(42,84,38,0.15);
+  }
+  .arp-dr-grid__text { flex: 1 1 300px; min-width: 0; }
+  .arp-wrap blockquote {
+    border-left: 4px solid #c8a84b;
+    padding-left: 1.1rem; margin: 1.25rem 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05rem; font-style: italic;
+    color: #2a5426; line-height: 1.6;
+  }
+
+  /* ── Protocol steps ── */
+  .arp-protocol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem; margin-bottom: 1.25rem;
+  }
+  .arp-step-card {
+    background: #fff; border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .arp-step-card__img img {
+    width: 100%; display: block;
+    object-fit: cover; aspect-ratio: 1 / 1;
+  }
+  .arp-step-card__name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: #1a1a1a; text-align: center;
+    padding: 0.9rem 1rem 0;
+  }
+  .arp-step-card__body { padding: 1.5rem; }
+  .arp-step-badge {
+    display: inline-flex; align-items: center;
+    gap: 0.5rem; margin-bottom: 0.75rem;
+  }
+  .arp-step-badge__num {
+    background: #2a5426; color: #fff;
+    font-family: 'DM Sans', system-ui, sans-serif; font-weight: 700;
+    font-size: 0.72rem; padding: 0.25rem 0.65rem;
+    border-radius: 99px;
+  }
+  .arp-step-badge__label {
+    font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600;
+    color: #2a5426; font-size: 0.82rem;
+  }
+  .arp-result-card {
+    background: #2a5426; border-radius: 0.75rem;
+    padding: 1.75rem; display: flex;
+    flex-direction: column; gap: 0.75rem;
+  }
+  .arp-result-badge { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .arp-result-badge__label {
+    background: #c8a84b; color: #1a1a1a;
+    font-family: 'DM Sans', system-ui, sans-serif; font-weight: 700;
+    font-size: 0.72rem; padding: 0.25rem 0.65rem;
+    border-radius: 99px;
+  }
+  .arp-result-card__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem; font-weight: 700; color: #fff;
+  }
+
+  /* ── Nightstand lifestyle ── */
+  .arp-nightstand-grid {
+    display: flex; flex-wrap: wrap;
+    gap: 2rem; align-items: center;
+    padding: 0 1.1rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .arp-nightstand-grid__img { flex: 1 1 280px; min-width: 0; }
+  .arp-nightstand-grid__img img {
+    width: 100%; border-radius: 0.75rem;
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  .arp-nightstand-grid__text { flex: 1 1 260px; min-width: 0; }
+  .arp-h2--sm {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 700; color: #1a1a1a;
+    line-height: 1.2; margin-bottom: 0.9rem;
+  }
+
+  /* ── Value props ── */
+  .arp-vp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .arp-vp-card {
+    background: #fff; border-radius: 0.75rem;
+    padding: 1.5rem;
+    border-left: 4px solid #b5c9a4;
+  }
+  .arp-vp-card__icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .arp-vp-card__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: #1a1a1a; margin-bottom: 0.4rem;
+  }
+
+  /* ── Ingredients ── */
+  .arp-ing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .arp-ing-card {
+    background: #fff; border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  }
+  .arp-ing-card__img img {
+    width: 100%; display: block;
+    object-fit: cover; aspect-ratio: 1 / 1;
+  }
+  .arp-ing-card__body { padding: 1.5rem; }
+  .arp-ing-badge {
+    display: inline-block;
+    background: #e8f0e4; color: #2a5426;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.2rem 0.65rem; border-radius: 99px;
+    margin-bottom: 0.65rem;
+  }
+  .arp-ing-list { border-top: 1px solid #d4e3c9; padding-top: 0.9rem; }
+  .arp-ing-item {
+    display: flex; gap: 0.65rem;
+    margin-bottom: 0.5rem; align-items: flex-start;
+  }
+  .arp-ing-item__dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #2a5426; margin-top: 0.5rem;
+    flex-shrink: 0;
+  }
+  .arp-ing-item__text { font-size: 0.88rem; color: #444; line-height: 1.5; }
+  .arp-together-box {
+    margin-top: 1.25rem; background: #2a5426;
+    color: #fff; border-radius: 0.75rem;
+    padding: 1.75rem 2rem; text-align: center;
+  }
+  .arp-together-box__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    font-weight: 700; margin-bottom: 0.65rem;
+  }
+
+  /* ── Lifestyle photos ── */
+  .arp-lifestyle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem; align-items: start;
+  }
+  .arp-lifestyle-item img {
+    width: 100%; border-radius: 0.75rem;
+    object-fit: cover;
+  }
+  .arp-lifestyle-item__text { padding-top: 1rem; }
+  .arp-lifestyle-item__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: #1a1a1a; margin-bottom: 0.4rem;
+  }
+
+  /* ── Trust badges ── */
+  .arp-trust-grid {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 1.75rem;
+  }
+  .arp-trust-badge {
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center; width: 110px;
+  }
+  .arp-trust-badge__icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    border: 2px solid #2a5426;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin-bottom: 0.5rem;
+    background: #fff;
+  }
+  .arp-trust-badge__title { font-weight: 700; font-size: 0.82rem; color: #1a1a1a; margin-bottom: 0.15rem; }
+  .arp-trust-badge__sub { font-size: 0.72rem; color: #555555; }
+
+  /* ── FAQ ── */
+  .arp-faq-item {
+    background: #fff; border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 0.75rem;
+  }
+  .arp-faq-btn {
+    width: 100%; display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem;
+    padding: 1.1rem 1.5rem; background: none;
+    border: none; text-align: left; cursor: pointer;
+  }
+  .arp-faq-btn__q {
+    font-family: 'DM Sans', system-ui, sans-serif; font-size: 1rem;
+    font-weight: 600; color: #1a1a1a; line-height: 1.4;
+  }
+  .arp-faq-btn__icon {
+    flex-shrink: 0; width: 24px; height: 24px;
+    border-radius: 50%; background: #e8f0e4;
+    color: #2a5426;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 700;
+    transition: background 0.2s;
+  }
+  .arp-faq-btn__icon--open { background: #2a5426; color: #fff; }
+  .arp-faq-answer {
+    display: none; padding: 0 1.5rem 1.25rem;
+    border-top: 1px solid #e8f0e4;
+  }
+  .arp-faq-answer p {
+    font-size: 0.95rem; color: #555;
+    line-height: 1.75; padding-top: 1rem;
+  }
+  .arp-faq-answer--open { display: block; }
+  .arp-faq-contact {
+    margin-top: 2rem; background: #2a5426;
+    border-radius: 0.75rem; padding: 1.5rem 2rem;
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    align-items: center; justify-content: space-between;
+  }
+  .arp-faq-contact__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: #fff; margin-bottom: 0.25rem;
+  }
+  .arp-faq-contact__sub { font-size: 0.9rem; color: #d4e3c9; }
+  .arp-faq-contact__btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  /* ── Final CTA section ── */
+  .arp-final-cta { background: #2a5426; padding: 3.5rem 1.1rem; text-align: center; }
+  .arp-final-cta__title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.7rem, 5vw, 2.8rem);
+    font-weight: 700; color: #fff; margin-bottom: 0.9rem;
+  }
+  .arp-final-cta__sub { margin-bottom: 1.75rem; }
+  .arp-final-cta__note { font-size: 0.78rem; color: #8fad7e; margin-top: 0.9rem; }
+
+  /* ── Footer ── */
+  .arp-footer {
+    background: #111; color: #888;
+    padding: 1.75rem 1.1rem; text-align: center;
+    font-size: 0.78rem; line-height: 1.7;
+  }
+  .arp-footer p { margin-bottom: 0.4rem; }
+  .arp-footer .arp-advert { font-weight: 600; color: #aaa; }
+
+  /* ── Sticky CTA ── */
+  #arp-sticky-cta {
+    position: fixed; bottom: 1rem; left: 50%;
+    transform: translateX(-50%) translateY(calc(100% + 1.5rem));
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.25s ease;
+    z-index: 9999;
+    width: calc(100% - 2rem); max-width: 400px;
+    will-change: transform;
+  }
+  #arp-sticky-cta.arp-visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  #arp-sticky-cta a {
+    display: block; background: #f5c518;
+    color: #1a1a1a; font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.04em; text-align: center;
+    padding: 0.9rem 1.25rem; border-radius: 0.5rem;
+    text-decoration: none;
+    box-shadow: 0 8px 28px rgba(245,197,24,0.35);
+  }
+</style>
+
+{% comment %}
+  ── Open Graph image override ────────────────────────────────────────────────
+  Shopify injects og:image via theme.liquid. We use a <style>-trick to
+  suppress the existing tag and inject our own via document.head so it
+  appears before any crawler-visible content.
+  For a guaranteed server-side fix, edit theme.liquid directly (see INSTALL.md).
+{% endcomment %}
+<script>
+  // Run synchronously in <head> context via Shopify section rendering.
+  // Most social crawlers (iMessage link preview, Slack, WhatsApp) DO execute
+  // inline scripts in sections when Shopify renders the full page HTML.
+  document.addEventListener('DOMContentLoaded', function() {
+    var heroUrl = '{{ "arp-hero-bundle.webp" | asset_url }}';
+    var tags = [
+      { property: 'og:image',        content: heroUrl },
+      { property: 'og:image:width',  content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { name:     'twitter:image',   content: heroUrl },
+      { name:     'twitter:card',    content: 'summary_large_image' }
+    ];
+    tags.forEach(function(t) {
+      var sel = t.property
+        ? 'meta[property="' + t.property + '"]'
+        : 'meta[name="'     + t.name     + '"]';
+      var el = document.querySelector(sel);
+      if (!el) { el = document.createElement('meta'); document.head.appendChild(el); }
+      if (t.property) el.setAttribute('property', t.property);
+      else            el.setAttribute('name', t.name);
+      el.setAttribute('content', t.content);
+    });
+  });
+</script>
+
+<div class="arp-wrap">
+
+  <!-- Progress Bar -->
+  <div id="arp-progress-track">
+    <div id="arp-progress-fill"></div>
+  </div>
+
+  <!-- Announcement Bar -->
+  <div class="arp-announce">
+    Natural Allergy Relief &nbsp;&middot;&nbsp; Pharmacist-Formulated
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-hero" id="arp-hero">
+    <div class="arp-hero__image">
+      <img
+        src="{{ 'arp-hero-bundle.webp' | asset_url }}"
+        alt="BetterLungs® and Nasal Reset Sticks — the Allergy Relief Protocol"
+        width="1280" height="720"
+      />
+    </div>
+    <div class="arp-hero__text">
+      <span class="arp-label">The Allergy Relief Protocol</span>
+      <h1 class="arp-h1 arp-hero__headline">
+        Stop Suffering Through
+        <span>Allergy Season.</span>
+      </h1>
+      <p class="arp-body arp-body--dark arp-hero__body">
+        Dr. Chris Jackson, Doctor of Pharmacy, created a two-product plan that gives you
+        <strong>fast relief from allergy symptoms</strong>
+        and builds a calmer immune system over time. All natural. No harsh chemicals.
+      </p>
+      <div class="arp-hero__btns">
+        <a href="{{ product_url }}" class="arp-btn-yellow">Get the Protocol</a>
+        <a href="#arp-how-it-works" class="arp-btn-outline">See How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       WHAT CAUSES ALLERGIES
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" style="background: #ffffff;">
+    <div class="arp-inner arp-center">
+      <span class="arp-label">Why Your Body Reacts</span>
+      <h2 class="arp-h2">What Actually Causes Allergies?</h2>
+      <p class="arp-body" style="max-width: 580px; margin: 0 auto 2rem;">
+        Allergies happen when your immune system sees something harmless — like pollen or dust — and treats it like a dangerous invader. It releases a chemical called <strong>histamine</strong>, which causes the swelling, sneezing, and stuffiness you feel.
+      </p>
+
+      <div class="arp-causes-grid">
+        <div class="arp-cause-card">
+          <div class="arp-cause-card__icon">🌿</div>
+          <div class="arp-cause-card__title">Pollen</div>
+          <p class="arp-body arp-body--xs" style="color: #555555;">Trees and grasses release tiny grains that trigger your immune system when you breathe them in.</p>
+        </div>
+        <div class="arp-cause-card">
+          <div class="arp-cause-card__icon">🏠</div>
+          <div class="arp-cause-card__title">Dust Mites</div>
+          <p class="arp-body arp-body--xs" style="color: #555555;">Tiny bugs in bedding and carpets leave waste particles that float into the air and cause reactions.</p>
+        </div>
+        <div class="arp-cause-card">
+          <div class="arp-cause-card__icon">🐾</div>
+          <div class="arp-cause-card__title">Pet Dander</div>
+          <p class="arp-body arp-body--xs" style="color: #555555;">Proteins from pet skin and fur stick to surfaces and linger in the air for a long time.</p>
+        </div>
+        <div class="arp-cause-card">
+          <div class="arp-cause-card__icon">🍄</div>
+          <div class="arp-cause-card__title">Mold Spores</div>
+          <p class="arp-body arp-body--xs" style="color: #555555;">Mold in damp places sends spores into the air, causing coughing and a stuffy nose.</p>
+        </div>
+      </div>
+
+      <div class="arp-histamine-box">
+        <p class="arp-body arp-body--dark arp-center" style="font-size: 0.95rem;">
+          That histamine reaction causes <strong>inflamed airways, mucus buildup, and difficulty breathing</strong>. That is the cycle the Allergy Relief Protocol is designed to break.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       DR. CHRIS
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" style="background: #f7f4ef;">
+    <div class="arp-inner">
+      <div class="arp-dr-grid">
+        <div class="arp-dr-grid__img">
+          <img
+            src="{{ 'arp-dr-chris.webp' | asset_url }}"
+            alt="Dr. Chris Jackson, PharmD presenting on respiratory health"
+            width="800" height="1000"
+            loading="lazy"
+          />
+        </div>
+        <div class="arp-dr-grid__text">
+          <span class="arp-label">The Pharmacist Behind the Protocol</span>
+          <h2 class="arp-h2">Meet Dr. Chris Jackson</h2>
+          <p class="arp-body" style="margin-bottom: 1rem;">
+            The moment Dr. Chris Jackson earned his <strong>Doctor of Pharmacy degree</strong>, he knew exactly what he wanted to do with it. He had watched too many people rely on chemical-filled medicines that only masked their symptoms and left them feeling foggy and dependent.
+          </p>
+          <p class="arp-body" style="margin-bottom: 1rem;">
+            He set out to create something different. He spent years studying the science of <strong>respiratory health</strong> and researching plants that humans have used for centuries to breathe better. He wanted products that worked with the body, not against it.
+          </p>
+          <blockquote>
+            "While Big Pharma builds dependency, we build trust, creating natural solutions your body already understands."
+          </blockquote>
+          <p class="arp-body">
+            That mission led to BetterLungs<sup>®</sup> and the Reset Sticks. Dr. Chris designed them to work together as a <strong>complete allergy relief system</strong>, giving people a natural path to breathing freely again.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       COMPARISON MATRIX
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" style="background: #2a5426;">
+    <div class="arp-inner">
+      <div class="arp-center" style="margin-bottom: 2.25rem;">
+        <span class="arp-label arp-label--light">Why the Protocol Wins</span>
+        <h2 class="arp-h2 arp-h2--white">How Does It Compare?</h2>
+        <p class="arp-body arp-body--light" style="max-width: 580px; margin: 0 auto;">
+          Most allergy solutions only treat one symptom. They come with side effects, and your body builds a tolerance to them. Here is how the Allergy Relief Protocol stacks up.
+        </p>
+      </div>
+
+      <div class="arp-compare-wrap">
+        <table class="arp-comparison-table">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th></th>
+              <th><div class="arp-col-icon">💊</div><div>Pills</div></th>
+              <th><div class="arp-col-icon">💨</div><div>Spray</div></th>
+              <th><div class="arp-col-icon">💉</div><div>Shots</div></th>
+              <th class="arp-highlight"><div class="arp-col-icon">🌿</div><div>Protocol</div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Works fast</td>
+              <td>❌</td><td>⚠️</td><td>❌</td>
+              <td class="arp-highlight-col">✅</td>
+            </tr>
+            <tr>
+              <td>No drowsiness</td>
+              <td>❌</td><td>✅</td><td>✅</td>
+              <td class="arp-highlight-col">✅</td>
+            </tr>
+            <tr>
+              <td>All-natural</td>
+              <td>❌</td><td>❌</td><td>❌</td>
+              <td class="arp-highlight-col">✅</td>
+            </tr>
+            <tr>
+              <td>No dependency</td>
+              <td>❌</td><td>❌</td><td>✅</td>
+              <td class="arp-highlight-col">✅</td>
+            </tr>
+            <tr>
+              <td>Long-term relief</td>
+              <td>❌</td><td>❌</td><td>⚠️</td>
+              <td class="arp-highlight-col">✅</td>
+            </tr>
+            <tr>
+              <td>Easy routine</td>
+              <td>✅</td><td>⚠️</td><td>❌</td>
+              <td class="arp-highlight-col">✅</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="arp-body arp-center" style="font-size: 0.7rem; margin-top: 0.85rem; opacity: 0.6; color: #d4e3c9;">
+        ✅ Yes &nbsp;&middot;&nbsp; ⚠️ Partial &nbsp;&middot;&nbsp; ❌ No
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       HOW THE PROTOCOL WORKS
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" id="arp-how-it-works" style="background: #edf4e8;">
+    <div class="arp-inner">
+      <div class="arp-center" style="margin-bottom: 2.5rem;">
+        <span class="arp-label">The Two-Step Solution</span>
+        <h2 class="arp-h2">How the Allergy Relief Protocol Works</h2>
+        <p class="arp-body" style="max-width: 620px; margin: 0 auto;">
+          Most allergy products only do one thing. This protocol does two things at once: <strong>fast comfort right now</strong>, and a <strong>calmer immune system over time</strong>.
+        </p>
+      </div>
+
+      <div class="arp-protocol-grid">
+        <!-- Step 1 -->
+        <div class="arp-step-card">
+          <div class="arp-step-card__img">
+            <img
+              src="{{ 'arp-reset-sticks.webp' | asset_url }}"
+              alt="Reset Sticks nasal inhalers"
+              width="600" height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="arp-step-card__name">Nasal Reset Sticks</div>
+          <div class="arp-step-card__body">
+            <div class="arp-step-badge">
+              <span class="arp-step-badge__num">STEP 1</span>
+              <span class="arp-step-badge__label">Quick Relief</span>
+            </div>
+            <p class="arp-body arp-body--sm">
+              Open a Reset Stick and breathe in slowly. The <strong>natural plant oils open your nasal passages in seconds</strong>. You feel the difference before you even put it down.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="arp-step-card">
+          <div class="arp-step-card__img">
+            <img
+              src="{{ 'arp-betterlungs.webp' | asset_url }}"
+              alt="BetterLungs® 60 capsule bottle"
+              width="600" height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="arp-step-card__name">BetterLungs<sup>®</sup></div>
+          <div class="arp-step-card__body">
+            <div class="arp-step-badge">
+              <span class="arp-step-badge__num">STEP 2</span>
+              <span class="arp-step-badge__label">Long-Term Strength</span>
+            </div>
+            <p class="arp-body arp-body--sm">
+              Take BetterLungs<sup>®</sup> every day to <strong>calm the inflammation inside your airways</strong> and help your immune system stop overreacting to allergens. The longer you take it, the better your body handles allergy triggers.
+            </p>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="arp-result-card">
+          <div class="arp-result-badge">
+            <span class="arp-result-badge__label">RESULT</span>
+          </div>
+          <div class="arp-result-card__title">Real Allergy Relief</div>
+          <p class="arp-body arp-body--light arp-body--sm">
+            Together, these two products cover both sides of the allergy problem. You get <strong style="color:#fff;">comfort today</strong> and a <strong style="color:#fff;">calmer immune system</strong> for tomorrow.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       NIGHTSTAND LIFESTYLE
+  ════════════════════════════════════════════════════ -->
+  <section style="background: #ffffff; padding: 0;">
+    <div class="arp-nightstand-grid">
+      <div class="arp-nightstand-grid__img">
+        <img
+          src="{{ 'arp-nightstand.webp' | asset_url }}"
+          alt="BetterLungs® and Reset Sticks on a bedside table"
+          width="800" height="600"
+          loading="lazy"
+        />
+      </div>
+      <div class="arp-nightstand-grid__text">
+        <span class="arp-label">Make It a Daily Habit</span>
+        <h2 class="arp-h2--sm">Two Minutes a Morning</h2>
+        <p class="arp-body" style="margin-bottom: 1rem;">
+          Keep BetterLungs<sup>®</sup> and your Reset Sticks on your nightstand. Take your capsules with a glass of water when you wake up. Reach for a Reset Stick the moment your nose feels blocked.
+        </p>
+        <p class="arp-body">
+          That is the whole routine. <strong>Simple enough to stick with. Powerful enough to change how you feel every day.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       VALUE PROPOSITIONS
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" style="background: #edf4e8;">
+    <div class="arp-inner">
+      <div class="arp-center" style="margin-bottom: 2.25rem;">
+        <span class="arp-label">What You Can Expect</span>
+        <h2 class="arp-h2">What the Protocol Does for You</h2>
+      </div>
+      <div class="arp-vp-grid">
+        <div class="arp-vp-card">
+          <div class="arp-vp-card__icon">💨</div>
+          <div class="arp-vp-card__title">Open Airways in Seconds</div>
+          <p class="arp-body arp-body--xs">Reset Sticks deliver natural menthol and eucalyptus directly to your nasal passages. You go from stuffed up to breathing freely before the minute is up.</p>
+        </div>
+        <div class="arp-vp-card">
+          <div class="arp-vp-card__icon">🛡️</div>
+          <div class="arp-vp-card__title">Fewer Reactions Over Time</div>
+          <p class="arp-body arp-body--xs">BetterLungs<sup>®</sup> helps calm the immune system so it stops overreacting to pollen and dust. After a few weeks, everyday allergens start to bother you less.</p>
+        </div>
+        <div class="arp-vp-card">
+          <div class="arp-vp-card__icon">😴</div>
+          <div class="arp-vp-card__title">Sleep Through the Night</div>
+          <p class="arp-body arp-body--xs">Congestion and coughing are the biggest sleep-wreckers for allergy sufferers. This protocol helps clear your airways before bed so you wake up rested.</p>
+        </div>
+        <div class="arp-vp-card">
+          <div class="arp-vp-card__icon">🌱</div>
+          <div class="arp-vp-card__title">No Harsh Chemicals</div>
+          <p class="arp-body arp-body--xs">Every ingredient is plant-based and carefully chosen by a pharmacist. You get real relief without the drowsiness or dependency that comes with many allergy drugs.</p>
+        </div>
+        <div class="arp-vp-card">
+          <div class="arp-vp-card__icon">🔄</div>
+          <div class="arp-vp-card__title">Break the Mucus Cycle</div>
+          <p class="arp-body arp-body--xs">NAC in BetterLungs<sup>®</sup> breaks up thick, sticky mucus so it can drain naturally. You stop feeling like your head is full of pressure every morning.</p>
+        </div>
+        <div class="arp-vp-card">
+          <div class="arp-vp-card__icon">📅</div>
+          <div class="arp-vp-card__title">Better Every Season</div>
+          <p class="arp-body arp-body--xs">The longer you follow the protocol, the calmer your immune system becomes. Many users find that each allergy season gets easier than the last.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       INGREDIENTS
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" id="arp-products" style="background: #faf7f2;">
+    <div class="arp-inner">
+      <div class="arp-center" style="margin-bottom: 2.5rem;">
+        <span class="arp-label">Inside the Protocol</span>
+        <h2 class="arp-h2">What's in Each Product</h2>
+      </div>
+      <div class="arp-ing-grid">
+        <!-- Reset Sticks -->
+        <div class="arp-ing-card">
+          <div class="arp-ing-card__img">
+            <img
+              src="{{ 'arp-reset-sticks.webp' | asset_url }}"
+              alt="Reset Sticks"
+              width="600" height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="arp-ing-card__body">
+            <span class="arp-ing-badge">Step 1 — Quick Relief</span>
+            <h3 class="arp-h3">Reset Sticks</h3>
+            <p class="arp-body arp-body--sm" style="margin-bottom: 1.1rem;">
+              When your nose feels blocked and your eyes are watering, <strong>you want help right now</strong>. Open a Reset Stick, hold it under your nose, and breathe slowly.
+            </p>
+            <div class="arp-ing-list">
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Menthol</strong> — Cools and opens nasal passages instantly</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Eucalyptus</strong> — Clears stuffiness and fights inflammation</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Peppermint</strong> — Opens airways and eases breathing</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Lavender</strong> — Calms the body's allergy response</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BetterLungs -->
+        <div class="arp-ing-card">
+          <div class="arp-ing-card__img">
+            <img
+              src="{{ 'arp-betterlungs.webp' | asset_url }}"
+              alt="BetterLungs® capsule bottle"
+              width="600" height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="arp-ing-card__body">
+            <span class="arp-ing-badge">Step 2 — Long-Term Strength</span>
+            <h3 class="arp-h3">BetterLungs<sup>®</sup></h3>
+            <p class="arp-body arp-body--sm" style="margin-bottom: 1.1rem;">
+              BetterLungs<sup>®</sup> works on the inside, <strong>building stronger airways and a calmer immune system</strong> over time. Take it every day and your body gets better at handling allergens.
+            </p>
+            <div class="arp-ing-list">
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>American Ginseng</strong> — Calms your immune system so it stops overreacting to pollen and dust</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Elderberry</strong> — Reduces airway inflammation and supports a balanced immune response</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>French Maritime Pine Bark</strong> — Lowers histamine release and eases swelling in nasal passages</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Red Reishi Mushroom</strong> — Trains your immune system to be less reactive to allergens over time</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Vitamin D</strong> — Strengthens immune defense against seasonal triggers</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>NAC</strong> — Breaks up thick mucus so it drains naturally</span>
+              </div>
+              <div class="arp-ing-item">
+                <span class="arp-ing-item__dot"></span>
+                <span class="arp-ing-item__text"><strong>Mullein</strong> — Soothes inflamed airways and loosens congestion</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arp-together-box">
+        <div class="arp-together-box__title">Together, They Work Better</div>
+        <p class="arp-body arp-body--light" style="max-width: 600px; margin: 0 auto; font-size: 0.95rem;">
+          Reset Sticks give you <strong style="color:#fff;">comfort right now</strong>. BetterLungs<sup>®</sup> builds your <strong style="color:#fff;">strength over time</strong>. Use them together and you get the best shot at breathing easy, even during peak allergy season.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       LIFESTYLE PHOTOS
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" style="background: #ffffff;">
+    <div class="arp-inner">
+      <div class="arp-lifestyle-grid">
+        <div class="arp-lifestyle-item">
+          <img
+            src="{{ 'arp-lifestyle-reset.webp' | asset_url }}"
+            alt="Woman using Reset Sticks outdoors"
+            width="800" height="800"
+            loading="lazy"
+          />
+          <div class="arp-lifestyle-item__text">
+            <div class="arp-lifestyle-item__title">Feel It in Seconds</div>
+            <p class="arp-body arp-body--sm">
+              Open a Reset Stick, hold it under your nose, and breathe slowly. <strong>No waiting, no side effects.</strong>
+            </p>
+          </div>
+        </div>
+        <div class="arp-lifestyle-item">
+          <img
+            src="{{ 'arp-lifestyle-capsules.webp' | asset_url }}"
+            alt="Man holding BetterLungs® capsule bottle in kitchen"
+            width="800" height="800"
+            loading="lazy"
+          />
+          <div class="arp-lifestyle-item__text">
+            <div class="arp-lifestyle-item__title">Build Strength Every Day</div>
+            <p class="arp-body arp-body--sm">
+              Take two BetterLungs<sup>®</sup> capsules each morning. <strong>Stronger, clearer airways start here.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       TRUST BADGES
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section--sm" style="background: #d4e3c9;">
+    <div class="arp-trust-grid">
+      <div class="arp-trust-badge">
+        <div class="arp-trust-badge__icon">🇺🇸</div>
+        <div class="arp-trust-badge__title">Made in USA</div>
+        <div class="arp-trust-badge__sub">Domestic manufacturing</div>
+      </div>
+      <div class="arp-trust-badge">
+        <div class="arp-trust-badge__icon">🔬</div>
+        <div class="arp-trust-badge__title">Lab Tested</div>
+        <div class="arp-trust-badge__sub">3rd party verified</div>
+      </div>
+      <div class="arp-trust-badge">
+        <div class="arp-trust-badge__icon">✅</div>
+        <div class="arp-trust-badge__title">GMP Certified</div>
+        <div class="arp-trust-badge__sub">Made in a US-regulated facility</div>
+      </div>
+      <div class="arp-trust-badge">
+        <div class="arp-trust-badge__icon">🛡️</div>
+        <div class="arp-trust-badge__title">365-Day Guarantee</div>
+        <div class="arp-trust-badge__sub">Risk-free purchase</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       FAQ
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-section" style="background: #b5c9a4;">
+    <div class="arp-inner--narrow">
+      <div class="arp-center" style="margin-bottom: 2.5rem;">
+        <p class="arp-label">Any Questions? We Got You.</p>
+        <h2 class="arp-h2">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="arp-faq-item">
+        <button class="arp-faq-btn" onclick="arpToggleFAQ(this)">
+          <span class="arp-faq-btn__q">How long does it take for BetterLungs<sup>®</sup> to work?</span>
+          <span class="arp-faq-btn__icon">+</span>
+        </button>
+        <div class="arp-faq-answer">
+          <p>Some people notice a little bit of help in the first few days. Most people see real results after about four weeks of taking BetterLungs<sup>®</sup> every day. The longer you take it, the better it works — think of it like building muscle at the gym. You need time and consistency.</p>
+        </div>
+      </div>
+
+      <div class="arp-faq-item">
+        <button class="arp-faq-btn" onclick="arpToggleFAQ(this)">
+          <span class="arp-faq-btn__q">Can I use Reset Sticks and BetterLungs<sup>®</sup> at the same time?</span>
+          <span class="arp-faq-btn__icon">+</span>
+        </button>
+        <div class="arp-faq-answer">
+          <p>Yes! Using them together is the whole idea of the Allergy Relief Protocol. Reset Sticks give you quick relief right now, while BetterLungs<sup>®</sup> builds your strength over time. They work great together and do not interfere with each other.</p>
+        </div>
+      </div>
+
+      <div class="arp-faq-item">
+        <button class="arp-faq-btn" onclick="arpToggleFAQ(this)">
+          <span class="arp-faq-btn__q">Are there any side effects I should know about?</span>
+          <span class="arp-faq-btn__icon">+</span>
+        </button>
+        <div class="arp-faq-answer">
+          <p>Betterbrand products are doctor-formulated to mitigate the chance of side effects. Do not take if you're allergic to any of the ingredients and always check with your doctor before starting a supplement.</p>
+        </div>
+      </div>
+
+      <div class="arp-faq-item">
+        <button class="arp-faq-btn" onclick="arpToggleFAQ(this)">
+          <span class="arp-faq-btn__q">Should I talk to my doctor before starting?</span>
+          <span class="arp-faq-btn__icon">+</span>
+        </button>
+        <div class="arp-faq-answer">
+          <p>If you have a lung condition like asthma or COPD, take blood thinners, are pregnant or breastfeeding, or have any health concerns, please talk to your doctor first. Your doctor knows your full health history and can tell you if these products are right for you.</p>
+        </div>
+      </div>
+
+      <div class="arp-faq-contact">
+        <div>
+          <p class="arp-faq-contact__title">Still have questions?</p>
+          <p class="arp-faq-contact__sub">Our team is here to help.</p>
+        </div>
+        <div class="arp-faq-contact__btns">
+          <a href="tel:18778518979" class="arp-btn-gold">📞 1-877-851-8979</a>
+          <a href="mailto:hello@betterbrandhealth.com" class="arp-btn-ghost">✉ Email Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       FINAL CTA
+  ════════════════════════════════════════════════════ -->
+  <section class="arp-final-cta">
+    <div class="arp-inner--660">
+      <h2 class="arp-final-cta__title">Ready to Breathe Easy?</h2>
+      <p class="arp-body arp-body--light arp-final-cta__sub">
+        Join thousands of people already breathing better with Dr. Chris Jackson's Allergy Relief Protocol. <strong style="color:#fff;">365-day money-back guarantee.</strong>
+      </p>
+      <a href="{{ product_url }}" class="arp-btn-yellow">Get the Protocol</a>
+      <p class="arp-final-cta__note">Free shipping &nbsp;&middot;&nbsp; 365-day money-back guarantee</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════
+       FOOTER / DISCLAIMER
+  ════════════════════════════════════════════════════ -->
+  <div class="arp-footer">
+    <p>&copy; 2026 BetterBrand. All rights reserved.</p>
+    <p class="arp-advert">ADVERTISEMENT</p>
+    <p>This article is a paid advertisement and not an independent news editorial. Statements herein have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary and are not guaranteed. Consult your physician before starting any supplement program, especially if you have a pre-existing medical condition or take medications.</p>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+       STICKY CTA
+  ════════════════════════════════════════════════════ -->
+  <div id="arp-sticky-cta">
+    <a href="{{ product_url }}">Get the Protocol</a>
+  </div>
+
+</div><!-- /.arp-wrap -->
+
+<script>
+  // ── Progress bar + sticky CTA ──────────────────────────────────────────────
+  (function () {
+    var fill = document.getElementById('arp-progress-fill');
+    var cta  = document.getElementById('arp-sticky-cta');
+    var hero = document.getElementById('arp-hero');
+
+    function onScroll() {
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (docH > 0 && fill) fill.style.width = (window.scrollY / docH * 100) + '%';
+
+      if (hero && cta) {
+        var heroBottom = hero.getBoundingClientRect().bottom;
+        if (heroBottom < 0) {
+          cta.classList.add('arp-visible');
+        } else {
+          cta.classList.remove('arp-visible');
+        }
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  // ── Kill Just Uno / Klaviyo / third-party popups ─────────────────────────
+  (function killPopups() {
+    function removePopups() {
+      // Just Uno: outer wrapper div with iswrapper="true" and justunologo attr
+      document.querySelectorAll('[iswrapper="true"]').forEach(function(el) { el.remove(); });
+      document.querySelectorAll('[justunologo]').forEach(function(el) { el.remove(); });
+      // Just Uno by id pattern
+      document.querySelectorAll('[id="inob"], [id^="ju-"], [class*="justuno"]').forEach(function(el) { el.remove(); });
+      // Klaviyo forms
+      document.querySelectorAll('klaviyo-onsite-component, [class*="klaviyo-form"], [class*="kl-private"]').forEach(function(el) { el.remove(); });
+      // Any fixed/absolute overlay covering the page (backdrop)
+      document.querySelectorAll('body > div[style*="position: fixed"][style*="background"]').forEach(function(el) {
+        if (!el.id || !el.id.startsWith('arp-')) el.remove();
+      });
+    }
+
+    // Run immediately and after DOM is ready
+    removePopups();
+    document.addEventListener('DOMContentLoaded', removePopups);
+
+    // Watch for dynamically injected popups
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        m.addedNodes.forEach(function(node) {
+          if (node.nodeType !== 1) return;
+          if (
+            node.getAttribute && (
+              node.getAttribute('iswrapper') === 'true' ||
+              node.hasAttribute('justunologo') ||
+              (node.id && node.id === 'inob') ||
+              (node.className && typeof node.className === 'string' && node.className.includes('justuno')) ||
+              (node.className && typeof node.className === 'string' && node.className.includes('klaviyo'))
+            )
+          ) {
+            node.remove();
+          }
+        });
+      });
+    });
+    observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+  })();
+
+  // ── FAQ accordion ──────────────────────────────────────────────────────────
+  function arpToggleFAQ(btn) {
+    var answer = btn.nextElementSibling;
+    var icon   = btn.querySelector('.arp-faq-btn__icon');
+    var isOpen = answer.classList.contains('arp-faq-answer--open');
+
+    // Close all
+    document.querySelectorAll('.arp-faq-answer').forEach(function(a) {
+      a.classList.remove('arp-faq-answer--open');
+    });
+    document.querySelectorAll('.arp-faq-btn__icon').forEach(function(i) {
+      i.textContent = '+';
+      i.classList.remove('arp-faq-btn__icon--open');
+    });
+
+    // Open clicked (if it was closed)
+    if (!isOpen) {
+      answer.classList.add('arp-faq-answer--open');
+      icon.textContent = '−';
+      icon.classList.add('arp-faq-btn__icon--open');
+    }
+  }
+</script>

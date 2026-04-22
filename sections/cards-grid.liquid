@@ -1,0 +1,448 @@
+<!-- start cards-grid.liquid (SECTION) -->
+
+{% assign collection = section.settings.collection %}
+{% assign splide = section.settings.enable_slider  %}
+
+{% render 'product-card-css' %}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    {% if section.settings.section_background_img != blank %}
+      background: url("{{ section.settings.section_background_img | image_url }}") no-repeat center / cover {{ section.settings.section_background_color }};
+    {% else %}
+      background: {{ section.settings.section_background_color }};
+    {% endif %} 
+    {% if section.settings.enable_custom_padding %}
+      padding: {{ section.settings.vertical_padding }}px {{ section.settings.horizontal_padding }}px;
+    {% else %}
+      padding: 20px 0;
+    {% endif %}
+  }
+  
+  #shopify-section-{{ section.id }} .cards-grid__headines-wrapper {
+    text-align: {{ section.settings.titles_align_desktop }};
+    color: {{ section.settings.headlines_text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .cards-grid__title {
+    font-size: clamp({{ section.settings.min_font_size_title }}px, calc({{ section.settings.min_font_size_title }}px + ({{ section.settings.max_font_size_title }} - {{section.settings.min_font_size_title }}) * ((100vw - 375px) / (1440 - 375))), {{ section.settings.max_font_size_title }}px);
+    font-weight: {{ section.settings.headline_font_weight }};
+    text-transform: {{ section.settings.headline_text_transform }};
+  }
+
+  #shopify-section-{{ section.id }} .cards-grid__subtitle {
+    font-size: clamp({{ section.settings.min_font_size_subtitle }}px, calc({{ section.settings.min_font_size_subtitle }}px + ({{ section.settings.max_font_size_subtitle }} - {{section.settings.min_font_size_subtitle }}) * ((100vw - 375px) / (1440 - 375))), {{ section.settings.max_font_size_subtitle }}px);
+  }
+
+  .cards-grid__headines-wrapper {
+    margin-bottom: 30px;
+  }
+
+  .cards-grid__group .splide__track {
+    padding-bottom: 10px;
+  }
+
+  .cards-grid__button {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 1019px) {
+    #shopify-section-{{ section.id }} {
+      {% if section.settings.enable_custom_padding %}
+        padding: {{ section.settings.vertical_padding_tablet }}px {{ section.settings.horizontal_padding_tablet }}px;
+      {% endif %}
+    }
+  }
+
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} {
+      {% if section.settings.section_background_img != blank %}
+        background-image: url("{{ section.settings.section_background_img_mob | image_url }}");
+      {% endif %}
+      
+      {% if section.settings.enable_custom_padding %}
+        padding: {{ section.settings.vertical_padding_mobile }}px {{ section.settings.horizontal_padding_mobile }}px;
+      {% endif %}
+    }
+
+    #shopify-section-{{ section.id }} .cards-grid__headines-wrapper {
+      text-align: {{ section.settings.titles_align_mobile }};
+    }
+
+    .cards-grid__button {
+      margin-top: 20px;
+    }
+  }
+
+  {% if splide == false %}
+    #shopify-section-{{ section.id }} .cards-grid__list {
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+      gap: 20px 1.7%;
+    }
+
+    #shopify-section-{{ section.id }} .cards-grid__item {
+      width: 23.7%;
+      position: relative;
+    }
+
+    #shopify-section-{{ section.id }} .cards-grid__item:hover .atc-popup {
+      display: block;
+    }
+
+    @media (max-width: 1019px) {
+      #shopify-section-{{ section.id }} .cards-grid__item {
+        width: 32.2%;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #shopify-section-{{ section.id }} .cards-grid__item {
+        width: 49.1%;
+      }
+    }
+  {% endif %}
+
+</style>
+
+<section class="{{section.id}} cards-grid {{ section.settings.custom_class }}">
+  <div class="cards-grid__wrapper wrapper">
+    <div class="cards-grid__headines-wrapper">
+      {% if section.settings.section_title != blank %}
+        <h2 class="cards-grid__title">
+          {{ section.settings.section_title }}{% if collection == "what-students-are-viewing" %}{%- if customer.id != null and customer.orders.size > 0 %}, {{ customer.first_name }}{% endif %}{% endif %}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.section_subtitle != blank %}
+        <div class="cards-grid__subtitle">
+          {{ section.settings.section_subtitle }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="cards-grid__group {% if splide %}splide{% endif %}"
+     {% if splide %}id="splide" {% endif %}
+      >
+     <div {% if splide %}class="splide__track"{% endif %}>
+        <ul class="{% if splide %}splide__list{% endif %} cards-grid__list">
+          {% for product in collection.products, limit: 12 %}
+            <li id="grid-item-{{ forloop.index }}" class="cards-grid__item {% if splide %}splide__slide{% endif %}">
+              {% render 'new-product-card' with 
+                product: product,
+                collection: collection,
+                forloop: forloop
+              %}
+            </li>        
+          {% endfor %}
+        </ul>
+      </div>
+      {% if splide %}
+        {% render 'splide-arrows' %}
+      {% endif %}
+    </div>
+    {% if section.settings.enable_button %}
+      <div class="cards-grid__button">
+        {% render 'redirect-button' with 
+          link_text: section.settings.link_text, 
+          link_href: collection.url, 
+          link_color: section.settings.link_color, 
+          link_color_hover: section.settings.link_color_hover
+        %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if splide %}
+  {% render 'standard-splide-js' %}
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Cards Grid", 
+  "class": "cards-grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class",
+      "info": "Custom class to apply css styles for specific sections"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "section_background_img",
+      "label": "Background Image Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "section_background_img_mob",
+      "label": "Background Image mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider",
+      "label": "Enable Products Slider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_custom_padding",
+      "label": "Enable Custom Padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding",
+      "label": "Horizontal Padding",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "label": "Vertical Padding",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding_tablet",
+      "label": "Horizontal Padding On Tablet",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding_tablet",
+      "label": "Vertical Padding On Tablet",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding_mobile",
+      "label": "Horizontal Padding On Mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding_mobile",
+      "label": "Vertical Padding On Mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Headline Text",
+      "default": "Lorem Ipsum"
+    },
+    {
+      "type": "range",
+      "id": "min_font_size_title",
+      "label": "Minimum Font Size For Title",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "max_font_size_title",
+      "label": "Maximum Font Size For Title",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "richtext",
+      "id": "section_subtitle",
+      "label": "Sub Headline Text",
+      "default": "<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit!</p>"
+    },
+    {
+      "type": "range",
+      "id": "min_font_size_subtitle",
+      "label": "Minimum Font Size For Subitle",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "max_font_size_subtitle",
+      "label": "Maximum Font Size For Subtitle",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "select",
+      "id": "titles_align_desktop",
+      "label": "Titles Alignment on Desktop",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "titles_align_mobile",
+      "label": "Titles Alignment on Mobile",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "headline_text_transform",
+      "label": "Headline Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "headline_font_weight",
+      "label": "Headline Font Weight",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "700"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "headlines_text_color",
+      "label": "Headlines Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_button",
+      "label": "Enable Button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Button Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "link_color_hover",
+      "label": "Button Color On Hover",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cards Grid",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

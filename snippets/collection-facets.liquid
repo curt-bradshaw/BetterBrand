@@ -1,0 +1,596 @@
+<!-- start collection-facets.liquid (SNIPPET) -->
+{% assign highestPrice = 0 %}
+{% assign products_by_price = collection.products | sort: 'price_max' | reverse %}
+
+{% for product in products_by_price limit: 1 %}
+  {% assign highestPrice = product.price_max %}
+{% endfor %}
+
+<div class="collection-facets__wrapper">
+  <h2 class="collection-facets__title no-desktop">{{ 'collection.general.mobile_filter_label' | t }}</h2>
+
+  <div class="collection-facets__scroll">
+    {% assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND'
+      | split: ','
+    %}
+    {% assign uses_comma_decimals = false %}
+    {% if currencies_using_comma_decimals contains cart.currency.iso_code %}
+      {% assign uses_comma_decimals = true %}
+    {% endif %}
+
+    {% assign first_filter_shown = false %}
+
+    {%- for filter in collection.filters -%}
+      {%- case filter.type -%}
+        {%- when 'boolean', 'list' -%}
+          {% unless filter.label == 'Variation' %}
+            <details
+              {% unless first_filter_shown %}
+                open{% assign first_filter_shown = true -%}
+              {% endunless %}
+              class="collection-facets__item collection-facets__item--list"
+            >
+              <summary class="collection-facets__item-summary">
+                <span class="collection-facets__item-title">
+                  {{- filter.label | escape }}
+                </span>
+              </summary>
+
+              <div class="collection-facets__item-values">
+                <fieldset class="collection-facets__item-fieldset">
+                  {%- for filter_value in filter.values -%}
+                    <label class="collection-facets__item-value">
+                      <input
+                        type="checkbox"
+                        class="collection-facets__item-option"
+                        value="{{ filter_value.value }}"
+                        name="{{ filter_value.param_name }}"
+                      >
+                      <span class="collection-facets__item-label">{{ filter_value.label }}</span>
+                    </label>
+                  {%- endfor -%}
+                </fieldset>
+              </div>
+            </details>
+          {% endunless %}
+        {%- when 'price_range' -%}
+          <details
+            open
+            class="collection-facets__item collection-facets__item--price-range"
+          >
+            <summary class="collection-facets__item-summary">
+              <span class="collection-facets__item-title">
+                {{- filter.label | escape }}
+              </span>
+            </summary>
+
+            <div class="collection-facets__item-values">
+              <fieldset class="collection-facets__item-fieldset">
+                <div class="collection-facets__item-box-wrapper">
+                  <div class="collection-facets__sliders-control">
+                    <div class="range-slider-track"></div>
+                    <input type="range" id="slider-1" step="1" min="0" max="{{ highestPrice }}" value="0">
+                    <input
+                      type="range"
+                      id="slider-2"
+                      step="1"
+                      min="0"
+                      max="{{ highestPrice }}"
+                      value="{{ highestPrice | divided_by: 1.2 | floor }}"
+                    >
+                  </div>
+
+                  <label class="collection-facets__item-box">
+                    Min
+                    <input
+                      type="number"
+                      min="0"
+                      name="{{ filter.min_value.param_name }}"
+                      placeholder="0"
+                      class="collection-facets__item-input price-range-min"
+                      {%- if filter.min_value.value -%}
+                        {%- if uses_comma_decimals -%}
+                          value="{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+                        {%- else -%}
+                          value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                        {%- endif %}
+                      {%- endif -%}
+                    >
+                  </label>
+                  <label class="collection-facets__item-box">
+                    Max
+                    <input
+                      type="number"
+                      name="{{ filter.max_value.param_name }}"
+                      class="collection-facets__item-input  price-range-max"
+                      placeholder="{{ highestPrice | divided_by: 100 }}"
+                      {%- if filter.max_value.value -%}
+                        {%- if uses_comma_decimals -%}
+                          value="{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+                        {%- else -%}
+                          value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                        {%- endif %}
+                      {%- endif -%}
+                    >
+                  </label>
+                </div>
+
+                <button class="collection-facets__item-button">Apply</button>
+              </fieldset>
+            </div>
+          </details>
+        {%- when 'list' -%}
+          {% if filter.label == 'Variation' %}
+            <details
+              {% unless first_filter_shown %}
+                open{% assign first_filter_shown = true -%}
+              {% endunless %}
+              class="collection-facets__item collection-facets__item--list"
+            >
+              <summary class="collection-facets__item-summary">
+                <span class="collection-facets__item-title">
+                  {{- filter.label | escape }}
+                </span>
+              </summary>
+
+              <div class="collection-facets__item-values">
+                <fieldset class="collection-facets__item-fieldset collection-facets__item-fieldset--variation">
+                  {% assign variantion_filter_values = filter.values | reverse %}
+                  {%- for filter_value in variantion_filter_values -%}
+                    <label class="collection-facets__item-value">
+                      <input
+                        style="display:none"
+                        type="checkbox"
+                        class="collection-facets__item-option"
+                        value="{{ filter_value.value }}"
+                        name="{{ filter_value.param_name }}"
+                      >
+
+                      <span class="collection-facets__item-label collection-facets__item--variation">
+                        {{- filter_value.label | capitalize -}}
+                      </span>
+                    </label>
+                  {%- endfor -%}
+                </fieldset>
+              </div>
+            </details>
+          {% endif %}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<style scope>
+
+  summary {
+  list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .collection-facets__item-summary {
+    appearance: auto;
+    -webkit-appearance: auto;
+    padding: 21px 0 22px;
+  }
+
+  .collection-facets__item-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .collection-facets__item {
+    border-top: 1px solid #dee2e6;
+  }
+
+  .collection-facets__item-title {
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    display: block;
+    color: #234134;
+    font-family: Bookmania, serif;
+    line-height: 1.5;
+  }
+  span.collection-facets__item-title::after {
+    content: '';
+    position: absolute;
+    right: 9.6px;
+    width: 17px;
+    height: 2px;
+    background-color: #5b734e;
+    top: 12px;
+    transition: ease all 0.6s;
+  }
+  span.collection-facets__item-title::before {
+    content: '';
+    position: absolute;
+    right: 17px;
+    height: 17px;
+    width: 2px;
+    background-color: #5b734e;
+    top: 4px;
+    transition: ease all 0.6s;
+  }
+
+  .collection-facets__item-values {
+    margin: 0 auto 10px;
+  }
+
+  details[open] span.collection-facets__item-title::after {
+    transform: none;
+  }
+
+  details[open] span.collection-facets__item-title::before {
+    transform: rotate(-90deg);
+    transition: ease all 0.6s;
+  }
+
+  details[open] summary ~ * {
+    animation: sweep 0.5s ease-in-out;
+  }
+
+  @keyframes sweep {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .collection-facets__item-fieldset {
+    border: none;
+    position: relative;
+  }
+
+  .collection-facets__item-label {
+    font-size: 18px;
+    word-break: break-word;
+    text-transform: capitalize;
+    color: #595959;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .collection-facets__item-fieldset.collection-facets__item-fieldset--variation .collection-facets__item-label {
+    text-transform: none;
+  }
+
+  .collection-facets__item-value {
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+    cursor: pointer;
+    margin-bottom: 1px;
+  }
+
+  .collection-facets__item-value input[type='checkbox'] {
+    min-width: 15px;
+    min-height: 15px;
+    margin: 0;
+    margin-right: 6px;
+    background: transparent;
+  }
+
+  .collection-facets__item-value:not(:last-child) {
+    margin-bottom: 10px;
+    margin-top: 2px;
+  }
+
+  .collection-facets__item-box-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 0;
+  }
+
+  .collection-facets__sliders-control {
+    width: 100%;
+    position: relative;
+    margin: 9px 0 24px;
+  }
+
+  .collection-facets__item.collection-facets__item--price-range .collection-facets__item-values {
+    margin-bottom: 10px;
+  }
+
+  .collection-facets__item-fieldset--variation {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+
+  .collection-facets__item-fieldset--variation .collection-facets__item-value {
+    margin: 0;
+  }
+
+  .collection-facets__item--variation {
+    padding: 5px 6px 5px 5px;
+    border: 1px solid #4b4b4b99;
+    border-radius: 5.74px;
+    letter-spacing: 0.3px;
+  }
+
+  .collection-facets__item-option:checked + .collection-facets__item--variation {
+    background-color: #565656;
+    color: #ffffff99;
+  }
+
+  input[type='range'] {
+    position: absolute;
+    pointer-events: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    z-index: 2;
+    height: 5px;
+    width: 100%;
+    background-color: transparent;
+  }
+
+  .range-slider-track {
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    background: linear-gradient(to right, #e3e3e3 25%, #a3a3a3 25%, #a3a3a3 75%, #e3e3e3 75%);
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 5px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 6px;
+    width: 6px;
+    background-color: #234134;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 3px #e8e8e8;
+  }
+
+  input[type='range']:active::-webkit-slider-thumb {
+    border: 2px solid #e3e3e3;
+  }
+
+  .collection-facets__item-box {
+    font-size: 16px;
+    display: flex;
+    width: 45%;
+    position: relative;
+    line-height: 1.5;
+    color: #595959;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 5px;
+    font-family: 'SuisseIntlMono', sans-serif;
+    font-weight: 400;
+    margin-left: 7px;
+  }
+  .collection-facets__item-input {
+    width: 91%;
+    height: 30px;
+    border: 1px solid #f5f5f5;
+    background-color: transparent;
+    padding: 6px 5px 5px 9.6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 0;
+    margin-top: 7px;
+  }
+  .collection-facets__item-input::placeholder {
+    color: #234134;
+    font-size: 14px;
+  }
+  .collection-facets__item-button {
+    background: transparent;
+    border: 1px solid #234134;
+    width: 100%;
+    height: 31px;
+    border-radius: 2px;
+    padding: 0 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #234134;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'SuisseIntlMono', sans-serif;
+    line-height: 150%;
+    font-size: 14px;
+  }
+  .collection-facets__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    background: transparent;
+    z-index: 10;
+  }
+
+  .collection-facets__item .collection-facets__item--price-range {
+    margin-top: 10px;
+  }
+
+  @media (max-width: 1019px) {
+    .collection-facets__wrapper {
+      position: relative;
+      height: 100%;
+    }
+    .collection-facets__scroll {
+      padding: 10px 20px 60px;
+      overflow-y: auto;
+      height: 100%;
+    }
+    .collection-facets__title {
+      padding: 10px 20px 10px;
+    }
+    .collection-facets__item-title {
+      font-size: 18px;
+    }
+    .collection-facets__item-value input[type='checkbox'] {
+      min-width: 16px;
+      min-height: 16px;
+      margin-right: 10px;
+    }
+
+    .collection-facets__item-label {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .collection-facets__item-title {
+      font-size: 16px;
+    }
+
+    .collection-facets__item-value input[type='checkbox'] {
+      min-width: 14px;
+      min-height: 14px;
+    }
+
+    .collection-facets__item-label {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<script>
+  const inputSliderOne = document.getElementById('slider-1');
+  const inputSliderTwo = document.getElementById('slider-2');
+
+  const inputMin = document.querySelector('.collection-facets__item-input.price-range-min');
+  const inputMax = document.querySelector('.collection-facets__item-input.price-range-max');
+
+  const highestPrice = parseInt('{{ highestPrice }}', 10); // ex: 9999
+  const minGap = Math.floor(highestPrice / 10);
+
+  const maxDisplayValue = Math.ceil(highestPrice / 100); // ex: 100
+
+  const sliderTrack = document.querySelector('.range-slider-track');
+  const sliderMaxValue = parseInt(inputSliderOne.max, 10);
+
+  inputSliderOne.value = 0;
+  inputSliderTwo.value = highestPrice;
+
+  inputMin.value = 0;
+  inputMax.value = maxDisplayValue;
+
+  fillColor();
+
+  /* =========================
+     SLIDERS → INPUTS
+     ========================= */
+  function slideOne() {
+    let min = parseInt(inputSliderOne.value, 10);
+    let max = parseInt(inputSliderTwo.value, 10);
+
+    if (max - min < minGap) {
+      inputSliderOne.value = max - minGap;
+      min = parseInt(inputSliderOne.value, 10);
+    }
+
+    updateTextInputs();
+    fillColor();
+  }
+
+  function slideTwo() {
+    let min = parseInt(inputSliderOne.value, 10);
+    let max = parseInt(inputSliderTwo.value, 10);
+
+    if (max - min < minGap) {
+      inputSliderTwo.value = min + minGap;
+      max = parseInt(inputSliderTwo.value, 10);
+    }
+
+    updateTextInputs();
+    fillColor();
+  }
+
+  /* =========================
+     INPUTS → SLIDERS
+     ========================= */
+  function updateFromInputs(event) {
+    let minVal = parseInt(inputMin.value, 10);
+    let maxVal = parseInt(inputMax.value, 10);
+
+    minVal = isNaN(minVal) ? 0 : Math.max(0, minVal);
+    maxVal = isNaN(maxVal) ? maxDisplayValue : Math.min(maxDisplayValue, maxVal);
+
+    let minCents = minVal * 100;
+    let maxCents = maxVal * 100;
+
+    if (maxCents - minCents < minGap) {
+      if (event.target === inputMin) {
+        minCents = Math.max(0, maxCents - minGap);
+      } else {
+        maxCents = Math.min(highestPrice, minCents + minGap);
+      }
+    }
+
+    inputSliderOne.value = minCents;
+    inputSliderTwo.value = Math.min(maxCents, highestPrice);
+
+    updateTextInputs();
+    fillColor();
+  }
+
+  function updateTextInputs() {
+    inputMin.value = Math.floor(inputSliderOne.value / 100);
+    inputMax.value = Math.round(inputSliderTwo.value / 100);
+  }
+
+  /* =========================
+     TRACK COLOR
+     ========================= */
+  function fillColor() {
+    const percentMin = (inputSliderOne.value / sliderMaxValue) * 100;
+    const percentMax = (inputSliderTwo.value / sliderMaxValue) * 100;
+
+    sliderTrack.style.background = `
+      linear-gradient(
+        to right,
+        #FFFFFF ${percentMin}%,
+        #DAC9B8 ${percentMin}%,
+        #DAC9B8 ${percentMax}%,
+        #FFFFFF ${percentMax}%
+      )
+    `;
+  }
+
+  /* =========================
+     EVENTOS
+     ========================= */
+  inputSliderOne.addEventListener('input', slideOne);
+  inputSliderTwo.addEventListener('input', slideTwo);
+
+  inputMin.addEventListener('change', updateFromInputs);
+  inputMax.addEventListener('change', updateFromInputs);
+</script>

@@ -1,0 +1,175 @@
+{% schema %}
+{
+  "name": "BAD Info Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image_desktop",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background Image (Mobile)"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "profile_image",
+      "label": "Profile Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "content",
+      "label": "Content Text"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image",
+      "label": "Icons Under CTA"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_2",
+      "label": "Icons Under CTA 2"
+    },
+    {
+      "type": "text",
+      "id": "cta_lower_text_1",
+      "label": "Text Under CTA 1",
+      "default": "365-Day Money Back Guarantee*"
+    },
+    {
+      "type": "text",
+      "id": "cta_lower_text_2",
+      "label": "Text Under CTA 2",
+      "default": "Free Shipping*"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD Info Section"
+    }
+  ]
+}
+{% endschema %}
+
+{% assign unique_class = 'BAD-custom-about-section-' | append: section.id %}
+
+<style>
+  .{{ unique_class }} {
+    background-color: {{ section.settings.background_color }};
+    background-size: cover;
+    background-position: center;
+    padding: 50px;
+    text-align: left;
+  }
+
+  .{{ unique_class }} .BAD-info-container {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .{{ unique_class }} h2 {
+    font-family: 'Bookmania', serif;
+    text-shadow: 0px 4px 4px rgba(242, 203, 73, 0.14);
+    font-size: 27px;
+    color: {{ section.settings.text_color }};
+  }
+
+  @media (min-width: 768px) {
+    {% if section.settings.background_image_desktop %}
+    .{{ unique_class }} {
+      background-image: url({{ section.settings.background_image_desktop | img_url: 'master' }});
+    }
+    {% endif %}
+  }
+
+  @media (max-width: 767px) {
+    .{{ unique_class }} {
+      padding: 10px;
+    }
+    {% if section.settings.background_image_mobile %}
+    .{{ unique_class }} {
+      background-image: url({{ section.settings.background_image_mobile | img_url: 'master' }});
+    }
+    {% endif %}
+
+    .{{ unique_class }} h2 {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .{{ unique_class }} .BAD-info-container {
+      flex-direction: column;
+    }
+  }
+
+  .{{ unique_class }} p {
+    font-family: 'Suisse Intl Mono', monospace;
+    font-size: 16px;
+    color: {{ section.settings.text_color }};
+    white-space: pre-line;
+  }
+
+  .{{ unique_class }} .BAD-profile-img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+  }
+</style>
+
+<section class="{{ unique_class }} page-width">
+  <h2>{{ section.settings.heading }}</h2>
+  <div class="BAD-info-container">
+    {% if section.settings.profile_image %}
+      <img src="{{ section.settings.profile_image | img_url: 'large' }}" alt="Profile Image" class="BAD-profile-img">
+    {% endif %}
+    <p class="page-width">{{ section.settings.content }}</p>
+  </div>
+  {% if section.settings.cta_text != blank %}
+    <div class="BAD-cta-wrapper page-width">
+      <a href="{{ section.settings.cta_url }}" class="BAD-cta-button" style="align-self:center;text-align:center;">
+        {{- section.settings.cta_text -}}
+      </a>
+      <div style="display:flex;justify-content:center;padding-top: 5px;gap:10px;">
+        <div style="display:flex;align-items:center;gap:5px;">
+          <img src="{{ section.settings.icon_image | img_url: '600x600' }}" alt="Product Image" class="cta-icons">
+          <p class="BAD-cta-info-text">{{ section.settings.cta_lower_text_1 }}</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <img src="{{ section.settings.icon_image_2 | img_url: '600x600' }}" alt="Product Image" class="cta-icons">
+          <p class="BAD-cta-info-text">{{ section.settings.cta_lower_text_2 }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</section>

@@ -1,0 +1,185 @@
+{% schema %}
+{
+  "name": "BAD Comparison Table",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Column Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Column Image"
+    },
+
+    {
+      "type": "textarea",
+      "id": "productTitle",
+      "label": "Product Title"
+    },
+    {
+      "type": "textarea",
+      "id": "left_features",
+      "label": "Left Column Features (comma-separated)",
+      "default": "3rd Party Tested, Purity & Potency Tested, Heavy Metal Tested, Bacteria & Mold Tested, 1st & Only 7-in-1 Complex, No Fake Colors or Dyes, Research Backed, Manufactured in USA"
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD Comparison Table"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .BAD-comparison-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .BAD-comparison-table h2 {
+    font-family: 'Bookmania', serif;
+    text-shadow: 0px 4px 4px rgba(242, 203, 73, 0.14);
+    font-size: 27px;
+    color: #234134;
+  }
+  .BAD-table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .BAD-column {
+    flex: 1;
+    padding: 20px;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .BAD-left {
+    background-color: #EAF7E1;
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 20px;
+    z-index: 2;
+  }
+
+  .BAD-right {
+    border: 1px solid #000;
+    border-radius: 15px;
+    padding: 20px;
+    transform: translateX(-65px);
+  }
+
+  .BAD-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  .BAD-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+  }
+
+  .BAD-list li {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .BAD-check {
+    color: green;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .BAD-xmark {
+    color: #A94442;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .BAD-image {
+    max-width: 100px;
+    margin-bottom: 10px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .BAD-column {
+      font-size: 12px;
+      min-width: 185px;
+    }
+
+      .BAD-image {
+        width: 40px;
+  }
+
+    .BAD-comparison-table h2 {
+      font-size: 20px;
+    }
+
+
+    .BAD-table {
+    flex-wrap: nowrap;
+    }
+
+     .BAD-right {
+    transform: translateX(-17px);
+  }
+    .BAD-left {
+    transform: translateX(17px);
+  }
+
+    .BAD-list li {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<section class="BAD-comparison-table page-width">
+  <h2>What Makes Betterbrand Better?</h2>
+  <div class="BAD-table">
+    <!-- Left Column -->
+    <div class="BAD-column BAD-left">
+      {% if section.settings.left_image %}
+        <img src="{{ section.settings.left_image | img_url: 'large' }}" alt="Product Image" class="BAD-image">
+      {% endif %}
+      <h3 class="BAD-title">{{ section.settings.productTitle }}</h3>
+      <ul class="BAD-list">
+        {% assign features = section.settings.left_features | split: ',' %}
+        {% for feature in features %}
+          <li><span class="BAD-check">✔</span> {{ feature | strip }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Right Column -->
+    <div class="BAD-column BAD-right">
+      {% if section.settings.right_image %}
+        <img src="{{ section.settings.right_image | img_url: 'large' }}" alt="Competitor Image" class="BAD-image">
+      {% endif %}
+      <h3 class="BAD-title">Others</h3>
+      <ul class="BAD-list">
+        {% for feature in features %}
+          <li>
+            <span class="BAD-xmark">✖</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>

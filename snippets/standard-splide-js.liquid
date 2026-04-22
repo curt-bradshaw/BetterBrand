@@ -1,0 +1,40 @@
+<!-- START standard-splide-js (SNIPPET) -->
+<script type="lazyload_int">
+  setTimeout(function () {
+    const splides = document.querySelectorAll('.splide');
+    splides.forEach(function (el) {
+      const splide = new Splide(el, {
+        type: 'loop',
+        perPage: 4.5,
+        perMove: 4,
+        pagination: false,
+        breakpoints: {
+          1019: {
+            perPage: 3.5,
+            perMove: 3
+          },
+          767: {
+            perPage: 2,
+            perMove: 1,
+            type: 'slide'
+          },
+          479: {
+            perPage: 1,
+            perMove: 1,
+            drag: 'free'
+          }
+        }
+      });
+      splide.mount();
+
+      const tabTitles = document.querySelectorAll('.tabs-slider__tab-title');
+      tabTitles.forEach(function (tabTitle) {
+        tabTitle.addEventListener('click', () => {
+          setTimeout(function(){
+            splide.refresh();
+          });
+        })
+      })
+    });
+  });
+</script>

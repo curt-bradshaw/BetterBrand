@@ -1,0 +1,496 @@
+<!-- start collection-banner.liquid (SNIPPET) -->
+
+{%- assign show_banner = section.settings.img_banner -%}
+{%- assign enabled_remove_feature_image = settings.enabled_collection_featured_image_filter -%}
+{%- assign handles_list = settings.collection_featured_image_filter -%}
+{%- assign collections_title = handles_list | split: ';' -%}
+{%- assign handle_array = '' -%}
+
+{%- for title in collections_title -%}
+  {%- assign handled_title = title | handleize -%}
+  {%- assign handle_array = handle_array | join: ';' -%}
+  {%- assign handle_array = handle_array | append: ';' | append: handled_title -%}
+  {%- assign handle_array = handle_array | split: ';' -%}
+{%- endfor -%}
+
+{%- if settings.enabled_collection_featured_image
+  and handle_array contains collection.handle
+  and handles_list != blank
+  and enabled_remove_feature_image
+-%}
+  {%- assign show_banner = false -%}
+{%- endif -%}
+
+{%- assign banner_image = collection.image -%}
+{%- if banner_image == blank and section.settings.default_collection_banner != blank -%}
+  {%- assign banner_image = section.settings.default_collection_banner -%}
+{%- endif -%}
+
+<style>
+  #shopify-section-{{ section.id }} .collection-banner__header-group {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+
+    {% if section.settings.align_by_right_margin_desktop %}
+      right: {{ section.settings.titles_position_horizontal_desktop }}%;
+    {% else %}
+      left: {{ section.settings.titles_position_horizontal_desktop }}%;
+    {% endif %}
+
+    {% if section.settings.align_by_right_margin_desktop %}
+      bottom: {{ section.settings.titles_position_vertical_desktop }}%;
+    {% else %}
+      top: {{ section.settings.titles_position_vertical_desktop }}%;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .collection-banner__title {
+    color: {{ section.settings.title_collection_color }};
+    font-size: {{ section.settings.font_size_title_desktop }}px;
+    margin-bottom: 5px;
+    font-family: Bookmania, serif;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  #shopify-section-{{ section.id }} .collection-banner__description p {
+    color: {{ section.settings.subtitle_collection_color }};
+    font-size: {{ section.settings.font_size_subtitle_desktop }}px;
+    font-family: "SuisseIntlMono", sans-serif;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 1019px) {
+    #shopify-section-{{ section.id }} .collection-banner__header-group {
+      width: {{ section.settings.text_box_width_tablet }}%;
+
+      {% if section.settings.align_by_right_margin_tablet %}
+        right: {{ section.settings.titles_position_horizontal_tablet }}%;
+      {% else %}
+        left: {{ section.settings.titles_position_horizontal_tablet }}%;
+      {% endif %}
+
+      {% if section.settings.align_by_right_margin_tablet %}
+        bottom: {{ section.settings.titles_position_vertical_tablet }}%;
+      {% else %}
+        top: {{ section.settings.titles_position_vertical_tablet }}%;
+      {% endif %}
+    }
+  }
+
+  @media (max-width: 767px){
+    #shopify-section-{{ section.id }} .collection-banner__header-group {
+      width: {{ section.settings.text_box_width_mobile }}%;
+
+      {% if section.settings.align_by_right_margin_mobile %}
+        right: {{ section.settings.titles_position_horizontal_mobile }}%;
+      {% else %}
+        left: {{ section.settings.titles_position_horizontal_mobile }}%;
+      {% endif %}
+
+      {% if section.settings.align_by_right_margin_mobile %}
+        bottom: {{ section.settings.titles_position_vertical_mobile }}%;
+      {% else %}
+        top: {{ section.settings.titles_position_vertical_mobile }}%;
+      {% endif %}
+    }
+
+    #shopify-section-{{ section.id }} .collection-banner__description p {
+    font-size: 14px;
+  }
+  }
+</style>
+
+<style scoped>
+    .collection-banner-wrapper {
+      position: relative;
+      height: 357px;
+    }
+
+    .collection-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.29), rgba(0, 0, 0, 0.29)),
+        radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(10, 29, 23, 0.72) 100%);
+    }
+
+    .collection-banner {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .collection-banner__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .collection-banner__header-group {
+    padding-left: 6px;
+    line-height: 1.2;
+  }
+
+  .collection-banner__title {
+    margin-top: 1px;
+    line-height: 30px;
+    text-shadow: 0px 0px 5px #000000;
+  }
+
+  .collection-banner__description {
+    line-height: 30px;
+    text-shadow: 0px 0px 5px #000000;
+  }
+
+  .collection-page__title-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  body .collection-page__title {
+    color: #FFF;
+    text-align: center;
+  }
+
+  /* =========================
+     Trusted Banner
+  ========================= */
+
+  .trusted-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #234134;
+  }
+
+  .trusted-banner__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 130px;
+    gap: 10px;
+  }
+
+  .trusted-banner__img {
+    width: 71px;
+    height: 33px;
+  }
+
+  .trusted-banner__text p {
+    font-family: "SuisseIntlMono", sans-serif;
+    font-size: 16px;
+    color: #FFFFFF;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  /* =========================
+     UVP Banner
+  ========================= */
+
+  .uvp-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #F0FFE9;
+  }
+
+  .uvp-banner__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 25px 20px;
+  }
+
+  .uvp-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .uvp-item__image {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+  }
+
+  .uvp-item__text {
+    font-family: "SuisseIntlMono", sans-serif;
+    font-size: 20px;
+    color: #234134;
+    font-weight: 400;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: normal;
+    word-break: break-word;
+    overflow: visible;
+  }
+
+  /* =========================
+     Desktop (≥ 1281px)
+  ========================= */
+
+  @media (min-width: 1281px) {
+    body
+      #shopify-section-{{ section.id }}
+      .collection-description__text.see-more.see-more:not(.collection-description__text--opened) {
+      padding: 0;
+    }
+
+    .collection-page__title,
+    .collection-description {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .uvp-banner__content {
+      gap: 20px;
+    }
+  }
+
+  /* =========================
+     Tablet (768px – 1019px)
+  ========================= */
+
+  @media (max-width: 1019px) and (min-width: 768px) {
+    .collection-banner__title {
+      margin: 0;
+      line-height: 33px;
+      font-size: 32px !important;
+    }
+
+    .collection-page__title {
+      color: #FFF;
+    }
+
+    .collection-banner-wrapper {
+      position: relative;
+      height: 300px;
+    }
+
+    .collection-banner__description {
+      line-height: 30px;
+    }
+
+    .collection-banner__image {
+      top: 1px;
+    }
+
+    .trusted-banner {
+      height: 63px;
+    }
+
+    .trusted-banner__text p {
+      font-size: 16px;
+    }
+
+    .uvp-banner__content {
+      padding: 25px 20px;
+      gap: 30px;
+    }
+
+    .uvp-item {
+      gap: 8px;
+    }
+
+    .uvp-item__text {
+      font-size: 13px;
+      line-height: 1;
+      text-align: center;
+      width: max-content;
+    }
+
+    .uvp-item__image {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  /* =========================
+     Mobile (≤ 767px)
+  ========================= */
+
+  @media (max-width: 767px) {
+    .collection-banner-wrapper {
+      position: relative;
+      overflow: hidden;
+      height: 170px;
+    }
+
+    .collection-banner__image {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .collection-banner__title {
+      line-height: 26px;
+      margin: 0;
+      font-size: 28px !important;
+    }
+
+    .collection-banner__description {
+      line-height: 100%;
+      margin: 0;
+    }
+
+    .collection-banner__description:nth-child(2) {
+      position: relative;
+      bottom: 1px;
+    }
+
+    .trusted-banner {
+      height: 48px;
+    }
+
+    .trusted-banner__content {
+      padding: 18px 20px;
+    }
+
+    .trusted-banner__text p {
+      font-size: 12px;
+    }
+
+    .trusted-banner__img {
+      width: 65px;
+      height: 28px;
+    }
+
+    .uvp-banner {
+      padding: 15px 0;
+    }
+
+    .uvp-banner__content {
+      flex-wrap: wrap;
+      padding: 0 20px;
+      gap: 0px 15px;
+    }
+
+    .uvp-item {
+      flex: 0 0 calc(50% - 8px);
+      max-width: calc(50% - 8px);
+      gap: 5px;
+      text-align: center;
+    }
+
+    .uvp-item:nth-child(n+3) {
+      margin-top: 5px;
+    }
+
+    .uvp-item__image {
+      width: 35px;
+      height: 35px;
+    }
+
+    .uvp-item__text {
+      font-size: 12px;
+      line-height: 1.3;
+      text-align: center;
+      word-break: break-word;
+    }
+  }
+
+  /* =========================
+     Small Mobile (≤ 480px)
+  ========================= */
+
+  @media (max-width: 480px) {
+    .uvp-banner__content {
+      gap: 0px;
+      padding: 0 20px;
+      justify-content: center;
+    }
+
+    .uvp-item {
+      flex: 0 0 calc(50% - 5px);
+      max-width: calc(50% - 8px);
+      gap: 8px;
+      padding: 8px 3px;
+      justify-content: flex-start;
+    }
+
+    .uvp-item__image {
+      width: 31px;
+      height: 31px;
+    }
+
+    .uvp-item__text {
+      font-size: 9px;
+      text-align: left;
+    }
+  }
+</style>
+
+{%- if settings.enabled_collection_featured_image and show_banner and banner_image != blank -%}
+  <div class="collection-banner-wrapper">
+    <div class="collection-banner">
+      {%- assign image_desktop_width = 1440 -%}
+      {%- assign image_desktop_height = image_desktop_width -%}
+
+      {{
+        banner_image
+        | image_url: width: image_desktop_width, height: image_desktop_height
+        | image_tag: class: 'collection-banner__image'
+      }}
+    </div>
+
+    <div class="collection-banner__header-group">
+      <h2 class="collection-banner__title">{{ collection.title }}</h2>
+      <div class="collection-banner__description">{{ collection.description }}</div>
+    </div>
+  </div>
+
+  <div class="trusted-banner">
+    <div class="trusted-banner__content">
+      <div class="trusted-banner__img">
+        <img src="{{ section.settings.trusted_image | img_url: '' }}" alt="">
+      </div>
+      <div class="trusted-banner__text">
+        <p>{{ section.settings.trusted_text }}</p>
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_uvp_banner and section.blocks.size > 0 -%}
+    <div class="uvp-banner">
+      <div class="uvp-banner__content">
+        {%- for block in section.blocks -%}
+          {% if block.type == 'uvp_item' %}
+          <div class="uvp-item">
+            {% if block.settings.uvp_image != blank %}
+              <img class="uvp-item__image" src="{{ block.settings.uvp_image | img_url: '100x100' }}">
+            {% endif %}
+            <div class="uvp-item__text">{{ block.settings.uvp_text }}</div>
+          </div>
+          {% endif %}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}

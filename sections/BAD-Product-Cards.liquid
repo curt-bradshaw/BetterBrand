@@ -1,0 +1,243 @@
+{% schema %}
+{
+  "name": "BAD Product Cards",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "textarea",
+      "id": "sectionHeading",
+      "label": "Section Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "sectionSubHeading",
+      "label": "SubHeading"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "selected_product",
+          "label": "Select Product"
+        },
+        {
+          "type": "color",
+          "id": "card_top_bg_color",
+          "label": "Card Top Background Color",
+          "default": "#204e32"
+        },
+        {
+          "type": "text",
+          "id": "card_top_text",
+          "label": "Card Top Heading",
+          "default": "Special Offer"
+        },
+        {
+          "type": "color",
+          "id": "card_bg_color",
+          "label": "Card Background Color",
+          "default": "#f5fbe5"
+        },
+        {
+          "type": "text",
+          "id": "card_heading",
+          "label": "Card Heading",
+          "default": "1 Month Supply - Subscribe and Save"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Custom Product Image (Optional - Defaults to Shopify Image)"
+        },
+        {
+          "type": "textarea",
+          "id": "image_description",
+          "label": "Text Below Image"
+        },
+        {
+          "type": "html",
+          "id": "html_section",
+          "label": "HTML Content Below Image"
+        },
+        {
+          "type": "text",
+          "id": "total_price_text",
+          "label": "Your Total Today Text",
+          "default": "YOUR TOTAL TODAY"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA Button Text",
+          "default": "TRY BETTERLUNGS"
+        },
+        {
+          "type": "color",
+          "id": "cta_bg_color",
+          "label": "CTA Button Background Color",
+          "default": "#ffcc00"
+        },{
+          "type": "text",
+          "id": "productId",
+          "label": "Select Product ID"
+        },
+        {
+          "type": "text",
+          "id": "selling_plan",
+          "label": "Selling Plan ID (Optional)"
+        },
+        {
+          "type": "html",
+          "id": "html_section_2",
+          "label": "HTML Content Below CTA"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD Product Cards",
+      "blocks": [
+        { "type": "product_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+   .BAD-product-cards {
+     display: flex;
+     padding: 0px 10px;
+     flex-wrap: wrap;
+     flex-direction: column;
+     gap: 20px;
+     justify-content: center;
+     background-color: {{ section.settings.section_bg_color }};
+   }
+
+   .BAD-product-cards h2 {
+     color: var(--Bottle-Green, #234134);
+     text-align: center;
+     font-family: bookmania;
+     font-size: 27px;
+     font-weight: 700;
+   }
+
+   .BAD-product-cards p {
+     color: var(--Bottle-Green, #234134);
+     text-align: center;
+     font-family: "suisse_intl_mono";
+     font-size: 12px;
+   }
+
+   .BAD-product-card {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     width: 100%;
+     max-width: 400px;
+     border-radius: 10px;
+     border: 1px solid black;
+     overflow: hidden;
+   }
+
+   .BAD-card-top {
+     padding: 10px;
+     text-align: center;
+     color: white;
+     font-weight: bold;
+   }
+
+   .BAD-card-content {
+     padding: 20px;
+     display: flex;
+     flex: 1;
+     flex-direction: column;
+     justify-content: space-between;
+     align-items: center;
+   }
+
+   .BAD-cta-button {
+     width: 100%;
+     text-align: center;
+     padding: 10px;
+     color: white;
+     font-weight: bold;
+     border-radius: 5px;
+     text-decoration: none;
+   }
+
+  .BAD-Product-Cards-wrapper {
+       display:flex;justify-content:center;gap:40px; flex-direction: row;
+  }
+
+  @media only screen and (max-width: 900px) {
+     .BAD-Product-Cards-wrapper {
+       flex-direction: column;
+       align-items: center;
+     }
+
+    .BAD-product-cards h2 { font-size: 20px;}
+
+  }
+</style>
+
+<section class="BAD-product-cards">
+  <div style="display:flex;justify-content:center;flex-direction:column;">
+    <h2>{{ section.settings.sectionHeading }}</h2>
+    {% if section.settings.sectionSubHeading != blank %}
+      <p class="BAD-cards-subHead">
+        🚨 {{ 'now' | date: '%B' }}
+        {{ section.settings.sectionSubHeading }}
+      </p>
+    {% endif %}
+  </div>
+  <div class="BAD-Product-Cards-wrapper" id="productCards">
+    {% for block in section.blocks %}
+      {% assign product = all_products[block.settings.selected_product] %}
+      {% assign first_variant = product.variants | first %}
+      <div class="BAD-product-card" style="background-color: {{ block.settings.card_bg_color }};">
+        {% if block.settings.card_top_text != blank %}
+          <div class="BAD-card-top" style="background-color: {{ block.settings.card_top_bg_color }};">
+            ⭐️ {{ 'now' | date: '%B' }}
+            {{ block.settings.card_top_text }}
+          </div>
+        {% endif %}
+        <div class="BAD-card-content">
+          <h2>{{ block.settings.card_heading }}</h2>
+          {% if block.settings.product_image %}
+            <img src="{{ block.settings.product_image | img_url: 'master' }}" alt="Product Image">
+          {% elsif product %}
+            <img src="{{ first_variant.featured_image | img_url: 'master' }}" alt="{{ product.title }}">
+          {% endif %}
+          <p style="margin-top:10px;">{{ block.settings.image_description }}</p>
+          <div>{{ block.settings.html_section }}</div>
+          <div style="text-align: center; color: #000;">
+            <p style="font-size: 23px; font-weight: 700;">
+              {{ block.settings.total_price_text }}
+            </p>
+            <p style="font-size: 23px; font-weight: 700;">
+              {% if first_variant.compare_at_price > product.price %}
+                <s>{{ first_variant.compare_at_price | money }}</s> {{ first_variant.price | money }}
+              {% else %}
+                {{ first_variant.price | money }}
+              {% endif %}
+            </p>
+          </div>
+          {% render 'landing-buttons', block: block %}
+          <div>{{ block.settings.html_section_2 }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

@@ -1,0 +1,524 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.old-layout",
+  "sections": {
+    "shogun-helper": {
+      "type": "shogun-helper",
+      "disabled": true,
+      "settings": {}
+    },
+    "shogun-optimizer": {
+      "type": "shogun-optimizer",
+      "disabled": true,
+      "settings": {}
+    },
+    "image_banner_nynm_hMfDV8": {
+      "type": "image-banner-nynm",
+      "blocks": {
+        "liquid_JrCYTw": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<div class=\"let-svg-main\">\n<div style=\"display:flex\">\n<div>\n<svg width=\"95\" height=\"110\" viewBox=\"0 0 95 110\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M26.2393 2L26.835 2.87207L64.1084 57.4404V2H92.6729V107.84H68.7373L68.1416 106.975L30.6143 52.5488V107.84H2V2H26.2393Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"79\" height=\"110\" viewBox=\"0 0 79 110\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M77.0098 2V25.9902H30.6143V42.875H73.3789V66.915H30.6143V83.8496H77.0098V107.84H2V2H77.0098Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"155\" height=\"110\" viewBox=\"0 0 155 110\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M34.1221 2L34.4795 3.55078L48.4189 64.0928L64.3604 3.49121L64.7529 2H90.0156L90.4072 3.49219L106.35 64.2373L120.338 3.55078L120.695 2H152.101L151.357 4.55762L121.771 106.397L121.352 107.84H94.6387L94.2129 106.409L77.3828 49.7637L60.5537 106.409L60.1289 107.84H33.4658L33.0469 106.398L3.41016 4.55859L2.66504 2H34.1221Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n&nbsp;&nbsp;&nbsp;\n</div>\n<div>\n⁨<svg width=\"113\" height=\"110\" viewBox=\"0 0 113 110\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M35.4883 2L36.0439 3.09766L56.2373 43.0664L76.4316 3.09766L76.9863 2H109.096L107.469 4.96289L70.4707 72.3389V107.84H42.0049V72.3389L5.00684 4.96289L3.37988 2H35.4883Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"79\" height=\"110\" viewBox=\"0 0 79 110\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M77.0098 2V25.9902H30.6143V42.875H73.3789V66.915H30.6143V83.8496H77.0098V107.84H2V2H77.0098Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"113\" height=\"110\" viewBox=\"0 0 113 110\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M74.1377 2L74.5967 3.36035L108.958 105.2L109.849 107.84H79.1396L78.7002 106.438L72.4268 86.457H40.1943L33.9346 106.438L33.4951 107.84H2.78613L3.67578 105.2L38.0371 3.36035L38.4961 2H74.1377ZM47.3057 63.7598H65.3008L56.293 35.0723L47.3057 63.7598Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"94\" height=\"110\" viewBox=\"0 0 94 110\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M46.0684 2C53.9313 2 60.8304 3.41862 66.7002 6.33594H66.6992C72.5962 9.21685 77.1854 13.3888 80.4082 18.8408L80.7061 19.3525C83.7362 24.6732 85.2138 30.8837 85.2139 37.9131C85.2139 45.2686 83.6059 51.6548 80.2861 56.9736L80.2832 56.9785C77.362 61.6273 73.3618 65.2868 68.335 67.9629L88.4512 104.883L90.0625 107.84H58.6436L58.0791 106.782L40.0234 72.9814H30.6143V107.84H2V2H46.0684ZM30.6143 49.5879H40.748C44.304 49.5879 47.1401 49.1252 49.3252 48.2803C51.5079 47.4162 53.0548 46.1703 54.0879 44.5811C55.1152 42.9678 55.7041 40.7903 55.7041 37.9131C55.7041 35.0306 55.113 32.8254 54.0723 31.1709L54.0645 31.1592C53.0181 29.469 51.4632 28.1702 49.291 27.2842L49.2812 27.2793L49.2705 27.2754C47.0659 26.3471 44.2481 25.8408 40.748 25.8408H30.6143V49.5879Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n&nbsp;&nbsp;&nbsp;\n</div>\n<div>\n<svg width=\"96\" height=\"112\" viewBox=\"0 0 96 112\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M26.5498 2L27.1455 2.87207L65.0186 58.3184V2H93.9434V109.332H69.7021L69.1055 108.468L30.9756 53.167V109.332H2V2H26.5498Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"81\" height=\"112\" viewBox=\"0 0 81 112\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M78.0498 2V26.2832H30.9756V43.4746H74.3672V67.8076H30.9756V85.0498H78.0498V109.332H2V2H78.0498Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"157\" height=\"112\" viewBox=\"0 0 157 112\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M34.5205 2L34.8779 3.55078L49.0488 65.0967L65.2539 3.49121L65.6465 2H91.2344L91.626 3.49219L107.832 65.2441L122.052 3.55078L122.409 2H154.213L153.47 4.55762L123.449 107.891L123.03 109.332H95.9688L95.5439 107.902L78.4395 50.3311L61.335 107.902L60.9102 109.332H33.9004L33.4814 107.892L3.41016 4.55859L2.66504 2H34.5205Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n&nbsp;&nbsp;&nbsp;\n</div>\n<div>\n<svg width=\"124\" height=\"112\" viewBox=\"0 0 124 112\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M36.2705 2L36.7793 3.24121L61.7705 64.1816L86.7627 3.24121L87.2725 2H121.543V109.332H93.2227V52.1934L71.4014 107.411L70.9014 108.677H52.6387L52.1396 107.408L30.3193 51.8818V109.332H2V2H36.2705Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n<svg width=\"81\" height=\"112\" viewBox=\"0 0 81 112\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M78.0498 2V26.2832H30.9756V43.4746H74.3672V67.8076H30.9756V85.0498H78.0498V109.332H2V2H78.0498Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"white\" stroke-width=\"4\"/>\n</svg>\n&nbsp;&nbsp;&nbsp;\n</div>\n</div>\n</div>",
+            "liquid_mob": "<div class=\"let-svg-main\">\n<div style=\"display:flex\">\n\n<div>\n<svg width=\"43\" height=\"49\" viewBox=\"0 0 43 49\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M12.0596 1.1496L12.4014 1.65155L27.9834 24.4631V1.1496H40.8975V47.4504H30.1201L29.7773 46.9523L14.085 24.1935V47.4504H1.14941V1.1496H12.0596Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"36\" height=\"49\" viewBox=\"0 0 36 49\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M34.1299 1.1496V12.0871H14.085V18.8098H32.5615V29.7687H14.085V36.5129H34.1299V47.4504H1.14941V1.1496H34.1299Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"69\" height=\"49\" viewBox=\"0 0 69 49\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M15.7319 1.1496L15.938 2.04218L21.6997 27.0676L28.2925 2.00702L28.5181 1.1496H39.8735L40.0991 2.008L46.6919 27.1301L52.4751 2.04218L52.6812 1.1496H66.8579L66.4312 2.62128L53.6479 46.6213L53.4067 47.4504H41.437L41.1929 46.6271L34.1958 23.0754L27.1987 46.6271L26.9546 47.4504H15.0063L14.7651 46.6213L1.96045 2.62128L1.53271 1.1496H15.7319Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n</div>\n\n<div>\n<svg width=\"51\" height=\"49\" viewBox=\"0 0 51 49\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M16.4746 1.1496L16.7939 1.78143L25.2637 18.5441L33.7334 1.78143L34.0527 1.1496H48.584L47.6484 2.8537L31.6992 31.8986V47.4504H18.8281V31.8986L2.87891 2.8537L1.94336 1.1496H16.4746Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"36\" height=\"49\" viewBox=\"0 0 36 49\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M34.1299 1.1496V12.0871H14.085V18.8098H32.5615V29.7687H14.085V36.5129H34.1299V47.4504H1.14941V1.1496H34.1299Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"51\" height=\"49\" viewBox=\"0 0 51 49\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M33.0332 1.1496L33.2969 1.9328L48.1426 45.9328L48.6543 47.4504H34.7783L34.5254 46.6447L31.8779 38.2121H18.3721L15.7305 46.6437L15.4775 47.4504H1.60156L2.11328 45.9328L16.959 1.9328L17.2236 1.1496H33.0332ZM21.624 27.8332H28.6191L25.1172 16.6818L21.624 27.8332Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"42\" height=\"49\" viewBox=\"0 0 42 49\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M20.4756 1.1496C23.9067 1.1496 26.9329 1.76887 29.5166 3.05292H29.5156C32.1104 4.32082 34.1356 6.16047 35.5576 8.56561C36.9844 10.9646 37.6748 13.7751 37.6748 16.9523C37.6748 20.1724 36.9701 22.9868 35.502 25.3391L35.5 25.342C34.2592 27.3165 32.5771 28.883 30.4824 30.048L39.0381 45.7502L39.9648 47.4504H25.7373L25.4121 46.842L17.6924 32.3898H14.085V47.4504H1.14941V1.1496H20.4756ZM14.085 21.7101H18.1768C19.6906 21.7101 20.8783 21.5135 21.7793 21.1652C22.6744 20.8105 23.2918 20.3067 23.7012 19.6769C24.107 19.0383 24.3525 18.1559 24.3525 16.9523C24.3525 15.745 24.105 14.8491 23.6914 14.1916L23.6875 14.1848C23.2707 13.5114 22.6486 12.9868 21.7598 12.6242L21.748 12.6193C20.8405 12.2372 19.6633 12.0226 18.1768 12.0226H14.085V21.7101Z\" fill=\"white\" fill-opacity=\"0.41\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n</div>\n\n<div>\n<svg width=\"44\" height=\"51\" viewBox=\"0 0 44 51\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M12.4756 1.1496L12.8174 1.65155L29.2031 25.6398V1.1496H42.5996V49.4504H31.4121L31.0693 48.9523L14.5684 25.0207V49.4504H1.14941V1.1496H12.4756Z\" fill=\"white\" fill-opacity=\"0.34\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"37\" height=\"51\" viewBox=\"0 0 37 51\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M35.5244 1.1496V12.4797H14.5684V19.6125H33.8848V30.965H14.5684V38.1203H35.5244V49.4504H1.14941V1.1496H35.5244Z\" fill=\"white\" fill-opacity=\"0.34\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"72\" height=\"51\" viewBox=\"0 0 72 51\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M16.2661 1.1496L16.4722 2.04218L22.5435 28.4123L29.4897 2.00702L29.7153 1.1496H41.5063L41.7319 2.008L48.6782 28.4777L54.772 2.04218L54.978 1.1496H69.688L69.2612 2.62128L55.897 48.6213L55.6558 49.4504H43.2202L42.9761 48.6271L35.6108 23.8361L28.2456 48.6271L28.0015 49.4504H15.5884L15.3472 48.6213L1.96045 2.62128L1.53271 1.1496H16.2661Z\" fill=\"white\" fill-opacity=\"0.34\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n</div>\n\n<div>\n<svg width=\"57\" height=\"51\" viewBox=\"0 0 57 51\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M16.8398 1.1496L17.1328 1.86346L28.0176 28.4055L38.9023 1.86346L39.1953 1.1496H54.8857V49.4504H41.7588V25.1174L32.5459 48.4308L32.2588 49.1584H23.7744L23.4883 48.4289L14.2764 24.9865V49.4504H1.14941V1.1496H16.8398Z\" fill=\"white\" fill-opacity=\"0.34\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n<svg width=\"37\" height=\"51\" viewBox=\"0 0 37 51\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M35.5244 1.1496V12.4797H14.5684V19.6125H33.8848V30.965H14.5684V38.1203H35.5244V49.4504H1.14941V1.1496H35.5244Z\" fill=\"white\" fill-opacity=\"0.34\" stroke=\"#EDEDED\" stroke-width=\"2.3\"/>\n</svg>\n</div>\n\n</div>\n</div>"
+          }
+        },
+        "text_Jqybjz": {
+          "type": "text",
+          "settings": {
+            "text": "Give Your Lungs a Fresh Start in 2026",
+            "text_style": "body"
+          }
+        },
+        "buttons_q4KypY": {
+          "type": "buttons",
+          "settings": {
+            "button_label": "SHOP BUNDLE",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "product": "quit-smoking-support-bundle"
+          }
+        }
+      },
+      "block_order": [
+        "liquid_JrCYTw",
+        "text_Jqybjz",
+        "buttons_q4KypY"
+      ],
+      "custom_css": [
+        "p {color: #fff; text-shadow: 0 3px 7px rgba(0, 0, 0, 0.31); font-family: Inter; font-size: 20px; font-style: normal; font-weight: 700; line-height: normal;}",
+        ".banner__box {padding: 0;}",
+        "@media (min-width: 1200px) {p {font-size: 38px; }}"
+      ],
+      "name": "Image banner NYNM",
+      "settings": {
+        "image_2": "shopify://shop_images/New_hero_image.png",
+        "image_mob": "shopify://shop_images/New_hero_image.png",
+        "image_overlay_opacity": 30,
+        "image_height": "large",
+        "desktop_content_position": "bottom-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "image_with_text_nynm_G6DNcY": {
+      "type": "image-with-text-nynm",
+      "blocks": {
+        "heading_4TJeTr": {
+          "type": "heading",
+          "settings": {
+            "heading": "Quit Smoking Bundle",
+            "heading_size": "h2"
+          }
+        },
+        "text_cqHiLc": {
+          "type": "text",
+          "settings": {
+            "text": "<p>2 Mullein + Chlorophyll Tinctures & 1 Reset Stick</p>",
+            "text_style": "body"
+          }
+        },
+        "images_DfeyQL": {
+          "type": "images",
+          "settings": {
+            "txt_1": "50,000+ customers",
+            "image_1": "shopify://shop_images/Stars_04cbc6f5-7f16-4823-a1e1-062d7795e7f4.png",
+            "width_1": 100,
+            "txt_2": "Doctor-Formulated",
+            "image_2": "shopify://shop_images/stethoscope-5_1.png",
+            "width_2": 54,
+            "txt_3": "Natural Ingredients",
+            "image_3": "shopify://shop_images/coca-leaves_1.png",
+            "width_3": 46
+          }
+        },
+        "button_UEXjDy": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP BUNDLE",
+            "product": "quit-smoking-support-bundle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_4TJeTr",
+        "text_cqHiLc",
+        "images_DfeyQL",
+        "button_UEXjDy"
+      ],
+      "custom_css": [
+        ".media > img {object-fit: contain;}",
+        "p {color: #234134 !important;}",
+        "@media screen and (min-width: 750px) {.image-with-text__text strong {font-size: 26px; font-weight: 600; line-height: normal; } .image-with-text__text p {font-size: 23px; font-weight: 500; line-height: 33px; }}",
+        "@media screen and (max-width: 750px) {.image-with-text__content {padding: 0; } .image-with-text__media-item {padding: 0 25px; } .image-with-text__text-item {padding: 0 20px 0; } .image-with-text__text {padding: 0 20px; }}"
+      ],
+      "name": "Image with text NYNM",
+      "settings": {
+        "image": "shopify://shop_images/Bundle_image_1.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "scheme-c292529d-9824-42a6-abe3-80b806af56f4",
+        "color_scheme": "scheme-c292529d-9824-42a6-abe3-80b806af56f4",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "trust_new_KBz8KR": {
+      "type": "trust-nynm-top",
+      "blocks": {
+        "step_jcQmXc": {
+          "type": "step",
+          "settings": {
+            "step_title": "Thousands Trust Our Clinically Validated Formula",
+            "step_description": "",
+            "txt_1": "",
+            "width_1": 36,
+            "txt_2": "",
+            "width_2": 36,
+            "txt_3": "",
+            "width_3": 36
+          }
+        },
+        "step_U4egBh": {
+          "type": "step",
+          "settings": {
+            "step_image": "shopify://shop_images/Group_13_2.png",
+            "step_title": "",
+            "step_description": "",
+            "txt_1": "",
+            "width_1": 36,
+            "txt_2": "",
+            "width_2": 36,
+            "txt_3": "",
+            "width_3": 36
+          }
+        },
+        "step_TJdwXL": {
+          "type": "step",
+          "settings": {
+            "step_image": "shopify://shop_images/8_1.png",
+            "step_title": "",
+            "step_description": "",
+            "txt_1": "",
+            "width_1": 36,
+            "txt_2": "",
+            "width_2": 36,
+            "txt_3": "",
+            "width_3": 36
+          }
+        },
+        "step_E3DRdU": {
+          "type": "step",
+          "settings": {
+            "step_image": "shopify://shop_images/GMP_1_1.png",
+            "step_title": "",
+            "step_description": "",
+            "txt_1": "",
+            "width_1": 36,
+            "txt_2": "",
+            "width_2": 36,
+            "txt_3": "",
+            "width_3": 36
+          }
+        }
+      },
+      "block_order": [
+        "step_jcQmXc",
+        "step_U4egBh",
+        "step_TJdwXL",
+        "step_E3DRdU"
+      ],
+      "name": "Trust Section",
+      "settings": {
+        "heading": "",
+        "text_color": "#000000",
+        "background_color": "#ffffff",
+        "btn_txt": "",
+        "btn_url": "",
+        "color_scheme": ""
+      }
+    },
+    "trust_new_CFPfFH": {
+      "type": "trust-nynm",
+      "blocks": {
+        "step_bUYw79": {
+          "type": "step",
+          "settings": {
+            "step_title": "",
+            "step_description": "After 60 days, users experience:",
+            "txt_1": "More energy",
+            "image_1": "shopify://shop_images/flash_1.png",
+            "width_1": 36,
+            "txt_2": "Deeper breaths",
+            "image_2": "shopify://shop_images/breath_1.png",
+            "width_2": 36,
+            "txt_3": "Easier clearance of mucus",
+            "image_3": "shopify://shop_images/cold_1.png",
+            "width_3": 36
+          }
+        },
+        "step_JDNGey": {
+          "type": "step",
+          "settings": {
+            "step_image": "shopify://shop_images/people-adventure-travel-active-healthy-lifestyle-concept-cheerful-energetic-elderly-man-hiking-with-backpack-forest-having-rest-stump-drinking-water-with-pine-trees.jpg",
+            "step_title": "",
+            "step_description": "",
+            "txt_1": "",
+            "width_1": 36,
+            "txt_2": "",
+            "width_2": 36,
+            "txt_3": "",
+            "width_3": 36
+          }
+        },
+        "select_dFTTn3": {
+          "type": "select",
+          "settings": {
+            "name": "Mariem G.",
+            "rate_n": 5,
+            "video": "shopify://files/videos/Review 1 - 5 stars.mp4"
+          }
+        },
+        "select_6nxDNz": {
+          "type": "select",
+          "settings": {
+            "name": "Jericho L.",
+            "rate_n": 5,
+            "video": "shopify://files/videos/Review 6 - 5 stars.mp4"
+          }
+        },
+        "select_cYt8U6": {
+          "type": "select",
+          "settings": {
+            "name": "Richard C.",
+            "rate_n": 5,
+            "video": "shopify://files/videos/Review 2 - 5 stars.mp4"
+          }
+        },
+        "select_zkYdRf": {
+          "type": "select",
+          "settings": {
+            "name": "Brendon Z.",
+            "rate_n": 5,
+            "video": "shopify://files/videos/Review 5 - 5 stars.mp4"
+          }
+        },
+        "select_TaJQAX": {
+          "type": "select",
+          "settings": {
+            "name": "Tanya D.",
+            "rate_n": 5,
+            "video": "shopify://files/videos/Review 3- 5 stars.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "step_bUYw79",
+        "step_JDNGey",
+        "select_dFTTn3",
+        "select_6nxDNz",
+        "select_cYt8U6",
+        "select_zkYdRf",
+        "select_TaJQAX"
+      ],
+      "custom_css": [
+        ".gradient {background: linear-gradient( 0deg, rgba(240, 255, 233, 0.81) 0%, rgba(240, 255, 233, 0.81) 0.01%, rgba(255, 255, 255, 0.81) 76.92% );}",
+        "p {color: #234134 !important;}",
+        "@media screen and (min-width: 750px) {.BAD-step-description {font-size: 23px; font-weight: 500; line-height: 33px; margin-bottom: 20px; }}"
+      ],
+      "name": "Trust Section",
+      "settings": {
+        "heading": "",
+        "text_color": "#000000",
+        "background_color": "rgba(0,0,0,0)",
+        "product": "quit-smoking-support-bundle",
+        "button_label": "SHOP BUNDLE",
+        "color_scheme": "scheme-f3ba0f1a-eaab-4e05-beca-0b216955c33b"
+      }
+    },
+    "image_with_text_b_head_WGc6iA": {
+      "type": "image-with-text-b-head",
+      "blocks": {
+        "text_fYCYNB": {
+          "type": "text",
+          "settings": {
+            "text": "<p>“The new year is a perfect time to start fresh habits that support your long-term health. A daily lung detox sets you up for better breathing and easier living. Don’t wait, put your lungs first in 2026.”</p><p><em><strong>-Dr Chris</strong></em></p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "text_fYCYNB"
+      ],
+      "custom_css": [
+        ".gradient {background: linear-gradient( 180deg, rgba(240, 255, 233, 0.81) 0%, rgba(240, 255, 233, 0.61) 36.06%, rgba(255, 255, 255, 0.81) 100% );}",
+        "p {color: var(--Color, #234134); font-family: Inter; font-size: 26px; font-style: normal; font-weight: 500; line-height: 39px;}",
+        "@media screen and (max-width: 749px) {p {font-size: 15px; line-height: 21px; } .image-with-text__content {text-align: center; padding: 15px; }}"
+      ],
+      "name": "Image with text + header",
+      "settings": {
+        "heading": "Why 2026 is the Year to Detox Your Lungs",
+        "heading_size": "h2",
+        "image": "shopify://shop_images/DSC_3203_1_1_1_dcc12300-7782-493f-a09e-a932f208c266.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "scheme-c292529d-9824-42a6-abe3-80b806af56f4",
+        "color_scheme": "scheme-c292529d-9824-42a6-abe3-80b806af56f4",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_text_overlay_nynm_MbzXAw": {
+      "type": "image-text-overlay-nynm",
+      "name": "Image text overlay",
+      "settings": {
+        "header": "Powered by Proven Natural Ingredients",
+        "header_alignment": "left",
+        "header_size": 32,
+        "header_color": "#234134",
+        "header_spacing": 55,
+        "gap": 40,
+        "aspect_ratio": "auto",
+        "border_radius": 8,
+        "overlay_color": "#00000066",
+        "overlay_opacity": 100,
+        "text_color": "#ffffff",
+        "content_padding": 40,
+        "vertical_alignment": "flex-end",
+        "horizontal_alignment": "flex-start",
+        "text_alignment": "left",
+        "heading_size": 32,
+        "text_size": 16,
+        "text_spacing": 10,
+        "image_1": "shopify://shop_images/brandon-stoll-OnnWqlb-d8c-unsplash_1.png",
+        "mob_image_1": "shopify://shop_images/brandon-stoll-OnnWqlb-d8c-unsplash_1_2.png",
+        "heading_1": "",
+        "text_1": "<div>\n<svg width=\"37\" height=\"33\" viewbox=\"0 0 37 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M10.4951 0.5L10.6221 0.810547L18.1094 19.0664L25.5967 0.810547L25.7236 0.5H35.7188V32.1025H27.5166V14.7871L20.876 31.5918L20.751 31.9082H15.4678L15.3428 31.5908L8.70215 14.6914V32.1025H0.5V0.5H10.4951Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"28\" height=\"33\" viewbox=\"0 0 28 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.89648 0.5V20.0967C8.89648 21.0764 9.10834 21.9314 9.51953 22.6748L9.68555 22.9463C10.0912 23.5635 10.6223 24.0558 11.2852 24.4268C12.0365 24.8472 12.9217 25.0654 13.9551 25.0654C14.9885 25.0654 15.8673 24.8477 16.6074 24.4287L16.6104 24.4268C17.3679 24.0028 17.9543 23.4211 18.377 22.6748C18.798 21.9312 19.0137 21.0761 19.0137 20.0967V0.5H27.3955V20.7393C27.3955 23.103 26.8317 25.1872 25.6875 26.9717V26.9727C24.5477 28.7399 22.9592 30.1041 20.9395 31.0674L20.9375 31.0684C18.9164 32.0219 16.5847 32.4912 13.9551 32.4912C11.2966 32.4912 8.9495 32.0222 6.92773 31.0684L6.92578 31.0674C4.90587 30.1039 3.32239 28.739 2.19238 26.9707L2.19141 26.9697C1.0579 25.1855 0.5 23.1021 0.5 20.7393V0.5H8.89648Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"23\" height=\"33\" viewbox=\"0 0 23 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.89648 0.5V25.0957H21.6279V32.1025H0.5V0.5H8.89648Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"23\" height=\"33\" viewbox=\"0 0 23 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.89648 0.5V25.0957H21.6279V32.1025H0.5V0.5H8.89648Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"24\" height=\"33\" viewbox=\"0 0 24 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M22.8379 0.5V7.50684H8.89648V12.7832H21.7471V19.8047H8.89648V25.0957H22.8379V32.1025H0.5V0.5H22.8379Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"10\" height=\"33\" viewbox=\"0 0 10 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.89648 0.5V32.1025H0.5V0.5H8.89648Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"29\" height=\"33\" viewbox=\"0 0 29 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M7.62988 0.5L7.77832 0.717773L19.1631 17.3848V0.5H27.5449V32.1025H20.5068L20.3574 31.8867L8.89648 15.2637V32.1025H0.5V0.5H7.62988Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n</div>\n<div>\n<svg width=\"23\" height=\"33\" viewbox=\"0 0 23 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.89648 0.5V25.0957H21.6279V32.1025H0.5V0.5H8.89648Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"24\" height=\"33\" viewbox=\"0 0 24 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M22.8379 0.5V7.50684H8.89648V12.7832H21.7471V19.8047H8.89648V25.0957H22.8379V32.1025H0.5V0.5H22.8379Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"34\" height=\"33\" viewbox=\"0 0 34 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M21.9238 0.5L22.0391 0.839844L32.3643 31.4424L32.5869 32.1025H23.5742L23.4639 31.752L21.5566 25.6768H11.7227L9.81934 31.752L9.70898 32.1025H0.696289L0.918945 31.4424L11.2441 0.839844L11.3594 0.5H21.9238ZM13.7959 19.0586H19.4785L16.6338 9.99902L13.7959 19.0586Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n<svg width=\"23\" height=\"33\" viewbox=\"0 0 23 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M22.3896 0.5V7.50684H8.89648V12.7832H21.0596V19.8047H8.89648V32.1025H0.5V0.5H22.3896Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>\n</div>",
+        "text_mob_1": "<svg width=\"213\" height=\"22\" viewbox=\"0 0 213 22\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M212.172 0.5V5.27344H203.694V8.2168H211.336V13H203.694V20.7256H198.048V0.5H212.172Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M188.234 0.5L188.35 0.839844L194.836 20.0664L195.059 20.7256H189.001L188.891 20.376L187.733 16.6895H181.828L180.674 20.375L180.563 20.7256H174.506L174.729 20.0664L181.215 0.839844L181.33 0.5H188.234ZM183.248 12.1592H186.312L184.777 7.27441L183.248 12.1592Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M171.513 0.5V5.27344H162.754V8.2168H170.828V13H162.754V15.9521H171.513V20.7256H157.107V0.5H171.513Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M145.588 0.5V15.9521H153.587V20.7256H139.942V0.5H145.588Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M115.511 0.5L115.66 0.717773L122.474 10.6934V0.5H128.11V20.7256H123.405L123.256 20.5098L116.395 10.5566V20.7256H110.748V0.5H115.511Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M106.716 0.5V20.7256H101.069V0.5H106.716Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M97.0435 0.5V5.27344H88.2847V8.2168H96.3589V13H88.2847V15.9521H97.0435V20.7256H82.6382V0.5H97.0435Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M71.1196 0.5V15.9521H79.1187V20.7256H65.4731V0.5H71.1196Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M53.9536 0.5V15.9521H61.9526V20.7256H48.3071V0.5H53.9536Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M32.6577 0.5V12.9971C32.6577 13.584 32.7842 14.0894 33.0249 14.5254L33.1226 14.6855C33.361 15.0485 33.6731 15.337 34.064 15.5557C34.5042 15.802 35.0277 15.9335 35.6499 15.9336C36.2725 15.9336 36.7923 15.8017 37.2251 15.5566L37.2271 15.5557C37.6737 15.3058 38.0175 14.9644 38.2661 14.5254C38.5131 14.0892 38.6421 13.5839 38.6421 12.9971V0.5H44.2798V13.4014C44.2797 14.9169 43.9177 16.2622 43.1772 17.417V17.418C42.4411 18.5593 41.4161 19.4388 40.1187 20.0576L40.1167 20.0586C38.8178 20.6714 37.324 20.9697 35.6499 20.9697C33.9581 20.9697 32.4553 20.6717 31.1558 20.0586L31.1548 20.0576C29.8568 19.4386 28.8341 18.5585 28.104 17.416L28.103 17.415C27.3695 16.2604 27.0113 14.916 27.0112 13.4014V0.5H32.6577Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n  <path d=\"M7.08984 0.5L7.2168 0.810547L11.748 11.8594L16.2803 0.810547L16.4082 0.5H22.998V20.7256H17.4727V10.6377L13.6592 20.2881L13.5342 20.6035H9.96289L9.83789 20.2871L6.02441 10.583V20.7256H0.5V0.5H7.08984Z\" fill=\"white\" fill-opacity=\"0.48\" stroke=\"white\"></path>\n</svg>",
+        "below_1": "<p>Nature’s lung detox</p>",
+        "link_1": "",
+        "image_2": "shopify://shop_images/bernd-dittrich-qmNF6x6zIq4-unsplash_1.png",
+        "mob_image_2": "shopify://shop_images/bernd-dittrich-qmNF6x6zIq4-unsplash_1_2.png",
+        "heading_2": "",
+        "text_2": "<div>\n<svg width=\"30\" height=\"33\" viewbox=\"0 0 30 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M15.1357 0.5C16.9866 0.5 18.7083 0.758823 20.2969 1.28125L20.8848 1.48535C22.2351 1.98764 23.4444 2.67666 24.5088 3.55469H24.5078C25.7264 4.55007 26.715 5.77225 27.4727 7.2168C28.2345 8.6694 28.7008 10.3204 28.8809 12.1611L28.9346 12.71H20.665L20.6084 12.2744C20.5177 11.5761 20.3335 10.9562 20.0605 10.4102C19.7884 9.86579 19.4308 9.40407 18.9873 9.02148C18.5468 8.64145 18.0191 8.34715 17.3965 8.14258L17.3877 8.13965C16.7783 7.92774 16.0925 7.81837 15.3252 7.81836C13.9649 7.81836 12.8181 8.14871 11.8643 8.79297L11.8652 8.79395C10.9182 9.44007 10.1741 10.3819 9.64258 11.6465C9.12166 12.909 8.85156 14.4607 8.85156 16.3154C8.8516 18.249 9.12691 19.8364 9.65527 21.0957C10.1962 22.3517 10.9409 23.2728 11.875 23.8896C12.8202 24.4977 13.9485 24.8115 15.2812 24.8115C16.0346 24.8115 16.7063 24.7156 17.3008 24.5293L17.3027 24.5283C17.91 24.3408 18.4317 24.0715 18.874 23.7246C19.3272 23.3671 19.6969 22.9366 19.9854 22.4297L19.9873 22.4268C20.2852 21.9097 20.4952 21.3208 20.6123 20.6543L20.6855 20.2383L21.1074 20.2402L28.3867 20.2842L28.9336 20.2871L28.8809 20.832C28.7484 22.2179 28.3464 23.5776 27.6807 24.9092L27.6797 24.9082C27.0213 26.2445 26.1185 27.4609 24.9736 28.5557L24.9717 28.5576C23.8132 29.6551 22.4069 30.5213 20.7627 31.1631C19.112 31.8112 17.2335 32.1299 15.1357 32.1299C12.362 32.1299 9.86049 31.5204 7.64355 30.291L7.64062 30.29C5.42756 29.047 3.68367 27.2382 2.40918 24.8799C1.12819 22.5095 0.500054 19.6477 0.5 16.3154C0.5 12.9724 1.13776 10.1037 2.43945 7.73242C3.73366 5.37479 5.49283 3.5717 7.71582 2.33887C9.93141 1.11022 12.4088 0.500009 15.1357 0.5Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"29\" height=\"32\" viewbox=\"0 0 29 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.70605 0.5V12.4668H19.4541V0.5H27.6465V31.3145H19.4541V19.334H8.70605V31.3145H0.5V0.5H8.70605Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"22\" height=\"32\" viewbox=\"0 0 22 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.70605 0.5V24.4629H21.1094V31.3145H0.5V0.5H8.70605Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"31\" height=\"33\" viewbox=\"0 0 31 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M15.2236 0.5C17.9691 0.500071 20.4604 1.10955 22.6855 2.33789H22.6846C24.927 3.57022 26.7013 5.37325 28.0059 7.73145C29.3178 10.103 29.9609 12.9719 29.9609 16.3154C29.9609 19.6587 29.3177 22.527 28.0059 24.8984C26.7014 27.2565 24.9268 29.0587 22.6846 30.291L22.6855 30.292C20.4603 31.5203 17.9691 32.1298 15.2236 32.1299C12.468 32.1299 9.97092 31.5151 7.74512 30.2764C5.51394 29.0346 3.74464 27.2323 2.44043 24.8848L2.43945 24.8828C1.13795 22.5118 0.500055 19.6488 0.5 16.3154C0.5 12.9724 1.13776 10.1037 2.43945 7.73242L2.44043 7.73145C3.74465 5.37382 5.51347 3.57038 7.74609 2.33789C9.9717 1.1093 12.4686 0.5 15.2236 0.5ZM15.2236 7.81836C13.8805 7.81836 12.7528 8.14168 11.8184 8.76758C10.8851 9.39274 10.1509 10.3212 9.62891 11.585C9.11711 12.8475 8.85156 14.4193 8.85156 16.3154C8.8516 18.2113 9.11718 19.7825 9.62891 21.0449L9.72949 21.2773C10.2437 22.4233 10.9432 23.2771 11.8184 23.8633C12.7527 24.489 13.8807 24.8115 15.2236 24.8115C16.577 24.8114 17.7029 24.4883 18.626 23.8643L18.6279 23.8623C19.5604 23.2377 20.2894 22.3104 20.8018 21.0479L20.8027 21.0449C21.324 19.783 21.5947 18.2118 21.5947 16.3154C21.5947 14.4189 21.324 12.847 20.8027 11.585L20.8018 11.582C20.2894 10.3195 19.5604 9.39218 18.6279 8.76758L18.626 8.76562C17.7029 8.14159 16.577 7.81844 15.2236 7.81836Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"27\" height=\"32\" viewbox=\"0 0 27 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M13.3164 0.5C15.6064 0.500042 17.6111 0.913059 19.3145 1.75879C21.0283 2.59533 22.3606 3.80637 23.2959 5.38867L23.4658 5.68652C24.2882 7.19583 24.6904 8.94875 24.6904 10.9287C24.6904 13.0694 24.2225 14.922 23.2607 16.4629V16.4648C22.3993 17.8357 21.2131 18.9091 19.7178 19.6895L25.6494 30.5752L26.0518 31.3145H17.0488L16.9072 31.0508L11.5977 21.1094H8.70605V31.3145H0.5V0.5H13.3164ZM8.70605 14.4316H11.7588C12.6754 14.4316 13.4344 14.3279 14.0469 14.1328L14.3008 14.043C14.954 13.7844 15.4219 13.409 15.7354 12.9268C16.0474 12.4371 16.2226 11.7825 16.2227 10.9287C16.2227 10.0734 16.0469 9.4107 15.7314 8.90918L15.7295 8.90625C15.4126 8.39441 14.9427 8.00275 14.292 7.7373L14.2871 7.73535C13.6283 7.45796 12.791 7.30864 11.7588 7.30859H8.70605V14.4316Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"31\" height=\"33\" viewbox=\"0 0 31 33\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M15.2236 0.5C17.9691 0.500071 20.4604 1.10955 22.6855 2.33789H22.6846C24.927 3.57022 26.7013 5.37324 28.0059 7.73145C29.3178 10.103 29.9609 12.9719 29.9609 16.3154C29.9609 19.6587 29.3177 22.527 28.0059 24.8984C26.7014 27.2565 24.9268 29.0587 22.6846 30.291L22.6855 30.292C20.4603 31.5203 17.9691 32.1298 15.2236 32.1299C12.468 32.1299 9.97092 31.5151 7.74512 30.2764C5.51394 29.0346 3.74464 27.2323 2.44043 24.8848L2.43945 24.8828C1.13795 22.5118 0.500055 19.6488 0.5 16.3154C0.5 12.9724 1.13776 10.1037 2.43945 7.73242L2.44043 7.73145C3.74465 5.37382 5.51347 3.57038 7.74609 2.33789C9.9717 1.1093 12.4686 0.5 15.2236 0.5ZM15.2236 7.81836C13.8805 7.81836 12.7528 8.14168 11.8184 8.76758C10.8851 9.39274 10.1509 10.3212 9.62891 11.585C9.11711 12.8475 8.85156 14.4193 8.85156 16.3154C8.8516 18.2113 9.11718 19.7825 9.62891 21.0449L9.72949 21.2773C10.2437 22.4233 10.9432 23.2771 11.8184 23.8633C12.7527 24.489 13.8807 24.8115 15.2236 24.8115C16.577 24.8114 17.7029 24.4883 18.626 23.8643L18.6279 23.8623C19.5604 23.2377 20.2894 22.3104 20.8018 21.0479L20.8027 21.0449C21.324 19.783 21.5947 18.2118 21.5947 16.3154C21.5947 14.4189 21.324 12.847 20.8027 11.585L20.8018 11.582C20.2894 10.3195 19.5604 9.39218 18.6279 8.76758L18.626 8.76562C17.7029 8.14159 16.577 7.81844 15.2236 7.81836Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"26\" height=\"32\" viewbox=\"0 0 26 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M13.3164 0.5C15.6122 0.500046 17.6223 0.949252 19.3291 1.86816C21.0402 2.77462 22.3681 4.04894 23.2998 5.68652C24.2324 7.31604 24.6904 9.19986 24.6904 11.3213C24.6904 13.4535 24.2219 15.3432 23.2686 16.9736C22.3249 18.5943 20.9761 19.8497 19.2354 20.7354C17.4915 21.6226 15.4398 22.0557 13.0977 22.0557H8.70605V31.3145H0.5V0.5H13.3164ZM8.70605 15.3779H11.7588C12.7903 15.3779 13.6128 15.1985 14.25 14.8672L14.252 14.8652C14.8259 14.5707 15.2673 14.1808 15.5879 13.6943L15.7178 13.4805C16.0488 12.8767 16.2227 12.1619 16.2227 11.3213C16.2226 10.4685 16.0481 9.76061 15.7197 9.17969L15.7178 9.17773C15.3912 8.59164 14.9102 8.13529 14.2568 7.80859C13.6067 7.48364 12.7809 7.30864 11.7588 7.30859H8.70605V15.3779Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"29\" height=\"32\" viewbox=\"0 0 29 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.70605 0.5V12.4668H19.4541V0.5H27.6465V31.3145H19.4541V19.334H8.70605V31.3145H0.5V0.5H8.70605Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"33\" height=\"32\" viewbox=\"0 0 33 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M10.0483 0.5L10.187 0.774414L16.1753 12.626L22.1636 0.774414L22.3022 0.5H31.5054L31.0981 1.24023L20.2563 20.9854V31.3145H12.0942V20.9854L1.25146 1.24023L0.845215 0.5H10.0483Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"22\" height=\"32\" viewbox=\"0 0 22 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.70605 0.5V24.4629H21.1094V31.3145H0.5V0.5H8.70605Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n<svg width=\"22\" height=\"32\" viewbox=\"0 0 22 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M8.70605 0.5V24.4629H21.1094V31.3145H0.5V0.5H8.70605Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>\n</div>",
+        "text_mob_2": "<svg width=\"216\" height=\"22\" viewbox=\"0 0 216 22\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M206.721 0.759033V15.967H214.593V20.6819H201.147V0.759033H206.721Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M190.086 0.759033V15.967H197.958V20.6819H184.513V0.759033H190.086Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M168.305 0.759033L168.443 1.03345L172.081 8.23169L175.719 1.03345L175.857 0.759033H182.119L181.713 1.49927L174.854 13.9905V20.6819H169.309V13.9905L162.449 1.49927L162.043 0.759033H168.305Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M147.619 0.759033V8.35376H154.076V0.759033H159.64V20.6819H154.076V13.0774H147.619V20.6819H142.046V0.759033H147.619Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M131.568 0.759033C133.049 0.759033 134.355 1.04896 135.47 1.64868H135.471C136.586 2.23961 137.454 3.07246 138.063 4.14282C138.673 5.20865 138.971 6.4364 138.971 7.80981C138.971 9.19081 138.667 10.4236 138.043 11.4905L138.042 11.4895C137.424 12.5497 136.542 13.3704 135.408 13.9475C134.271 14.5263 132.939 14.8049 131.43 14.8049H128.825V20.6819H123.252V0.759033H131.568ZM128.825 10.2014H130.58C131.215 10.2014 131.706 10.0908 132.077 9.89771L132.079 9.89673C132.465 9.69847 132.745 9.43016 132.934 9.09106C133.126 8.73908 133.23 8.31699 133.23 7.80981C133.23 7.29377 133.125 6.87662 132.935 6.54028L132.934 6.53833C132.745 6.20044 132.468 5.93634 132.084 5.74438C131.703 5.554 131.209 5.44557 130.58 5.44556H128.825V10.2014Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M110.225 0.5C111.995 0.500046 113.607 0.893582 115.049 1.68945H115.048C116.503 2.4892 117.653 3.65868 118.497 5.18359C119.348 6.72192 119.761 8.5747 119.761 10.7197C119.761 12.8647 119.348 14.7175 118.497 16.2559C117.654 17.7807 116.503 18.9502 115.048 19.75L115.049 19.751C113.607 20.5468 111.995 20.9404 110.225 20.9404C108.447 20.9404 106.831 20.543 105.389 19.7402C103.941 18.9346 102.795 17.7657 101.952 16.248L101.951 16.2461C101.107 14.7082 100.697 12.8584 100.697 10.7197C100.697 8.57536 101.107 6.72352 101.951 5.18555V5.18359C102.794 3.65919 103.942 2.48937 105.391 1.68945C106.833 0.8934 108.448 0.5 110.225 0.5ZM110.225 5.50977C109.403 5.50977 108.724 5.70699 108.165 6.08105C107.607 6.45451 107.163 7.01351 106.843 7.78809C106.53 8.5612 106.363 9.53309 106.363 10.7197C106.363 11.9067 106.53 12.8791 106.843 13.6523L106.969 13.9326C107.276 14.5634 107.677 15.0317 108.165 15.3584C108.724 15.7326 109.403 15.9297 110.225 15.9297C111.053 15.9296 111.731 15.7319 112.282 15.3594L112.283 15.3584C112.84 14.9855 113.282 14.4285 113.596 13.6553L113.597 13.6523C113.916 12.8796 114.085 11.9072 114.085 10.7197C114.085 9.53252 113.916 8.56074 113.597 7.78809L113.596 7.78516C113.282 7.01183 112.84 6.45395 112.283 6.08105L112.282 6.08008C111.731 5.7076 111.053 5.50981 110.225 5.50977Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M90.168 0.759033C91.6425 0.759033 92.9435 1.02507 94.0547 1.57642C95.1727 2.12213 96.0466 2.91441 96.6592 3.95044L96.7705 4.14673C97.3092 5.1355 97.5703 6.2791 97.5703 7.56079C97.5703 8.94625 97.2667 10.1576 96.6348 11.1702L96.6338 11.1711C96.1006 12.0196 95.3779 12.6924 94.4785 13.1936L98.1562 19.9426L98.5586 20.6819H92.4277L92.2861 20.4172L88.9678 14.2043H87.4248V20.6819H81.8516V0.759033H90.168ZM87.4248 9.60083H89.1797C89.8284 9.60082 90.3374 9.51709 90.7236 9.36841L90.8633 9.30786C91.1745 9.16086 91.397 8.96615 91.5508 8.72974C91.7247 8.45623 91.83 8.07773 91.8301 7.56079C91.8301 7.04244 91.724 6.65789 91.5469 6.37622L91.5449 6.37329C91.3664 6.08485 91.0999 5.85987 90.7188 5.70435L90.7129 5.70239C90.3235 5.53851 89.8183 5.44557 89.1797 5.44556H87.4248V9.60083Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M68.8242 0.5C70.5948 0.500046 72.2067 0.893582 73.6484 1.68945H73.6475C75.1027 2.4892 76.2531 3.65868 77.0967 5.18359C77.9477 6.72192 78.3603 8.5747 78.3604 10.7197C78.3604 12.8647 77.9476 14.7175 77.0967 16.2559C76.2531 17.7807 75.1026 18.9502 73.6475 19.75L73.6484 19.751C72.2068 20.5468 70.5947 20.9404 68.8242 20.9404C67.047 20.9404 65.4306 20.543 63.9883 19.7402C62.5409 18.9346 61.3949 17.7657 60.5518 16.248L60.5508 16.2461C59.7066 14.7082 59.2969 12.8584 59.2969 10.7197C59.2969 8.57536 59.7066 6.72352 60.5508 5.18555V5.18359C61.3941 3.65919 62.5412 2.48937 63.9902 1.68945C65.4323 0.893399 67.0477 0.5 68.8242 0.5ZM68.8242 5.50977C68.0024 5.50977 67.3232 5.70699 66.7646 6.08105C66.2071 6.45451 65.7623 7.01351 65.4424 7.78809C65.1292 8.5612 64.9629 9.53309 64.9629 10.7197C64.9629 11.9067 65.1291 12.8791 65.4424 13.6523L65.5684 13.9326C65.8754 14.5634 66.2769 15.0317 66.7646 15.3584C67.3233 15.7326 68.0023 15.9297 68.8242 15.9297C69.653 15.9296 70.331 15.7319 70.8818 15.3594L70.8828 15.3584C71.4395 14.9855 71.8815 14.4285 72.1953 13.6553L72.1963 13.6523C72.5155 12.8796 72.6846 11.9072 72.6846 10.7197C72.6845 9.53252 72.5154 8.56074 72.1963 7.78809L72.1953 7.78516C71.8815 7.01183 71.4395 6.45395 70.8828 6.08105L70.8818 6.08008C70.331 5.7076 69.653 5.50981 68.8242 5.50977Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M49.1758 0.759033V15.967H57.0479V20.6819H43.6025V0.759033H49.1758Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M27.8916 0.759033V8.35376H34.3486V0.759033H39.9121V20.6819H34.3486V13.0774H27.8916V20.6819H22.3184V0.759033H27.8916Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n  <path d=\"M9.97168 0.5C11.1633 0.500008 12.2752 0.666709 13.3037 1.00488L13.6846 1.13672C14.5594 1.46221 15.3451 1.90953 16.0371 2.48047H16.0361C16.829 3.12833 17.4713 3.92395 17.9629 4.86133C18.4587 5.80675 18.7607 6.87737 18.877 8.06543L18.9307 8.61426H13.3203L13.2637 8.17871C13.2084 7.7533 13.0967 7.37997 12.9336 7.05371C12.7714 6.72928 12.5594 6.45602 12.2969 6.22949C12.0373 6.00551 11.7239 5.83006 11.3496 5.70703L11.3408 5.7041C10.9759 5.57722 10.5614 5.50977 10.0918 5.50977C9.25983 5.50977 8.5689 5.7113 7.99805 6.09668C7.43047 6.48398 6.97915 7.05288 6.65332 7.82812C6.33461 8.60129 6.16604 9.56023 6.16602 10.7197C6.16602 11.9305 6.33816 12.9124 6.66113 13.6826L6.79102 13.9609C7.10691 14.5876 7.51302 15.0515 8.00098 15.374C8.56727 15.7382 9.2484 15.9297 10.0645 15.9297C10.5269 15.9296 10.9342 15.8706 11.291 15.7588L11.293 15.7578C11.6588 15.6448 11.9691 15.4841 12.2305 15.2793C12.4995 15.0671 12.7191 14.8122 12.8906 14.5107L12.8926 14.5078C13.07 14.1999 13.1966 13.8466 13.2676 13.4424L13.3408 13.0264L13.7627 13.0293L18.3828 13.0566L18.9297 13.0596L18.877 13.6045C18.7906 14.507 18.5285 15.3903 18.0977 16.2529C17.6696 17.1221 17.0832 17.9122 16.3418 18.6211L16.3398 18.6221C15.5856 19.3366 14.6722 19.8986 13.6094 20.3135C12.5366 20.7346 11.3213 20.9404 9.97168 20.9404C8.18358 20.9404 6.56483 20.5468 5.12793 19.75L5.125 19.749C3.68846 18.9421 2.5576 17.7682 1.7334 16.2432C0.902647 14.7059 0.5 12.8573 0.5 10.7197C0.500035 8.57536 0.909705 6.72352 1.75391 5.18555C2.59073 3.66109 3.73085 2.49071 5.17383 1.69043C6.60939 0.894343 8.21267 0.5 9.97168 0.5Z\" fill=\"white\" fill-opacity=\"0.52\" stroke=\"white\"></path>\n</svg>",
+        "below_2": "<p>Antioxidant & mullein magnifier</p>",
+        "link_2": ""
+      }
+    },
+    "image_with_text_nynm_jzhmbF": {
+      "type": "image-with-text-nynm-2",
+      "blocks": {
+        "heading_BaBtr3": {
+          "type": "heading",
+          "settings": {
+            "heading": "A Fresh Start Begins TODAY!",
+            "heading_size": "h2"
+          }
+        },
+        "text_Wc6VbX": {
+          "type": "text",
+          "settings": {
+            "text": "<p>36% OFF the Quit Smoking Bundle</p>",
+            "text_style": "body"
+          }
+        },
+        "button_D3t8Yi": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP BUNDLE",
+            "product": "quit-smoking-support-bundle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_BaBtr3",
+        "text_Wc6VbX",
+        "button_D3t8Yi"
+      ],
+      "custom_css": [
+        "{background: white !important;}",
+        "@media screen and (min-width: 750px) {.image-with-text__grid {flex-direction: column; align-items: center; } h2::before {left: 50%; transform: translate(-50%, 0); } .grid--2-col-tablet .grid__item {width: calc(100% - 140px); } .image-with-text__text p {font-size: 23px; font-weight: 500; }}",
+        "@media screen and (max-width: 750px) {.image-with-text__content {padding: 0; } .image-with-text__text-item {padding: 20px 0 0 !important; } .ntg-mobile-block {margin-bottom: 30px !important; }}"
+      ],
+      "name": "Image with text NYNM",
+      "settings": {
+        "image": "shopify://shop_images/Bundle_image_2.jpg",
+        "image_mob": "shopify://shop_images/static_3_2.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "center",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "scheme-c292529d-9824-42a6-abe3-80b806af56f4",
+        "color_scheme": "scheme-c292529d-9824-42a6-abe3-80b806af56f4",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "padding_top": 60,
+        "padding_bottom": 36
+      }
+    },
+    "custom_image_accordion_new_3y6pda": {
+      "type": "custom-image-accordion-nynm",
+      "blocks": {
+        "select_KyxyD8": {
+          "type": "select",
+          "settings": {
+            "title": "Does This Help With COPD, Asthma, Bronchitis, Or The Common Cold?",
+            "content": "We designed BetterLungs® to support healthy respiratory and immune systems while keeping everyone in mind. Our ingredients have been studied extensively in many settings! With that said, no supplement can make claims regarding any diagnosis. As always, we recommend that you check with your doctor or pharmacist before starting any new dietary supplement as they have your full medical history available"
+          }
+        },
+        "select_JPXqac": {
+          "type": "select",
+          "settings": {
+            "title": "Is It Safe To Take COPD And/Or Asthma Medication With BetterLungs?",
+            "content": "While all of our formulations are pieced together by a Doctor of Pharmacy, we recommend that you check with your doctor or pharmacist before starting any new dietary supplement as they have your full medical history available."
+          }
+        },
+        "select_NR4XVK": {
+          "type": "select",
+          "settings": {
+            "title": "Does This Help My Lungs If I Vape Or Smoke?",
+            "content": "The ingredients in BetterLungs were selected with smokers, and their lung health, in mind. The idea for the product came from our Chief Scientist who wanted to help the smokers in his family and those with chronic bronchitis and COPD."
+          }
+        },
+        "select_NEecx6": {
+          "type": "select",
+          "settings": {
+            "title": "Can I Take This For Extended Periods Of Time?",
+            "content": "Most of the ingredients work better the longer you take them, so definitely!"
+          }
+        },
+        "select_RP6zix": {
+          "type": "select",
+          "settings": {
+            "title": "How Long Does It Take For This Product To Work?",
+            "content": "While some customers notice positive effects in the first few days, we tell our customers to give the product 4 weeks for maximum effect."
+          }
+        },
+        "select_YCBXDf": {
+          "type": "select",
+          "settings": {
+            "title": "How can I get in touch with the team?",
+            "content": "If you have questions, you can give us a call at 1-877-851-8979 or email us at hello@betterbrandhealth.com."
+          }
+        }
+      },
+      "block_order": [
+        "select_KyxyD8",
+        "select_JPXqac",
+        "select_NR4XVK",
+        "select_NEecx6",
+        "select_RP6zix",
+        "select_YCBXDf"
+      ],
+      "custom_css": [
+        "@media (min-width: 768px) {.ntg-h2 {font-size: 32px; font-style: normal; font-weight: 700; line-height: 46px; } .ntg-accordion-content {color: #234134; font-size: 20px; font-weight: 400; line-height: 32px; } .ntg-opener-text {color: #234134; font-family: Inter; font-size: 23px; font-weight: 600; line-height: 38px; }}"
+      ],
+      "name": "image accordion new",
+      "settings": {
+        "heading": "Got Questions? <br>   We Got You!",
+        "image": "shopify://shop_images/2510-BB-Scott-Winter-9404_1.png",
+        "logo_group": "shopify://shop_images/2510-BB-Scott-Winter-9404_1.png",
+        "bottom_image": "shopify://shop_images/250427_BL-Mullein-Chlorophyll-Dropper-01_1_2.png"
+      }
+    }
+  },
+  "order": [
+    "shogun-helper",
+    "shogun-optimizer", 
+    "image_banner_nynm_hMfDV8",
+    "image_with_text_nynm_G6DNcY",
+    "trust_new_KBz8KR",
+    "trust_new_CFPfFH",
+    "image_with_text_b_head_WGc6iA",
+    "image_text_overlay_nynm_MbzXAw",
+    "image_with_text_nynm_jzhmbF",
+    "custom_image_accordion_new_3y6pda"
+  ]
+}

@@ -1,0 +1,228 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+  "sections": {
+    "main": {
+      "type": "cart-template",
+      "blocks": {
+        "6c995641-1c9d-487b-8e64-51737cbaccf6": {
+          "type": "trust_badges_cart",
+          "settings": {
+            "title": "",
+            "svg_trust_badge_cart": "amazon",
+            "title_trust_badges": "<p>Made In USA</p>",
+            "enable_custom_trust_badge_svg": true,
+            "custom_trust_badge_svg_html": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 15 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_2310_17264)\">\n<path d=\"M14.7803 2.21175C14.4875 1.91884 14.0126 1.91884 13.7197 2.21175L4.7342 11.1973L1.28033 7.74344C0.987451 7.45053 0.512607 7.45056 0.219667 7.74344C-0.0732428 8.03632 -0.0732428 8.51116 0.219667 8.80407L4.20387 12.7882C4.49666 13.0811 4.97186 13.0809 5.26453 12.7882L14.7803 3.27241C15.0732 2.97953 15.0732 2.50466 14.7803 2.21175Z\" fill=\"#234134\" style=\"fill:#234134;fill:color(display-p3 0.1373 0.2549 0.2039);fill-opacity:1;\"></path>\n</g>\n<defs>\n<clippath id=\"clip0_2310_17264\">\n<rect width=\"15\" height=\"15\" fill=\"white\" style=\"fill:white;fill-opacity:1;\"></rect>\n</clippath>\n</defs>\n</svg>",
+            "enable_img_trust_badge_cart": true
+          }
+        },
+        "26c3246c-0111-498e-ace5-18eadc02a107": {
+          "type": "trust_badges_cart",
+          "settings": {
+            "title": "",
+            "svg_trust_badge_cart": "amazon",
+            "title_trust_badges": "<p>Money-Back Guarantee</p>",
+            "enable_custom_trust_badge_svg": true,
+            "custom_trust_badge_svg_html": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 15 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_2310_17264)\">\n<path d=\"M14.7803 2.21175C14.4875 1.91884 14.0126 1.91884 13.7197 2.21175L4.7342 11.1973L1.28033 7.74344C0.987451 7.45053 0.512607 7.45056 0.219667 7.74344C-0.0732428 8.03632 -0.0732428 8.51116 0.219667 8.80407L4.20387 12.7882C4.49666 13.0811 4.97186 13.0809 5.26453 12.7882L14.7803 3.27241C15.0732 2.97953 15.0732 2.50466 14.7803 2.21175Z\" fill=\"#234134\" style=\"fill:#234134;fill:color(display-p3 0.1373 0.2549 0.2039);fill-opacity:1;\"></path>\n</g>\n<defs>\n<clippath id=\"clip0_2310_17264\">\n<rect width=\"15\" height=\"15\" fill=\"white\" style=\"fill:white;fill-opacity:1;\"></rect>\n</clippath>\n</defs>\n</svg>",
+            "enable_img_trust_badge_cart": true
+          }
+        },
+        "8a28c080-b1fe-41ac-b1c1-00b0f3b54ca1": {
+          "type": "trust_badges_cart",
+          "settings": {
+            "title": "",
+            "svg_trust_badge_cart": "amazon",
+            "title_trust_badges": "<p>Free Shipping</p>",
+            "enable_custom_trust_badge_svg": true,
+            "custom_trust_badge_svg_html": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 15 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_2310_17264)\">\n<path d=\"M14.7803 2.21175C14.4875 1.91884 14.0126 1.91884 13.7197 2.21175L4.7342 11.1973L1.28033 7.74344C0.987451 7.45053 0.512607 7.45056 0.219667 7.74344C-0.0732428 8.03632 -0.0732428 8.51116 0.219667 8.80407L4.20387 12.7882C4.49666 13.0811 4.97186 13.0809 5.26453 12.7882L14.7803 3.27241C15.0732 2.97953 15.0732 2.50466 14.7803 2.21175Z\" fill=\"#234134\" style=\"fill:#234134;fill:color(display-p3 0.1373 0.2549 0.2039);fill-opacity:1;\"></path>\n</g>\n<defs>\n<clippath id=\"clip0_2310_17264\">\n<rect width=\"15\" height=\"15\" fill=\"white\" style=\"fill:white;fill-opacity:1;\"></rect>\n</clippath>\n</defs>\n</svg>",
+            "enable_img_trust_badge_cart": true
+          }
+        },
+        "trust_badges_cart_dLXVJY": {
+          "type": "trust_badges_cart",
+          "settings": {
+            "title": "",
+            "svg_trust_badge_cart": "amazon",
+            "title_trust_badges": "<p>Satisfaction Guarantee</p>",
+            "enable_custom_trust_badge_svg": true,
+            "custom_trust_badge_svg_html": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 15 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_2310_17264)\">\n<path d=\"M14.7803 2.21175C14.4875 1.91884 14.0126 1.91884 13.7197 2.21175L4.7342 11.1973L1.28033 7.74344C0.987451 7.45053 0.512607 7.45056 0.219667 7.74344C-0.0732428 8.03632 -0.0732428 8.51116 0.219667 8.80407L4.20387 12.7882C4.49666 13.0811 4.97186 13.0809 5.26453 12.7882L14.7803 3.27241C15.0732 2.97953 15.0732 2.50466 14.7803 2.21175Z\" fill=\"#234134\" style=\"fill:#234134;fill:color(display-p3 0.1373 0.2549 0.2039);fill-opacity:1;\"></path>\n</g>\n<defs>\n<clippath id=\"clip0_2310_17264\">\n<rect width=\"15\" height=\"15\" fill=\"white\" style=\"fill:white;fill-opacity:1;\"></rect>\n</clippath>\n</defs>\n</svg>",
+            "enable_img_trust_badge_cart": false
+          }
+        },
+        "trust_badges_cart_CJDamB": {
+          "type": "trust_badges_cart",
+          "settings": {
+            "title": "",
+            "svg_trust_badge_cart": "amazon",
+            "title_trust_badges": "<p>Secure Payments</p>",
+            "enable_custom_trust_badge_svg": true,
+            "custom_trust_badge_svg_html": "<svg width=\"15\" height=\"15\" viewbox=\"0 0 15 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g clip-path=\"url(#clip0_2310_17264)\">\n<path d=\"M14.7803 2.21175C14.4875 1.91884 14.0126 1.91884 13.7197 2.21175L4.7342 11.1973L1.28033 7.74344C0.987451 7.45053 0.512607 7.45056 0.219667 7.74344C-0.0732428 8.03632 -0.0732428 8.51116 0.219667 8.80407L4.20387 12.7882C4.49666 13.0811 4.97186 13.0809 5.26453 12.7882L14.7803 3.27241C15.0732 2.97953 15.0732 2.50466 14.7803 2.21175Z\" fill=\"#234134\" style=\"fill:#234134;fill:color(display-p3 0.1373 0.2549 0.2039);fill-opacity:1;\"></path>\n</g>\n<defs>\n<clippath id=\"clip0_2310_17264\">\n<rect width=\"15\" height=\"15\" fill=\"white\" style=\"fill:white;fill-opacity:1;\"></rect>\n</clippath>\n</defs>\n</svg>",
+            "enable_img_trust_badge_cart": false
+          }
+        }
+      },
+      "block_order": [
+        "6c995641-1c9d-487b-8e64-51737cbaccf6",
+        "26c3246c-0111-498e-ace5-18eadc02a107",
+        "8a28c080-b1fe-41ac-b1c1-00b0f3b54ca1",
+        "trust_badges_cart_dLXVJY",
+        "trust_badges_cart_CJDamB"
+      ],
+      "settings": {
+        "enable_upsell_lazyload": false,
+        "proceed_to_checkout_top": false,
+        "color_font_button_cart": "#234134",
+        "color_background_button": "#f2cb49",
+        "color_font_button_cart_hover": "#ffffff",
+        "color_background_button_hover": "#234134",
+        "color_cartitem": "#252525",
+        "color_border_button_cart": "#000000",
+        "color_price_cart": "#234134",
+        "color_product_discount": "#969696",
+        "color_continue_shopping": "#252525",
+        "enable_continue_shopping_button": false,
+        "continue_shopping_href": "shopify://collections/all",
+        "continue_shopping_label": "Continue Shopping",
+        "text_cart_above_button": "Use Code GET5NOW to save 5%",
+        "enable_day_on_message": true,
+        "enable_trust_badge_title": true,
+        "title_trust_badges": "Trust Badge",
+        "trustBadges_enable": true,
+        "vasta_badges_size": 6,
+        "color_trust_badges": "#234134",
+        "free_shipping_text": "+ Free Shipping"
+      }
+    },
+    "better_reviews_cxReWP": {
+      "type": "better-reviews",
+      "blocks": {
+        "review_cBhNrd": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746.png",
+            "name": "Michelle C.",
+            "location": "United States",
+            "review_title": "Better Lungs for Energy and Easier Breathing",
+            "review_text": "It is good for overall good health. This product gives you energy and helps you breath better. I love Better Lungs!"
+          }
+        },
+        "review_Ghag3d": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746_1.png",
+            "name": "Ahmad Herwitz",
+            "location": "United States",
+            "review_title": "A Surprising Boost to My Breathing",
+            "review_text": "I smoke daily and I'd say it improves my breathing by like 15-20%. Which is awesome. I can't really ask more from a product like this."
+          }
+        },
+        "review_rFnbpq": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746_2.png",
+            "name": "Judie M.",
+            "location": "United States",
+            "review_title": "Positive Results After 3 Weeks",
+            "review_text": "I have COP D in the 3 weeks that I took that my lines have never felt better. I will buy again"
+          }
+        }
+      },
+      "block_order": [
+        "review_cBhNrd",
+        "review_Ghag3d",
+        "review_rFnbpq"
+      ],
+      "name": "Better Reviews",
+      "settings": {
+        "heading": "Meet The [BREAK_MOBILE]Betterbrand Community",
+        "subtitle": "Trusted by +836,000 Customers",
+        "button_label": "Show All Reviews",
+        "button_link": "https://www.trybetterbrand.com/pages/reviews"
+      }
+    },
+    "you_may_also_cta_RREHaM": {
+      "type": "you-may-also-cta",
+      "name": "You May Also CTA",
+      "settings": {
+        "heading": "You May Also Like",
+        "collection": "respiratory-supplements",
+        "products_limit": 4,
+        "default_rating": "5.0",
+        "default_reviews": "238"
+      }
+    },
+    "faq_section_BkQARp": {
+      "type": "faq-section",
+      "blocks": {
+        "faq_item_DpmE94": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Does This Help With COPD, Asthma, Bronchitis, Or The Common Cold?",
+            "answer": "<p>We designed BetterLungs® to support healthy respiratory and immune systems while keeping everyone in mind. Our ingredients have been studied extensively in many settings! With that said, no supplement can make claims regarding any diagnosis. As always, we recommend that you check with your doctor or pharmacist before starting any new dietary supplement as they have your full medical history available</p>"
+          }
+        },
+        "faq_item_creMBX": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Is It Safe To Take COPD And/Or Asthma Medication With BetterLungs?",
+            "answer": "<p>While all of our formulations are pieced together by a Doctor of Pharmacy, we recommend that you check with your doctor or pharmacist before starting any new dietary supplement as they have your full medical history available.Does This Help My Lungs If I Vape Or Smoke?</p>"
+          }
+        },
+        "faq_item_8cLdFm": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Does This Help My Lungs If I Vape Or Smoke?",
+            "answer": "<p>The ingredients in BetterLungs were selected with smokers, and their lung health, in mind. The idea for the product came from our Chief Scientist who wanted to help the smokers in his family and those with chronic bronchitis and COPD.</p>"
+          }
+        },
+        "faq_item_4aTygX": {
+          "type": "faq-item",
+          "settings": {
+            "question": "Can I Take This For Extended Periods Of Time?",
+            "answer": "<p>Most of the ingredients work better the longer you take them, so definitely!</p>"
+          }
+        },
+        "faq_item_G7tFcD": {
+          "type": "faq-item",
+          "settings": {
+            "question": "How Long Does It Take For This Product To Work?",
+            "answer": "<p>While some customers notice positive effects in the first few days, we tell our customers to give the product 4 weeks for maximum effect.</p>"
+          }
+        },
+        "faq_item_4eh3PV": {
+          "type": "faq-item",
+          "settings": {
+            "question": "How can I get in touch with the team?",
+            "answer": "<p>If you have questions, you can give us a call at <a href=\"tel:18778518979\" target=\"_blank\">1-877-851-8979</a> or email us at <a href=\"mailto:hello@betterbrandhealth.com\" target=\"_blank\">hello@betterbrandhealth.com</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_DpmE94",
+        "faq_item_creMBX",
+        "faq_item_8cLdFm",
+        "faq_item_4aTygX",
+        "faq_item_G7tFcD",
+        "faq_item_4eh3PV"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "text": "<p>Any Questions? We got you!</p>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "better_reviews_cxReWP",
+    "you_may_also_cta_RREHaM",
+    "faq_section_BkQARp"
+  ]
+}

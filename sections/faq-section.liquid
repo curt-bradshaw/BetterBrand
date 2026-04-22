@@ -1,0 +1,248 @@
+<!-- sections/faq-section.liquid -->
+{% assign section_data = product.metafields.pdp.faq_section.value %}
+{% assign heading = section_data.heading | default: section.settings.heading %}
+{% assign text = section_data.text | default: section.settings.text %}
+{% if section_data.faq_items %}
+  {% assign show_faq_metafields = true %}
+  {% assign faq_items = section_data.faq_items.value %}
+{% else %}
+  {% assign show_faq_metafields = false %}
+{% endif %}
+
+<section class="faq-section" {{ section.shopify_attributes }}>
+  <div class="faq__inner">
+    <div class="faq__intro">
+      <h2 class="faq__title">{{ heading }}</h2>
+      <div class="faq__description">{{ text }}</div>
+    </div>
+
+    <div class="faq__items">
+      {% if show_faq_metafields %}
+        {% for faq_item in faq_items %}
+          {% render 'faq-question-item', question: faq_item.question, answer: faq_item.answer, is_metafield: true %}
+        {% endfor %}
+      {% else %}
+        {% for block in section.blocks %}
+          {% render 'faq-question-item', shopify_attributes: block.shopify_attributes, question: block.settings.question, answer: block.settings.answer %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% if section.blocks.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for block in section.blocks %}
+      {% if block.type == 'faq-item' %}
+        {
+          "@type": "Question",
+          "name": {{ block.settings.question | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ block.settings.answer | strip_html | json }}
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "richtext", "id": "text", "label": "Intro text", "default": "<p>Any Questions? We got you!</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "faq-item",
+      "name": "FAQ Item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Enter your FAQ answer here.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [{ "name": "FAQ" }]
+}
+{% endschema %}
+
+<script>
+  function closeAllFAQs() {
+    document.querySelectorAll('.faq-question').forEach((btn) => {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.faq-icon');
+      btn.setAttribute('aria-expanded', 'false');
+      answer.style.maxHeight = null;
+      icon.textContent = '+';
+    });
+  }
+
+  function openFAQ(btn) {
+    const answer = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    btn.setAttribute('aria-expanded', 'true');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+    icon.textContent = '−';
+  }
+
+  function initFAQs() {
+    // const firstFAQ = document.querySelector('.faq-question');
+    // if (firstFAQ && firstFAQ.getAttribute('aria-expanded') === 'true') {
+    //   const firstAnswer = firstFAQ.nextElementSibling;
+    //   if (firstAnswer) {
+    //     firstAnswer.style.maxHeight = firstAnswer.scrollHeight + 'px';
+    //   }
+    // }
+
+    document.querySelectorAll('.faq-question').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+        if (expanded) {
+          closeAllFAQs();
+        } else {
+          closeAllFAQs();
+          openFAQ(btn);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFAQs);
+  } else {
+    initFAQs();
+  }
+</script>
+
+{% style %}
+  .faq-section {
+    padding: 80px 20px;
+  }
+
+  .faq__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 131px;
+    align-items: center;
+  }
+
+  .faq__title {
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #252525;
+    font-family: var(--bookmaniaFont);
+    line-height: 1.2;
+  }
+
+  .faq__description p {
+    font-size: 20px;
+    color: #555555;
+    line-height: 1.2;
+    text-align: left;
+  }
+
+  .faq__items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .faq-item {
+    background: #f0ffe9;
+    border-radius: 14px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 18px 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: #252525;
+  }
+
+  .faq-icon {
+    font-size: 22px;
+    line-height: 14px;
+    color: #8f8f8f;
+    font-weight: 400;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 20px;
+  }
+
+  .faq-answer p {
+    margin: 0;
+    padding: 10px 0 18px;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #555555;
+  }
+
+  @media (max-width: 1279px) {
+    .faq__inner {
+      gap: 0;
+      grid-template-columns: .7fr 1fr;
+    }
+  }
+
+  @media (max-width: 1019px) {
+    .faq-section {
+      padding: 60px 20px;
+    }
+    .faq__inner {
+      grid-template-columns: 1fr;
+      gap: 35px;
+    }
+    .faq__description p {
+      font-size: 18px;
+    }
+    .faq__title {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+    .faq-question {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .faq-section {
+      padding: 40px 20px;
+    }
+    .faq__title {
+      font-size: 24px;
+      text-align: center;
+    }
+    .faq__description p {
+      font-size: 16px;
+      text-align: center;
+    }
+    .faq__items {
+      gap: 15px;
+    }
+  }
+{% endstyle %}

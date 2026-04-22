@@ -1,0 +1,145 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
+{
+  "sections": {
+    "main": {
+      "type": "collection-template",
+      "settings": {
+        "font_size_title_desktop": 22,
+        "font_size_subtitle_desktop": 20,
+        "font_size_title_tablet": 20,
+        "font_size_subtitle_tablet": 18,
+        "font_size_title_mobile": 16,
+        "font_size_subtitle_mobile": 14,
+        "align_by_right_margin_desktop": false,
+        "align_by_bottom_margin_desktop": false,
+        "titles_position_horizontal_desktop": 9,
+        "titles_position_vertical_desktop": 28,
+        "text_box_width_desktop": 70,
+        "align_by_right_margin_tablet": false,
+        "align_by_bottom_margin_tablet": false,
+        "titles_position_horizontal_tablet": 11,
+        "titles_position_vertical_tablet": 31,
+        "text_box_width_tablet": 47,
+        "align_by_right_margin_mobile": false,
+        "align_by_bottom_margin_mobile": false,
+        "titles_position_horizontal_mobile": 8,
+        "titles_position_vertical_mobile": 20,
+        "text_box_width_mobile": 52,
+        "width_titles": 70,
+        "collection_banner_image_checkbox": false,
+        "collection_banner_image": 75,
+        "img_banner": true,
+        "product_card_title_font_size_desktop": 18,
+        "product_card_title_font_size_tablet": 21,
+        "section_background_color": "#fff",
+        "title_collection_color": "#ffffff",
+        "subtitle_collection_color": "#ffffff",
+        "review_stars_color": "#ffbc11",
+        "product_card_title_font_size_mobile": 13
+      }
+    },
+    "141f7cc5-fedc-466c-a29f-b47d94f1b0f2": {
+      "type": "faq-accordion",
+      "blocks": {
+        "template--21255095320850__141f7cc5-fedc-466c-a29f-b47d94f1b0f2-text_column-1": {
+          "type": "text_column",
+          "settings": {
+            "title_column": "How soon will my order ship?",
+            "content_column": "Elementum ullamcorper felis nulla scelerisque. Nunc enim nunc mattis leo massa."
+          }
+        },
+        "template--21255095320850__141f7cc5-fedc-466c-a29f-b47d94f1b0f2-text_column-2": {
+          "type": "text_column",
+          "settings": {
+            "title_column": "Is there any warranty exclusions?",
+            "content_column": "Elementum ullamcorper felis nulla scelerisque. Nunc enim nunc mattis leo massa."
+          }
+        },
+        "0bf1186d-325e-4a44-83ee-013147a3a5ea": {
+          "type": "text_column",
+          "settings": {
+            "title_column": "Are there any return exclusions?",
+            "content_column": "Elementum ullamcorper felis nulla scelerisque. Nunc enim nunc mattis leo massa."
+          }
+        },
+        "3c00685e-2b7b-481a-bc61-d43a2bc15765": {
+          "type": "text_column",
+          "settings": {
+            "title_column": "Will I be charged for a replacement item?",
+            "content_column": "Elementum ullamcorper felis nulla scelerisque. Nunc enim nunc mattis leo massa."
+          }
+        },
+        "7989987c-cc91-47eb-bb8d-19929ab2e3fe": {
+          "type": "text_column",
+          "settings": {
+            "title_column": "How can I track my orders &amp; payment?",
+            "content_column": "Elementum ullamcorper felis nulla scelerisque. Nunc enim nunc mattis leo massa."
+          }
+        }
+      },
+      "block_order": [
+        "template--21255095320850__141f7cc5-fedc-466c-a29f-b47d94f1b0f2-text_column-1",
+        "template--21255095320850__141f7cc5-fedc-466c-a29f-b47d94f1b0f2-text_column-2",
+        "0bf1186d-325e-4a44-83ee-013147a3a5ea",
+        "3c00685e-2b7b-481a-bc61-d43a2bc15765",
+        "7989987c-cc91-47eb-bb8d-19929ab2e3fe"
+      ],
+      "settings": {
+        "custom_class": "",
+        "enable_custom_margins_paddings": true,
+        "custom-margin-top": 0,
+        "custom-margin-bottom": 0,
+        "custom-padding-top": 0,
+        "custom-padding-bottom": 0,
+        "title": "FAQ's",
+        "subtitle": "Pellentesque cras adipiscing tempus libero vel nullam mauris tellus. Aliquam ultrices tellus consequat amet, lectus aliquam est in neque.",
+        "section_title_alignment": "center",
+        "row_title_text_transform": "capitalize",
+        "icon_style": "arrow",
+        "headline_text_box_width": 70,
+        "accordion_width": 69,
+        "headline_text_box_width_tablet": 61,
+        "accordion_width_tablet": 95,
+        "headline_text_box_width_mobile": 100,
+        "accordion_width_mobile": 89,
+        "headline_font_size": 37,
+        "subheadline_font_size": 20,
+        "title_font_size": 20,
+        "content_font_size": 16,
+        "arrow_size": 15,
+        "headline_font_size_tablet": 28,
+        "subheadline_font_size_tablet": 14,
+        "title_font_size_tablet": 20,
+        "content_font_size_tablet": 16,
+        "headline_font_size_mobile": 18,
+        "subheadline_font_size_mobile": 10,
+        "title_font_size_mobile": 10,
+        "content_font_size_mobile": 10,
+        "arrow_size_mobile": 10,
+        "background_color_accordion": "#161616",
+        "border_color_accordion": "#161616",
+        "headline_color": "#ffffff",
+        "subheadline_color": "#ffffff",
+        "active_tab_color": "#161616",
+        "active_tab_text_color": "#ffffff",
+        "inactive_tab_color": "#161616",
+        "inactive_tab_text_color": "#ffffff",
+        "hover_tab_color": "#161616",
+        "hover_text_color": "#ffffff",
+        "content_text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "141f7cc5-fedc-466c-a29f-b47d94f1b0f2"
+  ]
+}

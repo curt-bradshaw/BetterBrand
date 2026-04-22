@@ -1,0 +1,526 @@
+<!-- start product-card-reusable.liquid (SECTION) -->
+{%- assign target_product = all_products[section.settings.product_handle] -%}
+{%- if target_product == blank -%}
+  {%- assign target_product = product -%}
+{%- endif -%}
+
+{%- if target_product != blank -%}
+  {%- capture css -%}
+    <style>    
+      #shopify-section-{{ section.id }} {
+        background-color: {{ section.settings.section_background_color }};
+        margin: {{ section.settings.section_margin_top }}px 0 {{ section.settings.section_margin_bottom }}px 0;
+      }
+      
+      #shopify-section-{{ section.id }} .reusable-product-card {
+        max-width: {{ section.settings.max_width }}px;
+        margin: 0 auto;
+        border: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+        border-radius: {{ section.settings.border_radius }}px;
+      }
+
+      #shopify-section-{{ section.id }} .product-title-wrapper {
+        padding: 20px 15px 0px 15px;
+      }
+
+      #shopify-section-{{ section.id }} .product-title {
+        color: {{ section.settings.title_color }};
+        font-size: {{ section.settings.title_font_size }}px;
+        margin-bottom: {{ section.settings.title_margin_bottom }}px;
+      }
+
+      #shopify-section-{{ section.id }} .product-price-wrapper {
+        padding: 0px 15px 20px 15px;
+      }
+
+      #shopify-section-{{ section.id }} .price-compare {
+        text-decoration: line-through;
+        color: #838383;
+        margin-right: 10px;
+        font-size: 15px;
+      }
+      
+      #shopify-section-{{ section.id }} .product-price {
+        color: {{ section.settings.price_color }};
+        font-size: {{ section.settings.price_font_size }}px;
+        margin-bottom: {{ section.settings.price_margin_bottom }}px;
+        font-weight: 600;
+      }
+
+      #shopify-section-{{ section.id }} .reusable-product-image {
+        border-radius: 10px 10px 0px 0px;
+      }
+      
+      #shopify-section-{{ section.id }} .product-card__reviews {
+        padding: 0px 15px 10px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      #shopify-section-{{ section.id }} .product-card__reviews svg {
+        height: auto;
+      }
+      
+      #shopify-section-{{ section.id }} .product-card__reviews span {
+        color: #595959;
+        font-size: 12px;
+      }
+      
+      @media (max-width: 768px) {
+        #shopify-section-{{ section.id }} .product-title {
+          font-size: {{ section.settings.title_font_size_mobile }}px;
+        }
+        
+        #shopify-section-{{ section.id }} .product-price {
+          font-size: {{ section.settings.price_font_size_mobile }}px;
+        }
+      }
+    </style>
+  {%- endcapture -%}
+
+  {{ css }}
+
+  <div class="reusable-product-card" data-product-id="{{ target_product.id }}" data-product-handle="{{ target_product.handle }}">
+    
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        
+        {%- when 'product_image' -%}
+          {%- if section.settings.show_image and target_product.featured_image -%}
+            <div class="product-image-wrapper" {{ block.shopify_attributes }}>
+              <a href="{{ target_product.url }}" target="{{ section.settings.link_target }}">
+                <img 
+                  src="{{ target_product.featured_image | image_url: width: section.settings.image_width }}"
+                  alt="{{ target_product.featured_image.alt | escape }}"
+                  class="reusable-product-image"
+                  loading="lazy"
+                  width="{{ section.settings.image_width }}"
+                  height="auto"
+                >
+              </a>
+            </div>
+          {%- endif -%}
+          
+        {%- when 'product_title' -%}
+          {%- if section.settings.show_title -%}
+            <div class="product-title-wrapper" {{ block.shopify_attributes }}>
+              <h3 class="product-title">
+                <a href="{{ target_product.url }}" target="{{ section.settings.link_target }}">
+                  {{ target_product.title | escape }}
+                </a>
+              </h3>
+            </div>
+          {%- endif -%}
+          
+        {%- when 'product_price' -%}
+          {%- if section.settings.show_price -%}
+            <div class="product-price-wrapper" {{ block.shopify_attributes }}>
+              <div class="product-price">
+                {%- if target_product.compare_at_price > target_product.price -%}
+                  <span class="price-compare">{{ target_product.compare_at_price | money }}</span>
+                {%- endif -%}
+                <span class="price-current">{{ target_product.price | money }}</span>
+              </div>
+            </div>
+          {%- endif -%}
+          
+        {%- when 'product_description' -%}
+          {%- if section.settings.show_description and target_product.description != blank -%}
+            <div class="product-description-wrapper" {{ block.shopify_attributes }}>
+              <div class="product-description">
+                {{ target_product.description | truncate: section.settings.description_length }}
+              </div>
+            </div>
+          {%- endif -%}
+          
+        {%- when 'product_reviews' -%}
+          <div class="product-card__reviews" {{ block.shopify_attributes }}>
+            <svg width="114" height="22" viewBox="0 0 114 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11.1938 0L13.707 7.60081H21.8398L15.2602 12.2984L17.7734 19.8992L11.1938 15.2016L4.61426 19.8992L7.12743 12.2984L0.547865 7.60081H8.68066L11.1938 0Z"
+                fill="#595959" />
+              <path
+                d="M34.5815 0L37.0947 7.60081H45.2275L38.6479 12.2984L41.1611 19.8992L34.5815 15.2016L28.002 19.8992L30.5151 12.2984L23.9356 7.60081H32.0684L34.5815 0Z"
+                fill="#595959" />
+              <path
+                d="M57.4604 0L59.8593 7.60081H67.6225L61.342 12.2984L63.7409 19.8992L57.4604 15.2016L51.1799 19.8992L53.5789 12.2984L47.2984 7.60081H55.0615L57.4604 0Z"
+                fill="#595959" />
+              <path
+                d="M80.3391 0L82.8523 7.60081H90.9851L84.4055 12.2984L86.9187 19.8992L80.3391 15.2016L73.7595 19.8992L76.2727 12.2984L69.6931 7.60081H77.8259L80.3391 0Z"
+                fill="#595959" />
+              <path
+                d="M102.903 0L105.394 7.60081H113.457L106.934 12.2984L109.426 19.8992L102.903 15.2016L96.3799 19.8992L98.8714 12.2984L92.3486 7.60081H100.411L102.903 0Z"
+                fill="#595959" />
+            </svg>
+            <span>(5.0 of 800 Reviews)</span>
+          </div>
+
+          {% comment %}
+            {%- if show_reviews -%}
+            <div class="product-card__item-reviews-wrapper">
+            {%- render 'reviews-stars' with prod: prod -%}
+            </div>
+            {%- endif -%}
+          {% endcomment %}
+
+          {% comment %} Comment this div when a reviews app is downloaded {% endcomment %}
+          
+        {%- when 'add_to_cart_button' -%}
+          {%- if section.settings.show_add_to_cart -%}
+            <div class="add-to-cart-wrapper" {{ block.shopify_attributes }}>
+              {% form 'product', target_product, class: 'reusable-product-form' %}
+                <input type="hidden" name="id" value="{{ target_product.selected_or_first_available_variant.id }}">
+                <button 
+                  type="submit" 
+                  class="btn add-to-cart-btn"
+                  {% unless target_product.available %}disabled{% endunless %}
+                >
+                  {%- if target_product.available -%}
+                    {{ section.settings.add_to_cart_text | default: 'Add to Cart' }}
+                  {%- else -%}
+                    {{ section.settings.sold_out_text | default: 'Sold Out' }}
+                  {%- endif -%}
+                </button>
+              {% endform %}
+            </div>
+          {%- endif -%}
+          
+      {%- endcase -%}
+    {%- endfor -%}
+    
+  </div>
+
+{%- else -%}
+  <div class="reusable-product-card-placeholder">
+    <p>Please select a product in the section settings.</p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Reusable Product Card",
+  "tag": "section",
+  "class": "reusable-product-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Selection"
+    },
+    {
+      "type": "product",
+      "id": "product_handle",
+      "label": "Product",
+      "info": "Select a specific product to display. If empty, will use current page product context if available."
+    },
+    {
+      "type": "header",
+      "content": "Display Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show Product Image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Product Title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Product Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Product Description",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Show Add to Cart Button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum Width (px)",
+      "min": 200,
+      "max": 800,
+      "step": 50,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image Width (px)",
+      "min": 100,
+      "max": 600,
+      "step": 50,
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "description_length",
+      "label": "Description Length (characters)",
+      "min": 50,
+      "max": 500,
+      "step": 50,
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_margin_top",
+      "label": "Section Top Margin (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_margin_bottom",
+      "label": "Section Bottom Margin (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Card Top Padding (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Card Bottom Padding (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_sides",
+      "label": "Card Side Padding (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Title Font Size Mobile (px)",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "price_font_size",
+      "label": "Price Font Size (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "price_font_size_mobile",
+      "label": "Price Font Size Mobile (px)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Title Bottom Margin (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "price_margin_bottom",
+      "label": "Price Bottom Margin (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Section Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#e1e1e1"
+    },
+    {
+      "type": "header",
+      "content": "Border & Effects"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border Width (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border Radius (px)",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_text",
+      "label": "Add to Cart Button Text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Sold Out Button Text",
+      "default": "Sold Out"
+    },
+    {
+      "type": "select",
+      "id": "link_target",
+      "label": "Link Target",
+      "options": [
+        {
+          "value": "_self",
+          "label": "Same Window"
+        },
+        {
+          "value": "_blank",
+          "label": "New Window"
+        }
+      ],
+      "default": "_self"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_image",
+      "name": "Product Image",
+      "limit": 1
+    },
+    {
+      "type": "product_title",
+      "name": "Product Title",
+      "limit": 1
+    },
+    {
+      "type": "product_price",
+      "name": "Product Price",
+      "limit": 1
+    },
+    {
+      "type": "product_description",
+      "name": "Product Description",
+      "limit": 1
+    },
+    {
+      "type": "product_reviews",
+      "name": "Product Reviews",
+      "limit": 1
+    },
+    {
+      "type": "add_to_cart_button",
+      "name": "Add to Cart Button",
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reusable Product Card",
+      "blocks": [
+        {
+          "type": "product_image"
+        },
+        {
+          "type": "product_title"
+        },
+        {
+          "type": "product_reviews"
+        },
+        {
+          "type": "product_price"
+        },
+        {
+          "type": "add_to_cart_button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

@@ -1,0 +1,262 @@
+<!-- start BAD-faq-new-layout.liquid (SECTION) -->
+
+<style>
+  button#ac-trigger-0:focus,
+  button#ac-trigger-0:active {
+    outline: none;
+    box-shadow: none;
+  }
+
+  button#ac-trigger-0 {
+    outline: none;
+    box-shadow: none;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout {
+    padding: 20px 0 60px;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ac-trigger .ntg-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 80px;
+
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled {
+    background: #fff;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active {
+    background: #234134;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled .ntg-opener-text {
+    color: #234134;
+    transition: color 0.3s ease;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active .ntg-opener-text {
+    color: #fff;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ntg-accordion-content {
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active .ntg-icon::before,
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active .ntg-icon::after{
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 23px;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active .ntg-icon::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 1;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active .ntg-icon::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ac-trigger {
+    font-family: "suisse_intl_mono" !important;
+    font-weight: 400;
+    font-size: min(calc(20px + (22 - 20) * ((100vw - 768px) / (1440 - 768))), 22px);
+    padding: 26px 65px 24px 40px;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ntg-accordion-content p {
+    font-weight: 400;
+    font-size: min(calc(16px + (18 - 16) * ((100vw - 768px) / (1440 - 768))), 18px);
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ntg-accordion-content {
+    padding: 0 150px 20px 40px;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout  .accordion-container .ac {
+    margin: 0 0 10px;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .ntg-heading-holder {
+    margin: 0 0 40px;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .ntg-heading-holder h2{
+    font-size: 27px;
+  }
+
+  body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac-trigger .ntg-icon {
+    right: 40px;
+  }
+  @media (max-width:1019px){
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ac-trigger .ntg-icon {
+      width: 45px;
+      height: 45px;
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac-trigger {
+      padding: 20px 50px 20px 20px;
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ntg-accordion-content {
+      padding: 0 80px 20px 40px;
+    }
+  }
+
+  @media (max-width: 768px){
+    body .ntg-wrapper .BAD-faq-section-new-layout {
+      padding: 10px 0 30px;
+    }
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac-trigger .ntg-icon {
+      right: 10px;
+    }
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ac-trigger {
+      padding: 20px 60px 20px 10px;
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ntg-accordion-content {
+      padding: 0 50px 20px 10px;
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .ntg-heading-holder h2 {
+      font-size: 20px;
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ac-trigger {
+      font-size: calc(16px + (20 - 16) * ((100vw - 375px) / (767 - 375)));
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ntg-accordion-content p {
+      font-size: calc(14px + (16 - 14) * ((100vw - 375px) / (767 - 375)));
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .ac .ac-trigger .ntg-icon {
+      width: 35px;
+      height: 35px;
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active .ntg-icon::before,
+    body .ntg-wrapper .BAD-faq-section-new-layout .accordion-container .js-enabled.is-active .ntg-icon::after {
+      height: 15px;
+    }
+
+    body .ntg-wrapper .BAD-faq-section-new-layout .ntg-heading-holder {
+      margin: 20px 20px;
+    }
+  }
+</style>
+
+<div class="BAD-faq-section-new-layout ntg-faq-section">
+  <div class="ntg-container">
+    <div class="ntg-heading-holder">
+      <h2 class="ntg-h2" style="margin-top:40px;">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="accordion-container">
+      {% for block in section.blocks %}
+        <div
+          {% if forloop.index == 1 %}
+            id="index-one"
+          {% endif %}
+          class="ac"
+        >
+          <div class="ac-header">
+            <button type="button" class="ac-trigger">
+              <span class="ntg-opener-text">{{ block.settings.question }}</span>
+              <span class="ntg-icon"></span>
+            </button>
+          </div>
+          <div class="ac-panel">
+            <div class="ntg-accordion-content">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {%- if section.settings.link_text != blank -%}
+      <div class="ntg-link-holder">
+        <a href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "BAD FAQ",
+  "class": "BAD-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FAQs"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non ipsam, et sunt veniam sapiente alias unde odio distinctio dolor nulla modi magnam praesentium, amet voluptas, veritatis asperiores quae recusandae eos.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BAD Faq",
+      "blocks": [
+        {
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+{% comment %}
+  <script>
+    window.addEventListener('load', function() {
+      var indexOneElement = document.querySelector('#index-one .ac-header button');
+      if (indexOneElement) {
+          indexOneElement.click();
+      } else {
+          console.error('Elemento com ID "index-one" não encontrado.');
+      }
+    });
+  </script>
+{% endcomment %}

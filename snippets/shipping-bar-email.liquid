@@ -1,0 +1,25 @@
+<!-- start shipping-bar-email.liquid (SNIPPET) -->
+{%- assign email = settings.text_email -%}
+<div class="shipping-bar__item shipping-bar__item--small">
+  {%- unless settings.disable_shippingbar_text_email or email == blank -%}
+    {%- if section.settings.enable_link_shippingbar_text_email -%}
+      <a href="mailto:{{- email -}}" title="Store Email" class="shipping-bar__link">
+        {%- if section.settings.enable_email_icon_mobile -%}
+          {%- render 'icon-envelope' -%}
+        {%- else -%}
+          <span class="no-mobile">{%- render 'icon-envelope' -%}</span>
+        {%- endif -%}
+        <span class="no-mobile">{{- email -}}</span>
+      </a>
+    {%- else -%}
+      <div class="shipping-bar__item--wrapper no-mobile">
+        {%- if section.settings.enable_email_icon_mobile -%}
+          {%- render 'icon-envelope' -%}
+        {%- else -%}
+          <span class="no-mobile">{%- render 'icon-envelope' -%}</span>
+        {%- endif -%}
+        <span>{{- email -}}</span>
+      </div>
+    {%- endif -%}
+  {%- endunless -%}
+</div>

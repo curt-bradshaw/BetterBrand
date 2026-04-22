@@ -1,0 +1,82 @@
+<!--start shipping-calculate.liquid (SNIPPED)-->
+ 
+<div class="shipping-calculate-date">
+  {%- assign tomorrowDate = "now" | date: "%s" | plus: 86400 -%}
+  <div class="shipping__message shipping__message--today " style="display: none;">Ships Today If Ordered Within <br><span class="remain-time"></span></div>
+  <div class="shipping__message shipping__message--tomorrow " style="display: none;">Ships Tomorrow If Ordered Within <br><span class="within-time"></span></div>
+</div>
+
+<style>
+  .shipping-calculate-date{
+    clear: both;
+    display: flex;
+    justify-content: {{ section.settings.delivery_align | default: 'center' }};
+    padding: 5px 3px;
+    align-items: center;
+    font-size: 16px;
+    color: #234134;
+    background-color: #F2CB491A;
+    text-align: center;
+  }
+
+  .remain-time,
+  .within-time {
+    font-weight: 700;
+  }
+
+  @media (max-width: 1019px) {
+    .shipping-calculate-date * {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .shipping-calculate-date * {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function (e) {
+    var n = new Date();
+    var countDownDate = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 14, 0);
+    var x = setInterval(function () {
+      var currentDate = new Date();
+      var estData = currentDate.toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        hour12: false,
+      });
+      var limitHour = parseInt(estData.split(' ')[1].split(':')[0]);
+
+      if (limitHour > 14) {
+        countDownDate = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 14, 0);
+        var tomorrowTime = countDownDate.getTime() + 86400000;
+
+        var distance = Math.abs(currentDate - tomorrowTime);
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        $('.shipping-calculate-date .within-time').html(hours + 'hr ' + minutes + 'mins ' + seconds + 'sec');
+        $('.shipping__message--today').hide();
+        $('.shipping__message--tomorrow').show();
+        return;
+      }
+      var now = countDownDate.getTime();
+      
+      var distance = Math.abs(currentDate - now);
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      $('.shipping-calculate-date .remain-time').html(hours + 'hr ' + minutes + 'mins ' + seconds + ' sec');
+
+      $('.shipping__message--today').show();
+      $('.shipping__message--tomorrow').hide();
+    }, 1000);
+  });
+</script>
+<!--end shipping-calculate.liquid (SNIPPET)-->
