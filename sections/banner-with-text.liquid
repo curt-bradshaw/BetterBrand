@@ -16,6 +16,9 @@
       <div class="banner-with-text__content">
         <h2 class="banner-with-text__heading">
           {% if section.settings.svg == true %}
+            <span class="patrol-sr-only">
+              Customer rating: 5 out of 5 stars
+            </span>
             <span class="banner-with-text__stars" aria-hidden="true">
               {% for i in (1..5) %}
                 {% render 'star-icon-02' %}
