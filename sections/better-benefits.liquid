@@ -9,7 +9,7 @@
       {% for block in section.blocks %}
         <div class="bs-item">
           <div class="bs-icon-wrapper">
-            <img src="{{ block.settings.icon | img_url: '200x' }}" alt="{{ block.settings.title }}">
+            <img src="{{ block.settings.icon | img_url: '200x' }}" alt="{{ block.settings.icon.alt }}">
           </div>
           <div class="bs-content">
             <h3 class="bs-title">{{ block.settings.title }}</h3>
@@ -178,7 +178,7 @@
         "id": "mobile_margin_top",
         "label": "Mobile Margin Top",
         "default": 0
-      },
+      }
     ],
     "blocks": [
       {
