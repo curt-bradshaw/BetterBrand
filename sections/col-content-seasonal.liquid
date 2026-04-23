@@ -52,8 +52,7 @@
                 {{
                   section.settings.image
                   | image_url: width: 3200
-                  | image_tag:
-                    sizes: sizes,
+                  | image_tag: sizes: sizes,
                     widths: '50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3200'
                 }}
               </div>
@@ -73,7 +72,7 @@
                   {% endif %}
                  
                 >
-                  <summary id="Summary-{{ block.id }}-{{ section.id }}">
+                  <summary id="Summary-{{ block.id }}-{{ section.id }}-{{ forloop.index }}">
                      {% if block.settings.image != blank %}
                       <img class="collapsible-icon-v2" style="width: {{block.settings.image_width}}px;" src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
                     {% endif %}
@@ -88,7 +87,7 @@
                     class="accordion__content rte"
                     id="CollapsibleAccordion-{{ block.id }}-{{ section.id }}"
                     role="region"
-                    aria-labelledby="Summary-{{ block.id }}-{{ section.id }}"
+                    aria-labelledby="Summary-{{ block.id }}-{{ section.id }}-{{ forloop.index }}"
                   >
                     {{ block.settings.row_content }}
                     {{ block.settings.page.content }}
@@ -433,6 +432,7 @@
 </script>
 
 {% schema %}
+
 {
   "name": "Collapsible Content V2",
   "tag": "section",
@@ -663,4 +663,5 @@
     }
   ]
 }
+
 {% endschema %}
