@@ -11,7 +11,7 @@
       {% endif %}
     </div>
 
-    <div class="better-reviews__grid">
+    <div class="better-reviews__grid" tabindex="0">
       {% for block in section.blocks %}
         <div class="better-reviews__card" {{ block.shopify_attributes }}>
           {% if block.settings.image != blank %}
