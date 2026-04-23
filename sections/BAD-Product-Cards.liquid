@@ -216,9 +216,9 @@
         <div class="BAD-card-content">
           <h2>{{ block.settings.card_heading }}</h2>
           {% if block.settings.product_image %}
-            <img src="{{ block.settings.product_image | img_url: 'master' }}" alt="Product Image">
+            <img src="{{ block.settings.product_image | img_url: 'master' }}" alt="{{ block.settings.product_image.alt | escape }}">
           {% elsif product %}
-            <img src="{{ first_variant.featured_image | img_url: 'master' }}" alt="{{ product.title }}">
+            <img src="{{ first_variant.featured_image | img_url: 'master' }}" alt="{{ first_variant.featured_image.alt | escape }}">
           {% endif %}
           <p style="margin-top:10px;">{{ block.settings.image_description }}</p>
           <div>{{ block.settings.html_section }}</div>
@@ -228,7 +228,7 @@
             </p>
             <p style="font-size: 23px; font-weight: 700;">
               {% if first_variant.compare_at_price > product.price %}
-                <s>{{ first_variant.compare_at_price | money }}</s> {{ first_variant.price | money }}
+                <s><span class="patrol-sr-only">Regular Price:</span>{{ first_variant.compare_at_price | money }}</s> <span><span class="patrol-sr-only">Sale Price:</span>{{ first_variant.price | money }}</span>
               {% else %}
                 {{ first_variant.price | money }}
               {% endif %}
