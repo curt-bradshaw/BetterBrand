@@ -67,7 +67,7 @@
   <h2 class="BAD-heading page-width">{{ section.settings.BAD_section_heading }}</h2>
   <div class="BAD-carousel-wrapper page-width">
     <button class="BAD-carousel-btn BAD-prev">&lt;</button>
-    <div class="BAD-carousel">
+    <div class="BAD-carousel" tabindex="0">
       {% for block in section.blocks %}
         <div class="BAD-review-card">
           <div class="BAD-review-header">
@@ -75,7 +75,7 @@
               <img
                 class="BAD-user-image"
                 src="{{ block.settings.BAD_user_image | img_url: 'medium' }}"
-                alt="{{ block.settings.BAD_user_name }}"
+                alt="{{ block.settings.BAD_user_image.alt | escape }}"
               >
             {% endif %}
             <div class="BAD-user-info">
