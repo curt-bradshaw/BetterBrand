@@ -1,4 +1,5 @@
 {% schema %}
+
 {
   "name": "BAD Comparison Table",
   "settings": [
@@ -12,7 +13,6 @@
       "id": "right_image",
       "label": "Right Column Image"
     },
-
     {
       "type": "textarea",
       "id": "productTitle",
@@ -31,6 +31,7 @@
     }
   ]
 }
+
 {% endschema %}
 
 <style>
@@ -156,7 +157,7 @@
     <!-- Left Column -->
     <div class="BAD-column BAD-left">
       {% if section.settings.left_image %}
-        <img src="{{ section.settings.left_image | img_url: 'large' }}" alt="Product Image" class="BAD-image">
+        <img src="{{ section.settings.left_image | img_url: 'large' }}" alt="{{ section.settings.left_image.alt | escape }}" class="BAD-image">
       {% endif %}
       <h3 class="BAD-title">{{ section.settings.productTitle }}</h3>
       <ul class="BAD-list">
@@ -170,7 +171,7 @@
     <!-- Right Column -->
     <div class="BAD-column BAD-right">
       {% if section.settings.right_image %}
-        <img src="{{ section.settings.right_image | img_url: 'large' }}" alt="Competitor Image" class="BAD-image">
+        <img src="{{ section.settings.right_image | img_url: 'large' }}" alt="{{ section.settings.right_image.alt | escape }}" class="BAD-image">
       {% endif %}
       <h3 class="BAD-title">Others</h3>
       <ul class="BAD-list">
