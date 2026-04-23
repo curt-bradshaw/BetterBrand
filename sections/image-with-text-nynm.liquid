@@ -307,14 +307,16 @@
                             {% if image != blank %}
                               
                                 <div class="image-container">
-                                  <img 
-                                    src="{{ image | image_url: width: 400 }}" 
-                                    alt="Benefit {{ forloop.index }}"
-                                    width="{{ image.width }}" height="{{ image.height }}"
-                                    style="width:{{ width }}px"
-                                    loading="lazy"
-                                    class="benefit-image"
-                                  >
+                                    {% capture img_width %}
+                                      width: {{ width }}px
+                                    {% endcapture %}
+                                    {{ image | image_url: width: 400 
+                                      | image_tag: width: nil, 
+                                        height: nil, 
+                                        style: img_width,
+                                        loading: 'lazy',
+                                        class: 'benefit-image' 
+                                    }}
                                     <p>
                                       {{ text }}
                                     </p>
@@ -693,7 +695,7 @@
         {
           "type": "text",
           "id": "txt_1",
-          "label": "text 1",
+          "label": "text 1"
         },
         {
           "type": "image_picker",
@@ -713,7 +715,7 @@
         {
           "type": "text",
           "id": "txt_2",
-          "label": "text 2",
+          "label": "text 2"
         },
         {
           "type": "image_picker",
@@ -733,7 +735,7 @@
         {
           "type": "text",
           "id": "txt_3",
-          "label": "text 3",
+          "label": "text 3"
         },
         {
           "type": "image_picker",
