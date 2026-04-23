@@ -22,7 +22,7 @@
     <div class="clinically-study-cta-wrapper">
       <a href="{{ section.settings.cta_url }}" target="_blank" class="clinically-study-cta-button">
         <span class="clinically-study-cta-text">{{- section.settings.cta_text -}}</span>
-      </a>
+      <span class="patrol-sr-only patrol-blank-target">, opens in a new tab</span></a>
     </div>
   </div>
   
@@ -209,92 +209,94 @@
   {% endif %}
 
   {% schema %}
-  {
-    "name": "Clinically Study",
-    "settings": [
-      {
-        "type": "text",
-        "id": "heading",
-        "label": "Heading",
-        "default": "Clinically Studied. Proven Results."
-      },
-      {
-        "type": "textarea",
-        "id": "subheading",
-        "label": "Subheading",
-        "default": "In a 60-day clinical study, participants using our Mullein + Chlorophyll Tincture reported real results:"
-      },
-      {
-        "type": "text",
-        "id": "cta_text",
-        "label": "CTA Text",
-        "default": "See Full Results Here"
-      },
-      {
-        "type": "url",
-        "id": "cta_url",
-        "label": "CTA URL",
-      }
-    ],
-    "blocks": [
-      {
-        "type": "study_item_value",
-        "name": "Study Item Value",
-        "settings": [
-          {
-            "type": "number",
-            "id": "study_percentage",
-            "label": "Study Percentage",
-          },
-          {
-            "type": "text",
-            "id": "study_value",
-            "label": "Study Value",
-            "default": "Study Value"
+
+{
+  "name": "Clinically Study",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clinically Studied. Proven Results."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "In a 60-day clinical study, participants using our Mullein + Chlorophyll Tincture reported real results:"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "See Full Results Here"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL",
+    }
+  ],
+  "blocks": [
+    {
+      "type": "study_item_value",
+      "name": "Study Item Value",
+      "settings": [
+        {
+          "type": "number",
+          "id": "study_percentage",
+          "label": "Study Percentage",
+        },
+        {
+          "type": "text",
+          "id": "study_value",
+          "label": "Study Value",
+          "default": "Study Value"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Clinically Study",
+      "blocks": [
+        {
+          "type": "study_item_value",
+          "name": "Study Item Value",
+          "settings": {
+            "study_percentage": 81,
+            "study_value": "Experienced Less frequent coughing."
           }
-        ]
-      }
-    ],
-    "max_blocks": 4,
-    "presets": [
-      {
-        "name": "Clinically Study",
-        "blocks": [
-          {
-            "type": "study_item_value",
-            "name": "Study Item Value",
-            "settings": {
-              "study_percentage": 81,
-              "study_value": "Experienced Less frequent coughing."
-            }
-          },
-          {
-            "type": "study_item_value",
-            "name": "Study Item Value",
-            "settings": {
-              "study_percentage": 77,
-              "study_value": "noticed clearer airways."
-            }
-          },
-          {
-            "type": "study_item_value",
-            "name": "Study Item Value",
-            "settings": {
-              "study_percentage": 73,
-              "study_value": "had easier mucus clearance."
-            }
-          },
-          {
-            "type": "study_item_value",
-            "name": "Study Item Value",
-            "settings": {
-              "study_percentage": 68,
-              "study_value": "reported improved sleep quality."
-            }
+        },
+        {
+          "type": "study_item_value",
+          "name": "Study Item Value",
+          "settings": {
+            "study_percentage": 77,
+            "study_value": "noticed clearer airways."
           }
-        ]
-      }
-    ]
-  }
-  {% endschema %}
+        },
+        {
+          "type": "study_item_value",
+          "name": "Study Item Value",
+          "settings": {
+            "study_percentage": 73,
+            "study_value": "had easier mucus clearance."
+          }
+        },
+        {
+          "type": "study_item_value",
+          "name": "Study Item Value",
+          "settings": {
+            "study_percentage": 68,
+            "study_value": "reported improved sleep quality."
+          }
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
   
