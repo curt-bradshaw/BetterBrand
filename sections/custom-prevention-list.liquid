@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="ntg-text-holder">
-                    <span class="ntg-title">{{ block.settings.title }}</span>
+                    <strong class="ntg-title">{{ block.settings.title }}</strong>
                     {{ block.settings.text }}
                 </div>
             </li>
@@ -25,6 +25,7 @@
 </div>
 
 {% schema %}
+
 {
   "name": "Custom Prevention List",
   "class": "custom-prevention-list",
@@ -69,7 +70,7 @@
       "name": "Custom Prevention List",
       "category": "Custom Sections",
       "blocks": [
-        { 
+        {
           "type": "select"
         },
         {
@@ -79,6 +80,7 @@
     }
   ]
 }
+
 {% endschema %}
 
 {% stylesheet %}
