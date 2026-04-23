@@ -201,7 +201,7 @@
                   >
                     {%- render 'icon-envelope' -%}
                     <span>{{ settings.text_email }}</span>
-                  </a>
+                  <span class="patrol-sr-only patrol-blank-target">, opens in a new tab</span></a>
                 {%- endif -%}
                 {%- if block.settings.address != blank -%}
                   <a
@@ -370,7 +370,7 @@
                 >
                   {%- render 'icon-envelope' -%}
                   <span>{{ settings.text_email }}</span>
-                </a>
+                <span class="patrol-sr-only patrol-blank-target">, opens in a new tab</span></a>
               {%- endif -%}
               {%- if block.settings.address != blank -%}
                 <a
