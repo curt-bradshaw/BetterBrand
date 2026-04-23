@@ -17,7 +17,7 @@
                 <span class="bs-badge">{{ block.settings.badge }}</span>
             {% endif %}
           <div class="bs-image-wrapper">
-            <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.title }}" />
+            <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.image.alt | escape }}" />
           </div>
   
           <div class="bs-rating">
