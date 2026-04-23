@@ -1324,7 +1324,7 @@
 
     <div class="cart-drawer__overlay"></div>
 
-    <aside id="CartDrawer" class="cart-drawer__box">
+    <aside id="CartDrawer" class="cart-drawer__box" aria-labelledby="CartDrawerTitle">
       <div class="cart-drawer__header">
         <div class="cart-drawer__header-title-wrapper">
           <svg
@@ -1337,7 +1337,7 @@
           >
             <path d="M0.379395 9.08548L8.46918 15.3084L19.6704 0.373413" stroke="white" style="stroke:white;stroke-opacity:1;" stroke-width="1.24458" stroke-linejoin="round"/>
           </svg>
-          <h2 class="cart-drawer__title">{{ section.settings.text__head_cartDrawer }}</h2>
+          <h2 class="cart-drawer__title" id="CartDrawerTitle">{{ section.settings.text__head_cartDrawer }}</h2>
         </div>
         <svg
           class="cart-drawer__header-close-icon"
@@ -1437,6 +1437,7 @@
 {%- endunless -%}
 
 {% schema %}
+
 {
   "name": "Cart Drawer (Sitewide)",
   "class": "cart-drawer",
@@ -2003,6 +2004,7 @@
     }
   ]
 }
+
 {% endschema %}
 
 {%- if section.settings.disable_proceed == true -%}
