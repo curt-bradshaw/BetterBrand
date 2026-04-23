@@ -1,9 +1,10 @@
-<!--start shipping-calculate.liquid (SNIPPED)-->
+
+
  
 <div class="shipping-calculate-date">
   {%- assign tomorrowDate = "now" | date: "%s" | plus: 86400 -%}
   <div class="shipping__message shipping__message--today " style="display: none;">Ships Today If Ordered Within <br><span class="remain-time"></span></div>
-  <div class="shipping__message shipping__message--tomorrow " style="display: none;">Ships Tomorrow If Ordered Within <br><span class="within-time"></span></div>
+  <div class="shipping__message shipping__message--tomorrow " style="display: none;">Ships Tomorrow If Ordered Within <br><span class="within-time"><strong></strong></span></div>
 </div>
 
 <style>
@@ -59,7 +60,7 @@
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        $('.shipping-calculate-date .within-time').html(hours + 'hr ' + minutes + 'mins ' + seconds + 'sec');
+        $('.shipping-calculate-date .within-time strong').html(hours + 'hr ' + minutes + 'mins ' + seconds + 'sec');
         $('.shipping__message--today').hide();
         $('.shipping__message--tomorrow').show();
         return;
