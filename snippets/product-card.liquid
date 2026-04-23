@@ -108,7 +108,7 @@
                   {%- if variant.compare_at_price > variant.price -%}
                     <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
                   {%- endif -%}
-                  <span class="product-card__item-price">{{- variant.price | money -}}</span>
+                  <span class="product-card__item-price"><strong>{{- variant.price | money -}}</strong></span>
                 {%- endif -%}
     
                 {% if settings.enable_outofstock_label %}

@@ -60,14 +60,7 @@
                         {% if image != blank %}
                           
                             <div class="image-container">
-                              <img 
-                                src="{{ image | image_url: width: 400 }}" 
-                                alt="Benefit {{ forloop.index }}"
-                                width="{{ image.width }}" height="{{ image.height }}"
-                                style="width:{{ width }}px"
-                                loading="lazy"
-                                class="benefit-image"
-                              >
+                              <img src="{{ image | image_url: width: 400 }}" alt="{{ image.alt }}" width="{{ image.width }}" height="{{ image.height }}" style="width:{{ width }}px" loading="lazy" class="benefit-image">
                                 <p>
                                   {{ text }}
                                 </p>
@@ -141,8 +134,7 @@
                       </div>
                       {{
                         block.settings.video
-                        | video_tag:
-                          class: 'slide-video',
+                        | video_tag: class: 'slide-video',
                           image_size: '1000x',
                           autoplay: false,
                           loop: true,
@@ -155,6 +147,7 @@
                       -->
                       <div class="video-controls">
                         <button class="play-pause-btn">
+                          <span class="patrol-sr-only">Play</span>
                           <svg
                             class="play-icon"
                             width="61"
@@ -162,11 +155,12 @@
                             viewBox="0 0 61 61"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
                           >
                             <path d="M30.4997 55.9166C44.5369 55.9166 55.9163 44.5372 55.9163 30.4999C55.9163 16.4627 44.5369 5.08325 30.4997 5.08325C16.4624 5.08325 5.08301 16.4627 5.08301 30.4999C5.08301 44.5372 16.4624 55.9166 30.4997 55.9166Z" stroke="#EBFFEE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M25.4163 20.3333L40.6663 30.4999L25.4163 40.6666V20.3333Z" stroke="#EBFFEE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                           </svg>
-                          <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;">
+                          <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;" aria-hidden="true">
                             <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
                           </svg>
                         </button>
@@ -607,6 +601,7 @@
 
 
 {% schema %}
+
 {
   "name": "Trust Section",
   "settings": [
@@ -727,7 +722,6 @@
           "label": "width",
           "default": 36
         }
-      
       ]
     },
     {
@@ -771,4 +765,5 @@
     }
   ]
 }
+
 {% endschema %}

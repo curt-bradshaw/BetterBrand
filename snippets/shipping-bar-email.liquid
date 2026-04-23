@@ -1,4 +1,5 @@
 <!-- start shipping-bar-email.liquid (SNIPPET) -->
+<section aria-label="Contact Email">
 {%- assign email = settings.text_email -%}
 <div class="shipping-bar__item shipping-bar__item--small">
   {%- unless settings.disable_shippingbar_text_email or email == blank -%}
@@ -23,3 +24,4 @@
     {%- endif -%}
   {%- endunless -%}
 </div>
+</section>

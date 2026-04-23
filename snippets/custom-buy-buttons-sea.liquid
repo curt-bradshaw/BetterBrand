@@ -101,7 +101,12 @@
               {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
-                Get the Seasonal Box | {{ product.selected_or_first_available_variant.price | money }} <del>{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>
+                Get the Seasonal Box | 
+                <span> 
+                <span class="patrol-sr-only">Sale Price:</span>
+                  {{ product.selected_or_first_available_variant.price | money }}
+                </span>
+                <del><span class="patrol-sr-only">Regular Price:</span>{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>
               {%- endif -%}
             </span>
             {%- render 'loading-spinner' -%}

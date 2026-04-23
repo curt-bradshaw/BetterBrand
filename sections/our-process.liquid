@@ -456,7 +456,7 @@
 <section class="our-process__section">
   {% if section.settings.section_image_1 %}
     <div class="our-process__section-image-1">
-      <img src="{{ section.settings.section_image_1 | image_url: width: 1000 }}" width="268" height="180">
+      <img src="{{ section.settings.section_image_1 | image_url: width: 1000 }}" alt="{{ section.settings.section_image_1.alt }}" width="268" height="180">
     </div>
   {% endif %}
   <div class="our-process__wrapper new-lander-wrapper">
@@ -552,7 +552,7 @@
   </div> 
   {% if section.settings.section_image_2 %}
     <div class="our-process__section-image-2">
-      <img src="{{ section.settings.section_image_2 | image_url: width: 1000 }}" width="391" height="388">
+      <img src="{{ section.settings.section_image_2 | image_url: width: 1000 }}" width="391" height="388" alt="{{ section.settings.section_image_2.alt }}">
     </div>
   {% endif %}
 </section>
@@ -666,146 +666,148 @@
 </script>
 
 {% schema %}
-  {
-    "name": "Our Process Timeline",
-    "class": "our-process-timeline",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "section_image_1",
-        "label": "Section Image 1",
+
+{
+  "name": "Our Process Timeline",
+  "class": "our-process-timeline",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "section_image_1",
+      "label": "Section Image 1",
+    },
+    {
+      "type": "image_picker",
+      "id": "section_image_2",
+      "label": "Section Image 2",
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "<h2>What to Expect</h2>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "<p>What to Expect</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "white_version",
+      "label": "White Version",
+      "default": false,
+    },
+    {
+      "type": "checkbox",
+      "id": "show_history_images",
+      "label": "Show History Images",
+      "default": false,
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#010101"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_background_image",
+      "label": "Show Background Image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "reduce_title_size",
+      "label": "Reduce Title Size",
+      "default": false,
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_timeline_last_line",
+      "label": "Hide Timeline Last Line",
+      "default": false,
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL",
       },
-      {
-        "type": "image_picker",
-        "id": "section_image_2",
-        "label": "Section Image 2",
-      },
-      {
-        "type": "richtext",
-        "id": "title",
-        "label": "Title",
-        "default": "<h2>What to Expect</h2>"
-      },
-      {
-        "type": "richtext",
-        "id": "subtitle",
-        "label": "Subtitle",
-        "default": "<p>What to Expect</p>"
-      },
-      {
-        "type": "checkbox",
-        "id": "white_version",
-        "label": "White Version",
-        "default": false,
-      },
-      {
-        "type": "checkbox",
-        "id": "show_history_images",
-        "label": "Show History Images",
-        "default": false,
-      },
-      {
-        "type": "color",
-        "id": "background_color",
-        "label": "Background Color",
-        "default": "#010101"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_background_image",
-        "label": "Show Background Image",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "reduce_title_size",
-        "label": "Reduce Title Size",
-        "default": false,
-      },
-      {
-        "type": "checkbox",
-        "id": "hide_timeline_last_line",
-        "label": "Hide Timeline Last Line",
-        "default": false,
-      },
-      {
-        "type": "url",
-        "id": "cta_url",
-        "label": "CTA URL",
-      },
-    ],
-    "blocks": [
-      {
-        "type": "timeline-item",
-        "name": "Timeline Item",
-        "settings": [
-          {
-            "type": "richtext",
-            "id": "text",
-            "label": "Text",
-            "default": "<h3>Day 1</h3>"
+  ],
+  "blocks": [
+    {
+      "type": "timeline-item",
+      "name": "Timeline Item",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<h3>Day 1</h3>"
+        },
+        {
+          "type": "richtext",
+          "id": "item_number",
+          "label": "Item Number",
+          "default": "<p>1</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "<p>You’ll put it on and get a “Damn, you lift?” even if you don’t.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "reverse_order",
+          "label": "Reverse Order",
+          "default": false,
           },
-          {
-            "type": "richtext",
-            "id": "item_number",
-            "label": "Item Number",
-            "default": "<p>1</p>"
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Process Timeline",
+      "blocks": [
+        {
+          "type": "timeline-item",
+          "settings": {
+            "reverse_order": false,
+            "text": "<h3>Day 1</h3>",
+            "subtext": "<p>You’ll put it on and get a “Damn, you lift?” even if you don’t.</p>"
+          }
+        },
+        {
+          "type": "timeline-item",
+          "settings": {
+            "reverse_order": false,
+            "text": "<h3>Week 1:</h3>",
+            "subtext": "<p>It’s your go-to. No stink. No sag. Compliments incoming.</p>"
+          }
+        },
+        {
+          "type": "timeline-item",
+          "settings": {
+            "reverse_order": false,
+            "text": "<h3>Month 1:</h3>",
+            "subtext": "<p>You’ve washed it 5x. Still looks brand new. You’ve thrown out 4 cotton shirts.</p>"
+          }
+        },
+        {
+          "type": "timeline-item",
+          "settings": {
+            "reverse_order": false,
+            "text": "<h3>Year 1+:</h3>",
+            "subtext": "<p>It’s still your favorite. Still holding shape. Still outperforming everything else in your closet. </p>"
+          }
           },
-          {
-            "type": "richtext",
-            "id": "subtext",
-            "label": "Subtext",
-            "default": "<p>You’ll put it on and get a “Damn, you lift?” even if you don’t.</p>"
-          },
-          {
-            "type": "checkbox",
-            "id": "reverse_order",
-            "label": "Reverse Order",
-            "default": false,
-          },
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Our Process Timeline",
-        "blocks": [
-          {
-            "type": "timeline-item",
-            "settings": {
-              "reverse_order": false,
-              "text": "<h3>Day 1</h3>",
-              "subtext": "<p>You’ll put it on and get a “Damn, you lift?” even if you don’t.</p>"
-            }
-          },
-          {
-            "type": "timeline-item",
-            "settings": {
-              "reverse_order": false,
-              "text": "<h3>Week 1:</h3>",
-              "subtext": "<p>It’s your go-to. No stink. No sag. Compliments incoming.</p>"
-            }
-          },
-          {
-            "type": "timeline-item",
-            "settings": {
-              "reverse_order": false,
-              "text": "<h3>Month 1:</h3>",
-              "subtext": "<p>You’ve washed it 5x. Still looks brand new. You’ve thrown out 4 cotton shirts.</p>"
-            }
-          },
-          {
-            "type": "timeline-item",
-            "settings": {
-              "reverse_order": false,
-              "text": "<h3>Year 1+:</h3>",
-              "subtext": "<p>It’s still your favorite. Still holding shape. Still outperforming everything else in your closet. </p>"
-            }
-          },
-        ]
-      }
-    ]
-  }
+      ]
+    }
+  ]
+}
+
 {% endschema %}
 
 <!-- END our-process.liquid -->

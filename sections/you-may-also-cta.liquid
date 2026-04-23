@@ -37,7 +37,7 @@
             <button type="submit" class="yma-cta-atc-button" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
               <span class="yma-cta-atc-text">ADD TO CART</span>
               <span class="yma-cta-atc-divider">|</span>
-              <span class="yma-cta-atc-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+              <span class="yma-cta-atc-price"><strong>{{ product.selected_or_first_available_variant.price | money }}</strong></span>
             </button>
           </form>
         </div>
@@ -268,49 +268,55 @@
   {% endstyle %}
   
   {% schema %}
-  {
-    "name": "You May Also CTA",
-    "settings": [
-      {
-        "type": "text",
-        "id": "heading",
-        "label": "Heading",
-        "default": "You May Also Like"
-      },
-      {
-        "type": "collection",
-        "id": "collection",
-        "label": "Collection"
-      },
-      {
-        "type": "range",
-        "id": "products_limit",
-        "label": "Products to show",
-        "min": 2,
-        "max": 12,
-        "step": 1,
-        "default": 4
-      },
-      {
-        "type": "header",
-        "content": "Rating Settings"
-      },
-      {
-        "type": "text",
-        "id": "default_rating",
-        "label": "Default Rating",
-        "default": "5.0",
-        "info": "Used if product doesn't have rating metafield"
-      },
-      {
-        "type": "text",
-        "id": "default_reviews",
-        "label": "Default Review Count",
-        "default": "238",
-        "info": "Used if product doesn't have review count metafield"
-      }
-    ],
-    "presets": [ { "name": "You May Also CTA" } ]
-  }
-  {% endschema %}
+
+{
+  "name": "You May Also CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Rating Settings"
+    },
+    {
+      "type": "text",
+      "id": "default_rating",
+      "label": "Default Rating",
+      "default": "5.0",
+      "info": "Used if product doesn't have rating metafield"
+    },
+    {
+      "type": "text",
+      "id": "default_reviews",
+      "label": "Default Review Count",
+      "default": "238",
+      "info": "Used if product doesn't have review count metafield"
+    }
+  ],
+  "presets": [
+    {
+      "name": "You May Also CTA"
+    }
+  ]
+}
+
+{% endschema %}
   

@@ -607,7 +607,7 @@
 
         {%- capture cart_drawer -%}
               <div class="header__item-cart icon--cart" id="cart-count">
-                <span class="header__item-cart-number">{{ cart.item_count }}</span>
+                <span class="header__item-cart-number"><strong>{{ cart.item_count }}</strong></span>
                 {%- render 'header-icon-cart-new-layout' -%}
                 {%- if section.settings.enable_cart_title -%}
                   <span class="header__item-cart-text">{{ section.settings.cart_title_text }}</span>

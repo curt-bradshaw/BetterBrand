@@ -1,0 +1,51 @@
+/* @patrol-core-begin — DO NOT EDIT: All changes in this block will be overwritten by Patrol */
+.patrol-sr-only {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.patrol-unstyled-list {
+  list-style: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+a:not([target="_blank"]) > span.patrol-blank-target {
+  /* Hide New Window Span when applied incorrectly */
+  display: none;
+}
+
+strong.patrol-semantic-bold {
+  font-weight: inherit;
+}
+/* @patrol-core-end */
+
+.patrol-skip-link {
+  position: absolute;
+  left: -1000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.patrol-skip-link:focus {
+  left: 0;
+  top: 0;
+  width: fit-content;
+  background: white;
+  padding: 5px;
+  height: auto;
+  overflow: visible;
+  z-index: 2147483647;
+  border: 2px solid blue;
+  border-radius: 10px;
+}

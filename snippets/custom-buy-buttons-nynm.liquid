@@ -88,16 +88,18 @@
             {% endif %}
           >
             <span>
+        <strong>
               
               {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-                {{ 'products.product.sold_out' | t }}
+    {{ 'products.product.sold_out' | t }}
               {%- else -%}
                 {%- if block.settings.button_label == blank -%}
-                   {{button_label}} 
+       {{button_label}} 
                 {%- else -%}
-                 {{block.settings.button_label}} 
+     {{block.settings.button_label}} 
                 {%- endif -%}
               {%- endif -%}
+        </strong>
             </span>
             {%- render 'loading-spinner' -%}
           </button>

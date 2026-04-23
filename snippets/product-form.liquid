@@ -165,17 +165,12 @@
   <div class="product-badges">
     {% if block.settings.product_badge_icon1 %}
       <div class="product-badge-icon">
-        <img
-          src="{{ block.settings.product_badge_icon1  | img_url: 'medium' }}"
-          alt="Product Badge Icon"
-          width=""
-          height=""
-        >
+        <img src="{{ block.settings.product_badge_icon1  | img_url: 'medium' }}" alt="{{ block.settings.product_badge_icon1.alt }}" width="" height="">
       </div>
       <div class="product-badge-icon">
         <img
           src="{{ block.settings.product_badge_icon2 | img_url: 'medium' }}"
-          alt="Product Badge Icon"
+          alt="{{ block.settings.product_badge_icon2.alt }}"
           width=""
           height=""
         >
@@ -183,7 +178,7 @@
       <div class="product-badge-icon">
         <img
           src="{{ block.settings.product_badge_icon3 | img_url: 'medium' }}"
-          alt="Product Badge Icon"
+          alt="{{ block.settings.product_badge_icon3.alt }}"
           width=""
           height=""
         >
@@ -196,12 +191,7 @@
       style="display: none"
     {% endif %}
     <div class="product-buy-infos-item">
-      <img
-        src="{{ block.settings.product_buy_infos_icon | image_url: width: 31 }}"
-        alt="Buy Infos Icon"
-        width=""
-        height=""
-      >
+      <img src="{{ block.settings.product_buy_infos_icon | image_url: width: 31 }}" alt="{{ block.settings.product_buy_infos_icon.alt }}" width="" height="">
       <span>{{ block.settings.product_buy_infos_text }}</span>
     </div>
   </div>

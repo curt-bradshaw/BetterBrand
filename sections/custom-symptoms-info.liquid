@@ -12,7 +12,7 @@
                         <img src="{{ block.settings.icon_image | img_url: 'master' }}" alt="{{ block.settings.icon_image.alt }}" width="{{ block.settings.icon_image.width }}" height="{{ block.settings.icon_image.height }}">
                     </div>
                     <div class="ntg-text-holder">
-                        <span class="ntg-title">{{ block.settings.icon_title }}</span>
+                        <strong class="ntg-title">{{ block.settings.icon_title }}</strong>
                         {{ block.settings.icon_text }}
                     </div>
                 </div>
@@ -23,6 +23,7 @@
 </div>
 
 {% schema %}
+
 {
   "name": "Custom Symptoms Info",
   "class": "custom-symptoms-info",
@@ -68,7 +69,7 @@
       "name": "Custom Symptoms Info",
       "category": "Custom Sections",
       "blocks": [
-        { 
+        {
           "type": "select"
         },
         {
@@ -78,6 +79,7 @@
     }
   ]
 }
+
 {% endschema %}
 
 {% stylesheet %}

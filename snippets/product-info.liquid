@@ -8,7 +8,7 @@
 <div class="product-info">
   <div class="product-info-item">
     {% if icon %}
-      <img src="{{ icon | image_url: width: 62 }}" alt="Info Icon">
+      {{ icon | image_url: width: 62 | image_tag: width: nil, height: nil }}
     {% endif %}
     {% if text != blank %}
       <span>{{ text }}</span>

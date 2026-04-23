@@ -1,4 +1,5 @@
 <!-- start shipping-bar-phone.liquid (SNIPPET) -->
+<section aria-label="Contact Phone">
 {%- assign phone = settings.text_tel -%}
 <div class="shipping-bar__item shipping-bar__item--small">
   {%- unless settings.disable_shippingbar_phone or phone == blank -%}
@@ -23,3 +24,4 @@
     {%- endif -%}
   {%- endunless -%}
 </div>
+</section>

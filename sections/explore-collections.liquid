@@ -15,7 +15,7 @@
         <div class="ec-image-wrapper">
           <img
             src="{{ block.settings.image | image_url: width: 800 }}"
-            alt="{{ block.settings.title }}"
+            alt="{{ block.settings.image.alt | escape }}"
             width="800"
             height="800"
           >
@@ -158,6 +158,7 @@
 {% endstyle %}
 
 {% schema %}
+
 {
   "name": "Explore Collections",
   "settings": [
@@ -211,4 +212,5 @@
     }
   ]
 }
+
 {% endschema %}

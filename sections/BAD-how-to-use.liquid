@@ -1,4 +1,5 @@
 {% schema %}
+
 {
   "name": "BAD How To Use Section",
   "settings": [
@@ -60,6 +61,7 @@
     }
   ]
 }
+
 {% endschema %}
 
 <section
@@ -73,7 +75,7 @@
         {% if block.settings.step_image %}
           <img
             src="{{ block.settings.step_image | img_url: 'medium' }}"
-            alt="{{ block.settings.step_title }}"
+            alt="{{ block.settings.step_image.alt | escape }}"
             class="BAD-step-image"
           >
         {% endif %}

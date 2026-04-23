@@ -412,7 +412,8 @@
                     {% endfor %}
 
                     {% for option in variants_options %}
-                      <select
+                      <label for="{{ option | handleize }}-{{ section.id }}" class="patrol-sr-only">{{ option }}</label>
+                      <select id="{{ option | handleize }}-{{ section.id }}"
                         class="cart-drawer__upsell-product-select"
                         data-index="{{ forloop.index }}"
                         {% unless forloop.first %}
@@ -429,6 +430,7 @@
                     {% endfor %}
                   {% endif %}
 
+                  <label for="upsell-all-product-variants" class="patrol-sr-only">Variant Selector</label>
                   <select
                     id="upsell-all-product-variants"
                     name="items[{{- forloop.index0 -}}][id]"
