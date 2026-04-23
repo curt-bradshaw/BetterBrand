@@ -16,10 +16,10 @@
   >
     <div class="text-btn">
       {%- if settings.enable_price_atc -%}
-        <span class="btn-money">{{ variant.price | money }}</span>
-        <span class="divisor">|</span>
+        <span class="btn-money"><strong>{{ variant.price | money }}</strong></span>
+        <span class="divisor"><strong>|</strong></span>
       {%- endif -%}
-      <span class="btn-label">{{ settings.add_to_cart_label }}</span>
+      <span class="btn-label"><strong>{{ settings.add_to_cart_label }}</strong></span>
       <span class="btn-svg">{%- render 'icon-cart-fill' -%}</span>
       <span class="btn-items">&#40;1 {{ 'products.product.item' | t }}&#41;</span>
 
