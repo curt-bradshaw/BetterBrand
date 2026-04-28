@@ -4157,6 +4157,7 @@
               </div>
             {%- when 'title' -%}
               {%- render 'product-title' with block: block, product_title: product.title -%}
+              <p>{{ product.metafields.custom.product_description | escape }}</p>
             {% when 'reviews' %}
               {%- render 'product-reviews' with block: block, pattern: '([rating] of [count] reviews)' -%}
             {%- when 'price' -%}
