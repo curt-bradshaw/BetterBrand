@@ -43,21 +43,21 @@
         "product_info_WfBXk4": {
           "type": "product_info",
           "settings": {
-            "product_info_icon": "shopify://shop_images/Avatar_42befad4-3bec-4b5a-a3c1-f58ad88c89f7.png",
+            "product_info_icon": "shopify://shop_images/Avatar-3.png",
             "product_info_text": "No antihistamines, pharmacist-formulated*"
           }
         },
         "product_info_KPHCBP": {
           "type": "product_info",
           "settings": {
-            "product_info_icon": "shopify://shop_images/Avatar-2.png",
+            "product_info_icon": "shopify://shop_images/Avatar_42befad4-3bec-4b5a-a3c1-f58ad88c89f7.png",
             "product_info_text": "Opens nasal passages in seconds*"
           }
         },
         "product_info_6FDNmg": {
           "type": "product_info",
           "settings": {
-            "product_info_icon": "shopify://shop_images/Avatar-3.png",
+            "product_info_icon": "shopify://shop_images/Avatar-2.png",
             "product_info_text": "Calms allergic response over time*"
           }
         },
