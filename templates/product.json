@@ -515,10 +515,12 @@
         "feature_kRtzVz",
         "feature_8D8p4A"
       ],
+      "custom_css": [
+        ".comparison__overlay {background-color: #234134;}"
+      ],
       "settings": {
         "heading": "US Vs. THEM",
-        "subheading": "Where clean science, clinical validation, and care come together for results that last.",
-        "background": "shopify://shop_images/74ef01c1ea7a99e64b2cfae4d895efd9f413cf13.png"
+        "subheading": "Where clean science, clinical validation, and care come together for results that last."
       }
     },
     "trustpilot_JmWUPQ": {
