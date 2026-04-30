@@ -525,7 +525,7 @@
     },
     "trustpilot_JmWUPQ": {
       "type": "trustpilot",
-      "disabled": false,
+      "custom_css": [],
       "name": "Trustpilot Reviews",
       "settings": {
         "hide_for_product_handle": "allergy-protocol"
