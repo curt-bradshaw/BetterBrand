@@ -525,6 +525,7 @@
     },
     "trustpilot_JmWUPQ": {
       "type": "trustpilot",
+      "disabled": true,
       "name": "Trustpilot Reviews",
       "settings": {}
     },
