@@ -30,9 +30,11 @@
   </button>
 </div>
 
-<div class="atc-button-stack">
-  <p>{{ product.metafields.custom.sale_text | metafield_tag }}</p>
-</div>
+{%- if product.metafields.custom.sale_text != blank -%}
+  <div class="atc-button-stack">
+    <p>{{ product.metafields.custom.sale_text | metafield_tag }}</p>
+  </div>
+{%- endif -%}
 
 <div id="truemed-instructions" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp"></div>
 <script src="https://static.truemed.com/widgets/product-page-widget.min.js" defer></script>
