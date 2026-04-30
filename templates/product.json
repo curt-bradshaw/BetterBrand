@@ -525,9 +525,11 @@
     },
     "trustpilot_JmWUPQ": {
       "type": "trustpilot",
-      "disabled": true,
+      "disabled": false,
       "name": "Trustpilot Reviews",
-      "settings": {}
+      "settings": {
+        "hide_for_product_handle": "allergy-protocol"
+      }
     },
     "loox-reviews": {
       "type": "loox-reviews",
