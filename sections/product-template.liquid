@@ -4176,6 +4176,7 @@
             {%- when 'description' -%}
               {%- render 'product-description' with product: product, block: block -%}
             {%- when 'product_form' -%}
+              {%- render 'disclaimer', product: product -%}
               {%- render 'product-form' with settings: settings, product: product, section.id: section.id, block: block -%}
             {% when 'product_badges' %}
               {%- render 'product-badges' with block: block -%}
