@@ -527,9 +527,7 @@
       "type": "trustpilot",
       "custom_css": [],
       "name": "Trustpilot Reviews",
-      "settings": {
-        "hide_for_product_handle": "allergy-protocol"
-      }
+      "settings": {}
     },
     "loox-reviews": {
       "type": "loox-reviews",
