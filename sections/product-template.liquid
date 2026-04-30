@@ -4174,8 +4174,6 @@
                 {% endif %}
               {% endunless %}
             {%- when 'description' -%}
-              {%- render 'disclaimer', product: product -%}
-              <h2>Description</h2>
               {%- render 'product-description' with product: product, block: block -%}
             {%- when 'product_form' -%}
               {%- render 'product-form' with settings: settings, product: product, section.id: section.id, block: block -%}

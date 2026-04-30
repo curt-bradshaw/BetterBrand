@@ -30,13 +30,63 @@
   </button>
 </div>
 
+<div class="atc-button-stack">
+  <p>{{ product.metafields.custom.sale_text | metafield_tag }}</p>
+</div>
+
 <div id="truemed-instructions" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp"></div>
 <script src="https://static.truemed.com/widgets/product-page-widget.min.js" defer></script>
 
 <style>
+  @keyframes atc-button-stack-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    20% {
+      transform: translateY(-10px);
+    }
+    40% {
+      transform: translateY(0);
+    }
+    55% {
+      transform: translateY(-6px);
+    }
+    70% {
+      transform: translateY(0);
+    }
+    80% {
+      transform: translateY(-3px);
+    }
+    90% {
+      transform: translateY(0);
+    }
+  }
+
   .truemed-entry-box {
     justify-content: center;
     margin-bottom: 15px;
+  }
+
+  .atc-button-stack {
+    text-align: center;
+    background-color: #c2deb4;
+    padding: 10px;
+    width: 84%;
+    margin: 0 auto 10px;
+    border-radius: 10px;
+    animation: atc-button-stack-bounce 1.6s ease-in-out infinite;
+  }
+
+  .atc-button-stack p {
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .atc-button-stack {
+      animation: none;
+      transform: none;
+    }
   }
 
   @media (max-width: 767px) {
@@ -45,6 +95,10 @@
     }
     .truemed-entry-box {
         margin-top: 15px;
+    }
+    .atc-button-stack {
+      margin: 10px auto; 
+      width: 90%;
     }
   }
 </style>
