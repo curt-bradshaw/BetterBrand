@@ -525,9 +525,7 @@
     },
     "trustpilot_JmWUPQ": {
       "type": "trustpilot",
-      "custom_css": [
-        ".trustpilot-widget {display: none; }"
-      ],
+      "custom_css": [],
       "name": "Trustpilot Reviews",
       "settings": {}
     },
