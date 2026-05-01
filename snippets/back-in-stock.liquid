@@ -350,7 +350,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init · v2.2 · 2026-04-29');
+  log('init · v2.3 · 2026-04-30');
 
   // ============================================================
   // ESCAPE TRANSFORMED ANCESTOR — move overlay to document.body
@@ -751,21 +751,37 @@
     var hasOosText = detectVisibleOosText();
     var vid = readSelectedVariantId();
     var v = findVariant(vid);
-    if (!v) return;
 
-    if (hasOosText && v.available) {
-      // Subscription app says OOS but Shopify says in-stock — treat as OOS
-      log('text-signal OOS ('+reason+') — overriding variant.available for', v.id);
-      // Build a synthetic variant with available=false so syncTriggerForVariant injects our button
-      var override = { id: v.id, title: v.title, available: false, image: v.image };
+    // v2.3: decouple OOS detection from variant lookup. If Loop (or any
+    // subscription app) shows "Out of stock" text, we fire the popup even
+    // if we can't identify the exact variant. Loop maintains its own
+    // variant state — we shouldn't depend on it being in our variants array
+    // or in the URL/form. Use a synthetic fallback variant from the
+    // product-level data when our lookup fails.
+    if (hasOosText) {
+      var override;
+      if (v) {
+        log('text-signal OOS ('+reason+') — overriding variant.available for', v.id);
+        override = { id: v.id, title: v.title, available: false, image: v.image };
+      } else {
+        log('text-signal OOS ('+reason+') — variant lookup FAILED for vid='+vid+', using product-level fallback');
+        override = {
+          id: vid || (p.variants[0] && p.variants[0].id) || p.productId,
+          title: 'Selected option',
+          available: false,
+          image: p.featuredImage
+        };
+      }
       window.__bbBisCurrentVariant = override;
       syncTriggerForVariant(override);
-    } else if (!hasOosText) {
-      // No OOS text visible — fall back to native variant.available
-      window.__bbBisCurrentVariant = v;
-      syncTriggerForVariant(v);
+      return;
     }
-    // If hasOosText && !v.available, we already handled it via the native path
+
+    if (!v) return; // No OOS text and no variant — nothing to do
+
+    // No OOS text visible — fall back to native variant.available
+    window.__bbBisCurrentVariant = v;
+    syncTriggerForVariant(v);
   }
 
   // Watch the product section for text/DOM changes (subscription widget re-renders)
