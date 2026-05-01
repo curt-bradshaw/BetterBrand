@@ -350,7 +350,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init · v2.3 · 2026-04-30');
+  log('init · v2.4 · 2026-04-30');
 
   // ============================================================
   // ESCAPE TRANSFORMED ANCESTOR — move overlay to document.body
@@ -397,17 +397,58 @@
     return null;
   }
 
+  // v2.4: read variant from subscription widget's selected state
+  // (Loop, Stay AI, Skio etc. don't always sync to URL/form)
+  function readSelectedVariantFromWidget() {
+    var scope = document.querySelector('[id*="MainProduct"], [id*="product-section"], [class*="product-form"], main') || document.body;
+    var attrSelectors = [
+      '[data-variant-id][selected]', '[data-variant-id].selected', '[data-variant-id].is-selected',
+      '[data-variant-id].active', '[data-variant-id].is-active', '[data-variant-id].checked',
+      '[data-variant-id][aria-pressed="true"]', '[data-variant-id][aria-checked="true"]',
+      'input[type="radio"]:checked[data-variant-id]',
+      '[data-loop-variant-id]', '[data-loop-id]',
+      'loop-plan-option[selected]', 'loop-plan-option.selected', 'loop-plan-option.is-selected',
+      '[data-loop-plan][selected]', '[data-loop-plan].selected'
+    ];
+    for (var i = 0; i < attrSelectors.length; i++) {
+      var el = scope.querySelector(attrSelectors[i]);
+      if (el) {
+        var vid = el.getAttribute('data-variant-id') || el.getAttribute('data-loop-variant-id') || el.getAttribute('data-loop-id') || el.value;
+        if (vid && findVariant(vid)) {
+          log('variant detected from widget DOM ('+attrSelectors[i]+'):', vid);
+          return String(vid);
+        }
+      }
+    }
+    // Fallback: scan generic selected/active elements and match by text against variant titles
+    var generic = scope.querySelectorAll('.selected, .is-selected, .active, .is-active, [aria-pressed="true"], [aria-checked="true"]');
+    for (var j = 0; j < generic.length; j++) {
+      var text = (generic[j].textContent || '').trim();
+      if (!text) continue;
+      for (var k = 0; k < p.variants.length; k++) {
+        if (p.variants[k].title && text.indexOf(p.variants[k].title) >= 0) {
+          log('variant detected from selected text "'+text.slice(0,40)+'" matched variant:', p.variants[k].id);
+          return p.variants[k].id;
+        }
+      }
+    }
+    return null;
+  }
+
   function readSelectedVariantId() {
-    // 1. URL param ?variant= (Section Rendering API canonical source on Dawn-family themes)
+    // 1. Subscription widget selected state (Loop, Stay AI, etc.) — most authoritative for sub apps
+    var fromWidget = readSelectedVariantFromWidget();
+    if (fromWidget) return fromWidget;
+    // 2. URL param ?variant= (Section Rendering API canonical source on Dawn-family themes)
     try {
       var url = new URL(window.location.href);
       var qv = url.searchParams.get('variant');
       if (qv) return qv;
     } catch(_) {}
-    // 2. Form field name="id" (works on classic and modern themes)
+    // 3. Form field name="id" (works on classic and modern themes)
     var hidden = document.querySelector('form[action*="/cart/add"] [name="id"]');
     if (hidden && hidden.value) return hidden.value;
-    // 3. Fallback: first available variant, else first variant
+    // 4. Fallback: first available variant, else first variant
     for (var i = 0; i < p.variants.length; i++) if (p.variants[i].available) return p.variants[i].id;
     return p.variants[0] && p.variants[0].id;
   }
@@ -752,18 +793,31 @@
     var vid = readSelectedVariantId();
     var v = findVariant(vid);
 
-    // v2.3: decouple OOS detection from variant lookup. If Loop (or any
-    // subscription app) shows "Out of stock" text, we fire the popup even
-    // if we can't identify the exact variant. Loop maintains its own
-    // variant state — we shouldn't depend on it being in our variants array
-    // or in the URL/form. Use a synthetic fallback variant from the
-    // product-level data when our lookup fails.
+    // v2.3+v2.4: decouple OOS detection from variant lookup. If a subscription
+    // app shows "Out of stock" text, fire the popup even if we can't identify
+    // the exact variant from URL/form/widget. Try in priority order:
+    //   1. The variant we resolved from URL/form/widget
+    //   2. "Sole OOS variant by elimination" — if exactly one variant is OOS in
+    //      Shopify and we see OOS text, it MUST be that one
+    //   3. Generic product-level fallback
     if (hasOosText) {
       var override;
-      if (v) {
-        log('text-signal OOS ('+reason+') — overriding variant.available for', v.id);
+      var oosVariants = p.variants.filter(function(x){ return !x.available; });
+
+      if (v && !v.available) {
+        // Resolved variant matches Shopify's OOS state — perfect
+        log('text-signal OOS ('+reason+') — using resolved+native-OOS variant', v.id);
+        override = { id: v.id, title: v.title, available: false, image: v.image };
+      } else if (oosVariants.length === 1) {
+        // Exactly one OOS variant exists — by elimination it must be that one
+        log('text-signal OOS ('+reason+') — using sole OOS variant by elimination:', oosVariants[0].id, oosVariants[0].title, '(resolved was', vid, ')');
+        override = { id: oosVariants[0].id, title: oosVariants[0].title, available: false, image: oosVariants[0].image };
+      } else if (v) {
+        // Resolved a variant but Shopify says it's available; trust the OOS text and override
+        log('text-signal OOS ('+reason+') — overriding variant.available for', v.id, v.title);
         override = { id: v.id, title: v.title, available: false, image: v.image };
       } else {
+        // No variant resolved at all — use product-level fallback
         log('text-signal OOS ('+reason+') — variant lookup FAILED for vid='+vid+', using product-level fallback');
         override = {
           id: vid || (p.variants[0] && p.variants[0].id) || p.productId,
