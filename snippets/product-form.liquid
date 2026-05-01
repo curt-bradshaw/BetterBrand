@@ -152,15 +152,7 @@
     <div id="add-to-cart-error" class="add-to-cart-errors add-to-cart--error hide"></div>
   </div>
 
-  <div
-    id="button-out-of-stock"
-    class="btn btn-choose-variant"
-    {% if product.selected_or_first_available_variant.available %}
-      style="display: none;"
-    {% endif %}
-  >
-    <span class="btn-label">{{ settings.out_of_stock_label | default: '( out of stock )' | escape }}</span>
-  </div>
+  {% render 'atc-button', product: product, variant: variant, oos_only: true %}
   <span class="invetoryError"></span>
 
   <div class="product-badges">

@@ -1,5 +1,16 @@
 <!-- START atc-button (SNIPPET) -->
 
+{% if oos_only %}
+  <div
+    id="button-out-of-stock"
+    class="btn btn-choose-variant"
+    {% if variant.available %}
+      style="display: none;"
+    {% endif %}
+  >
+    <span class="btn-label">{{ settings.out_of_stock_label | default: '( out of stock )' | escape }}</span>
+  </div>
+{% else %}
 <div
   class="product-form__buttons"
   {% unless product.selected_or_first_available_variant.available %}
@@ -71,3 +82,4 @@
     }
   }
 </style>
+{% endif %}
