@@ -3279,6 +3279,7 @@
         position: relative;
         width: 100%;
         top: 0;
+        margin-bottom: 20px !important;
       }
 
       .cart-product--max-items .max-msg {
@@ -4138,6 +4139,7 @@
         {% endif %}
       </div>
 
+      {% render 'back-in-stock' %}
       <div class="product-half rte">
         {% if settings.enable_product_breadcrumbs %}
           {% render 'breadcrumb' %}
@@ -4156,6 +4158,7 @@
               </div>
             {%- when 'title' -%}
               {%- render 'product-title' with block: block, product_title: product.title -%}
+              <p>{{ product.metafields.custom.product_description | escape }}</p>
             {% when 'reviews' %}
               {%- render 'product-reviews' with block: block, pattern: '([rating] of [count] reviews)' -%}
             {%- when 'price' -%}

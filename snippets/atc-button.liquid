@@ -30,6 +30,12 @@
   </button>
 </div>
 
+{%- if product.metafields.custom.sale_text != blank -%}
+  <div class="atc-button-stack">
+    <p>{{ product.metafields.custom.sale_text | metafield_tag }}</p>
+  </div>
+{%- endif -%}
+
 <div id="truemed-instructions" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp"></div>
 <script src="https://static.truemed.com/widgets/product-page-widget.min.js" defer></script>
 
@@ -39,12 +45,29 @@
     margin-bottom: 15px;
   }
 
+  .atc-button-stack {
+    text-align: center;
+    background-color: #c2deb4;
+    padding: 10px;
+    width: 84%;
+    margin: 0 auto 10px;
+    border-radius: 10px;
+  }
+
+  .atc-button-stack p {
+    margin: 0;
+  }
+
   @media (max-width: 767px) {
     .truemed-entry-text {
       font-size: 11px;
     }
     .truemed-entry-box {
         margin-top: 15px;
+    }
+    .atc-button-stack {
+      margin: 10px auto; 
+      width: 90%;
     }
   }
 </style>

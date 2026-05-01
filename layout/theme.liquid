@@ -261,6 +261,8 @@
   {%- assign templateSuffix = template.suffix | handle -%}
   {%- assign templateSuffix = ' ' | append: templateSuffix -%}
 
+  {{ 'patrol-styles.css' | asset_url | stylesheet_tag }}
+
   {%- if templateSuffix == ' ' -%}
     {%- assign templateSuffix = '' -%}
   {%- endif -%}
