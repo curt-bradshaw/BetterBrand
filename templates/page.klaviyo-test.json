@@ -11,10 +11,26 @@
   "sections": {
     "main": {
       "type": "page-template",
+      "disabled": true,
       "settings": {}
+    },
+    "custom_area_rGXwXd": {
+      "type": "custom-area",
+      "name": "Custom Area",
+      "settings": {
+        "custom_class": "",
+        "enable_custom_margins_paddings": false,
+        "custom-margin-top": 0,
+        "custom-margin-bottom": 0,
+        "custom-padding-top": 0,
+        "custom-padding-bottom": 0,
+        "title": "",
+        "html_area": "<div class=\"klaviyo-form-W2ZwsL\"></div>"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "custom_area_rGXwXd"
   ]
 }
