@@ -175,7 +175,7 @@
     "proceed_to_checkout_top": false,
     "enable_cart_property": false,
     "enable_cart_upsell_cart": false,
-    "enable_cart_upsell_drawer": false,
+    "enable_cart_upsell_drawer": true,
     "products_cart_drawer_upsell": "2",
     "upsell_title": "Shop Best Sellers",
     "upsell_subtitle": "",
