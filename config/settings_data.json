@@ -176,7 +176,7 @@
     "enable_cart_property": false,
     "enable_cart_upsell_cart": false,
     "enable_cart_upsell_drawer": true,
-    "products_cart_drawer_upsell": "2",
+    "products_cart_drawer_upsell": "3",
     "upsell_title": "Shop Best Sellers",
     "upsell_subtitle": "",
     "upsell_collection": "best-sellers",
