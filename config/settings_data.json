@@ -1175,6 +1175,11 @@
         "settings": {
           "version": "v3"
         }
+      },
+      "10312807297210203588": {
+        "type": "shopify://apps/rokt-aftersell/blocks/utm-triggers/509ec35d-0632-4dfc-a105-fa799cd9d149",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
