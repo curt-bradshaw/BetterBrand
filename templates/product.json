@@ -632,6 +632,19 @@
         "heading": "Frequently Asked Questions",
         "text": "<p>Any Questions? We got you!</p>"
       }
+    },
+    "1778525589b9b2b9eb": {
+      "type": "apps",
+      "blocks": {
+        "rokt_aftersell_pdp_upsells_gG4Hxp": {
+          "type": "shopify://apps/rokt-aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "rokt_aftersell_pdp_upsells_gG4Hxp"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -645,6 +658,7 @@
     "trustpilot_JmWUPQ",
     "loox-reviews",
     "recently_viewed_product_template_9PcgAE",
-    "faq_section_7NrfTG"
+    "faq_section_7NrfTG",
+    "1778525589b9b2b9eb"
   ]
 }
