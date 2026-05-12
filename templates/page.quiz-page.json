@@ -1,1 +1,67 @@
-{"sections":{"main":{"type":"page-template","disabled":true,"settings":{}},"177521582813a34a97":{"type":"apps","blocks":{"revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG":{"type":"shopify:\/\/apps\/revenuehunt-recommender-quiz\/blocks\/v2-inline-quiz\/672f3d48-fd3b-4227-8778-c6e58c4f8a98","settings":{"quiz_height":700,"quiz_height_unit":"px","quiz_fixed_height":false,"quiz_full_width":false,"quiz_retake_autoscroll":"disabled","quiz_question_autoscroll":"disabled","quiz_id":"0aPGtS"}}},"block_order":["revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG"],"settings":{}}},"order":["main","177521582813a34a97"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "177521582813a34a97": {
+      "type": "apps",
+      "blocks": {
+        "revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG": {
+          "type": "shopify://apps/revenuehunt-recommender-quiz/blocks/v2-inline-quiz/672f3d48-fd3b-4227-8778-c6e58c4f8a98",
+          "settings": {
+            "quiz_height": 700,
+            "quiz_height_unit": "px",
+            "quiz_fixed_height": false,
+            "quiz_full_width": false,
+            "quiz_retake_autoscroll": "disabled",
+            "quiz_question_autoscroll": "disabled",
+            "quiz_id": "0aPGtS"
+          }
+        }
+      },
+      "block_order": [
+        "revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "1778628321f16f30c1": {
+      "type": "apps",
+      "blocks": {
+        "octane_ai_advanced_quiz_maker_octaneai_section_Pwf47Q": {
+          "type": "shopify://apps/octane-ai-advanced-quiz-maker/blocks/octaneai_section/db2513a5-c9b0-40fd-9058-42c28e6e6502",
+          "settings": {
+            "octane_id": "7XbKp1SmmZXxLN3h",
+            "embed_type": "fullpage",
+            "enable_loading": false,
+            "stroke_color": "#000000",
+            "mobile_height": "match_browser",
+            "mobile_custom_height_px": 600,
+            "desktop_height": "match_browser",
+            "desktop_custom_height_px": 600
+          }
+        }
+      },
+      "block_order": [
+        "octane_ai_advanced_quiz_maker_octaneai_section_Pwf47Q"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "177521582813a34a97",
+    "1778628321f16f30c1"
+  ]
+}
