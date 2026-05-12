@@ -56,12 +56,28 @@
       "block_order": [
         "octane_ai_advanced_quiz_maker_octaneai_section_Pwf47Q"
       ],
+      "disabled": true,
       "settings": {}
+    },
+    "custom_area_HgfKrt": {
+      "type": "custom-area",
+      "name": "Custom Area",
+      "settings": {
+        "custom_class": "",
+        "enable_custom_margins_paddings": false,
+        "custom-margin-top": 0,
+        "custom-margin-bottom": 0,
+        "custom-padding-top": 0,
+        "custom-padding-bottom": 0,
+        "title": "",
+        "html_area": "<div class=\"octane-ai-quiz \" data-quiz-id=\"7XbKp1SmmZXxLN3h\" data-embed-type=\"fullpage\" data-mobile-height=\"match_browser\" data-desktop-height=\"match_browser\">\n    \n</div>\n<script src=\"https://app.octaneai.com/ljeam4b42u6x8jle/quiz.js\" defer></script>"
+      }
     }
   },
   "order": [
     "main",
     "177521582813a34a97",
-    "1778628321f16f30c1"
+    "1778628321f16f30c1",
+    "custom_area_HgfKrt"
   ]
 }
