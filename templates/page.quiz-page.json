@@ -56,6 +56,9 @@
       "block_order": [
         "octane_ai_advanced_quiz_maker_octaneai_section_Pwf47Q"
       ],
+      "custom_css": [
+        ".cd4aa624acee0859a7a73c8856cd2dbd828c34057 {max-width: 800px; }"
+      ],
       "settings": {}
     },
     "custom_area_HgfKrt": {
