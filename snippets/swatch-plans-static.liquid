@@ -4,6 +4,8 @@
 {% assign last_option_variant_id = product.metafields.pdp.variant_id_with_subscription %}
 {% assign last_option_selling_plan_id = product.metafields.pdp.selling_plan_id_to_show_on_pdp %}
 {% assign last_option_subtitle = product.metafields.pdp.pdp_last_option_subtitle %}
+{% comment %} Boolean: true = hide all plan badges; false or unset = show (subject to per-card rules). {% endcomment %}
+{% assign hide_plan_badge = product.metafields.pdp.hide_plan_badge.value | default: false %}
 
 {% if last_option_variant_id and last_option_selling_plan_id %}
   {% assign last_option_variant = product.variants | where: 'id', last_option_variant_id | first %}
@@ -48,7 +50,8 @@
                   {% assign title_parts = v.title | split: '(' %}
                   <strong>{{ title_parts[0] | strip }}</strong>
                   {% if title_parts.size > 1 %}
-                    <span>(<strong>{{ title_parts[1] }}</strong>)</span>
+                    {% assign title_inside = title_parts[1] | split: ')' | first | strip %}
+                    <span>(<strong>{{ title_inside }}</strong>)</span>
                   {% endif %}
                 {% else %}
                   <strong>{{ v.title }}</strong>
@@ -57,7 +60,7 @@
             </div>
 
             <div class="plan-right">
-              <div class="plan-badge {% unless curr_idx > 1 %}hidden{% endunless %}">
+              <div class="plan-badge {% if hide_plan_badge %}hidden{% elsif curr_idx <= 1 %}hidden{% endif %}">
                 {% case curr_idx %}
                   {% when 2 %}
                     {% assign discount = 10 %}
@@ -151,7 +154,7 @@
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
-              <div class="plan-badge">
+              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
                 <span><strong>SAVE 20%</strong></span>
               </div>
             </div>
@@ -353,9 +356,8 @@
     }
 
     .plan-badge.hidden {
-    visibility: hidden;
-    height: 24px;
-  }
+      display: none;
+    }
 
     .content {
       display: flex;
