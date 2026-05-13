@@ -1176,11 +1176,6 @@
           "version": "v3"
         }
       },
-      "14952540001915115444": {
-        "type": "shopify://apps/upcart-cart-drawer/blocks/app-embed/af3da5fb-f5f7-40ec-8273-41bf50059d4b",
-        "disabled": false,
-        "settings": {}
-      },
       "7594718713064568544": {
         "type": "shopify://apps/octane-ai-advanced-quiz-maker/blocks/octaneai_fullscreen/db2513a5-c9b0-40fd-9058-42c28e6e6502",
         "disabled": false,
@@ -1188,6 +1183,11 @@
           "octane_id": "",
           "textarea_input": ""
         }
+      },
+      "14952540001915115444": {
+        "type": "shopify://apps/upcart-cart-drawer/blocks/app-embed/af3da5fb-f5f7-40ec-8273-41bf50059d4b",
+        "disabled": true,
+        "settings": {}
       }
     },
     "color_schemes": {
