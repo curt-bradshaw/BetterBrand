@@ -22,10 +22,10 @@
         "enable_custom_margins_paddings": false,
         "custom-margin-top": 0,
         "custom-margin-bottom": 0,
-        "custom-padding-top": 0,
-        "custom-padding-bottom": 0,
-        "title": "",
-        "html_area": "<div class=\"klaviyo-form-W2ZwsL\"></div>"
+        "custom-padding-top": 30,
+        "custom-padding-bottom": 30,
+        "title": "Klaviyo Form",
+        "html_area": "<div style=\"max-width: 640px; margin: 0 auto;\">\n  <div class=\"klaviyo-form-W2ZwsL\"></div>\n</div>"
       }
     }
   },
