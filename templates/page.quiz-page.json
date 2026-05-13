@@ -33,7 +33,6 @@
       "block_order": [
         "revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG"
       ],
-      "disabled": true,
       "settings": {}
     },
     "1778628321f16f30c1": {
@@ -62,6 +61,7 @@
     },
     "custom_area_HgfKrt": {
       "type": "custom-area",
+      "disabled": true,
       "name": "Custom Area",
       "settings": {
         "custom_class": "",
