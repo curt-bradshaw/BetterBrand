@@ -56,12 +56,12 @@
       "block_order": [
         "octane_ai_advanced_quiz_maker_octaneai_section_Pwf47Q"
       ],
+      "disabled": true,
       "custom_css": [],
       "settings": {}
     },
     "custom_area_HgfKrt": {
       "type": "custom-area",
-      "disabled": true,
       "name": "Custom Area",
       "settings": {
         "custom_class": "",
