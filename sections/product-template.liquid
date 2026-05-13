@@ -986,9 +986,43 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      align-self: center;
       width: 25px;
       height: 25px;
       margin: 0 15px;
+      line-height: 0;
+    }
+
+    .btn-add-tocart .text-btn .btn-svg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 1.15em;
+      height: 1.15em;
+      margin: 0 0.45em;
+    }
+
+    .btn-add-tocart > .btn-svg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 1.15em;
+      height: 1.15em;
+      margin: 0 0.45em;
+    }
+
+    .btn-add-tocart .text-btn .btn-svg svg,
+    .btn-add-tocart > .btn-svg svg {
+      display: block;
+      margin: 0;
+      position: static;
+      top: auto;
+      width: 100%;
+      height: 100%;
+      max-width: 26px;
+      max-height: 25px;
     }
 
     .product-form__buttons {
@@ -1023,8 +1057,10 @@
 
     .btn-add-tocart .text-btn {
       letter-spacing: 0px;
-      line-height: normal;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
       gap: 4px;
       color: #234134;
       font-weight: 700;
@@ -1033,18 +1069,16 @@
       line-height: 1;
     }
 
-    .btn-add-tocart .text-btn *:not(.btn-svg,.divisor) {
+    .btn-add-tocart .text-btn > * {
+      position: static;
+      top: auto;
       line-height: 1;
-      position: relative;
-      top: 4px;
     }
 
     .btn-money,
     .btn-label,
     .btn-items {
       font-family: var(--bookmaniaFont);
-      position: relative;
-      top: 1px;
     }
 
     .btn-add-tocart .divisor {
@@ -1372,9 +1406,6 @@
         margin: 17px 0 15px;
       }
 
-      .btn-add-tocart .text-btn *:not(.btn-svg,.divisor) {
-        top: 5px;
-      }
     }
 
     .product-page .prod_description a {
@@ -2170,14 +2201,14 @@
       line-height: 1.1;
     }
 
-    .btn-svg svg {
+    .product-box-float .btn-svg svg {
       position: relative;
       top: 4px;
       max-height: 100%;
       margin-bottom: 10px;
     }
 
-    .btn-svg svg path {
+    .product-box-float .btn-svg svg path {
       fill: #fff;
     }
 
@@ -3439,13 +3470,24 @@
       }
 
       .btn-add-tocart .divisor {
-        margin: 3px 5px;
+        margin: 0 5px;
       }
 
       .btn-svg svg {
         height: calc(var(--AddToCartFontSize) + 6px);
         padding: 0;
         margin-bottom: 8px;
+      }
+
+      .btn-add-tocart .text-btn .btn-svg svg,
+      .btn-add-tocart > .btn-svg svg {
+        position: static;
+        top: auto;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        margin-bottom: 0;
+        padding: 0;
       }
 
       .btn-add-tocart .btn-items {
@@ -3743,10 +3785,6 @@
         width: 45%;
       }
 
-      .btn-add-tocart .text-btn *:not(.btn-svg,.divisor) {
-        top: 2px;
-      }
-
       .product-page .product-price {
         margin: 0px 0 15px;
       }
@@ -3939,18 +3977,19 @@
       }
 
       .product-page .btn-add-tocart .divisor {
-        margin: 4px 5px;
+        margin: 0 5px;
       }
 
       .product-page .btn-add-tocart .btn-svg {
-        padding-bottom: 5px;
+        padding-bottom: 0;
       }
 
-      .product-page .btn-add-tocart .btn-svg svg{
-        width: 16px;
-        height: 15px;
+      .product-page .btn-add-tocart .btn-svg svg {
+        width: 100%;
+        height: 100%;
+        max-width: 24px;
+        max-height: 24px;
         margin: 0;
-        margin-bottom: 2px;
       }
 
       .product-page .btn-add-tocart .btn-items{
@@ -4105,6 +4144,14 @@
       .product-page .btn-svg svg {
         width: 18px;
         height: 18px;
+      }
+
+      .product-page .btn-add-tocart .text-btn .btn-svg svg,
+      .product-page .btn-add-tocart > .btn-svg svg {
+        width: 100%;
+        height: 100%;
+        max-width: 22px;
+        max-height: 22px;
       }
 
       .product-page .btn-add-tocart .compare_percent {
