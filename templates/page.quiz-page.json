@@ -33,11 +33,11 @@
       "block_order": [
         "revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG"
       ],
-      "disabled": true,
       "settings": {}
     },
     "custom_area_HgfKrt": {
       "type": "custom-area",
+      "disabled": true,
       "name": "Custom Area",
       "settings": {
         "custom_class": "",
@@ -47,7 +47,7 @@
         "custom-padding-top": 0,
         "custom-padding-bottom": 0,
         "title": "",
-        "html_area": "<link rel=\"stylesheet\" href=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.css\">\n\n<div class=\"octane-ai-quiz \" data-quiz-id=\"7XbKp1SmmZXxLN3h\" data-embed-type=\"fullpage\" data-mobile-height=\"match_browser\" data-desktop-height=\"match_browser\"></div>\n<script src=\"https://app.octaneai.com/ljeam4b42u6x8jle/quiz.js\" defer></script>\n\n<script src=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.js\" defer></script>"
+        "html_area": "<link rel=\"stylesheet\" href=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.css\">\n\n<div class=\"octane-ai-quiz \" data-quiz-id=\"7XbKp1SmmZXxLN3h\" data-embed-type=\"fullpage\" data-mobile-height=\"match_browser\" data-desktop-height=\"match_browser\"></div>\n<script src=\"https://app.octaneai.com/ljeam4b42u6x8jle/quiz.js\" defer></script>\n\n<script src=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.js?v=20260514b\" defer></script>"
       }
     }
   },
