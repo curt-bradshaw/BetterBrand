@@ -327,7 +327,9 @@
       "on_sale_from_html": "On Sale from {{ price }}",
       "from_text_html": "From {{ price }}",
       "quantity": "Quantity",
-      "add_to_cart": "Add to Cart"
+      "add_to_cart": "Add to Cart",
+      "related_products_nav_label": "Related products",
+      "choose_your_flavor": "Choose Your Flavor"
     }
   },
   "gift_cards": {

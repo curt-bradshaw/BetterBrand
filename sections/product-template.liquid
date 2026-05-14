@@ -4190,6 +4190,13 @@
         {% if settings.enable_product_breadcrumbs %}
           {% render 'breadcrumb' %}
         {% endif %}
+        {% assign pdp_has_mobile_gallery_block = false %}
+        {% for b in section.blocks %}
+          {% if b.type == 'product_images' %}
+            {% assign pdp_has_mobile_gallery_block = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
         {% assign benefits_from_metafields = product.metafields.pdp.benefits.value %}
         {% assign all_benefits_rendered = false %}
         {%- for block in section.blocks -%}
@@ -4201,9 +4208,19 @@
                 class="no-desktop product-half half-img {% if settings.enable_sticky_product_slider %}product-slider-sticky{% endif %}"
               >
                 {%- render 'product-sliders' -%}
+                {%-
+                  render 'pdp-related-product-links',
+                  placement: 'gallery',
+                  suppress_title_on_mobile: pdp_has_mobile_gallery_block
+                -%}
               </div>
             {%- when 'title' -%}
               {%- render 'product-title' with block: block, product_title: product.title -%}
+              {%-
+                render 'pdp-related-product-links',
+                placement: 'title',
+                suppress_title_on_mobile: pdp_has_mobile_gallery_block
+              -%}
               <p>{{ product.metafields.custom.product_description | escape }}</p>
             {% when 'reviews' %}
               {%- render 'product-reviews' with block: block, pattern: '([rating] of [count] reviews)' -%}

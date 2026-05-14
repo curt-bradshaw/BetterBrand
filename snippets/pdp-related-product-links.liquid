@@ -1,0 +1,221 @@
+{% comment %}
+  PDP related product shortcuts (metafield list → circular images + titles).
+
+  Metafield: pdp.related_product_links (List of products)
+
+  placement:
+    - 'title' (default) — under the product title (desktop + mobile fallback)
+    - 'gallery' — under the mobile image gallery (max-width 1019px only; hidden on desktop)
+
+  suppress_title_on_mobile: pass true when the section includes a `product_images` block so the
+  title placement is hidden on small screens and only the gallery copy shows.
+
+  Render twice from product-template: once on `title` block, once after sliders in `product_images`.
+{% endcomment %}
+
+{% assign placement = placement | default: 'title' %}
+{% assign suppress_title_on_mobile = suppress_title_on_mobile | default: false %}
+{% assign related_products = product.metafields.pdp.related_product_links.value %}
+
+{% if related_products != blank %}
+  <div class="pdp-related-product-links-root pdp-related-product-links-root--{{ placement }}">
+    <h2
+      class="pdp-related-product-links__heading"
+      id="pdp-related-links-heading-{{ section.id }}-{{ placement }}"
+    >
+      {{ 'products.product.choose_your_flavor' | t }}
+    </h2>
+    <nav
+      class="pdp-related-product-links"
+      aria-labelledby="pdp-related-links-heading-{{ section.id }}-{{ placement }}"
+    >
+      <ul class="pdp-related-product-links__list" role="list">
+        {% for rp in related_products %}
+          {% if rp == blank %}
+            {% continue %}
+          {% endif %}
+          <li class="pdp-related-product-links__item">
+            <a
+              href="{{ rp.url }}"
+              class="pdp-related-product-links__link{% if rp.id == product.id %} pdp-related-product-links__link--current{% endif %}"
+              title="{{ rp.title | escape }}"
+              {% if rp.id == product.id %}
+                aria-current="page"
+              {% endif %}
+            >
+              <span class="pdp-related-product-links__thumb{% if rp.id == product.id %} pdp-related-product-links__thumb--current{% endif %}">
+                {% if rp.featured_image %}
+                  <img
+                    class="pdp-related-product-links__img"
+                    src="{{ rp.featured_image | image_url: width: 160 }}"
+                    alt=""
+                    role="presentation"
+                    width="64"
+                    height="64"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <span class="pdp-related-product-links__placeholder" aria-hidden="true"></span>
+                {% endif %}
+              </span>
+              <span class="pdp-related-product-links__caption">{{ rp.title | escape }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+
+  <style>
+    .pdp-related-product-links-root--gallery {
+      display: none;
+    }
+    @media (max-width: 1019px) {
+      {% if suppress_title_on_mobile %}
+        .pdp-related-product-links-root--title {
+          display: none !important;
+        }
+      {% endif %}
+      .pdp-related-product-links-root--gallery {
+        display: block;
+        width: 100%;
+      }
+      .pdp-related-product-links-root--gallery .pdp-related-product-links {
+        margin-top: 10px;
+        margin-bottom: 18px;
+      }
+    }
+
+    .pdp-related-product-links__heading {
+      margin: 0 0 10px;
+      padding: 0;
+      font-family: var(--bookmaniaFont, Georgia, serif);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #234134;
+      text-align: left;
+    }
+    @media (max-width: 1019px) {
+      .pdp-related-product-links__heading {
+        text-align: center;
+      }
+    }
+
+    /* Product column uses .rte; global .rte ul adds padding-left — reset for this nav only */
+    .product-page .product-half.rte ul.pdp-related-product-links__list {
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    .pdp-related-product-links {
+      margin: 0 0 18px;
+      width: 100%;
+    }
+    .pdp-related-product-links__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 14px 0px;
+      justify-content: flex-start;
+    }
+    .pdp-related-product-links__link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 92px;
+      max-width: 100%;
+      text-decoration: none;
+      color: #234134;
+      transition: transform 0.2s ease;
+    }
+    .pdp-related-product-links__link:hover,
+    .pdp-related-product-links__link:focus {
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .pdp-related-product-links__link:hover .pdp-related-product-links__thumb,
+    .pdp-related-product-links__link:focus .pdp-related-product-links__thumb {
+      border-color: #234134;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px #234134;
+    }
+    .pdp-related-product-links__link--current {
+      cursor: default;
+      pointer-events: none;
+      transform: none;
+    }
+    .pdp-related-product-links__link--current:hover,
+    .pdp-related-product-links__link--current:focus {
+      transform: none;
+    }
+    .pdp-related-product-links__thumb {
+      display: block;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid #23413433;
+      background: #f5f5f0;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .pdp-related-product-links__thumb--current {
+      border-color: #234134;
+      box-shadow: 0 0 0 2px #234134;
+    }
+    .pdp-related-product-links__link--current:hover .pdp-related-product-links__thumb,
+    .pdp-related-product-links__link--current:focus .pdp-related-product-links__thumb {
+      box-shadow: 0 0 0 2px #234134;
+    }
+    .pdp-related-product-links__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pdp-related-product-links__placeholder {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #e8efe4 0%, #d4e0cf 100%);
+    }
+    .pdp-related-product-links__caption {
+      display: block;
+      width: 100%;
+      font-family: var(--bookmaniaFont, Georgia, serif);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.25;
+      text-align: center;
+      word-break: break-word;
+      hyphens: auto;
+    }
+    .pdp-related-product-links__link--current .pdp-related-product-links__caption {
+      font-weight: 700;
+    }
+    @media (max-width: 1019px) {
+      .pdp-related-product-links__list {
+        justify-content: center;
+      }
+    }
+    @media (max-width: 767px) {
+      .pdp-related-product-links__heading {
+        font-size: 16px;
+      }
+      .pdp-related-product-links__link {
+        width: 80px;
+      }
+      .pdp-related-product-links__thumb {
+        width: 56px;
+        height: 56px;
+      }
+      .pdp-related-product-links__caption {
+        font-size: 11px;
+      }
+    }
+  </style>
+{% endif %}
