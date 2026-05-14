@@ -33,7 +33,6 @@
       "block_order": [
         "revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG"
       ],
-      "disabled": true,
       "settings": {}
     },
     "custom_area_HgfKrt": {
@@ -71,6 +70,7 @@
       "block_order": [
         "octane_ai_advanced_quiz_maker_octaneai_section_6kiyXn"
       ],
+      "disabled": true,
       "settings": {}
     }
   },
