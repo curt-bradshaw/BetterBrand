@@ -33,6 +33,7 @@
       "block_order": [
         "revenuehunt_recommender_quiz_v2_inline_quiz_3tL8KG"
       ],
+      "disabled": true,
       "settings": {}
     },
     "custom_area_HgfKrt": {
@@ -47,13 +48,36 @@
         "custom-padding-top": 0,
         "custom-padding-bottom": 0,
         "title": "",
-        "html_area": "<link rel=\"stylesheet\" href=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.css\">\n\n<div class=\"octane-ai-quiz \" data-quiz-id=\"7XbKp1SmmZXxLN3h\" data-embed-type=\"fullpage\" data-mobile-height=\"match_browser\" data-desktop-height=\"match_browser\"></div>\n<script src=\"https://app.octaneai.com/ljeam4b42u6x8jle/quiz.js\" defer></script>\n\n<script src=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.js?v=20260514b\" defer></script>"
+        "html_area": "<link rel=\"stylesheet\" href=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.css?v=20260514i\">\n\n<div class=\"octane-ai-quiz \" data-quiz-id=\"7XbKp1SmmZXxLN3h\" data-embed-type=\"fullpage\" data-mobile-height=\"match_browser\" data-desktop-height=\"match_browser\"></div>\n<script src=\"https://app.octaneai.com/ljeam4b42u6x8jle/quiz.js\" defer></script>\n\n<script src=\"https://betterbrand-quiz-stripped.pages.dev/lung-quiz.js?v=20260514i\" defer></script>"
       }
+    },
+    "1778779965bb0f253f": {
+      "type": "apps",
+      "blocks": {
+        "octane_ai_advanced_quiz_maker_octaneai_section_6kiyXn": {
+          "type": "shopify://apps/octane-ai-advanced-quiz-maker/blocks/octaneai_section/db2513a5-c9b0-40fd-9058-42c28e6e6502",
+          "settings": {
+            "octane_id": "ljeam4b42u6x8jle:7XbKp1SmmZXxLN3h:quiz",
+            "embed_type": "fullpage",
+            "enable_loading": false,
+            "stroke_color": "#000000",
+            "mobile_height": "match_browser",
+            "mobile_custom_height_px": 600,
+            "desktop_height": "match_browser",
+            "desktop_custom_height_px": 600
+          }
+        }
+      },
+      "block_order": [
+        "octane_ai_advanced_quiz_maker_octaneai_section_6kiyXn"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
     "177521582813a34a97",
-    "custom_area_HgfKrt"
+    "custom_area_HgfKrt",
+    "1778779965bb0f253f"
   ]
 }
