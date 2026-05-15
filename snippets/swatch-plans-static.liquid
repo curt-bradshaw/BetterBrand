@@ -154,13 +154,6 @@
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
-
-              {% comment %} Show compare at price if it exists {% endcomment %}
-              {% assign v = product.selected_or_first_available_variant %}
-              {% if v.compare_at_price > v.price %}
-                <span class="price-compare-at">{{ v.compare_at_price | money }}</span>
-              {% endif %}
-              
               <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
                 <span><strong>SAVE 20%</strong></span>
               </div>

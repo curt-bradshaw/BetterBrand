@@ -60,6 +60,7 @@
               {%- endif -%}
             {%- endif -%}
           </picture>
+            <span class="product-card__image-corner-badge">Memorial Day Sale</span>
         </div>
 
         <div class="product-card__product-info">
@@ -108,6 +109,9 @@
                   {%- if variant.compare_at_price > variant.price -%}
                     <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
                   {%- endif -%}
+                  {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
+                  <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
+                  <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
                   <span class="product-card__item-price"><strong>{{- variant.price | money -}}</strong></span>
                 {%- endif -%}
     
@@ -154,6 +158,13 @@
   {% endif %}
 
   <style scoped>
+
+    .product-card__item-price-original strong {
+      text-decoration: line-through;
+      font-size: 16px;
+      padding-left: 10px; 
+    }
+
     .product-card__grid-item {
       width: 31%;
       display: flex;
@@ -176,6 +187,24 @@
       overflow: hidden;
       width: 100%;
       transform: scale(1);
+    }
+
+    .product-card__image-corner-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 5;
+      background: #f2cb49;
+      color: #234134;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: 1px solid #234134;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      pointer-events: none;
     }
     .product-card__grid-item-link {
       width: 100%;
