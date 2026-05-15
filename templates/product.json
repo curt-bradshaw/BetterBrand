@@ -312,7 +312,7 @@
       "settings": {
         "image": "shopify://shop_images/image-_1.webp",
         "heading": "Why a Pharmacist Built This",
-        "text": "<p>Dr. Chris Jackson, Founder of Betterbrand, hated how sluggish and drowsy antihistamines made him, and he knew others did too.</p><p><strong>The Allergy Relief Protocol</strong> is what he came up with. Plant-based ingredients backed by real research, <strong>designed to work with the body instead of overriding it.</strong> No dependency. No drowsiness. No compromise.</p><p>Made in the US. Pharmacist-formulated. Backed by a 365-day guarantee.</p>",
+        "text": "<p>Dr. Chris Jackson, Founder of Betterbrand, believes most supplements fail for one reason. They're formulated to sell, not to work.<br/><br/><strong>Betterbrand</strong> is the opposite. Every product is researched, selected, and dosed by a pharmacist. Ingredients backed by real research and <strong>designed to work with the body instead of overriding it.</strong> No guesswork. No filler. No compromise.<br/><br/>Made in the US. Pharmacist-formulated. Backed by a 365-day guarantee.</p>",
         "link_text": "Learn More",
         "link_url": "",
         "padding_top_desktop": 0,
@@ -637,7 +637,7 @@
       "type": "apps",
       "blocks": {
         "rokt_aftersell_pdp_upsells_gG4Hxp": {
-          "type": "shopify://apps/rokt-aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
+          "type": "shopify://apps/aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
           "settings": {}
         }
       },
