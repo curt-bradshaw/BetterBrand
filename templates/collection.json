@@ -48,7 +48,7 @@
         "uvp_item_3VkhEc"
       ],
       "custom_css": [
-        ".collection-banner-wrapper, .trusted-banner {display: none;}"
+        ".collection-banner-wrapper,.trusted-banner {display: none;}"
       ],
       "settings": {
         "default_collection_banner": "shopify://shop_images/aff86614f5440f5458d5c0f3ee901d44bba61383.png",
