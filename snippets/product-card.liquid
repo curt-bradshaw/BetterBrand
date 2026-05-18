@@ -109,7 +109,7 @@
                   {%- if variant.compare_at_price > variant.price -%}
                     <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
                   {%- endif -%}
-                  {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
+                  {% assign discounted_cents = variant.price | times: 70 | divided_by: 100 %}
                   <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
                   <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
                 {%- endif -%}
@@ -162,6 +162,12 @@
       text-decoration: line-through;
       font-size: 16px;
       padding-left: 10px; 
+    }
+
+    @media screen and (max-width: 1019px) {
+      .product-card__item-price-original strong {
+        font-size: 12px !important;
+      }
     }
 
     .product-card__grid-item {

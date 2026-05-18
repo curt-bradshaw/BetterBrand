@@ -15,8 +15,10 @@
       {%- assign image_width = 200 -%}
   {%- endcase -%}
 
-  {%- assign items_per_page = settings.products_amount | plus: 0 -%}
   {% if template.suffix == 'bundle' %}
+    {%- assign items_per_page = 50 -%}
+  {% else %}
+    {%- comment -%} Shopify max 50 per page; load remaining pages via collection-js {%- endcomment -%}
     {%- assign items_per_page = 50 -%}
   {% endif %}
 
@@ -29,6 +31,7 @@
         style="position: relative"
         id="collection-page-content"
         class="collection-page__grid-products grid-uniform {{ grid_uniform_class_desktop }} {{ grid_uniform_class_tablet }} {{ grid_uniform_class_mobile }}"
+        data-total-pages="{{ paginate.pages }}"
       >
         <input
           type="hidden"
@@ -124,36 +127,6 @@
           {%- if collection_style == 'paginator' -%}
             {%- render 'pagination', paginate: paginate -%}
 
-          {%- elsif collection_style == 'loading-more' -%}
-            {%- if paginate.current_page < paginate.pages -%}
-              <div class="collection-page__loading-more-wrapper">
-                <div class="loading-more__progress-wrapper">
-                  <a
-                    href="#"
-                    class="collection-page__loading-more"
-                    data-pages="{{ paginate.pages }}"
-                  >
-                    Load More
-                  </a>
-                </div>
-              </div>
-            {%- else -%}
-              <div class="collection-page__loading-more-wrapper">
-                <span style="color:#234134 " class="collection-page__items--loaded"> All items have been loaded. </span>
-              </div>
-            {%- endif -%}
-
-          {%- elsif collection_style == 'infinite-loading' -%}
-            {%- if paginate.current_page < paginate.pages -%}
-              <span class="spinner-widget">
-                <span class="spinner-widget__spinner"></span>
-                <span class="spinner-widget__text">Loading</span>
-              </span>
-            {%- else -%}
-              <div class="collection-page__loading-more-wrapper">
-                <span style="color:#234134 " class="collection-page__items--loaded"> All items have been loaded. </span>
-              </div>
-            {%- endif -%}
           {%- endif -%}
         {% endunless %}
       </div>
