@@ -1,0 +1,289 @@
+{%- comment -%}
+  ============================================================
+  Betterbrand Memorial Day Pre-Lander — Shopify OS 2.0 Section
+  ============================================================
+  File: sections/betterbrand-memorial-prelander.liquid
+  Paired with: templates/page.betterbrand-memorial-prelander.json
+
+  INSTALLATION:
+  1. Upload all files from the assets zip into the Shopify theme Assets folder.
+  2. Copy this file into the theme sections folder.
+  3. Copy templates/page.betterbrand-memorial-prelander.json into the theme templates folder.
+  4. Create or edit a Shopify page and select the “betterbrand-memorial-prelander” page template.
+  5. Preview the page and confirm the automatic 20% discount is configured in Shopify checkout.
+  ============================================================
+{%- endcomment -%}
+
+{%- assign bbmd_shop_url = 'https://www.trybetterbrand.com/collections/all' -%}
+{%- assign bbmd_home_url = 'https://www.trybetterbrand.com/' -%}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  .klaviyo-form-container,
+  [class*="klaviyo-form"],
+  klaviyo-onsite-component,
+  [data-testid*="klaviyo"],
+  #klaviyo-ios-sms-consent-modal,
+  .needsclick.kl-private-reset-css-Xuajs1,
+  [class*="kl-private"] { display:none !important; }
+
+  octane-ai-quiz,
+  [class*="octane-quiz"],
+  [id*="octane-quiz"],
+  .octane-quiz-container { display:none !important; }
+
+  #ju-root,
+  [id*="justuno"],
+  [class*="justuno"],
+  .ju-container { display:none !important; }
+
+  .essential_annoucement_bar_wrapper,
+  [class*="essential_annoucement_bar"],
+  [class*="essential_announcement_bar"],
+  announcement-bar,
+  .announcement-bar,
+  .announcement-bar-section,
+  #shopify-section-announcement-bar,
+  [id*="announcement"],
+  [class*="announcement-bar"] { display:none !important; }
+
+  header.header-content,
+  header,
+  .header,
+  .site-header,
+  .header-content,
+  #shopify-section-header,
+  [id*="section-header"],
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper { display:none !important; }
+
+  footer.footer-content,
+  footer,
+  .footer,
+  .site-footer,
+  .footer-content,
+  #shopify-section-footer,
+  [id*="section-footer"],
+  [class*="site-footer"] { display:none !important; }
+
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] { padding-top:0 !important; margin-top:0 !important; }
+
+  .bbmd-wrap,
+  .bbmd-wrap * { box-sizing:border-box !important; }
+
+  .bbmd-wrap {
+    --bbmd-green-dark:#123b1b;
+    --bbmd-green-mid:#2d5a2d;
+    --bbmd-green-sage:#e8f0e8;
+    --bbmd-green-light:#f4f8f2;
+    --bbmd-yellow:#e8c84a;
+    --bbmd-yellow-hover:#d4b435;
+    --bbmd-text-dark:#1a2e1a;
+    --bbmd-text-mid:#3d5c3d;
+    --bbmd-border:#d0ddd0;
+    font-family:'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+    color:var(--bbmd-text-dark) !important;
+    background:#fff !important;
+    overflow-x:hidden !important;
+    width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  .bbmd-wrap a { color:inherit !important; }
+  .bbmd-announcement { background:var(--bbmd-green-dark) !important; color:#fff !important; text-align:center !important; padding:8px 18px !important; font-size:12px !important; font-weight:900 !important; letter-spacing:.08em !important; text-transform:uppercase !important; line-height:1.25 !important; }
+  .bbmd-announcement span { color:var(--bbmd-yellow) !important; }
+  .bbmd-nav { background:#fff !important; border-bottom:1px solid #e5e5e5 !important; position:sticky !important; top:0 !important; z-index:200 !important; padding:0 40px !important; display:flex !important; align-items:center !important; justify-content:space-between !important; height:62px !important; }
+  .bbmd-logo img { height:28px !important; width:auto !important; display:block !important; }
+  .bbmd-links { display:flex !important; gap:26px !important; list-style:none !important; margin:0 !important; padding:0 !important; }
+  .bbmd-links a { font-size:12px !important; font-weight:900 !important; color:var(--bbmd-text-dark) !important; text-decoration:none !important; letter-spacing:.08em !important; text-transform:uppercase !important; }
+  .bbmd-nav-cta,
+  .bbmd-hero-cta,
+  .bbmd-btn-primary { background:var(--bbmd-yellow) !important; color:var(--bbmd-green-dark) !important; font-weight:900 !important; font-size:13px !important; letter-spacing:.08em !important; text-transform:uppercase !important; padding:13px 24px !important; border-radius:50px !important; text-decoration:none !important; border:none !important; cursor:pointer !important; transition:background .2s, transform .15s !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; gap:8px !important; }
+  .bbmd-nav-cta:hover,
+  .bbmd-hero-cta:hover,
+  .bbmd-btn-primary:hover { background:var(--bbmd-yellow-hover) !important; transform:translateY(-1px) !important; }
+  .bbmd-btn-secondary { background:#fff !important; color:var(--bbmd-green-dark) !important; border:1px solid var(--bbmd-border) !important; font-weight:900 !important; font-size:13px !important; letter-spacing:.08em !important; text-transform:uppercase !important; padding:13px 22px !important; border-radius:50px !important; text-decoration:none !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; }
+  .bbmd-hero { display:grid !important; grid-template-columns:52% 48% !important; min-height:620px !important; background:var(--bbmd-green-dark) !important; overflow:hidden !important; }
+  .bbmd-hero-visual { position:relative !important; background:#0e260e !important; display:flex !important; align-items:stretch !important; justify-content:center !important; padding:0 !important; overflow:hidden !important; }
+  .bbmd-hero-photo { width:100% !important; height:100% !important; min-height:620px !important; object-fit:cover !important; object-position:center !important; display:block !important; }
+  .bbmd-hero-visual::after { content:'' !important; position:absolute !important; inset:0 !important; background:linear-gradient(90deg, rgba(18,59,27,.08), rgba(18,59,27,.24)) !important; pointer-events:none !important; }
+  .bbmd-hero-content { background:var(--bbmd-green-dark) !important; color:#fff !important; display:flex !important; align-items:center !important; padding:52px 50px !important; }
+  .bbmd-hero-text { max-width:500px !important; }
+  .bbmd-eyebrow { font-size:12px !important; font-weight:900 !important; letter-spacing:.16em !important; text-transform:uppercase !important; color:var(--bbmd-yellow) !important; margin-bottom:12px !important; }
+  .bbmd-title,
+  .bbmd-heading { font-family:'Bebas Neue', Impact, sans-serif !important; letter-spacing:.03em !important; }
+  .bbmd-title { font-size:clamp(52px,6vw,88px) !important; line-height:.92 !important; color:#fff !important; margin:0 0 18px !important; }
+  .bbmd-title span,
+  .bbmd-heading span { color:var(--bbmd-yellow) !important; }
+  .bbmd-hero-body { font-size:16px !important; line-height:1.65 !important; color:rgba(255,255,255,.86) !important; margin:0 0 20px !important; }
+  .bbmd-badges { display:flex !important; gap:12px 16px !important; flex-wrap:wrap !important; margin:0 0 24px !important; }
+  .bbmd-badge { font-size:11px !important; font-weight:900 !important; letter-spacing:.06em !important; text-transform:uppercase !important; color:rgba(255,255,255,.92) !important; }
+  .bbmd-badge::before { content:'✓ ' !important; color:var(--bbmd-yellow) !important; }
+  .bbmd-section { padding:72px 40px !important; }
+  .bbmd-section--sage { background:var(--bbmd-green-sage) !important; }
+  .bbmd-section--light { background:var(--bbmd-green-light) !important; }
+  .bbmd-container { max-width:1180px !important; margin:0 auto !important; }
+  .bbmd-two-col { display:grid !important; grid-template-columns:1fr 1fr !important; gap:46px !important; align-items:center !important; }
+  .bbmd-two-col--reverse .bbmd-visual-card { order:2 !important; }
+  .bbmd-two-col--reverse .bbmd-copy-card { order:1 !important; }
+  .bbmd-visual-card { overflow:hidden !important; border-radius:22px !important; border:1px solid var(--bbmd-border) !important; box-shadow:0 22px 60px rgba(26,58,26,.11) !important; background:#fff !important; min-height:430px !important; }
+  .bbmd-visual-card img { width:100% !important; height:100% !important; min-height:430px !important; object-fit:cover !important; display:block !important; }
+  .bbmd-copy-card { background:#fff !important; border:1px solid var(--bbmd-border) !important; border-radius:20px !important; padding:34px !important; box-shadow:0 20px 50px rgba(26,58,26,.08) !important; }
+  .bbmd-section--sage .bbmd-copy-card { background:rgba(255,255,255,.82) !important; }
+  .bbmd-heading { font-size:clamp(38px,4.5vw,64px) !important; line-height:1 !important; color:var(--bbmd-green-dark) !important; margin:0 0 14px !important; }
+  .bbmd-lead { font-size:16px !important; line-height:1.7 !important; color:var(--bbmd-text-mid) !important; margin:0 0 16px !important; }
+  .bbmd-quote { border-left:4px solid var(--bbmd-yellow) !important; padding-left:16px !important; font-style:italic !important; color:var(--bbmd-text-mid) !important; line-height:1.7 !important; margin-top:16px !important; }
+  .bbmd-cta-row { display:flex !important; flex-wrap:wrap !important; gap:12px !important; margin-top:24px !important; }
+  .bbmd-proof-grid { display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:18px !important; margin-top:28px !important; }
+  .bbmd-proof-item { background:#fff !important; border:1px solid var(--bbmd-border) !important; border-radius:16px !important; padding:18px !important; font-size:14px !important; font-weight:800 !important; color:var(--bbmd-green-dark) !important; }
+  .bbmd-proof-item::before { content:'✓' !important; color:var(--bbmd-green-mid) !important; margin-right:8px !important; font-weight:900 !important; }
+  .bbmd-closing { background:linear-gradient(135deg,var(--bbmd-green-dark),#0e260e) !important; color:#fff !important; text-align:center !important; }
+  .bbmd-closing .bbmd-heading { color:#fff !important; max-width:820px !important; margin:0 auto 16px !important; }
+  .bbmd-closing p { color:rgba(255,255,255,.78) !important; max-width:720px !important; margin:0 auto 24px !important; line-height:1.7 !important; }
+  .bbmd-footer { background:#0d1f0d !important; padding:44px 40px 32px !important; color:rgba(255,255,255,.55) !important; }
+  .bbmd-footer-inner { max-width:1200px !important; margin:0 auto !important; display:grid !important; grid-template-columns:2fr 1fr 1fr !important; gap:38px !important; }
+  .bbmd-footer-logo img { height:30px !important; filter:brightness(0) invert(1) !important; margin-bottom:14px !important; }
+  .bbmd-footer p,
+  .bbmd-footer a { font-size:13px !important; line-height:1.65 !important; color:rgba(255,255,255,.55) !important; text-decoration:none !important; }
+  .bbmd-footer-title { font-size:11px !important; font-weight:900 !important; letter-spacing:.14em !important; text-transform:uppercase !important; color:#fff !important; margin-bottom:12px !important; }
+  .bbmd-footer-disclaimer { max-width:1200px !important; margin:24px auto 0 !important; padding-top:22px !important; border-top:1px solid rgba(255,255,255,.08) !important; font-size:11px !important; color:rgba(255,255,255,.28) !important; line-height:1.65 !important; }
+  .bbmd-sticky-cta { position:fixed !important; bottom:14px !important; left:50% !important; transform:translateX(-50%) !important; z-index:300 !important; background:var(--bbmd-green-dark) !important; color:#fff !important; border:1px solid rgba(255,255,255,.16) !important; border-radius:999px !important; padding:7px 9px 7px 16px !important; display:flex !important; align-items:center !important; gap:12px !important; box-shadow:0 16px 50px rgba(0,0,0,.18) !important; font-size:12px !important; font-weight:800 !important; }
+  .bbmd-sticky-cta a { background:var(--bbmd-yellow) !important; color:var(--bbmd-green-dark) !important; padding:9px 16px !important; border-radius:999px !important; text-decoration:none !important; text-transform:uppercase !important; letter-spacing:.06em !important; font-size:10px !important; white-space:nowrap !important; }
+
+  @media (max-width:900px) {
+    .bbmd-hero,
+    .bbmd-two-col { grid-template-columns:1fr !important; }
+    .bbmd-hero { min-height:auto !important; }
+    .bbmd-hero-content { padding:38px 24px 42px !important; }
+    .bbmd-hero-visual { min-height:auto !important; padding:0 !important; }
+    .bbmd-hero-photo { min-height:520px !important; }
+    .bbmd-two-col--reverse .bbmd-visual-card,
+    .bbmd-two-col--reverse .bbmd-copy-card { order:initial !important; }
+    .bbmd-proof-grid { grid-template-columns:repeat(2,1fr) !important; }
+  }
+
+  @media (max-width:640px) {
+    .bbmd-announcement { font-size:10px !important; }
+    .bbmd-nav { padding:0 18px !important; height:58px !important; }
+    .bbmd-links { display:none !important; }
+    .bbmd-nav-cta { padding:10px 15px !important; font-size:10px !important; }
+    .bbmd-logo img { height:24px !important; }
+    .bbmd-hero-photo { min-height:430px !important; }
+    .bbmd-title { font-size:50px !important; }
+    .bbmd-hero-body { font-size:15px !important; line-height:1.58 !important; }
+    .bbmd-section { padding:52px 20px !important; }
+    .bbmd-copy-card { padding:26px !important; }
+    .bbmd-visual-card,
+    .bbmd-visual-card img { min-height:360px !important; }
+    .bbmd-proof-grid { grid-template-columns:1fr !important; }
+    .bbmd-footer-inner { grid-template-columns:1fr !important; }
+    .bbmd-sticky-cta { width:calc(100% - 24px) !important; justify-content:space-between !important; }
+  }
+</style>
+
+<script>
+  (function() {
+    function removePopupLayers() {
+      var selectors = [
+        '[iswrapper="true"]', '[justunologo]', '#inob',
+        '[id*="justuno"]', '[class*="justuno"]', '#ju-root',
+        '[id*="klaviyo-modal"]', '[class*="kl-private"]'
+      ];
+      selectors.forEach(function(sel) {
+        document.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+      });
+    }
+    removePopupLayers();
+    document.addEventListener('DOMContentLoaded', removePopupLayers);
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType !== 1) return;
+          var isBlocked = node.hasAttribute && (
+            node.hasAttribute('iswrapper') ||
+            node.hasAttribute('justunologo') ||
+            (node.id && node.id.toLowerCase().indexOf('justuno') > -1) ||
+            (node.id && node.id === 'inob')
+          );
+          if (isBlocked) node.remove();
+        });
+      });
+    });
+    observer.observe(document.documentElement, { childList:true, subtree:true });
+  })();
+</script>
+
+<div class="bbmd-wrap">
+  <div class="bbmd-announcement">Memorial Day Offer: <span>20% Off Site-Wide</span> — Automatically Applied At Checkout</div>
+
+  <div class="bbmd-nav" role="navigation" aria-label="Memorial Day pre-lander navigation">
+    <a class="bbmd-logo" href="{{ bbmd_home_url }}" aria-label="Betterbrand home"><img src="https://www.trybetterbrand.com/cdn/shop/files/Betterbrand_Logo_HD-green.png?v=1766094376&width=400" alt="Betterbrand" loading="eager"></a>
+    <ul class="bbmd-links"><li><a href="#founder">Founder</a></li><li><a href="#offer">The Offer</a></li><li><a href="#why">Why Betterbrand</a></li></ul>
+    <a class="bbmd-nav-cta" href="{{ bbmd_shop_url }}">Shop 20% Off</a>
+  </div>
+
+  <section class="bbmd-hero" aria-label="Betterbrand Memorial Day offer">
+    <div class="bbmd-hero-visual"><img class="bbmd-hero-photo" src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/bb-md-hero.webp?v=1779137546" alt="Dr. Chris Jackson with Betterbrand respiratory wellness products" loading="eager"></div>
+    <div class="bbmd-hero-content"><div class="bbmd-hero-text">
+      <div class="bbmd-eyebrow">Veteran-Founded Memorial Day Offer</div>
+      <h1 class="bbmd-title">Honor The Day.<br><span>Save 20%.</span></h1>
+      <p class="bbmd-hero-body">Memorial Day carries special meaning at Betterbrand because our founder, Dr. Chris Jackson, is a former Army Combat Medic. This weekend, we are honoring that service-led foundation with 20% off site-wide, automatically applied at checkout.</p>
+      <div class="bbmd-badges"><span class="bbmd-badge">Veteran-founded</span><span class="bbmd-badge">20% off site-wide</span><span class="bbmd-badge">No code needed</span><span class="bbmd-badge">365-day guarantee</span></div>
+      <a class="bbmd-hero-cta" href="{{ bbmd_shop_url }}">Shop The Memorial Day Offer</a>
+    </div></div>
+  </section>
+
+  <section class="bbmd-section bbmd-section--light" id="founder"><div class="bbmd-container bbmd-two-col">
+    <div class="bbmd-visual-card"><img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/bb-md-founder-service.webp?v=1779137546" alt="Dr. Chris Jackson during Army service" loading="lazy"></div>
+    <div class="bbmd-copy-card">
+      <div class="bbmd-eyebrow">The Founder Behind Betterbrand</div>
+      <h2 class="bbmd-heading">Before Betterbrand, Dr. Chris Served As An <span>Army Combat Medic.</span></h2>
+      <p class="bbmd-lead">Service came before supplements. Dr. Chris Jackson’s time as an Army Combat Medic shaped how Betterbrand thinks about care: be prepared, keep people supported, and take responsibility for the details.</p>
+      <p class="bbmd-lead">Memorial Day is not just another sale weekend for us. It is a moment to pause, remember, and recognize why service remains part of the company’s foundation.</p>
+      <p class="bbmd-quote">Veteran-founded. Doctor of Pharmacy-led. Built around daily wellness routines people can actually keep.</p>
+      <div class="bbmd-cta-row"><a class="bbmd-btn-primary" href="{{ bbmd_shop_url }}">Continue To The Offer</a></div>
+    </div>
+  </div></section>
+
+  <section class="bbmd-section bbmd-section--sage" id="offer"><div class="bbmd-container bbmd-two-col bbmd-two-col--reverse">
+    <div class="bbmd-visual-card"><img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/bb-md-offer-founder.webp?v=1779137546" alt="Dr. Chris Jackson in a white coat representing Betterbrand respiratory health support" loading="lazy"></div>
+    <div class="bbmd-copy-card">
+      <div class="bbmd-eyebrow">A Memorial Day Offer With Purpose</div>
+      <h2 class="bbmd-heading">20% Off To Help The Country Support <span>Respiratory Health.</span></h2>
+      <p class="bbmd-lead">Betterbrand is built around practical daily wellness routines for people who want to breathe easier, stay prepared, and support their respiratory health through the season ahead.</p>
+      <p class="bbmd-lead">This Memorial Day, the 20% site-wide offer is our way to make those routines more accessible for the country we are proud to serve. There is no code to remember; savings are automatic at checkout.</p>
+      <div class="bbmd-cta-row"><a class="bbmd-btn-primary" href="{{ bbmd_shop_url }}">Shop 20% Off Site-Wide</a><a class="bbmd-btn-secondary" href="{{ bbmd_home_url }}">Visit Betterbrand</a></div>
+    </div>
+  </div></section>
+
+  <section class="bbmd-section" id="why"><div class="bbmd-container">
+    <div class="bbmd-eyebrow">Why Betterbrand</div>
+    <h2 class="bbmd-heading">Simple Routines. Clean Ingredients.<br><span>Real Risk Reversal.</span></h2>
+    <p class="bbmd-lead">The Memorial Day offer applies site-wide, so visitors can choose the Betterbrand respiratory and daily wellness support that fits their routine. Every order is also backed by Betterbrand’s 365-day money-back guarantee.</p>
+    <div class="bbmd-proof-grid"><div class="bbmd-proof-item">Made in USA</div><div class="bbmd-proof-item">Made in GMP Facility</div><div class="bbmd-proof-item">Third-Party Tested</div><div class="bbmd-proof-item">Natural Ingredients</div><div class="bbmd-proof-item">Trusted by +836,000 Customers</div><div class="bbmd-proof-item">365-Day Money-Back Guarantee</div></div>
+  </div></section>
+
+  <section class="bbmd-section bbmd-closing"><div class="bbmd-container"><h2 class="bbmd-heading">Honor The Day. Support Your Routine.</h2><p>The discount is automatic at checkout, so there is no code to remember. Visit Betterbrand, choose the respiratory support that fits your routine, and save 20% during the Memorial Day offer.</p><a class="bbmd-hero-cta" href="{{ bbmd_shop_url }}">Continue To Betterbrand</a></div></section>
+
+  <div class="bbmd-footer"><div class="bbmd-footer-inner"><div><a class="bbmd-footer-logo" href="{{ bbmd_home_url }}"><img src="https://www.trybetterbrand.com/cdn/shop/files/Betterbrand_Logo_HD-green.png?v=1766094376&width=400" alt="Betterbrand" loading="lazy"></a><p>Veteran-founded wellness support built around clean ingredients, everyday routines, and a 365-day money-back guarantee.</p></div><div><div class="bbmd-footer-title">Memorial Day</div><p><a href="#founder">Founder Story</a></p><p><a href="#offer">The 20% Offer</a></p></div><div><div class="bbmd-footer-title">Contact</div><p><a href="mailto:hello@betterbrandhealth.com">hello@betterbrandhealth.com</a></p><p><a href="tel:18778518979">1-877-851-8979</a></p></div></div><div class="bbmd-footer-disclaimer">*These statements have not been evaluated by the FDA. Betterbrand products are not intended to diagnose, treat, cure, or prevent any disease. Use as directed. Consult a physician or qualified healthcare professional before using any new dietary supplement, especially if you are pregnant, nursing, taking medication, or have a medical condition. Memorial Day 20% off messaging assumes the discount is configured automatically in the Betterbrand Shopify checkout.</div></div>
+
+  <div class="bbmd-sticky-cta" role="status"><span>Memorial Day: 20% off site-wide</span><a href="{{ bbmd_shop_url }}">Shop Now</a></div>
+</div>
+
+{% schema %}
+{
+  "name": "Memorial Day Prelander",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Memorial Day Prelander",
+    }
+  ]
+}
+{% endschema %}
