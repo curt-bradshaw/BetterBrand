@@ -60,7 +60,7 @@
               {%- endif -%}
             {%- endif -%}
           </picture>
-            <span class="product-card__image-corner-badge">Memorial Day Sale</span>
+            <span class="product-card__image-corner-badge">Memorial Day Sale - 20% Off</span>
         </div>
 
         <div class="product-card__product-info">
@@ -112,7 +112,6 @@
                   {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
                   <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
                   <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
-                  <span class="product-card__item-price"><strong>{{- variant.price | money -}}</strong></span>
                 {%- endif -%}
     
                 {% if settings.enable_outofstock_label %}
