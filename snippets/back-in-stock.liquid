@@ -354,7 +354,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.5 * 2026-04-30');
+  log('init * v2.6 * 2026-05-19 (Vasta PDP support)');
 
   // v2.5: memoize state so MutationObserver-driven re-syncs don't re-log
   // and don't re-execute identical work. Loop's widget mutates the DOM
@@ -512,11 +512,36 @@
   // ============================================================
   // INJECT "NOTIFY ME" TRIGGER BUTTON INTO PRODUCT FORM
   // ============================================================
+  // v2.6 (2026-05-19): Vasta theme support ‚Äî PDP OOS uses <div id="button-out-of-stock">,
+  // not a real <button>. And the page has multiple cart/add forms (PDP + cart drawer upsell).
+  // We must prefer the PDP form and explicitly exclude anything inside #CartDrawer / aside.
+  function isInCartDrawer(el) {
+    if (!el || !el.closest) return false;
+    return !!(el.closest('#CartDrawer') ||
+              el.closest('.cart-drawer') ||
+              el.closest('aside[id*="Cart"]'));
+  }
   function findCartForm() {
-    return document.querySelector('form[action*="/cart/add"]');
+    // Vasta-specific: prefer the main PDP form by id/class
+    var pdpForm = document.querySelector(
+      'form.form-add-to-cart:not([data-bb-bis-skip]), ' +
+      'form#AddToCartForm:not([data-bb-bis-skip]), ' +
+      'form[id*="product-form"]:not([data-bb-bis-skip])'
+    );
+    if (pdpForm && !isInCartDrawer(pdpForm)) return pdpForm;
+    // Fallback: first cart/add form that is NOT inside the cart drawer
+    var forms = document.querySelectorAll('form[action*="/cart/add"]');
+    for (var i = 0; i < forms.length; i++) {
+      if (!isInCartDrawer(forms[i])) return forms[i];
+    }
+    return forms[0] || null;
   }
   function findAtcButton(form) {
     if (!form) return null;
+    // 1) Vasta theme OOS pseudo-button (<div id="button-out-of-stock">)
+    var oosDiv = form.querySelector('#button-out-of-stock, .btn-choose-variant');
+    if (oosDiv) return oosDiv;
+    // 2) Standard ATC button selectors
     return form.querySelector(
       'button[name="add"], button[type="submit"][name="add"], [data-add-to-cart], ' +
       'button[type="submit"]:not([data-bb-bis-trigger]):not(.bb-bis-trigger):not([data-bb-bis-close])'
