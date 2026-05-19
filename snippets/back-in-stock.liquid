@@ -1,0 +1,939 @@
+{%- comment -%}
+  ============================================================
+  BACK-IN-STOCK SNIPPET ‚Äî Betterbrand ¬∑ v2 (2026-04-28)
+  ============================================================
+  v2 changelog (vs v1):
+  ‚Ä¢ No longer relies on intercepting ATC clicks. Most themes
+    DISABLE or HIDE the ATC button on sold-out variants, leaving
+    nothing to intercept ‚Äî that's why v1 silently did nothing.
+  ‚Ä¢ Now INJECTS our own "Notify Me When It's Back" button into
+    the product form whenever the selected variant is OOS, and
+    hides the disabled ATC button. Works with Dawn, Impulse,
+    Prestige, Sense, Studio, AJAX themes ‚Äî anything that has a
+    `form[action*="/cart/add"]`.
+  ‚Ä¢ Watches for variant changes via three independent paths:
+    URL `?variant=` change (Section Rendering API), form field
+    change, and MutationObserver on the form. So when a customer
+    flips between sizes, our button shows/hides correctly.
+  ‚Ä¢ Loud console diagnostics so install issues surface in 1 sec:
+    open DevTools console on a PDP ‚Äî every step is logged with
+    a `[bb-bis]` prefix.
+  ‚Ä¢ Click-intercept retained as a SECONDARY safety net for any
+    theme that still shows an enabled ATC button on OOS variants.
+
+  INSTALL: just render this snippet once on the product page
+  template (e.g. inside sections/main-product.liquid). No need
+  to wrap or modify the existing Add-to-Cart button.
+
+      {%- render 'back-in-stock' -%}
+
+  Powered by Klaviyo's official back-in-stock-subscriptions API
+  (fires the native "Subscribed to Back in Stock" metric, id JesdQ9).
+  Existing flow WsaDJv triggers automatically on restock.
+  ============================================================
+{%- endcomment -%}
+
+<div class="bb-bis-overlay" id="bb-bis-overlay" role="dialog" aria-modal="true" aria-labelledby="bb-bis-headline" hidden>
+  <div class="bb-bis-modal">
+    <button type="button" class="bb-bis-close" aria-label="Close" data-bb-bis-close>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="bb-bis-image-side">
+      <div class="bb-bis-oos-badge"><span class="bb-bis-pulse"></span>Sold Out</div>
+      <img
+        class="bb-bis-product-img"
+        data-bb-bis-img
+        src="{{ product.featured_image | image_url: width: 600 }}"
+        alt="{{ product.title | escape }}"
+        loading="lazy"
+      >
+      <div class="bb-bis-product-caption" data-bb-bis-caption>{{ product.title }}</div>
+    </div>
+
+    <div class="bb-bis-form-side">
+      <div class="bb-bis-form-section" data-bb-bis-form-section>
+        <p class="bb-bis-eyebrow">Restock Alert</p>
+        <h2 class="bb-bis-headline" id="bb-bis-headline">It&rsquo;s coming<br><em>back soon.</em></h2>
+        <p class="bb-bis-subhead">
+          Drop your details and we&rsquo;ll let you know the moment
+          <span class="bb-bis-product-name" data-bb-bis-name>{{ product.title }}</span>
+          is back in stock &mdash; by email <em>and</em> text, so you don&rsquo;t miss it.
+        </p>
+
+        <form class="bb-bis-form" data-bb-bis-form novalidate>
+          <input type="email" name="email" class="bb-bis-input" placeholder="Email address" required autocomplete="email" data-bb-bis-email>
+          <div class="bb-bis-phone-wrap">
+            <div class="bb-bis-phone-prefix"><span class="bb-bis-flag">üá∫üá∏</span><span>+1</span></div>
+            <input type="tel" name="phone" class="bb-bis-input" placeholder="Mobile number" required autocomplete="tel" inputmode="tel" data-bb-bis-phone>
+          </div>
+          <button type="submit" class="bb-bis-btn" data-bb-bis-submit>Notify Me When It&rsquo;s Back</button>
+          <div class="bb-bis-error" data-bb-bis-error></div>
+        </form>
+
+        <p class="bb-bis-compliance">
+          By submitting, you agree to receive recurring marketing emails and text messages from Betterbrand at the contact info provided. Consent isn&rsquo;t a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out. View our <a href="{{ shop.url }}/policies/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>.
+        </p>
+
+        <div class="bb-bis-trust-row">
+          <span>836,000+ customers</span>
+          <span class="bb-bis-dot"></span>
+          <span>365-day guarantee</span>
+        </div>
+      </div>
+
+      <div class="bb-bis-success" data-bb-bis-success>
+        <div class="bb-bis-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h3 class="bb-bis-success-headline">You&rsquo;re on the list</h3>
+        <p class="bb-bis-success-body">We&rsquo;ll let you know the moment <strong data-bb-bis-success-product>{{ product.title }}</strong> is back in stock.</p>
+        <p class="bb-bis-success-signoff">Breathe easier, naturally.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Inject the product/variant data so the JS knows which variant is OOS at click time {%- endcomment -%}
+<script data-bb-bis-data>
+  window.bbBisProduct = {
+    title: {{ product.title | json }},
+    productId: "{{ product.id }}",
+    handle: {{ product.handle | json }},
+    url: {{ shop.url | append: product.url | json }},
+    featuredImage: {{ product.featured_image | image_url: width: 600 | json }},
+    variants: [
+      {%- for v in product.variants -%}
+        {
+          id: "{{ v.id }}",
+          title: {{ v.title | json }},
+          available: {{ v.available }},
+          image: {%- if v.featured_image -%}{{ v.featured_image | image_url: width: 600 | json }}{%- else -%}null{%- endif -%}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  };
+</script>
+
+{%- comment -%} Snippet runs once per page; load styles + behavior only on first include {%- endcomment -%}
+{%- unless content_for_header contains 'bb-bis-init' -%}
+<style data-bb-bis-styles>
+  @font-face { font-family: 'SuisseIntlMono'; src: url({{ shop.url }}/cdn/shop/files/suisse-intl-mono-webfont.woff2?v=590474723420591623) format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'SuisseIntlMono'; src: url({{ shop.url }}/cdn/shop/files/suisseintlmono-bold-webfont.woff2?v=13901557664829825750) format('woff2'); font-weight: 700; font-display: swap; }
+
+  /* !important on position + z-index so theme CSS can't trap the overlay
+     inside a transformed/filtered ancestor (CSS containing-block escape) */
+  .bb-bis-overlay {
+    position: fixed !important;
+    top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important;
+    inset: 0 !important;
+    width: 100vw !important; height: 100vh !important;
+    max-width: none !important; max-height: none !important;
+    margin: 0 !important; padding: 20px !important;
+    background: rgba(20,30,25,0.55) !important;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    z-index: 2147483647 !important;
+    transform: none !important; filter: none !important;
+    animation: bbBisFade 0.3s ease-out;
+  }
+  .bb-bis-overlay[hidden] { display: none !important; }
+  @keyframes bbBisFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes bbBisSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bbBisPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+
+  .bb-bis-modal {
+    background: #fff; border-radius: 6px; width: 100%; max-width: 940px;
+    max-height: 92vh; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.4); position: relative;
+    animation: bbBisSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #252525;
+    font-family: 'SuisseIntlMono', ui-monospace, Menlo, monospace;
+  }
+
+  .bb-bis-close {
+    position: absolute; top: 16px; right: 16px; width: 34px; height: 34px;
+    border-radius: 50%; background: rgba(255,255,255,0.95); border: none;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.15s;
+  }
+  .bb-bis-close:hover { transform: scale(1.08); background: #fff; }
+  .bb-bis-close svg { width: 14px; height: 14px; stroke: #234134; }
+
+  .bb-bis-image-side {
+    background: #C2DEB4; position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px 32px; min-height: 540px; overflow: hidden;
+  }
+  .bb-bis-image-side::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 35%, rgba(255,255,255,0.35) 0%, transparent 60%),
+      radial-gradient(circle at 100% 100%, rgba(35,65,52,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .bb-bis-image-side::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+    background: linear-gradient(to top, rgba(35,65,52,0.06), transparent); pointer-events: none;
+  }
+  .bb-bis-product-img {
+    max-width: 100%; max-height: 480px; width: auto; height: auto;
+    object-fit: contain; position: relative; z-index: 1;
+    filter: drop-shadow(0 30px 50px rgba(35,65,52,0.28));
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .bb-bis-modal:hover .bb-bis-product-img { transform: translateY(-4px); }
+
+  .bb-bis-oos-badge {
+    position: absolute; top: 22px; left: 22px;
+    background: #234134; color: #fff;
+    font-family: 'SuisseIntlMono', monospace; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.22em; padding: 8px 14px; text-transform: uppercase; z-index: 2;
+    box-shadow: 0 4px 12px rgba(35,65,52,0.18);
+  }
+  .bb-bis-pulse {
+    display: inline-block; width: 6px; height: 6px; background: #F2CB49;
+    border-radius: 50%; margin-right: 8px; vertical-align: middle;
+    animation: bbBisPulse 1.6s ease-in-out infinite;
+  }
+  .bb-bis-product-caption {
+    position: absolute; bottom: 22px; left: 22px; right: 22px; z-index: 2;
+    font-family: bookmania, Georgia, serif; font-style: italic; font-weight: 700;
+    font-size: 14px; color: #234134; opacity: 0.75;
+  }
+  .bb-bis-product-caption::before { content: '‚Äî '; }
+
+  .bb-bis-form-side {
+    background: #fff; padding: 56px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .bb-bis-eyebrow {
+    font-family: 'SuisseIntlMono', monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase; color: #3F745D;
+    margin: 0 0 12px; padding: 0;
+  }
+  .bb-bis-headline {
+    font-family: bookmania, Georgia, serif; font-size: 46px; line-height: 1.02;
+    letter-spacing: -0.015em; color: #234134; margin: 0 0 18px; padding: 0; font-weight: 700;
+  }
+  .bb-bis-headline em { font-style: italic; font-weight: 700; color: #234134; }
+  .bb-bis-subhead {
+    font-family: 'SuisseIntlMono', monospace; font-size: 15px; line-height: 1.55;
+    color: #252525; margin: 0 0 26px; padding: 0;
+  }
+  .bb-bis-product-name { font-weight: 700; color: #234134; }
+
+  .bb-bis-form { display: flex; flex-direction: column; gap: 10px; margin: 0; }
+  .bb-bis-input {
+    width: 100%; padding: 15px 16px; border: 1.5px solid rgba(35,65,52,0.18);
+    border-radius: 4px; font-size: 15px;
+    font-family: 'SuisseIntlMono', monospace; background: #fff; color: #252525;
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+  .bb-bis-input::placeholder { color: #a8b3ac; }
+  .bb-bis-input:focus { border-color: #234134; box-shadow: 0 0 0 3px rgba(35,65,52,0.1); }
+  .bb-bis-input.bb-bis-error-field { border-color: #b22222; }
+
+  .bb-bis-phone-wrap { display: grid; grid-template-columns: 76px 1fr; gap: 8px; }
+  .bb-bis-phone-prefix {
+    display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 10px;
+    border: 1.5px solid rgba(35,65,52,0.18); border-radius: 4px;
+    background: #f7f4ed; font-size: 14px; color: #252525; font-weight: 500;
+    font-family: 'SuisseIntlMono', monospace;
+  }
+  .bb-bis-flag { font-size: 16px; }
+
+  .bb-bis-btn {
+    width: 100%; padding: 17px 24px; background: #234134; color: #fff; border: none;
+    border-radius: 4px;
+    font-family: 'SuisseIntlMono', monospace; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer;
+    transition: background 0.15s; margin-top: 6px;
+  }
+  .bb-bis-btn:hover { background: #1a3128; }
+  .bb-bis-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .bb-bis-compliance {
+    font-family: 'SuisseIntlMono', monospace; font-size: 11px; line-height: 1.5;
+    color: #6b6b6b; margin: 14px 0 0;
+  }
+  .bb-bis-compliance a { color: #234134; text-decoration: underline; }
+  .bb-bis-trust-row {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(35,65,52,0.08);
+    font-family: 'SuisseIntlMono', monospace; font-size: 11px; color: #6b6b6b;
+    font-weight: 500; letter-spacing: 0.05em;
+  }
+  .bb-bis-dot { width: 3px; height: 3px; border-radius: 50%; background: #F2CB49; }
+
+  .bb-bis-error {
+    font-family: 'SuisseIntlMono', monospace; font-size: 13px; color: #b22222;
+    background: #fef6f6; border: 1px solid #fde0e0; border-radius: 3px;
+    padding: 10px 12px; margin-top: 4px; display: none;
+  }
+  .bb-bis-error.bb-bis-show { display: block; }
+
+  .bb-bis-success { display: none; text-align: center; padding: 20px 0; }
+  .bb-bis-success.bb-bis-show { display: block; }
+  .bb-bis-success-icon {
+    width: 56px; height: 56px; background: #234134; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;
+  }
+  .bb-bis-success-icon svg { width: 26px; height: 26px; }
+  .bb-bis-success-headline {
+    font-family: bookmania, Georgia, serif; font-size: 32px; font-weight: 600;
+    color: #234134; margin: 0 0 10px; letter-spacing: -0.01em;
+  }
+  .bb-bis-success-body {
+    font-family: 'SuisseIntlMono', monospace; font-size: 15px; line-height: 1.55;
+    color: #252525; margin: 0 0 18px;
+  }
+  .bb-bis-success-signoff {
+    font-family: bookmania, serif; font-style: italic; font-size: 17px;
+    color: #3F745D; margin: 0;
+  }
+
+  /* Injected "Notify Me" trigger button ‚Äî replaces theme's disabled SOLD OUT button when variant is OOS */
+  .bb-bis-trigger {
+    width: 100%;
+    display: block;
+    padding: 17px 24px;
+    background: #234134;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-family: 'SuisseIntlMono', ui-monospace, Menlo, monospace;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.05s;
+    box-sizing: border-box;
+    margin: 0;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .bb-bis-trigger:hover { background: #1a3128; }
+  .bb-bis-trigger:active { transform: translateY(1px); }
+  .bb-bis-trigger::before {
+    content: '‚ú¶';
+    margin-right: 8px;
+    color: #F2CB49;
+  }
+  /* Hide whatever ATC button the theme rendered while we're showing our trigger */
+  [data-bb-bis-hidden-atc] { display: none !important; }
+
+  @media (max-width: 720px) {
+    .bb-bis-overlay { padding: 16px; }
+    .bb-bis-modal { grid-template-columns: 1fr; max-width: 420px; max-height: 90vh; overflow-y: auto; }
+    .bb-bis-image-side { display: none; }
+    .bb-bis-form-side { padding: 44px 28px 32px; }
+    .bb-bis-eyebrow { font-size: 10px; }
+    .bb-bis-headline { font-size: 32px; }
+    .bb-bis-subhead { font-size: 14px; margin-bottom: 22px; }
+  }
+</style>
+
+<script data-bb-bis-script>
+(function() {
+  if (window.__bbBisInit) return; window.__bbBisInit = true;
+
+  var SUBMIT_URL = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/back-in-stock/submit';
+  var TRIGGER_LABEL = 'Notify Me When It‚Äôs Back';
+  var DEBUG = true;
+  function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
+  function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
+
+  log('init ¬∑ v2.5 ¬∑ 2026-04-30');
+
+  // v2.5: memoize state so MutationObserver-driven re-syncs don't re-log
+  // and don't re-execute identical work. Loop's widget mutates the DOM
+  // continuously (animations / internal re-renders) and would otherwise
+  // cause console spam + wasted cycles.
+  var __bbBisLastTriggerKey = null;
+  var __bbBisLastTextSyncKey = null;
+  var __bbBisLastVariantLogKey = null;
+
+  // ============================================================
+  // ESCAPE TRANSFORMED ANCESTOR ‚Äî move overlay to document.body
+  // ============================================================
+  // CSS spec: an ancestor with transform/filter/perspective/will-change/contain
+  // becomes the containing block for `position: fixed` descendants. If our
+  // snippet is rendered inside such an ancestor, the overlay collapses into
+  // that ancestor's box instead of covering the viewport. To escape, we
+  // physically move the overlay element to be a direct child of <body>.
+  function liftOverlayToBody() {
+    var overlay = document.getElementById('bb-bis-overlay');
+    if (!overlay) return;
+    if (overlay.parentNode === document.body) return;
+    document.body.appendChild(overlay);
+    log('lifted overlay to document.body to escape any transformed ancestor');
+  }
+  if (document.body) liftOverlayToBody();
+  else document.addEventListener('DOMContentLoaded', liftOverlayToBody);
+
+  // ============================================================
+  // PRODUCT DATA SANITY CHECK
+  // ============================================================
+  var p = window.bbBisProduct;
+  if (!p) {
+    warn('window.bbBisProduct is missing. Did you {%- raw -%}{%- render \'back-in-stock\' -%}{%- endraw -%} OUTSIDE a product context? It must be rendered inside a product section/template where `product` is defined.');
+    return;
+  }
+  if (!p.variants || !p.variants.length) {
+    warn('product.variants is empty ‚Äî snippet won\'t do anything. This usually means the snippet was rendered outside a product page (e.g. theme.liquid). Move it into sections/main-product.liquid or your product template.');
+    return;
+  }
+  var oosCount = p.variants.filter(function(v){ return !v.available; }).length;
+  log('product loaded:', p.title, '¬∑ variants:', p.variants.length, '¬∑ OOS:', oosCount);
+
+  // ============================================================
+  // VARIANT LOOKUP
+  // ============================================================
+  function findVariant(variantId) {
+    if (!variantId) return null;
+    var idStr = String(variantId);
+    for (var i = 0; i < p.variants.length; i++) {
+      if (String(p.variants[i].id) === idStr) return p.variants[i];
+    }
+    return null;
+  }
+
+  // v2.4: read variant from subscription widget's selected state
+  // (Loop, Stay AI, Skio etc. don't always sync to URL/form)
+  function readSelectedVariantFromWidget() {
+    var scope = document.querySelector('[id*="MainProduct"], [id*="product-section"], [class*="product-form"], main') || document.body;
+    var attrSelectors = [
+      '[data-variant-id][selected]', '[data-variant-id].selected', '[data-variant-id].is-selected',
+      '[data-variant-id].active', '[data-variant-id].is-active', '[data-variant-id].checked',
+      '[data-variant-id][aria-pressed="true"]', '[data-variant-id][aria-checked="true"]',
+      'input[type="radio"]:checked[data-variant-id]',
+      '[data-loop-variant-id]', '[data-loop-id]',
+      'loop-plan-option[selected]', 'loop-plan-option.selected', 'loop-plan-option.is-selected',
+      '[data-loop-plan][selected]', '[data-loop-plan].selected'
+    ];
+    for (var i = 0; i < attrSelectors.length; i++) {
+      var el = scope.querySelector(attrSelectors[i]);
+      if (el) {
+        var vid = el.getAttribute('data-variant-id') || el.getAttribute('data-loop-variant-id') || el.getAttribute('data-loop-id') || el.value;
+        if (vid && findVariant(vid)) {
+          var logKey = attrSelectors[i] + ':' + vid;
+          if (logKey !== __bbBisLastVariantLogKey) {
+            log('variant detected from widget DOM ('+attrSelectors[i]+'):', vid);
+            __bbBisLastVariantLogKey = logKey;
+          }
+          return String(vid);
+        }
+      }
+    }
+    // Fallback: scan generic selected/active elements and match by text against variant titles
+    var generic = scope.querySelectorAll('.selected, .is-selected, .active, .is-active, [aria-pressed="true"], [aria-checked="true"]');
+    for (var j = 0; j < generic.length; j++) {
+      var text = (generic[j].textContent || '').trim();
+      if (!text) continue;
+      for (var k = 0; k < p.variants.length; k++) {
+        if (p.variants[k].title && text.indexOf(p.variants[k].title) >= 0) {
+          log('variant detected from selected text "'+text.slice(0,40)+'" matched variant:', p.variants[k].id);
+          return p.variants[k].id;
+        }
+      }
+    }
+    return null;
+  }
+
+  function readSelectedVariantId() {
+    // 1. Subscription widget selected state (Loop, Stay AI, etc.) ‚Äî most authoritative for sub apps
+    var fromWidget = readSelectedVariantFromWidget();
+    if (fromWidget) return fromWidget;
+    // 2. URL param ?variant= (Section Rendering API canonical source on Dawn-family themes)
+    try {
+      var url = new URL(window.location.href);
+      var qv = url.searchParams.get('variant');
+      if (qv) return qv;
+    } catch(_) {}
+    // 3. Form field name="id" (works on classic and modern themes)
+    var hidden = document.querySelector('form[action*="/cart/add"] [name="id"]');
+    if (hidden && hidden.value) return hidden.value;
+    // 4. Fallback: first available variant, else first variant
+    for (var i = 0; i < p.variants.length; i++) if (p.variants[i].available) return p.variants[i].id;
+    return p.variants[0] && p.variants[0].id;
+  }
+
+  // ============================================================
+  // POPUP OPEN / CLOSE
+  // ============================================================
+  function openBisPopup(variant) {
+    var overlay = document.getElementById('bb-bis-overlay');
+    if (!overlay) { warn('overlay element not found in DOM'); return; }
+
+    var fullTitle = variant.title && variant.title !== 'Default Title'
+      ? p.title + ' ‚Äî ' + variant.title
+      : p.title;
+    var imgUrl = variant.image || p.featuredImage;
+
+    var nameEl = overlay.querySelector('[data-bb-bis-name]');
+    var captionEl = overlay.querySelector('[data-bb-bis-caption]');
+    var imgEl = overlay.querySelector('[data-bb-bis-img]');
+    var successProductEl = overlay.querySelector('[data-bb-bis-success-product]');
+
+    if (nameEl) nameEl.textContent = fullTitle;
+    if (captionEl) captionEl.textContent = fullTitle;
+    if (imgEl && imgUrl) { imgEl.src = imgUrl; imgEl.alt = fullTitle; }
+    if (successProductEl) successProductEl.textContent = fullTitle;
+
+    var formSection = overlay.querySelector('[data-bb-bis-form-section]');
+    var successSection = overlay.querySelector('[data-bb-bis-success]');
+    var errorDiv = overlay.querySelector('[data-bb-bis-error]');
+    var submitBtn = overlay.querySelector('[data-bb-bis-submit]');
+    if (formSection) formSection.style.display = '';
+    if (successSection) successSection.classList.remove('bb-bis-show');
+    if (errorDiv) errorDiv.classList.remove('bb-bis-show');
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Notify Me When It‚Äôs Back'; }
+
+    window.__bbBisActiveVariant = variant;
+    overlay.removeAttribute('hidden');
+    log('popup opened for variant:', variant.id, variant.title);
+  }
+  function closeBisPopup() {
+    var overlay = document.getElementById('bb-bis-overlay');
+    if (overlay) overlay.setAttribute('hidden', '');
+  }
+
+  // ============================================================
+  // INJECT "NOTIFY ME" TRIGGER BUTTON INTO PRODUCT FORM
+  // ============================================================
+  function findCartForm() {
+    return document.querySelector('form[action*="/cart/add"]');
+  }
+  function findAtcButton(form) {
+    if (!form) return null;
+    return form.querySelector(
+      'button[name="add"], button[type="submit"][name="add"], [data-add-to-cart], ' +
+      'button[type="submit"]:not([data-bb-bis-trigger]):not(.bb-bis-trigger):not([data-bb-bis-close])'
+    );
+  }
+
+  function syncTriggerForVariant(variant) {
+    var form = findCartForm();
+    if (!form) {
+      // no form on this page ‚Äî bail (could be a non-product page or fully headless theme)
+      return;
+    }
+
+    // v2.5 memo: skip work if state hasn't changed
+    var key = variant ? (variant.id + ':' + (variant.available ? 'in' : 'oos')) : 'none';
+    if (key === __bbBisLastTriggerKey) return;
+    __bbBisLastTriggerKey = key;
+
+    var atc = findAtcButton(form);
+    var existing = form.querySelector('[data-bb-bis-trigger]');
+
+    if (variant && !variant.available) {
+      // OOS: hide ATC, show our trigger
+      if (atc && !atc.hasAttribute('data-bb-bis-hidden-atc')) {
+        atc.setAttribute('data-bb-bis-hidden-atc', '');
+        log('hid theme ATC button:', atc.tagName + (atc.name ? '[name='+atc.name+']' : ''));
+      }
+      if (existing) {
+        // already showing our button ‚Äî just update its variant binding
+        existing.setAttribute('data-variant-id', variant.id);
+        return;
+      }
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'bb-bis-trigger';
+      btn.setAttribute('data-bb-bis-trigger', '');
+      btn.setAttribute('data-variant-id', variant.id);
+      btn.textContent = TRIGGER_LABEL;
+      // Insert AFTER atc if found, else at the end of the form
+      if (atc && atc.parentNode) {
+        atc.parentNode.insertBefore(btn, atc.nextSibling);
+      } else {
+        form.appendChild(btn);
+      }
+      log('injected Notify Me trigger for OOS variant:', variant.id, variant.title);
+    } else {
+      // In-stock or unknown: remove our trigger, restore ATC
+      if (existing) { existing.remove(); log('removed Notify Me trigger (variant in stock)'); }
+      if (atc && atc.hasAttribute('data-bb-bis-hidden-atc')) {
+        atc.removeAttribute('data-bb-bis-hidden-atc');
+        log('restored theme ATC button');
+      }
+    }
+  }
+
+  function refreshFromCurrentVariant(reason) {
+    var vid = readSelectedVariantId();
+    var v = findVariant(vid);
+    log('refresh ('+(reason||'manual')+') variant:', vid, '¬∑ available:', v ? v.available : 'unknown');
+    if (!v) return;
+    window.__bbBisCurrentVariant = v;
+    syncTriggerForVariant(v);
+  }
+
+  // ============================================================
+  // VARIANT CHANGE WATCHERS
+  // ============================================================
+
+  // 1) Listen to changes on the cart form (radio/select variant pickers)
+  document.addEventListener('change', function(e) {
+    var form = e.target.closest && e.target.closest('form[action*="/cart/add"]');
+    if (!form) return;
+    // small delay so the theme has time to update name="id" / URL
+    setTimeout(function(){ refreshFromCurrentVariant('form change'); }, 50);
+  });
+
+  // 2) URL changes via pushState/replaceState (Section Rendering API doesn't fire popstate)
+  ['pushState','replaceState'].forEach(function(fnName) {
+    var orig = history[fnName];
+    history[fnName] = function() {
+      var ret = orig.apply(this, arguments);
+      setTimeout(function(){ refreshFromCurrentVariant('history.'+fnName); }, 50);
+      return ret;
+    };
+  });
+  window.addEventListener('popstate', function(){ refreshFromCurrentVariant('popstate'); });
+
+  // 3) MutationObserver fallback ‚Äî catches sections that re-render the form HTML wholesale
+  var observerInited = false;
+  function initObserver() {
+    if (observerInited) return;
+    var form = findCartForm();
+    if (!form) return;
+    observerInited = true;
+    var mo = new MutationObserver(function(){
+      // Debounce
+      clearTimeout(window.__bbBisMoDebounce);
+      window.__bbBisMoDebounce = setTimeout(function(){ refreshFromCurrentVariant('mutation'); }, 100);
+    });
+    mo.observe(form, { childList: true, subtree: true, attributes: true, attributeFilter: ['value','name','disabled','hidden'] });
+    log('MutationObserver attached to cart form');
+  }
+
+  // ============================================================
+  // CLICK HANDLER FOR OUR INJECTED BUTTON (and SECONDARY safety-net for stray ATC clicks)
+  // ============================================================
+  document.addEventListener('click', function(e) {
+    // Our trigger button
+    var trigger = e.target.closest('[data-bb-bis-trigger]');
+    if (trigger) {
+      e.preventDefault();
+      var vid = trigger.getAttribute('data-variant-id') || readSelectedVariantId();
+      var v = findVariant(vid);
+      if (v) openBisPopup(v);
+      else warn('trigger clicked but no matching variant found for id', vid);
+      return;
+    }
+
+    // Safety net: if some theme STILL fires an ATC click for an OOS variant
+    // (e.g. enabled-but-shows-error pattern), intercept and pop our modal.
+    var btn = e.target.closest('button[type="submit"], [name="add"], [data-add-to-cart]');
+    if (!btn) return;
+    if (btn.hasAttribute('data-bb-bis-hidden-atc')) { e.preventDefault(); return; }
+    var form = btn.closest('form[action*="/cart/add"]');
+    if (!form) return;
+    var variantInput = form.querySelector('[name="id"]');
+    if (!variantInput) return;
+    var v = findVariant(variantInput.value);
+    if (!v || v.available) return;
+    log('safety-net: caught ATC click on OOS variant', v.id);
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    openBisPopup(v);
+  }, true);
+
+  // Block form submits for OOS variants too (covers programmatic submits)
+  document.addEventListener('submit', function(e) {
+    var form = e.target;
+    if (!form || !form.action || form.action.indexOf('/cart/add') === -1) return;
+    var variantInput = form.querySelector('[name="id"]');
+    if (!variantInput) return;
+    var v = findVariant(variantInput.value);
+    if (!v || v.available) return;
+    log('safety-net: caught form submit for OOS variant', v.id);
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    openBisPopup(v);
+  }, true);
+
+  // ============================================================
+  // CLOSE / KEYBOARD
+  // ============================================================
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('[data-bb-bis-close]')) { closeBisPopup(); return; }
+    if (e.target.id === 'bb-bis-overlay') closeBisPopup();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeBisPopup();
+  });
+
+  // ============================================================
+  // PHONE FORMATTER
+  // ============================================================
+  document.addEventListener('input', function(e) {
+    var ph = e.target.closest('[data-bb-bis-phone]');
+    if (!ph) return;
+    var v = ph.value.replace(/\D/g, '').slice(0, 10);
+    if (v.length > 6) v = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
+    else if (v.length > 3) v = '(' + v.slice(0,3) + ') ' + v.slice(3);
+    else if (v.length > 0) v = '(' + v;
+    ph.value = v;
+  });
+
+  // ============================================================
+  // FORM SUBMIT TO KLAVIYO BIS API (via Supabase Edge Function)
+  // ============================================================
+  document.addEventListener('submit', function(e) {
+    var form = e.target.closest('[data-bb-bis-form]');
+    if (!form) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var modal = form.closest('.bb-bis-modal');
+    var emailInput = modal.querySelector('[data-bb-bis-email]');
+    var phoneInput = modal.querySelector('[data-bb-bis-phone]');
+    var submitBtn = modal.querySelector('[data-bb-bis-submit]');
+    var errorDiv = modal.querySelector('[data-bb-bis-error]');
+    var formSection = modal.querySelector('[data-bb-bis-form-section]');
+    var successSection = modal.querySelector('[data-bb-bis-success]');
+
+    errorDiv.classList.remove('bb-bis-show');
+    emailInput.classList.remove('bb-bis-error-field');
+    phoneInput.classList.remove('bb-bis-error-field');
+
+    var email = emailInput.value.trim();
+    var phoneRaw = phoneInput.value.replace(/\D/g, '');
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput.classList.add('bb-bis-error-field');
+      errorDiv.textContent = 'Please enter a valid email address.';
+      errorDiv.classList.add('bb-bis-show');
+      return;
+    }
+    if (phoneRaw.length !== 10) {
+      phoneInput.classList.add('bb-bis-error-field');
+      errorDiv.textContent = 'Please enter a valid 10-digit US mobile number.';
+      errorDiv.classList.add('bb-bis-show');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting‚Ä¶';
+
+    var v = window.__bbBisActiveVariant || {};
+    var payload = {
+      email: email,
+      phone: '+1' + phoneRaw,
+      product: {
+        title: p.title,
+        variantId: v.id,
+        productId: p.productId,
+        imageUrl: v.image || p.featuredImage,
+        url: p.url
+      }
+    };
+    log('submitting BIS subscription:', payload.email, '¬∑', payload.phone, '¬∑', v.id);
+
+    fetch(SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, j: j }; }); })
+    .then(function(res) {
+      if (!res.ok || !res.j.success) throw new Error(res.j.error || 'Subscription failed');
+      log('submit success');
+      formSection.style.display = 'none';
+      successSection.classList.add('bb-bis-show');
+      try { localStorage.setItem('bb_bis_' + (v.id || ''), Date.now().toString()); } catch (_) {}
+    })
+    .catch(function(err) {
+      warn('submit failed:', err.message);
+      errorDiv.textContent = err.message || 'Network error. Please try again.';
+      errorDiv.classList.add('bb-bis-show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Notify Me When It‚Äôs Back';
+    });
+  }, true);
+
+  // ============================================================
+  // SUBSCRIPTION-APP OOS DETECTION (Loop / Stay AI / Skio / etc.)
+  // ============================================================
+  // Some subscription apps manage inventory separately from Shopify's
+  // variant.available. They render their own "Out of stock" text in the
+  // widget while Shopify still reports the variant in-stock. This block
+  // detects that visible signal ‚Äî works regardless of which app ‚Äî and
+  // also opportunistically listens for app-specific events.
+
+  var OOS_TEXT_RE = /\b(out\s*of\s*stock|sold\s*out|unavailable|currently\s*unavailable|notify\s*me\s*when\s*available)\b/i;
+
+  function findProductFormScope() {
+    // Look for the cart form first; widen to common product-section ancestors
+    var form = findCartForm();
+    if (!form) return document.body;
+    var section = form.closest('[id*="MainProduct"], [id*="product-section"], [class*="product-form"], main, section') || form;
+    return section;
+  }
+
+  function detectVisibleOosText() {
+    var scope = findProductFormScope();
+    if (!scope) return false;
+    // Only consider visible text nodes
+    var texts = scope.innerText || scope.textContent || '';
+    if (!OOS_TEXT_RE.test(texts)) return false;
+    // Make sure the matching text node is actually visible (not display:none deep in DOM)
+    var nodes = scope.querySelectorAll('*');
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      if (!OOS_TEXT_RE.test(n.textContent || '')) continue;
+      // Skip our own popup nodes
+      if (n.closest && n.closest('.bb-bis-overlay')) continue;
+      // Skip if has lots of children ‚Äî only want leaf-ish text
+      if (n.children.length > 3) continue;
+      var cs = window.getComputedStyle(n);
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0') continue;
+      return true;
+    }
+    return false;
+  }
+
+  function syncFromTextSignal(reason) {
+    var hasOosText = detectVisibleOosText();
+    var vid = readSelectedVariantId();
+    var v = findVariant(vid);
+
+    // v2.5 memo: skip if (oosText, vid) unchanged
+    var key = vid + ':' + (hasOosText ? '1' : '0');
+    if (key === __bbBisLastTextSyncKey) return;
+    __bbBisLastTextSyncKey = key;
+
+    // v2.3+v2.4: decouple OOS detection from variant lookup. If a subscription
+    // app shows "Out of stock" text, fire the popup even if we can't identify
+    // the exact variant from URL/form/widget. Try in priority order:
+    //   1. The variant we resolved from URL/form/widget
+    //   2. "Sole OOS variant by elimination" ‚Äî if exactly one variant is OOS in
+    //      Shopify and we see OOS text, it MUST be that one
+    //   3. Generic product-level fallback
+    if (hasOosText) {
+      var override;
+      var oosVariants = p.variants.filter(function(x){ return !x.available; });
+
+      if (v && !v.available) {
+        // Resolved variant matches Shopify's OOS state ‚Äî perfect
+        log('text-signal OOS ('+reason+') ‚Äî using resolved+native-OOS variant', v.id);
+        override = { id: v.id, title: v.title, available: false, image: v.image };
+      } else if (oosVariants.length === 1) {
+        // Exactly one OOS variant exists ‚Äî by elimination it must be that one
+        log('text-signal OOS ('+reason+') ‚Äî using sole OOS variant by elimination:', oosVariants[0].id, oosVariants[0].title, '(resolved was', vid, ')');
+        override = { id: oosVariants[0].id, title: oosVariants[0].title, available: false, image: oosVariants[0].image };
+      } else if (v) {
+        // Resolved a variant but Shopify says it's available; trust the OOS text and override
+        log('text-signal OOS ('+reason+') ‚Äî overriding variant.available for', v.id, v.title);
+        override = { id: v.id, title: v.title, available: false, image: v.image };
+      } else {
+        // No variant resolved at all ‚Äî use product-level fallback
+        log('text-signal OOS ('+reason+') ‚Äî variant lookup FAILED for vid='+vid+', using product-level fallback');
+        override = {
+          id: vid || (p.variants[0] && p.variants[0].id) || p.productId,
+          title: 'Selected option',
+          available: false,
+          image: p.featuredImage
+        };
+      }
+      window.__bbBisCurrentVariant = override;
+      syncTriggerForVariant(override);
+      return;
+    }
+
+    if (!v) return; // No OOS text and no variant ‚Äî nothing to do
+
+    // No OOS text visible ‚Äî fall back to native variant.available
+    window.__bbBisCurrentVariant = v;
+    syncTriggerForVariant(v);
+  }
+
+  // Watch the product section for text/DOM changes (subscription widget re-renders)
+  var textObserverInited = false;
+  function initTextObserver() {
+    if (textObserverInited) return;
+    var scope = findProductFormScope();
+    if (!scope || scope === document.body) return;
+    textObserverInited = true;
+    var mo = new MutationObserver(function(){
+      clearTimeout(window.__bbBisTextDebounce);
+      window.__bbBisTextDebounce = setTimeout(function(){ syncFromTextSignal('text mutation'); }, 120);
+    });
+    mo.observe(scope, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['class','disabled','hidden','style'] });
+    log('text-OOS observer attached to product scope');
+  }
+
+  // Loop / Stay AI / Skio / generic subscription app event hooks
+  // (cheap to attach ‚Äî if events don't exist, no harm)
+  var SUB_APP_EVENTS = [
+    'loop:variant:change', 'loop:variantChange', 'loop:variantChanged',
+    'loopwork:variant:change', 'loopwork:variantChange',
+    'loop:plan:change', 'loop:sellingPlanChange',
+    'subscription:variant:change', 'subscription:plan:change',
+    'stayai:variantChange', 'skio:variantChange', 'recharge:variantChange',
+    'shopify:variant:change', 'variant:change'
+  ];
+  SUB_APP_EVENTS.forEach(function(ev) {
+    document.addEventListener(ev, function(){
+      log('subscription-app event fired:', ev);
+      setTimeout(function(){ syncFromTextSignal('event:'+ev); }, 50);
+    });
+  });
+
+  // Diagnostic: log subscription-app presence (visible in console for tightening)
+  function logSubscriptionAppPresence() {
+    var sig = {
+      loopGlobal: !!window.Loop || !!window.LoopSubscriptions || !!window.loopwork,
+      loopElements: document.querySelectorAll('[class*="loop-"], [data-loop], loop-subscription-widget, loop-subscription, [id*="loop-widget"]').length,
+      stayAi: !!window.stayai || document.querySelectorAll('[class*="stayai"]').length,
+      skio: !!window.Skio || document.querySelectorAll('[class*="skio"]').length,
+      recharge: !!window.ReChargeWidget || document.querySelectorAll('[id*="recharge"]').length,
+      bold: !!window.BOLD || document.querySelectorAll('[class*="bold-subscription"]').length,
+      shopifySellingPlan: !!document.querySelector('[name="selling_plan"]'),
+      visibleOosTextNow: detectVisibleOosText()
+    };
+    log('subscription-app signature:', JSON.stringify(sig));
+  }
+
+  // ============================================================
+  // KICK OFF
+  // ============================================================
+  function ready(fn) {
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
+  ready(function(){
+    refreshFromCurrentVariant('initial');
+    initObserver();
+    initTextObserver();
+    logSubscriptionAppPresence();
+    syncFromTextSignal('initial text-check');
+    // Re-check every 750ms for the first 5s in case the theme/widget renders async
+    var ticks = 0;
+    var iv = setInterval(function(){
+      ticks++;
+      refreshFromCurrentVariant('tick '+ticks);
+      initObserver();
+      initTextObserver();
+      syncFromTextSignal('tick '+ticks+' text-check');
+      if (ticks >= 7) {
+        clearInterval(iv);
+        logSubscriptionAppPresence();
+      }
+    }, 750);
+  });
+})();
+</script>
+{%- endunless -%}
