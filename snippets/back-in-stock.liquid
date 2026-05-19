@@ -354,7 +354,14 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.6 * 2026-05-19 (Vasta PDP support)');
+  log('init * v2.7 * 2026-05-19 (auto-fire on OOS variant selection)');
+
+  // Track whether the current variant state is the INITIAL load (don't auto-fire on landing)
+  // vs a USER-INITIATED variant selection (auto-fire when OOS).
+  var __bbBisInitialPass = true;
+  var __bbBisLastOosVariantId = null;
+  // Throttle the mutation log spam ‚Äî only log once every 1.5s
+  var __bbBisLastMutationLog = 0;
 
   // v2.5: memoize state so MutationObserver-driven re-syncs don't re-log
   // and don't re-execute identical work. Loop's widget mutates the DOM
@@ -555,52 +562,58 @@
       return;
     }
 
-    // v2.5 memo: skip work if state hasn't changed
+    // v2.7: no visible trigger button ‚Äî auto-fire popup on user-initiated OOS variant change.
+    // Skip work if state hasn't changed
     var key = variant ? (variant.id + ':' + (variant.available ? 'in' : 'oos')) : 'none';
     if (key === __bbBisLastTriggerKey) return;
     __bbBisLastTriggerKey = key;
 
-    var atc = findAtcButton(form);
-    var existing = form.querySelector('[data-bb-bis-trigger]');
+    // Remove any leftover trigger from earlier versions (cleanup)
+    form.querySelectorAll('[data-bb-bis-trigger], .bb-bis-trigger').forEach(function(b){ b.remove(); });
+
+    // Restore any hidden ATC from earlier versions (cleanup)
+    form.querySelectorAll('[data-bb-bis-hidden-atc]').forEach(function(el){ el.removeAttribute('data-bb-bis-hidden-atc'); });
+
+    // Bind a click on the existing theme OOS pseudo-button so clicking it opens our popup.
+    var oosBtn = form.querySelector('#button-out-of-stock, .btn-choose-variant');
+    if (oosBtn && !oosBtn.__bbBisClickBound) {
+      oosBtn.__bbBisClickBound = true;
+      oosBtn.style.cursor = 'pointer';
+      oosBtn.addEventListener('click', function(e){
+        var v = window.__bbBisCurrentVariant;
+        if (v && !v.available) {
+          e.preventDefault(); e.stopPropagation();
+          openBisPopup(v);
+        }
+      }, true);
+      log('bound click handler to OOS button');
+    }
 
     if (variant && !variant.available) {
-      // OOS: hide ATC, show our trigger
-      if (atc && !atc.hasAttribute('data-bb-bis-hidden-atc')) {
-        atc.setAttribute('data-bb-bis-hidden-atc', '');
-        log('hid theme ATC button:', atc.tagName + (atc.name ? '[name='+atc.name+']' : ''));
-      }
-      if (existing) {
-        // already showing our button -- just update its variant binding
-        existing.setAttribute('data-variant-id', variant.id);
-        return;
-      }
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'bb-bis-trigger';
-      btn.setAttribute('data-bb-bis-trigger', '');
-      btn.setAttribute('data-variant-id', variant.id);
-      btn.textContent = TRIGGER_LABEL;
-      // Insert AFTER atc if found, else at the end of the form
-      if (atc && atc.parentNode) {
-        atc.parentNode.insertBefore(btn, atc.nextSibling);
+      __bbBisLastOosVariantId = variant.id;
+      // Auto-fire ONLY on user-initiated changes, not initial page load.
+      if (!__bbBisInitialPass) {
+        log('auto-firing popup for OOS variant change:', variant.id, variant.title);
+        openBisPopup(variant);
       } else {
-        form.appendChild(btn);
+        log('OOS variant detected on initial load (no auto-fire):', variant.id, variant.title);
       }
-      log('injected Notify Me trigger for OOS variant:', variant.id, variant.title);
     } else {
-      // In-stock or unknown: remove our trigger, restore ATC
-      if (existing) { existing.remove(); log('removed Notify Me trigger (variant in stock)'); }
-      if (atc && atc.hasAttribute('data-bb-bis-hidden-atc')) {
-        atc.removeAttribute('data-bb-bis-hidden-atc');
-        log('restored theme ATC button');
-      }
+      __bbBisLastOosVariantId = null;
     }
   }
 
   function refreshFromCurrentVariant(reason) {
     var vid = readSelectedVariantId();
     var v = findVariant(vid);
-    log('refresh ('+(reason||'manual')+') variant:', vid, '* available:', v ? v.available : 'unknown');
+    // v2.7: throttle the mutation-spam ‚Äî only log if state would actually change OR enough time has passed
+    var key = v ? (v.id + ':' + (v.available ? 'in' : 'oos')) : 'none';
+    var now = Date.now();
+    var willChange = key !== __bbBisLastTriggerKey;
+    if (willChange || (now - __bbBisLastMutationLog) > 1500) {
+      __bbBisLastMutationLog = now;
+      log('refresh ('+(reason||'manual')+') variant:', vid, '* available:', v ? v.available : 'unknown');
+    }
     if (!v) return;
     window.__bbBisCurrentVariant = v;
     syncTriggerForVariant(v);
@@ -613,10 +626,31 @@
   // 1) Listen to changes on the cart form (radio/select variant pickers)
   document.addEventListener('change', function(e) {
     var form = e.target.closest && e.target.closest('form[action*="/cart/add"]');
-    if (!form) return;
+    if (!form || isInCartDrawer(form)) return;
     // small delay so the theme has time to update name="id" / URL
     setTimeout(function(){ refreshFromCurrentVariant('form change'); }, 50);
   });
+
+  // 1b) Vasta variant-picker cards ‚Äî clicking a card with [data-variant-id]
+  //     directly opens the popup if it points to an OOS variant. This handles cases
+  //     where the change event doesn't fire (e.g. clicking the already-selected card).
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest && e.target.closest('[data-variant-id]');
+    if (!card) return;
+    if (isInCartDrawer(card)) return;
+    // Skip our own elements
+    if (card.classList && (card.classList.contains('bb-bis-trigger') || card.closest('.bb-bis-overlay'))) return;
+    var vid = card.getAttribute('data-variant-id');
+    if (!vid) return;
+    // Defer a tick so the theme's own click handler sets the radio first.
+    setTimeout(function(){
+      var v = findVariant(vid);
+      if (v && !v.available) {
+        log('user clicked OOS variant card:', vid, v.title);
+        openBisPopup(v);
+      }
+    }, 100);
+  }, true);
 
   // 2) URL changes via pushState/replaceState (Section Rendering API doesn't fire popstate)
   ['pushState','replaceState'].forEach(function(fnName) {
@@ -998,6 +1032,12 @@
       initObserver();
       initTextObserver();
       syncFromTextSignal('tick '+ticks+' text-check');
+      // v2.7: After tick 2 (1.5s), declare initial-load over.
+      // Any variant changes from this point are user-initiated and should auto-fire the popup.
+      if (ticks === 2) {
+        __bbBisInitialPass = false;
+        log('initial pass complete -- subsequent OOS variant selections will auto-fire popup');
+      }
       if (ticks >= 7) {
         clearInterval(iv);
         logSubscriptionAppPresence();
