@@ -329,6 +329,37 @@
   /* Hide whatever ATC button the theme rendered while we're showing our trigger */
   [data-bb-bis-hidden-atc] { display: none !important; }
 
+  /* v2.8: When the theme OOS pseudo-button is relabeled to "Notify Me When In Stock",
+     restyle it as a primary CTA (dark forest green, like the original Add to Cart). */
+  #button-out-of-stock.bb-bis-cta-restock,
+  .btn-choose-variant.bb-bis-cta-restock,
+  [data-bb-bis-cta] {
+    background: #234134 !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transition: background 0.15s, transform 0.05s !important;
+  }
+  #button-out-of-stock.bb-bis-cta-restock:hover,
+  .btn-choose-variant.bb-bis-cta-restock:hover,
+  [data-bb-bis-cta]:hover {
+    background: #1a3128 !important;
+  }
+  #button-out-of-stock.bb-bis-cta-restock .btn-label,
+  .btn-choose-variant.bb-bis-cta-restock .btn-label,
+  [data-bb-bis-cta] .btn-label {
+    color: #fff !important;
+  }
+  /* Optional sparkle icon before the label, like the original trigger */
+  #button-out-of-stock.bb-bis-cta-restock .btn-label::before,
+  .btn-choose-variant.bb-bis-cta-restock .btn-label::before,
+  [data-bb-bis-cta] .btn-label::before {
+    content: '\2726';
+    color: #F2CB49;
+    margin-right: 8px;
+  }
+
   @media (max-width: 720px) {
     .bb-bis-overlay { padding: 16px; }
     .bb-bis-modal { grid-template-columns: 1fr; max-width: 420px; max-height: 90vh; overflow-y: auto; }
@@ -354,14 +385,14 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.7 * 2026-05-19 (auto-fire on OOS variant selection)');
+  log('init * v2.8 * 2026-05-19 (relabel OOS button -> Notify Me When In Stock)');
 
-  // Track whether the current variant state is the INITIAL load (don't auto-fire on landing)
-  // vs a USER-INITIATED variant selection (auto-fire when OOS).
-  var __bbBisInitialPass = true;
+  // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
   // Throttle the mutation log spam ‚Äî only log once every 1.5s
   var __bbBisLastMutationLog = 0;
+  // Label shown on the relabeled OOS button (replaces "(Out of Stock)").
+  var OOS_BUTTON_LABEL = 'Notify Me When In Stock';
 
   // v2.5: memoize state so MutationObserver-driven re-syncs don't re-log
   // and don't re-execute identical work. Loop's widget mutates the DOM
@@ -562,7 +593,8 @@
       return;
     }
 
-    // v2.7: no visible trigger button ‚Äî auto-fire popup on user-initiated OOS variant change.
+    // v2.8: no auto-fire, no injected button. The native theme "(Out of Stock)" button
+    // gets RELABELED to "Notify Me When In Stock" + restyled as a CTA + click opens popup.
     // Skip work if state hasn't changed
     var key = variant ? (variant.id + ':' + (variant.available ? 'in' : 'oos')) : 'none';
     if (key === __bbBisLastTriggerKey) return;
@@ -574,11 +606,13 @@
     // Restore any hidden ATC from earlier versions (cleanup)
     form.querySelectorAll('[data-bb-bis-hidden-atc]').forEach(function(el){ el.removeAttribute('data-bb-bis-hidden-atc'); });
 
-    // Bind a click on the existing theme OOS pseudo-button so clicking it opens our popup.
+    // Find the theme's OOS pseudo-button.
     var oosBtn = form.querySelector('#button-out-of-stock, .btn-choose-variant');
-    if (oosBtn && !oosBtn.__bbBisClickBound) {
+    if (!oosBtn) return;
+
+    // Bind click handler ONCE (idempotent ‚Äî guarded by flag on the element).
+    if (!oosBtn.__bbBisClickBound) {
       oosBtn.__bbBisClickBound = true;
-      oosBtn.style.cursor = 'pointer';
       oosBtn.addEventListener('click', function(e){
         var v = window.__bbBisCurrentVariant;
         if (v && !v.available) {
@@ -590,15 +624,29 @@
     }
 
     if (variant && !variant.available) {
-      __bbBisLastOosVariantId = variant.id;
-      // Auto-fire ONLY on user-initiated changes, not initial page load.
-      if (!__bbBisInitialPass) {
-        log('auto-firing popup for OOS variant change:', variant.id, variant.title);
-        openBisPopup(variant);
-      } else {
-        log('OOS variant detected on initial load (no auto-fire):', variant.id, variant.title);
+      // Relabel: "(Out of Stock)" -> "Notify Me When In Stock"
+      var label = oosBtn.querySelector('.btn-label') || oosBtn;
+      if (!oosBtn.__bbBisOriginalText) {
+        oosBtn.__bbBisOriginalText = label.textContent;
       }
+      if (label.textContent.trim() !== OOS_BUTTON_LABEL) {
+        label.textContent = OOS_BUTTON_LABEL;
+        log('relabeled OOS button -> "' + OOS_BUTTON_LABEL + '" for variant', variant.id, variant.title);
+      }
+      // Style as a CTA (override the gray-disabled look).
+      oosBtn.classList.add('bb-bis-cta-restock');
+      oosBtn.setAttribute('data-bb-bis-cta', '');
+      oosBtn.style.cursor = 'pointer';
+      __bbBisLastOosVariantId = variant.id;
     } else {
+      // In stock or unknown: restore original label + remove our styling.
+      var label = oosBtn.querySelector('.btn-label') || oosBtn;
+      if (oosBtn.__bbBisOriginalText && label.textContent.trim() !== oosBtn.__bbBisOriginalText.trim()) {
+        label.textContent = oosBtn.__bbBisOriginalText;
+        log('restored OOS button label (variant in stock)');
+      }
+      oosBtn.classList.remove('bb-bis-cta-restock');
+      oosBtn.removeAttribute('data-bb-bis-cta');
       __bbBisLastOosVariantId = null;
     }
   }
@@ -631,26 +679,9 @@
     setTimeout(function(){ refreshFromCurrentVariant('form change'); }, 50);
   });
 
-  // 1b) Vasta variant-picker cards ‚Äî clicking a card with [data-variant-id]
-  //     directly opens the popup if it points to an OOS variant. This handles cases
-  //     where the change event doesn't fire (e.g. clicking the already-selected card).
-  document.addEventListener('click', function(e) {
-    var card = e.target.closest && e.target.closest('[data-variant-id]');
-    if (!card) return;
-    if (isInCartDrawer(card)) return;
-    // Skip our own elements
-    if (card.classList && (card.classList.contains('bb-bis-trigger') || card.closest('.bb-bis-overlay'))) return;
-    var vid = card.getAttribute('data-variant-id');
-    if (!vid) return;
-    // Defer a tick so the theme's own click handler sets the radio first.
-    setTimeout(function(){
-      var v = findVariant(vid);
-      if (v && !v.available) {
-        log('user clicked OOS variant card:', vid, v.title);
-        openBisPopup(v);
-      }
-    }, 100);
-  }, true);
+  // v2.8: variant-card auto-fire removed. The relabeled "Notify Me When In Stock" button
+  // is the only entry point to the popup ‚Äî when a variant is OOS, the theme's OOS button
+  // changes its label and the user clicks it.
 
   // 2) URL changes via pushState/replaceState (Section Rendering API doesn't fire popstate)
   ['pushState','replaceState'].forEach(function(fnName) {
@@ -1032,12 +1063,7 @@
       initObserver();
       initTextObserver();
       syncFromTextSignal('tick '+ticks+' text-check');
-      // v2.7: After tick 2 (1.5s), declare initial-load over.
-      // Any variant changes from this point are user-initiated and should auto-fire the popup.
-      if (ticks === 2) {
-        __bbBisInitialPass = false;
-        log('initial pass complete -- subsequent OOS variant selections will auto-fire popup');
-      }
+      // v2.8: no auto-fire ‚Äî popup opens only via the relabeled OOS button click.
       if (ticks >= 7) {
         clearInterval(iv);
         logSubscriptionAppPresence();
