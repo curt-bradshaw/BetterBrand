@@ -1,24 +1,24 @@
 {%- comment -%}
   ============================================================
-  BACK-IN-STOCK SNIPPET ‚Äî Betterbrand ¬∑ v2 (2026-04-28)
+  BACK-IN-STOCK SNIPPET -- Betterbrand * v2 (2026-04-28)
   ============================================================
   v2 changelog (vs v1):
-  ‚Ä¢ No longer relies on intercepting ATC clicks. Most themes
+  * No longer relies on intercepting ATC clicks. Most themes
     DISABLE or HIDE the ATC button on sold-out variants, leaving
-    nothing to intercept ‚Äî that's why v1 silently did nothing.
-  ‚Ä¢ Now INJECTS our own "Notify Me When It's Back" button into
+    nothing to intercept -- that's why v1 silently did nothing.
+  * Now INJECTS our own "Notify Me When It's Back" button into
     the product form whenever the selected variant is OOS, and
     hides the disabled ATC button. Works with Dawn, Impulse,
-    Prestige, Sense, Studio, AJAX themes ‚Äî anything that has a
+    Prestige, Sense, Studio, AJAX themes -- anything that has a
     `form[action*="/cart/add"]`.
-  ‚Ä¢ Watches for variant changes via three independent paths:
+  * Watches for variant changes via three independent paths:
     URL `?variant=` change (Section Rendering API), form field
     change, and MutationObserver on the form. So when a customer
     flips between sizes, our button shows/hides correctly.
-  ‚Ä¢ Loud console diagnostics so install issues surface in 1 sec:
-    open DevTools console on a PDP ‚Äî every step is logged with
+  * Loud console diagnostics so install issues surface in 1 sec:
+    open DevTools console on a PDP -- every step is logged with
     a `[bb-bis]` prefix.
-  ‚Ä¢ Click-intercept retained as a SECONDARY safety net for any
+  * Click-intercept retained as a SECONDARY safety net for any
     theme that still shows an enabled ATC button on OOS variants.
 
   INSTALL: just render this snippet once on the product page
@@ -67,7 +67,7 @@
         <form class="bb-bis-form" data-bb-bis-form novalidate>
           <input type="email" name="email" class="bb-bis-input" placeholder="Email address" required autocomplete="email" data-bb-bis-email>
           <div class="bb-bis-phone-wrap">
-            <div class="bb-bis-phone-prefix"><span class="bb-bis-flag">üá∫üá∏</span><span>+1</span></div>
+            <div class="bb-bis-phone-prefix"><span class="bb-bis-flag">&#127482;&#127480;</span><span>+1</span></div>
             <input type="tel" name="phone" class="bb-bis-input" placeholder="Mobile number" required autocomplete="tel" inputmode="tel" data-bb-bis-phone>
           </div>
           <button type="submit" class="bb-bis-btn" data-bb-bis-submit>Notify Me When It&rsquo;s Back</button>
@@ -206,7 +206,7 @@
     font-family: bookmania, Georgia, serif; font-style: italic; font-weight: 700;
     font-size: 14px; color: #234134; opacity: 0.75;
   }
-  .bb-bis-product-caption::before { content: '‚Äî '; }
+  .bb-bis-product-caption::before { content: '-- '; }
 
   .bb-bis-form-side {
     background: #fff; padding: 56px 48px;
@@ -299,7 +299,7 @@
     color: #3F745D; margin: 0;
   }
 
-  /* Injected "Notify Me" trigger button ‚Äî replaces theme's disabled SOLD OUT button when variant is OOS */
+  /* Injected "Notify Me" trigger button -- replaces theme's disabled SOLD OUT button when variant is OOS */
   .bb-bis-trigger {
     width: 100%;
     display: block;
@@ -322,7 +322,7 @@
   .bb-bis-trigger:hover { background: #1a3128; }
   .bb-bis-trigger:active { transform: translateY(1px); }
   .bb-bis-trigger::before {
-    content: '‚ú¶';
+    content: '&#10022;';
     margin-right: 8px;
     color: #F2CB49;
   }
@@ -345,12 +345,12 @@
   if (window.__bbBisInit) return; window.__bbBisInit = true;
 
   var SUBMIT_URL = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/back-in-stock/submit';
-  var TRIGGER_LABEL = 'Notify Me When It‚Äôs Back';
+  var TRIGGER_LABEL = 'Notify Me When It's Back';
   var DEBUG = true;
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init ¬∑ v2.5 ¬∑ 2026-04-30');
+  log('init * v2.5 * 2026-04-30');
 
   // v2.5: memoize state so MutationObserver-driven re-syncs don't re-log
   // and don't re-execute identical work. Loop's widget mutates the DOM
@@ -361,7 +361,7 @@
   var __bbBisLastVariantLogKey = null;
 
   // ============================================================
-  // ESCAPE TRANSFORMED ANCESTOR ‚Äî move overlay to document.body
+  // ESCAPE TRANSFORMED ANCESTOR -- move overlay to document.body
   // ============================================================
   // CSS spec: an ancestor with transform/filter/perspective/will-change/contain
   // becomes the containing block for `position: fixed` descendants. If our
@@ -387,11 +387,11 @@
     return;
   }
   if (!p.variants || !p.variants.length) {
-    warn('product.variants is empty ‚Äî snippet won\'t do anything. This usually means the snippet was rendered outside a product page (e.g. theme.liquid). Move it into sections/main-product.liquid or your product template.');
+    warn('product.variants is empty -- snippet won\'t do anything. This usually means the snippet was rendered outside a product page (e.g. theme.liquid). Move it into sections/main-product.liquid or your product template.');
     return;
   }
   var oosCount = p.variants.filter(function(v){ return !v.available; }).length;
-  log('product loaded:', p.title, '¬∑ variants:', p.variants.length, '¬∑ OOS:', oosCount);
+  log('product loaded:', p.title, '* variants:', p.variants.length, '* OOS:', oosCount);
 
   // ============================================================
   // VARIANT LOOKUP
@@ -448,7 +448,7 @@
   }
 
   function readSelectedVariantId() {
-    // 1. Subscription widget selected state (Loop, Stay AI, etc.) ‚Äî most authoritative for sub apps
+    // 1. Subscription widget selected state (Loop, Stay AI, etc.) -- most authoritative for sub apps
     var fromWidget = readSelectedVariantFromWidget();
     if (fromWidget) return fromWidget;
     // 2. URL param ?variant= (Section Rendering API canonical source on Dawn-family themes)
@@ -473,7 +473,7 @@
     if (!overlay) { warn('overlay element not found in DOM'); return; }
 
     var fullTitle = variant.title && variant.title !== 'Default Title'
-      ? p.title + ' ‚Äî ' + variant.title
+      ? p.title + ' -- ' + variant.title
       : p.title;
     var imgUrl = variant.image || p.featuredImage;
 
@@ -494,7 +494,7 @@
     if (formSection) formSection.style.display = '';
     if (successSection) successSection.classList.remove('bb-bis-show');
     if (errorDiv) errorDiv.classList.remove('bb-bis-show');
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Notify Me When It‚Äôs Back'; }
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Notify Me When It's Back'; }
 
     window.__bbBisActiveVariant = variant;
     overlay.removeAttribute('hidden');
@@ -522,7 +522,7 @@
   function syncTriggerForVariant(variant) {
     var form = findCartForm();
     if (!form) {
-      // no form on this page ‚Äî bail (could be a non-product page or fully headless theme)
+      // no form on this page -- bail (could be a non-product page or fully headless theme)
       return;
     }
 
@@ -541,7 +541,7 @@
         log('hid theme ATC button:', atc.tagName + (atc.name ? '[name='+atc.name+']' : ''));
       }
       if (existing) {
-        // already showing our button ‚Äî just update its variant binding
+        // already showing our button -- just update its variant binding
         existing.setAttribute('data-variant-id', variant.id);
         return;
       }
@@ -571,7 +571,7 @@
   function refreshFromCurrentVariant(reason) {
     var vid = readSelectedVariantId();
     var v = findVariant(vid);
-    log('refresh ('+(reason||'manual')+') variant:', vid, '¬∑ available:', v ? v.available : 'unknown');
+    log('refresh ('+(reason||'manual')+') variant:', vid, '* available:', v ? v.available : 'unknown');
     if (!v) return;
     window.__bbBisCurrentVariant = v;
     syncTriggerForVariant(v);
@@ -600,7 +600,7 @@
   });
   window.addEventListener('popstate', function(){ refreshFromCurrentVariant('popstate'); });
 
-  // 3) MutationObserver fallback ‚Äî catches sections that re-render the form HTML wholesale
+  // 3) MutationObserver fallback -- catches sections that re-render the form HTML wholesale
   var observerInited = false;
   function initObserver() {
     if (observerInited) return;
@@ -726,7 +726,7 @@
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting‚Ä¶';
+    submitBtn.textContent = 'Submitting...';
 
     var v = window.__bbBisActiveVariant || {};
     var payload = {
@@ -740,7 +740,7 @@
         url: p.url
       }
     };
-    log('submitting BIS subscription:', payload.email, '¬∑', payload.phone, '¬∑', v.id);
+    log('submitting BIS subscription:', payload.email, '*', payload.phone, '*', v.id);
 
     fetch(SUBMIT_URL, {
       method: 'POST',
@@ -760,7 +760,7 @@
       errorDiv.textContent = err.message || 'Network error. Please try again.';
       errorDiv.classList.add('bb-bis-show');
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Notify Me When It‚Äôs Back';
+      submitBtn.textContent = 'Notify Me When It's Back';
     });
   }, true);
 
@@ -770,7 +770,7 @@
   // Some subscription apps manage inventory separately from Shopify's
   // variant.available. They render their own "Out of stock" text in the
   // widget while Shopify still reports the variant in-stock. This block
-  // detects that visible signal ‚Äî works regardless of which app ‚Äî and
+  // detects that visible signal -- works regardless of which app -- and
   // also opportunistically listens for app-specific events.
 
   var OOS_TEXT_RE = /\b(out\s*of\s*stock|sold\s*out|unavailable|currently\s*unavailable|notify\s*me\s*when\s*available)\b/i;
@@ -796,7 +796,7 @@
       if (!OOS_TEXT_RE.test(n.textContent || '')) continue;
       // Skip our own popup nodes
       if (n.closest && n.closest('.bb-bis-overlay')) continue;
-      // Skip if has lots of children ‚Äî only want leaf-ish text
+      // Skip if has lots of children -- only want leaf-ish text
       if (n.children.length > 3) continue;
       var cs = window.getComputedStyle(n);
       if (cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0') continue;
@@ -819,7 +819,7 @@
     // app shows "Out of stock" text, fire the popup even if we can't identify
     // the exact variant from URL/form/widget. Try in priority order:
     //   1. The variant we resolved from URL/form/widget
-    //   2. "Sole OOS variant by elimination" ‚Äî if exactly one variant is OOS in
+    //   2. "Sole OOS variant by elimination" -- if exactly one variant is OOS in
     //      Shopify and we see OOS text, it MUST be that one
     //   3. Generic product-level fallback
     if (hasOosText) {
@@ -827,20 +827,20 @@
       var oosVariants = p.variants.filter(function(x){ return !x.available; });
 
       if (v && !v.available) {
-        // Resolved variant matches Shopify's OOS state ‚Äî perfect
-        log('text-signal OOS ('+reason+') ‚Äî using resolved+native-OOS variant', v.id);
+        // Resolved variant matches Shopify's OOS state -- perfect
+        log('text-signal OOS ('+reason+') -- using resolved+native-OOS variant', v.id);
         override = { id: v.id, title: v.title, available: false, image: v.image };
       } else if (oosVariants.length === 1) {
-        // Exactly one OOS variant exists ‚Äî by elimination it must be that one
-        log('text-signal OOS ('+reason+') ‚Äî using sole OOS variant by elimination:', oosVariants[0].id, oosVariants[0].title, '(resolved was', vid, ')');
+        // Exactly one OOS variant exists -- by elimination it must be that one
+        log('text-signal OOS ('+reason+') -- using sole OOS variant by elimination:', oosVariants[0].id, oosVariants[0].title, '(resolved was', vid, ')');
         override = { id: oosVariants[0].id, title: oosVariants[0].title, available: false, image: oosVariants[0].image };
       } else if (v) {
         // Resolved a variant but Shopify says it's available; trust the OOS text and override
-        log('text-signal OOS ('+reason+') ‚Äî overriding variant.available for', v.id, v.title);
+        log('text-signal OOS ('+reason+') -- overriding variant.available for', v.id, v.title);
         override = { id: v.id, title: v.title, available: false, image: v.image };
       } else {
-        // No variant resolved at all ‚Äî use product-level fallback
-        log('text-signal OOS ('+reason+') ‚Äî variant lookup FAILED for vid='+vid+', using product-level fallback');
+        // No variant resolved at all -- use product-level fallback
+        log('text-signal OOS ('+reason+') -- variant lookup FAILED for vid='+vid+', using product-level fallback');
         override = {
           id: vid || (p.variants[0] && p.variants[0].id) || p.productId,
           title: 'Selected option',
@@ -853,9 +853,9 @@
       return;
     }
 
-    if (!v) return; // No OOS text and no variant ‚Äî nothing to do
+    if (!v) return; // No OOS text and no variant -- nothing to do
 
-    // No OOS text visible ‚Äî fall back to native variant.available
+    // No OOS text visible -- fall back to native variant.available
     window.__bbBisCurrentVariant = v;
     syncTriggerForVariant(v);
   }
@@ -876,7 +876,7 @@
   }
 
   // Loop / Stay AI / Skio / generic subscription app event hooks
-  // (cheap to attach ‚Äî if events don't exist, no harm)
+  // (cheap to attach -- if events don't exist, no harm)
   var SUB_APP_EVENTS = [
     'loop:variant:change', 'loop:variantChange', 'loop:variantChanged',
     'loopwork:variant:change', 'loopwork:variantChange',
