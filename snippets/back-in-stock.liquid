@@ -344,7 +344,11 @@
 (function() {
   if (window.__bbBisInit) return; window.__bbBisInit = true;
 
-  var SUBMIT_URL = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/back-in-stock/submit';
+  // Klaviyo Client BIS Subscription API \u2014 public/anonymous endpoint, no server needed.
+  // Company ID for Betterbrand Klaviyo: NYkPJ4 (visible in onsite klaviyo.js URL)
+  var KLAVIYO_COMPANY_ID = 'NYkPJ4';
+  var KLAVIYO_BIS_URL = 'https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=' + KLAVIYO_COMPANY_ID;
+  var KLAVIYO_REVISION = '2024-10-15';
   var TRIGGER_LABEL = 'Notify Me When It\u2019s Back';
   var DEBUG = true;
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
@@ -729,27 +733,68 @@
     submitBtn.textContent = 'Submitting\u2026';
 
     var v = window.__bbBisActiveVariant || {};
-    var payload = {
-      email: email,
-      phone: '+1' + phoneRaw,
-      product: {
-        title: p.title,
-        variantId: v.id,
-        productId: p.productId,
-        imageUrl: v.image || p.featuredImage,
-        url: p.url
+    var phoneE164 = '+1' + phoneRaw;
+
+    // Klaviyo client BIS subscription payload (JSON:API format).
+    // The catalog-variant ID format is "$shopify:::$default:::SHOPIFY_VARIANT_ID".
+    var klaviyoPayload = {
+      data: {
+        type: 'back-in-stock-subscription',
+        attributes: {
+          channels: ['EMAIL', 'SMS'],
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: email,
+                phone_number: phoneE164
+              }
+            }
+          }
+        },
+        relationships: {
+          variant: {
+            data: {
+              type: 'catalog-variant',
+              id: '$shopify:::$default:::' + v.id
+            }
+          }
+        }
       }
     };
-    log('submitting BIS subscription:', payload.email, '*', payload.phone, '*', v.id);
+    log('submitting BIS subscription:', email, '*', phoneE164, '*', v.id);
 
-    fetch(SUBMIT_URL, {
+    // Also identify the profile via the onsite SDK so it lands in Klaviyo profile properties.
+    try {
+      if (window.klaviyo && typeof window.klaviyo.identify === 'function') {
+        window.klaviyo.identify({ $email: email, $phone_number: phoneE164 });
+      } else if (window._learnq && window._learnq.push) {
+        window._learnq.push(['identify', { $email: email, $phone_number: phoneE164 }]);
+      }
+    } catch (_) {}
+
+    fetch(KLAVIYO_BIS_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      headers: {
+        'Content-Type': 'application/json',
+        'Revision': KLAVIYO_REVISION
+      },
+      body: JSON.stringify(klaviyoPayload)
     })
-    .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, j: j }; }); })
+    .then(function(r) {
+      // Klaviyo returns 202 with empty body on success.
+      if (r.status === 202 || (r.status >= 200 && r.status < 300)) return { ok: true };
+      // Try to parse error JSON.
+      return r.json().then(function(j) {
+        var errMsg = 'Subscription failed.';
+        if (j && j.errors && j.errors.length) {
+          errMsg = j.errors.map(function(e) { return e.detail || e.title; }).join(' ');
+        }
+        return { ok: false, error: errMsg };
+      }).catch(function() { return { ok: false, error: 'Subscription failed (status ' + r.status + ').' }; });
+    })
     .then(function(res) {
-      if (!res.ok || !res.j.success) throw new Error(res.j.error || 'Subscription failed');
+      if (!res.ok) throw new Error(res.error || 'Subscription failed');
       log('submit success');
       formSection.style.display = 'none';
       successSection.classList.add('bb-bis-show');
