@@ -11,10 +11,17 @@
   "sections": {
     "main": {
       "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "betterbrand_memorial_prelander_T9zkYF": {
+      "type": "betterbrand-memorial-prelander",
+      "name": "Memorial Day Prelander",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "betterbrand_memorial_prelander_T9zkYF"
   ]
 }
