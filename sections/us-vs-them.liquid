@@ -133,7 +133,7 @@
                         {% assign star_count = value | split: ':' | last | plus: 0 %}
                         <span class="stars">
                           {% for i in (1..star_count) -%}
-                            <span class="star"><strong>★</strong></span>
+                            <span class="star"><strong class="patrol-semantic-bold">★</strong></span>
                           {%- endfor %}
                         </span>
                       {% else %}
