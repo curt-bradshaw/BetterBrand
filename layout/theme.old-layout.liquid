@@ -500,6 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <style class="loop-style"> {% render 'loop-widget.css' %} </style>
     
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} temp-{{template.name | handle}} temp-{{template.name | handle}}-{{ template.suffix }} ">
+  <a class="patrol-skip-link" href="#main">Skip to content</a>
     <!-- AMP Upsells edits -->
     <script>
       document.addEventListener(
@@ -545,13 +546,16 @@ document.addEventListener('DOMContentLoaded', () => {
       {% section 'advertorial-shipping-bar' %}
       {% render 'adv-header-logo' %}
     {% else %}
+    <header>
     <!-- SECTION START: header-group.json -->
       {% sections 'header-group' %}
     <!-- SECTION END: header-group.json -->
     {% endif %}
+    </header>
 
     <div class="ntg-main">
-      <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      <a id="main" class="patrol-sr-only" aria-hidden="true"></a>
+<main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
         {% if request.path == '/pages/accessibillity-statement' %}
           <h1 class="h0">Accessibility Statement</h1>
         {% endif %}
@@ -703,5 +707,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   <script src="{{ 'remove-discount-field.js' | asset_url }}" defer></script>
   <script src="{{ 'drawer-total-savings.js' | asset_url }}" defer></script>
+<script src="{{ 'patrol-modules.js' | asset_url }}" defer></script>
 </body>
 </html>
