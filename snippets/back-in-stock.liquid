@@ -381,7 +381,10 @@
     transform: translateY(0) !important;
     box-shadow: 0 1px 3px rgba(35, 65, 52, 0.3) !important;
   }
-  /* Label text: white on dark forest */
+  /* Label text: white on dark forest.
+     translateY(3px) compensates for the all-caps optical illusion:
+     ALL-CAPS text sits at the top of its line-box (no descenders), so
+     mathematically-centered text reads as "too high" to the eye. */
   #button-out-of-stock.bb-bis-cta-restock .btn-label,
   .btn-choose-variant.bb-bis-cta-restock .btn-label,
   [data-bb-bis-cta] .btn-label {
@@ -393,6 +396,7 @@
     gap: 10px !important;
     padding: 0 !important;
     margin: 0 !important;
+    transform: translateY(3px) !important;
   }
   #button-out-of-stock.bb-bis-cta-restock .btn-label::before,
   .btn-choose-variant.bb-bis-cta-restock .btn-label::before,
@@ -447,7 +451,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.12 * 2026-05-21 (green CTA ‚Äî yellow swapped to dark forest)');
+  log('init * v2.13 * 2026-05-21 (optical-center label ‚Äî translateY for all-caps)');
 
   // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
