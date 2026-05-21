@@ -434,6 +434,12 @@
     .bb-bis-eyebrow { font-size: 10px; }
     .bb-bis-headline { font-size: 32px; }
     .bb-bis-subhead { font-size: 14px; margin-bottom: 22px; }
+    /* v2.17: extra breathing room below the CTA on mobile so trust badges aren't crammed */
+    #button-out-of-stock.bb-bis-cta-restock,
+    .btn-choose-variant.bb-bis-cta-restock,
+    [data-bb-bis-cta] {
+      margin-bottom: 16px !important;
+    }
   }
 </style>
 
@@ -451,7 +457,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.16 * 2026-05-21 (remove italic + use &nbsp; in headline to fix wide gap)');
+  log('init * v2.17 * 2026-05-21 (mobile: 16px margin below CTA per Curt)');
 
   // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
