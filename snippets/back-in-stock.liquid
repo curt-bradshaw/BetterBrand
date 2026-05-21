@@ -59,9 +59,9 @@
         <p class="bb-bis-eyebrow">Restock Alert</p>
         <h2 class="bb-bis-headline" id="bb-bis-headline">It&rsquo;s coming<br><em>back soon.</em></h2>
         <p class="bb-bis-subhead">
-          Drop your details and we&rsquo;ll let you know the moment
+          We&rsquo;ll text <em>and</em> email you the moment
           <span class="bb-bis-product-name" data-bb-bis-name>{{ product.title }}</span>
-          is back in stock &mdash; by email <em>and</em> text, so you don&rsquo;t miss it.
+          is back in stock, so you don&rsquo;t miss it.
         </p>
 
         <form class="bb-bis-form" data-bb-bis-form novalidate>
@@ -451,7 +451,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.13 * 2026-05-21 (optical-center label ‚Äî translateY for all-caps)');
+  log('init * v2.14 * 2026-05-21 (popup subhead copy fix ‚Äî drop stray em dash per Curt)');
 
   // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
