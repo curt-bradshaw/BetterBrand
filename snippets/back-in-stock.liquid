@@ -57,7 +57,7 @@
     <div class="bb-bis-form-side">
       <div class="bb-bis-form-section" data-bb-bis-form-section>
         <p class="bb-bis-eyebrow">Restock Alert</p>
-        <h2 class="bb-bis-headline" id="bb-bis-headline">It&rsquo;s coming<br><em>back soon.</em></h2>
+        <h2 class="bb-bis-headline" id="bb-bis-headline">It&rsquo;s coming<br>back&nbsp;soon.</h2>
         <p class="bb-bis-subhead">
           We&rsquo;ll text <em>and</em> email you the moment
           <span class="bb-bis-product-name" data-bb-bis-name>{{ product.title }}</span>
@@ -219,10 +219,9 @@
   }
   .bb-bis-headline {
     font-family: bookmania, Georgia, serif; font-size: 46px; line-height: 1.02;
-    letter-spacing: -0.015em; word-spacing: -0.05em;
+    letter-spacing: -0.015em;
     color: #234134; margin: 0 0 18px; padding: 0; font-weight: 700;
   }
-  .bb-bis-headline em { font-style: italic; font-weight: 700; color: #234134; word-spacing: -0.05em; }
   .bb-bis-subhead {
     font-family: 'SuisseIntlMono', monospace; font-size: 15px; line-height: 1.55;
     color: #252525; margin: 0 0 26px; padding: 0;
@@ -452,7 +451,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.15 * 2026-05-21 (tighten word-spacing on headline per Curt)');
+  log('init * v2.16 * 2026-05-21 (remove italic + use &nbsp; in headline to fix wide gap)');
 
   // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
