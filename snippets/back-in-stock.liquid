@@ -329,9 +329,9 @@
   /* Hide whatever ATC button the theme rendered while we're showing our trigger */
   [data-bb-bis-hidden-atc] { display: none !important; }
 
-  /* v2.9 (2026-05-21): Yellow CTA per Tate's feedback ("blends into the page, doesn't feel
-     like a CTA") + centered text per Curt's feedback ("too much padding underneath").
-     Uses brand yellow (#F2CB49) on dark forest text for max contrast. */
+  /* v2.11 (2026-05-21): Tighter vertical centering + pointing-finger icon +
+     subtle pulse animation per Tate's feedback ("text needs to be centered, needs
+     something that draws more attention that it's an action button"). */
   #button-out-of-stock.bb-bis-cta-restock,
   .btn-choose-variant.bb-bis-cta-restock,
   [data-bb-bis-cta] {
@@ -341,10 +341,12 @@
     opacity: 1 !important;
     pointer-events: auto !important;
     transition: background 0.15s, transform 0.05s, box-shadow 0.15s !important;
-    /* Vertical centering: equal top/bottom padding, no extra below */
-    padding-top: 18px !important;
-    padding-bottom: 18px !important;
+    /* Vertical centering: reset all spacing, use min-height + flex center */
+    padding: 0 24px !important;
+    margin: 0 !important;
     line-height: 1 !important;
+    min-height: 60px !important;
+    height: 60px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -352,7 +354,18 @@
     /* Subtle lift so it reads as a CTA, not a flat shape */
     box-shadow: 0 2px 6px rgba(35, 65, 52, 0.18) !important;
     font-weight: 800 !important;
+    font-size: 15px !important;
     letter-spacing: 0.04em !important;
+    /* Attention pulse ‚Äî subtle continuous breathing animation */
+    animation: bb-bis-cta-pulse 2.4s ease-in-out infinite !important;
+  }
+  @keyframes bb-bis-cta-pulse {
+    0%, 100% {
+      box-shadow: 0 2px 6px rgba(35, 65, 52, 0.18), 0 0 0 0 rgba(242, 203, 73, 0.55);
+    }
+    50% {
+      box-shadow: 0 2px 8px rgba(35, 65, 52, 0.22), 0 0 0 10px rgba(242, 203, 73, 0);
+    }
   }
   #button-out-of-stock.bb-bis-cta-restock:hover,
   .btn-choose-variant.bb-bis-cta-restock:hover,
@@ -360,6 +373,7 @@
     background: #E5B92F !important;
     box-shadow: 0 4px 10px rgba(35, 65, 52, 0.28) !important;
     transform: translateY(-1px) !important;
+    animation-play-state: paused !important;
   }
   #button-out-of-stock.bb-bis-cta-restock:active,
   .btn-choose-variant.bb-bis-cta-restock:active,
@@ -367,6 +381,7 @@
     transform: translateY(0) !important;
     box-shadow: 0 1px 3px rgba(35, 65, 52, 0.2) !important;
   }
+  /* Pointing-finger icon BEFORE the label, dark forest to match text */
   #button-out-of-stock.bb-bis-cta-restock .btn-label,
   .btn-choose-variant.bb-bis-cta-restock .btn-label,
   [data-bb-bis-cta] .btn-label {
@@ -375,15 +390,36 @@
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+    gap: 10px !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
-  /* Sparkle icon before the label, dark forest to match text */
   #button-out-of-stock.bb-bis-cta-restock .btn-label::before,
   .btn-choose-variant.bb-bis-cta-restock .btn-label::before,
   [data-bb-bis-cta] .btn-label::before {
-    content: '\2726';
-    color: #234134;
-    margin-right: 8px;
-    font-size: 0.9em;
+    content: '\1F449'; /* üëâ pointing right hand */
+    margin: 0;
+    font-size: 1.15em;
+    line-height: 1;
+    display: inline-block;
+    animation: bb-bis-wiggle 1.6s ease-in-out infinite;
+  }
+  @keyframes bb-bis-wiggle {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-3px); }
+    50%      { transform: translateX(0); }
+    75%      { transform: translateX(3px); }
+  }
+  /* Respect reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    #button-out-of-stock.bb-bis-cta-restock,
+    .btn-choose-variant.bb-bis-cta-restock,
+    [data-bb-bis-cta],
+    #button-out-of-stock.bb-bis-cta-restock .btn-label::before,
+    .btn-choose-variant.bb-bis-cta-restock .btn-label::before,
+    [data-bb-bis-cta] .btn-label::before {
+      animation: none !important;
+    }
   }
 
   @media (max-width: 720px) {
@@ -411,7 +447,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.10 * 2026-05-21 (trust row: 836,000+ -> 1M+ customers)');
+  log('init * v2.11 * 2026-05-21 (better centering, pointing finger + pulse animation per Tate)');
 
   // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
