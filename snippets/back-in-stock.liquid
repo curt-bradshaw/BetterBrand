@@ -335,8 +335,8 @@
   #button-out-of-stock.bb-bis-cta-restock,
   .btn-choose-variant.bb-bis-cta-restock,
   [data-bb-bis-cta] {
-    background: #F2CB49 !important;
-    color: #234134 !important;
+    background: #234134 !important;
+    color: #fff !important;
     cursor: pointer !important;
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -352,26 +352,26 @@
     justify-content: center !important;
     text-align: center !important;
     /* Subtle lift so it reads as a CTA, not a flat shape */
-    box-shadow: 0 2px 6px rgba(35, 65, 52, 0.18) !important;
+    box-shadow: 0 2px 6px rgba(35, 65, 52, 0.25) !important;
     font-weight: 800 !important;
     font-size: 15px !important;
     letter-spacing: 0.04em !important;
-    /* Attention pulse ‚Äî subtle continuous breathing animation */
+    /* Attention pulse ‚Äî yellow halo against the dark green button */
     animation: bb-bis-cta-pulse 2.4s ease-in-out infinite !important;
   }
   @keyframes bb-bis-cta-pulse {
     0%, 100% {
-      box-shadow: 0 2px 6px rgba(35, 65, 52, 0.18), 0 0 0 0 rgba(242, 203, 73, 0.55);
+      box-shadow: 0 2px 6px rgba(35, 65, 52, 0.25), 0 0 0 0 rgba(242, 203, 73, 0.65);
     }
     50% {
-      box-shadow: 0 2px 8px rgba(35, 65, 52, 0.22), 0 0 0 10px rgba(242, 203, 73, 0);
+      box-shadow: 0 2px 8px rgba(35, 65, 52, 0.3),  0 0 0 10px rgba(242, 203, 73, 0);
     }
   }
   #button-out-of-stock.bb-bis-cta-restock:hover,
   .btn-choose-variant.bb-bis-cta-restock:hover,
   [data-bb-bis-cta]:hover {
-    background: #E5B92F !important;
-    box-shadow: 0 4px 10px rgba(35, 65, 52, 0.28) !important;
+    background: #1a3128 !important;
+    box-shadow: 0 4px 10px rgba(35, 65, 52, 0.4) !important;
     transform: translateY(-1px) !important;
     animation-play-state: paused !important;
   }
@@ -379,13 +379,13 @@
   .btn-choose-variant.bb-bis-cta-restock:active,
   [data-bb-bis-cta]:active {
     transform: translateY(0) !important;
-    box-shadow: 0 1px 3px rgba(35, 65, 52, 0.2) !important;
+    box-shadow: 0 1px 3px rgba(35, 65, 52, 0.3) !important;
   }
-  /* Pointing-finger icon BEFORE the label, dark forest to match text */
+  /* Label text: white on dark forest */
   #button-out-of-stock.bb-bis-cta-restock .btn-label,
   .btn-choose-variant.bb-bis-cta-restock .btn-label,
   [data-bb-bis-cta] .btn-label {
-    color: #234134 !important;
+    color: #fff !important;
     line-height: 1 !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -447,7 +447,7 @@
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.11 * 2026-05-21 (better centering, pointing finger + pulse animation per Tate)');
+  log('init * v2.12 * 2026-05-21 (green CTA ‚Äî yellow swapped to dark forest)');
 
   // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
