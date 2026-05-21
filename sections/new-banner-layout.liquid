@@ -118,7 +118,7 @@
           />
         {%- endif -%}
         
-        <img class="new-banner__banner-image" width="{{ image_desktop_width }}" height="{{ image_desktop_height }}"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Banner" loading="eager"/>
+        <img class="new-banner__banner-image" width="{{ image_desktop_width }}" height="{{ image_desktop_height }}"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Three headshots: left—middle-aged man with gray stubble; center—young smiling man; right—young red-haired woman lit by warm light." loading="eager"/>
       </picture>
 
       {%- if section.settings.banner_absolute_image != blank -%}
@@ -1399,1453 +1399,1452 @@
 
 {% schema %}
 {
-  "name": "New Banner Layout",
-  "class": "banner",
-  "max_blocks": 50,
-
-  "settings": [
+  "name":"New Banner Layout",
+  "class":"banner",
+  "max_blocks":50,
+  "settings":[
     {
-      "type": "header",
-      "content": "General Settings"
+      "type":"header",
+      "content":"General Settings"
     },
     {
-      "type": "checkbox",
-      "id": "enable_custom_margins_paddings",
-      "label": "Enable Custom Margins and Paddings",
-      "default": false
+      "type":"checkbox",
+      "id":"enable_custom_margins_paddings",
+      "label":"Enable Custom Margins and Paddings",
+      "default":false
     },
     {
-      "type": "range",
-      "id": "custom-margin-top",
-      "min": 0,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Margin Top",
-      "default": 0
+      "type":"range",
+      "id":"custom-margin-top",
+      "min":0,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Margin Top",
+      "default":0
     },
     {
-      "type": "range",
-      "id": "custom-margin-bottom",
-      "min": 0,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Margin Bottom",
-      "default": 0
+      "type":"range",
+      "id":"custom-margin-bottom",
+      "min":0,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Margin Bottom",
+      "default":0
     },
     {
-      "type": "range",
-      "id": "custom-padding-top",
-      "min": 0,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Padding Top",
-      "default": 0
+      "type":"range",
+      "id":"custom-padding-top",
+      "min":0,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Padding Top",
+      "default":0
     },
     {
-      "type": "range",
-      "id": "custom-padding-bottom",
-      "min": 0,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Padding Bottom",
-      "default": 0
+      "type":"range",
+      "id":"custom-padding-bottom",
+      "min":0,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Padding Bottom",
+      "default":0
     },
     {
-      "type": "text",
-      "id": "custom_class",
-      "label": "Custom Class",
-      "info": "Custom class to apply css styles for specific sections"
+      "type":"text",
+      "id":"custom_class",
+      "label":"Custom Class",
+      "info":"Custom class to apply css styles for specific sections"
     },
     {
-      "type": "image_picker",
-      "id": "homepage_banner_style_1",
-      "label": "Banner Image Desktop",
-      "info": "1440x500"
+      "type":"image_picker",
+      "id":"homepage_banner_style_1",
+      "label":"Banner Image Desktop",
+      "info":"1440x500"
     },
     {
-      "type": "image_picker",
-      "id": "tablet_banner_style_1",
-      "label": "Banner Image Tablet",
-      "info": "1019x500"
+      "type":"image_picker",
+      "id":"tablet_banner_style_1",
+      "label":"Banner Image Tablet",
+      "info":"1019x500"
     },
     {
-      "type": "image_picker",
-      "id": "mobile_banner_style_1",
-      "label": "Banner Mobile Image",
-      "info": "750x300"
+      "type":"image_picker",
+      "id":"mobile_banner_style_1",
+      "label":"Banner Mobile Image",
+      "info":"750x300"
     },
     {
-      "type": "image_picker",
-      "id": "banner_absolute_image",
-      "label": "Absolute Image (Center Bottom)",
-      "info": "Image positioned at the middle bottom of the banner"
+      "type":"image_picker",
+      "id":"banner_absolute_image",
+      "label":"Absolute Image (Center Bottom)",
+      "info":"Image positioned at the middle bottom of the banner"
     },
     {
-      "type": "checkbox",
-      "id": "enable_custom_banner_height",
-      "label": "Enable Custom Banner Height",
-      "default": false
+      "type":"checkbox",
+      "id":"enable_custom_banner_height",
+      "label":"Enable Custom Banner Height",
+      "default":false
     },
     {
-      "type": "range",
-      "id": "banner_max_height",
-      "min": 200,
-      "max": 800,
-      "step": 10,
-      "unit": "px",
-      "label": "Desktop Banner Height",
-      "default": 500
+      "type":"range",
+      "id":"banner_max_height",
+      "min":200,
+      "max":800,
+      "step":10,
+      "unit":"px",
+      "label":"Desktop Banner Height",
+      "default":500
     },
     {
-      "type": "range",
-      "id": "banner_max_height_tablet",
-      "min": 200,
-      "max": 800,
-      "step": 10,
-      "unit": "px",
-      "label": "Tablet Banner Height",
-      "default": 430
+      "type":"range",
+      "id":"banner_max_height_tablet",
+      "min":200,
+      "max":800,
+      "step":10,
+      "unit":"px",
+      "label":"Tablet Banner Height",
+      "default":430
     },
     {
-      "type": "range",
-      "id": "banner_max_height_mobile",
-      "min": 50,
-      "max": 800,
-      "step": 10,
-      "unit": "px",
-      "label": "Mobile Banner Height",
-      "default": 210
+      "type":"range",
+      "id":"banner_max_height_mobile",
+      "min":50,
+      "max":800,
+      "step":10,
+      "unit":"px",
+      "label":"Mobile Banner Height",
+      "default":210
     },
     {
-      "type": "checkbox",
-      "id": "full_with_banne1",
-      "label": "Full Width",
-      "default": true
+      "type":"checkbox",
+      "id":"full_with_banne1",
+      "label":"Full Width",
+      "default":true
     },
     {
-      "type": "header",
-      "content": "Custom Width"
+      "type":"header",
+      "content":"Custom Width"
     },
     {
-      "type": "checkbox",
-      "id": "enable_custom_width",
-      "label": "Enable Custom Width",
-      "info": "If enabled, the Custom Banner Height will not work.",
-      "default": false
+      "type":"checkbox",
+      "id":"enable_custom_width",
+      "label":"Enable Custom Width",
+      "info":"If enabled, the Custom Banner Height will not work.",
+      "default":false
     },
     {
-      "type": "paragraph",
-      "content": "Desktop"
+      "type":"paragraph",
+      "content":"Desktop"
     },
     {
-      "type": "range",
-      "id": "custom_width_desktop",
-      "min": 1,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Custom Width",
-      "default": 50
+      "type":"range",
+      "id":"custom_width_desktop",
+      "min":1,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Custom Width",
+      "default":50
     },
     {
-      "type": "paragraph",
-      "content": "Tablet"
+      "type":"paragraph",
+      "content":"Tablet"
     },
     {
-      "type": "range",
-      "id": "custom_width_tablet",
-      "min": 1,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Custom Width",
-      "default": 50
+      "type":"range",
+      "id":"custom_width_tablet",
+      "min":1,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Custom Width",
+      "default":50
     },
     {
-      "type": "paragraph",
-      "content": "Mobile"
+      "type":"paragraph",
+      "content":"Mobile"
     },
     {
-      "type": "range",
-      "id": "custom_width_mobile",
-      "min": 1,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Custom Width",
-      "default": 50
+      "type":"range",
+      "id":"custom_width_mobile",
+      "min":1,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Custom Width",
+      "default":50
     },
     {
-      "type": "checkbox",
-      "id": "enable_lazy_load",
-      "label": "Enable Lazy Load",
-      "info": "If this is the first section of the homepage, you have to keep this field unchecked for Google Pagespeed score improvements.",
-      "default": false
+      "type":"checkbox",
+      "id":"enable_lazy_load",
+      "label":"Enable Lazy Load",
+      "info":"If this is the first section of the homepage, you have to keep this field unchecked for Google Pagespeed score improvements.",
+      "default":false
     },
     {
-      "type": "header",
-      "content": "Headline"
+      "type":"header",
+      "content":"Headline"
     },
     {
-      "type": "checkbox",
-      "id": "enable_h1",
-      "label": "Enable H1 tag",
-      "default": false
+      "type":"checkbox",
+      "id":"enable_h1",
+      "label":"Enable H1 tag",
+      "default":false
     },
     {
-      "type": "checkbox",
-      "id": "enable_upper_banner_title",
-      "label": "Enable Upper Headline text",
-      "default": false
+      "type":"checkbox",
+      "id":"enable_upper_banner_title",
+      "label":"Enable Upper Headline text",
+      "default":false
     },
     {
-      "type": "text",
-      "id": "upper_banner_title",
-      "label": "Upper Headline Text",
-      "default": "Upper Headline Example",
-      "placeholder": "Upper Headline text"
+      "type":"text",
+      "id":"upper_banner_title",
+      "label":"Upper Headline Text",
+      "default":"Upper Headline Example",
+      "placeholder":"Upper Headline text"
     },
     {
-      "type": "image_picker",
-      "id": "upper_banner_title_photo",
-      "label": "Upper Headline Photo",
-      "info": "This photo will be displayed on the right side of the upper headline text."
+      "type":"image_picker",
+      "id":"upper_banner_title_photo",
+      "label":"Upper Headline Photo",
+      "info":"This photo will be displayed on the right side of the upper headline text."
     },
     {
-      "type": "select",
-      "id": "upper_banner_title_transform",
-      "label": "Upper Headline Text Transform",
-      "options": [
+      "type":"select",
+      "id":"upper_banner_title_transform",
+      "label":"Upper Headline Text Transform",
+      "options":[
         {
-          "value": "none",
-          "label": "Same as Input"
+          "value":"none",
+          "label":"Same as Input"
         },
         {
-          "value": "capitalize",
-          "label": "Capitalize"
+          "value":"capitalize",
+          "label":"Capitalize"
         },
         {
-          "value": "uppercase",
-          "label": "UPPERCASE"
+          "value":"uppercase",
+          "label":"UPPERCASE"
         },
         {
-          "value": "lowercase",
-          "label": "lowercase"
+          "value":"lowercase",
+          "label":"lowercase"
         }
       ],
-      "default": "uppercase"
+      "default":"uppercase"
     },
     {
-      "type": "richtext",
-      "id": "main_banner_title",
-      "label": "Headline Text"
+      "type":"richtext",
+      "id":"main_banner_title",
+      "label":"Headline Text"
     },
     {
-      "type": "richtext",
-      "id": "main_banner_sub_title",
-      "label": "Sub Headline Text",
-      "default": "<p>Sub Headline Example</p>",
+      "type":"richtext",
+      "id":"main_banner_sub_title",
+      "label":"Sub Headline Text",
+      "default":"<p>Sub Headline Example</p>"
     },
     {
-      "type": "select",
-      "id": "vasta_headline_align",
-      "label": "Headline Alignment",
-      "options": [
+      "type":"select",
+      "id":"vasta_headline_align",
+      "label":"Headline Alignment",
+      "options":[
         {
-          "value": "left",
-          "label": "Left"
+          "value":"left",
+          "label":"Left"
         },
         {
-          "value": "center",
-          "label": "Center"
+          "value":"center",
+          "label":"Center"
         },
         {
-          "value": "right",
-          "label": "Right"
+          "value":"right",
+          "label":"Right"
         }
       ],
-      "default": "center"
+      "default":"center"
     },
     {
-      "type": "select",
-      "id": "vasta_headline_align_mobile",
-      "label": "Headline Alignment on Mobile",
-      "options": [
+      "type":"select",
+      "id":"vasta_headline_align_mobile",
+      "label":"Headline Alignment on Mobile",
+      "options":[
         {
-          "value": "left",
-          "label": "Left"
+          "value":"left",
+          "label":"Left"
         },
         {
-          "value": "center",
-          "label": "Center"
+          "value":"center",
+          "label":"Center"
         },
         {
-          "value": "right",
-          "label": "Right"
+          "value":"right",
+          "label":"Right"
         }
       ],
-      "default": "center"
+      "default":"center"
     },
     {
-      "type": "select",
-      "id": "text_transform",
-      "label": "Headline Transform",
-      "options": [
+      "type":"select",
+      "id":"text_transform",
+      "label":"Headline Transform",
+      "options":[
         {
-          "value": "capitalize",
-          "label": "Capitalize"
+          "value":"capitalize",
+          "label":"Capitalize"
         },
         {
-          "value": "lowercase",
-          "label": "Lowercase"
+          "value":"lowercase",
+          "label":"Lowercase"
         },
         {
-          "value": "uppercase",
-          "label": "Uppercase"
+          "value":"uppercase",
+          "label":"Uppercase"
         },
         {
-          "value": "initial",
-          "label": "Original"
+          "value":"initial",
+          "label":"Original"
         }
       ],
-      "default": "initial"
+      "default":"initial"
     },
     {
-      "type": "checkbox",
-      "id": "enable_max_width",
-      "label": "Enable Headline Background Max Width",
-      "default": false
-    },
-    {
-      "type": "range",
-      "id": "new_banner_headline_width",
-      "label": "Headline Background Max Width",
-      "unit": "%",
-      "min": 20,
-      "max": 100,
-      "step": 2,
-      "default": 40
+      "type":"checkbox",
+      "id":"enable_max_width",
+      "label":"Enable Headline Background Max Width",
+      "default":false
+    },
+    {
+      "type":"range",
+      "id":"new_banner_headline_width",
+      "label":"Headline Background Max Width",
+      "unit":"%",
+      "min":20,
+      "max":100,
+      "step":2,
+      "default":40
     },
     {
-      "type": "checkbox",
-      "id": "enable_button_headline",
-      "label": "Enable Headline Aligned Button",
-      "default": true
+      "type":"checkbox",
+      "id":"enable_button_headline",
+      "label":"Enable Headline Aligned Button",
+      "default":true
     },
     {
-      "type": "text",
-      "id": "label_button_headline",
-      "label": "Button Text",
-      "default": "Lorem ipsum"
+      "type":"text",
+      "id":"label_button_headline",
+      "label":"Button Text",
+      "default":"Lorem ipsum"
     },
     {
-      "type": "url",
-      "id": "link_button_headline",
-      "label": "Button Link"
+      "type":"url",
+      "id":"link_button_headline",
+      "label":"Button Link"
     },
     {
-      "type": "checkbox",
-      "id": "enable_button_radius",
-      "label": "Enable rounded button"
+      "type":"checkbox",
+      "id":"enable_button_radius",
+      "label":"Enable rounded button"
     },
     {
-      "type": "range",
-      "id": "button_radius",
-      "min": 0,
-      "max": 40,
-      "step": 1,
-      "unit": "px",
-      "label": "Rounded button border",
-      "default": 5
+      "type":"range",
+      "id":"button_radius",
+      "min":0,
+      "max":40,
+      "step":1,
+      "unit":"px",
+      "label":"Rounded button border",
+      "default":5
     },
     {
-      "type": "range",
-      "id": "banner_font_size_new_button",
-      "min": 10,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Headline Button Font Size",
-      "default": 16
+      "type":"range",
+      "id":"banner_font_size_new_button",
+      "min":10,
+      "max":24,
+      "step":1,
+      "unit":"px",
+      "label":"Headline Button Font Size",
+      "default":16
     },
     {
-      "type": "range",
-      "id": "banner_font_size_new_button_tablet",
-      "min": 10,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Headline Button Font Size on Tablet",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "banner_font_size_new_button_mobile",
-      "min": 10,
-      "max": 24,
-      "step": 1,
-      "unit": "px",
-      "label": "Headline Button Font Size on Mobile",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "vasta_new_button_width_desktop",
-      "min": 90,
-      "max": 390,
-      "step": 5,
-      "unit": "px",
-      "label": "Button Width on Desktop",
-      "default": 170
+      "type":"range",
+      "id":"banner_font_size_new_button_tablet",
+      "min":10,
+      "max":24,
+      "step":1,
+      "unit":"px",
+      "label":"Headline Button Font Size on Tablet",
+      "default":16
+    },
+    {
+      "type":"range",
+      "id":"banner_font_size_new_button_mobile",
+      "min":10,
+      "max":24,
+      "step":1,
+      "unit":"px",
+      "label":"Headline Button Font Size on Mobile",
+      "default":16
+    },
+    {
+      "type":"range",
+      "id":"vasta_new_button_width_desktop",
+      "min":90,
+      "max":390,
+      "step":5,
+      "unit":"px",
+      "label":"Button Width on Desktop",
+      "default":170
     },
     {
-      "type": "range",
-      "id": "vasta_new_button_width_tablet",
-      "min": 90,
-      "max": 300,
-      "step": 10,
-      "unit": "px",
-      "label": "Button Width on Tablet",
-      "default": 170
+      "type":"range",
+      "id":"vasta_new_button_width_tablet",
+      "min":90,
+      "max":300,
+      "step":10,
+      "unit":"px",
+      "label":"Button Width on Tablet",
+      "default":170
     },
     {
-      "type": "range",
-      "id": "vasta_new_button_width_mobile",
-      "min": 90,
-      "max": 300,
-      "step": 10,
-      "unit": "px",
-      "label": "Button Width on Mobile",
-      "default": 170
-    },
-    {
-      "type": "header",
-      "content": "Headline Font Size"
-    },
-    {
-      "type": "header",
-      "content": "Desktop"
-    },
-    {
-      "type": "range",
-      "id": "main_banner_upper_headline_size",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Upper Headline Font Size on Desktop",
-      "default": 16
+      "type":"range",
+      "id":"vasta_new_button_width_mobile",
+      "min":90,
+      "max":300,
+      "step":10,
+      "unit":"px",
+      "label":"Button Width on Mobile",
+      "default":170
+    },
+    {
+      "type":"header",
+      "content":"Headline Font Size"
+    },
+    {
+      "type":"header",
+      "content":"Desktop"
+    },
+    {
+      "type":"range",
+      "id":"main_banner_upper_headline_size",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Upper Headline Font Size on Desktop",
+      "default":16
     },
     {
-      "type": "range",
-      "id": "main_banner_headline_size",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Headline Font Size on Desktop",
-      "default": 26
+      "type":"range",
+      "id":"main_banner_headline_size",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Headline Font Size on Desktop",
+      "default":26
     },
     {
-      "type": "range",
-      "id": "main_banner_sub_headline_size",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Sub Headline Font Size on Desktop",
-      "default": 20
+      "type":"range",
+      "id":"main_banner_sub_headline_size",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Sub Headline Font Size on Desktop",
+      "default":20
     },
     {
-      "type": "header",
-      "content": "Tablet"
+      "type":"header",
+      "content":"Tablet"
     },
     {
-      "type": "range",
-      "id": "main_banner_upper_headline_size_tablet",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Upper Headline Font Size on Tablet",
-      "default": 26
+      "type":"range",
+      "id":"main_banner_upper_headline_size_tablet",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Upper Headline Font Size on Tablet",
+      "default":26
     },
     {
-      "type": "range",
-      "id": "main_banner_headline_size_tablet",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Headline Font Size on Tablet",
-      "default": 26
+      "type":"range",
+      "id":"main_banner_headline_size_tablet",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Headline Font Size on Tablet",
+      "default":26
     },
     {
-      "type": "range",
-      "id": "main_banner_sub_headline_size_tablet",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Sub Headline Font Size on Tablet",
-      "default": 40
+      "type":"range",
+      "id":"main_banner_sub_headline_size_tablet",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Sub Headline Font Size on Tablet",
+      "default":40
     },
     {
-      "type": "header",
-      "content": "Mobile"
+      "type":"header",
+      "content":"Mobile"
     },
     {
-      "type": "range",
-      "id": "main_banner_upper_headline_size_mobile",
-      "min": 10,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Upper Headline Font Size on Mobile",
-      "default": 26
+      "type":"range",
+      "id":"main_banner_upper_headline_size_mobile",
+      "min":10,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Upper Headline Font Size on Mobile",
+      "default":26
     },
     {
-      "type": "range",
-      "id": "main_banner_headline_size_mobile",
-      "min": 10,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Headline Font Size on Mobile",
-      "default": 26
+      "type":"range",
+      "id":"main_banner_headline_size_mobile",
+      "min":10,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Headline Font Size on Mobile",
+      "default":26
     },
     {
-      "type": "range",
-      "id": "main_banner_sub_headline_size_mobile",
-      "min": 10,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Sub Headline Font Size on Mobile",
-      "default": 20
+      "type":"range",
+      "id":"main_banner_sub_headline_size_mobile",
+      "min":10,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Sub Headline Font Size on Mobile",
+      "default":20
     },
     {
-      "type": "header",
-      "content": "Floating Headline"
+      "type":"header",
+      "content":"Floating Headline"
     },
     {
-      "type": "paragraph",
-      "content": "Enable the floating headline below to desktop, tablet or mobile. To configure the positioning of headline horizontally and vertically, access the \"Headline Position\" below, otherwise it will be at the top of the banner"
+      "type":"paragraph",
+      "content":"Enable the floating headline below to desktop, tablet or mobile. To configure the positioning of headline horizontally and vertically, access the \"Headline Position\" below, otherwise it will be at the top of the banner"
     },
     {
-      "type": "checkbox",
-      "id": "enable_floating_headline",
-      "label": "Enable Headline on Desktop",
-      "default": true
+      "type":"checkbox",
+      "id":"enable_floating_headline",
+      "label":"Enable Headline on Desktop",
+      "default":true
     },
     {
-      "type": "checkbox",
-      "id": "enable_floating_headline_tablet",
-      "label": "Enable Headline on Tablet",
-      "default": true
+      "type":"checkbox",
+      "id":"enable_floating_headline_tablet",
+      "label":"Enable Headline on Tablet",
+      "default":true
     },
     {
-      "type": "checkbox",
-      "id": "enable_floating_headline_mobile",
-      "label": "Enable Headline on Mobile",
-      "default": true
+      "type":"checkbox",
+      "id":"enable_floating_headline_mobile",
+      "label":"Enable Headline on Mobile",
+      "default":true
     },
     {
-      "type": "header",
-      "content": "Headline Position"
+      "type":"header",
+      "content":"Headline Position"
     },
     {
-      "type": "header",
-      "content": "Desktop"
+      "type":"header",
+      "content":"Desktop"
     },
     {
-      "type": "range",
-      "id": "vasta_title_horizontal_position",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Desktop Horizontal Headline Position",
-      "default": 50
+      "type":"range",
+      "id":"vasta_title_horizontal_position",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Desktop Horizontal Headline Position",
+      "default":50
     },
     {
-      "type": "range",
-      "id": "vasta_title_vertical_position",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Desktop Vertical Headline Position",
-      "default": 30
+      "type":"range",
+      "id":"vasta_title_vertical_position",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Desktop Vertical Headline Position",
+      "default":30
     },
     {
-      "type": "header",
-      "content": "Tablet"
+      "type":"header",
+      "content":"Tablet"
     },
     {
-      "type": "range",
-      "id": "vasta_title_horizontal_position_tablet",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Tablet Horizontal Headline Position",
-      "default": 50
+      "type":"range",
+      "id":"vasta_title_horizontal_position_tablet",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Tablet Horizontal Headline Position",
+      "default":50
     },
     {
-      "type": "range",
-      "id": "vasta_title_vertical_position_tablet",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Tablet Vertical Headline Position",
-      "default": 30
+      "type":"range",
+      "id":"vasta_title_vertical_position_tablet",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Tablet Vertical Headline Position",
+      "default":30
     },
     {
-      "type": "header",
-      "content": "Mobile"
+      "type":"header",
+      "content":"Mobile"
     },
     {
-      "type": "range",
-      "id": "vasta_title_horizontal_position_mobile",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Mobile Horizontal Headline Position",
-      "default": 50
+      "type":"range",
+      "id":"vasta_title_horizontal_position_mobile",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Mobile Horizontal Headline Position",
+      "default":50
     },
     {
-      "type": "range",
-      "id": "vasta_title_vertical_position_mobile",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Mobile Vertical Headline Position",
-      "default": 30
+      "type":"range",
+      "id":"vasta_title_vertical_position_mobile",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Mobile Vertical Headline Position",
+      "default":30
     },
     {
-      "type": "header",
-      "content": "Text Box Size"
+      "type":"header",
+      "content":"Text Box Size"
     },
     {
-      "type": "range",
-      "id": "banner_tablet_width",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Banner Text Content Width For Tablet",
-      "info": "Only works on tablet resolution",
-      "default": 100
+      "type":"range",
+      "id":"banner_tablet_width",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Banner Text Content Width For Tablet",
+      "info":"Only works on tablet resolution",
+      "default":100
     },
     {
-      "type": "range",
-      "id": "banner_mobile_width",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "label": "Banner Text Content Width For Mobile",
-      "info": "Only works on mobile resolution",
-      "default": 100
+      "type":"range",
+      "id":"banner_mobile_width",
+      "min":0,
+      "max":100,
+      "step":1,
+      "unit":"%",
+      "label":"Banner Text Content Width For Mobile",
+      "info":"Only works on mobile resolution",
+      "default":100
     },
     {
-      "type": "range",
-      "id": "banner_mobile_height",
-      "min": 0,
-      "max": 300,
-      "step": 10,
-      "unit": "px",
-      "label": "Banner Text Content Height",
-      "info": "Only works on mobile resolution",
-      "default": 200
+      "type":"range",
+      "id":"banner_mobile_height",
+      "min":0,
+      "max":300,
+      "step":10,
+      "unit":"px",
+      "label":"Banner Text Content Height",
+      "info":"Only works on mobile resolution",
+      "default":200
     },
     {
-      "type": "header",
-      "content": "Block Settings"
+      "type":"header",
+      "content":"Block Settings"
     },
     {
-      "type": "checkbox",
-      "label": "Enable Background Blur",
-      "id": "enable_background_blur",
-      "default": false
+      "type":"checkbox",
+      "label":"Enable Background Blur",
+      "id":"enable_background_blur",
+      "default":false
     },
     {
-      "type": "header",
-      "content": "Block Review Width"
+      "type":"header",
+      "content":"Block Review Width"
     },
     {
-      "type": "range",
-      "id": "block_review_desktop_width",
-      "min": 200,
-      "max": 400,
-      "step": 2,
-      "unit": "px",
-      "label": "Block Review Width For Desktop",
-      "info": "Only works on desktop resolution",
-      "default": 200
+      "type":"range",
+      "id":"block_review_desktop_width",
+      "min":200,
+      "max":400,
+      "step":2,
+      "unit":"px",
+      "label":"Block Review Width For Desktop",
+      "info":"Only works on desktop resolution",
+      "default":200
     },
     {
-      "type": "range",
-      "id": "block_review_tablet_width",
-      "min": 200,
-      "max": 400,
-      "step": 2,
-      "unit": "px",
-      "label": "Block Review Width For Tablet",
-      "info": "Only works on tablet resolution",
-      "default": 200
+      "type":"range",
+      "id":"block_review_tablet_width",
+      "min":200,
+      "max":400,
+      "step":2,
+      "unit":"px",
+      "label":"Block Review Width For Tablet",
+      "info":"Only works on tablet resolution",
+      "default":200
     },
     {
-      "type": "range",
-      "id": "block_review_mobile_width",
-      "min": 200,
-      "max": 400,
-      "step": 2,
-      "unit": "px",
-      "label": "Block Review Width For Mobile",
-      "info": "Only works on mobile resolution",
-      "default": 200
+      "type":"range",
+      "id":"block_review_mobile_width",
+      "min":200,
+      "max":400,
+      "step":2,
+      "unit":"px",
+      "label":"Block Review Width For Mobile",
+      "info":"Only works on mobile resolution",
+      "default":200
     },
     {
-      "type": "header",
-      "content": "Block Review Font Size"
+      "type":"header",
+      "content":"Block Review Font Size"
     },
     {
-      "type": "paragraph",
-      "content": "Desktop"
+      "type":"paragraph",
+      "content":"Desktop"
     },
     {
-      "type": "range",
-      "id": "block_review_author_font_size_desktop",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Author's Name Font Size Desktop",
-      "default": 20
+      "type":"range",
+      "id":"block_review_author_font_size_desktop",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Author's Name Font Size Desktop",
+      "default":20
     },
     {
-      "type": "range",
-      "id": "block_review_font_size_desktop",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Review Font Size Desktop",
-      "default": 26
+      "type":"range",
+      "id":"block_review_font_size_desktop",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Review Font Size Desktop",
+      "default":26
     },
     {
-      "type": "paragraph",
-      "content": "Tablet"
+      "type":"paragraph",
+      "content":"Tablet"
     },
     {
-      "type": "range",
-      "id": "block_review_author_font_size_tablet",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Author's name Font Size Tablet",
-      "default": 20
+      "type":"range",
+      "id":"block_review_author_font_size_tablet",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Author's name Font Size Tablet",
+      "default":20
     },
     {
-      "type": "range",
-      "id": "block_review_font_size_tablet",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Review Font Size Tablet",
-      "default": 20
+      "type":"range",
+      "id":"block_review_font_size_tablet",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Review Font Size Tablet",
+      "default":20
     },
     {
-      "type": "paragraph",
-      "content": "Mobile"
+      "type":"paragraph",
+      "content":"Mobile"
     },
     {
-      "type": "range",
-      "id": "block_review_author_font_size_mobile",
-      "min": 10,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Author's name Font Size Mobile",
-      "default": 20
+      "type":"range",
+      "id":"block_review_author_font_size_mobile",
+      "min":10,
+      "max":100,
+      "step":1,
+      "unit":"px",
+      "label":"Author's name Font Size Mobile",
+      "default":20
     },
     {
-      "type": "range",
-      "id": "block_review_font_size_mobile",
-      "min": 10,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Review Font Size Mobile",
-      "default": 26
+      "type":"range",
+      "id":"block_review_font_size_mobile",
+      "min":10,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Review Font Size Mobile",
+      "default":26
     },
     {
-      "type": "header",
-      "content": "Block Buttons"
+      "type":"header",
+      "content":"Block Buttons"
     },
     {
-      "type": "range",
-      "id": "banner_font_size_button",
-      "min": 10,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Button Font Size",
-      "default": 46
+      "type":"range",
+      "id":"banner_font_size_button",
+      "min":10,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Button Font Size",
+      "default":46
     },
     {
-      "type": "range",
-      "id": "banner_font_size_button_tablet",
-      "min": 10,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Button Font Size Tablet",
-      "default": 10
+      "type":"range",
+      "id":"banner_font_size_button_tablet",
+      "min":10,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Button Font Size Tablet",
+      "default":10
     },
     {
-      "type": "range",
-      "id": "banner_font_size_button_mobile",
-      "min": 10,
-      "max": 60,
-      "step": 1,
-      "unit": "px",
-      "label": "Button Font Size Mobile",
-      "default": 10
+      "type":"range",
+      "id":"banner_font_size_button_mobile",
+      "min":10,
+      "max":60,
+      "step":1,
+      "unit":"px",
+      "label":"Button Font Size Mobile",
+      "default":10
     },
     {
-      "type": "header",
-      "content": "Colors"
+      "type":"header",
+      "content":"Colors"
     },
     {
-      "type": "paragraph",
-      "content": "Button"
+      "type":"paragraph",
+      "content":"Button"
     },
     {
-      "type": "color",
-      "id": "vasta_buttons_color_1",
-      "label": "Button Background Color",
-      "default": "#FFFFFF"
+      "type":"color",
+      "id":"vasta_buttons_color_1",
+      "label":"Button Background Color",
+      "default":"#FFFFFF"
     },
     {
-      "type": "color",
-      "id": "vasta_buttons_text_color_1",
-      "label": "Button Text Color",
-      "default": "#fff"
+      "type":"color",
+      "id":"vasta_buttons_text_color_1",
+      "label":"Button Text Color",
+      "default":"#fff"
     },
     {
-      "type": "color",
-      "id": "vasta_border_color_1",
-      "label": "Button Border Color",
-      "default": "#fff"
+      "type":"color",
+      "id":"vasta_border_color_1",
+      "label":"Button Border Color",
+      "default":"#fff"
     },
     {
-      "type": "color",
-      "id": "vasta_border_color_1_hover",
-      "label": "Button Hover Border Color",
-      "default": "#fff"
+      "type":"color",
+      "id":"vasta_border_color_1_hover",
+      "label":"Button Hover Border Color",
+      "default":"#fff"
     },
     {
-      "type": "color",
-      "id": "vasta_buttons_hover_color_1",
-      "label": "Button Hover Background Color",
-      "default": "#fff"
+      "type":"color",
+      "id":"vasta_buttons_hover_color_1",
+      "label":"Button Hover Background Color",
+      "default":"#fff"
     },
     {
-      "type": "color",
-      "id": "vasta_buttons_hover_text_color_1",
-      "label": "Button Hover Text Color",
-      "default": "#000"
+      "type":"color",
+      "id":"vasta_buttons_hover_text_color_1",
+      "label":"Button Hover Text Color",
+      "default":"#000"
     },
     {
-      "type": "paragraph",
-      "content": "Headline"
+      "type":"paragraph",
+      "content":"Headline"
     },
     {
-      "type": "color",
-      "id": "banner_upper_stars_color",
-      "label": "Upper Headline Stars Color",
-      "default": "#000000"
+      "type":"color",
+      "id":"banner_upper_stars_color",
+      "label":"Upper Headline Stars Color",
+      "default":"#000000"
     },
     {
-      "type": "color",
-      "id": "banner_upper_titcolor",
-      "label": "Upper Headline Text Color",
-      "default": "#000000"
+      "type":"color",
+      "id":"banner_upper_titcolor",
+      "label":"Upper Headline Text Color",
+      "default":"#000000"
     },
     {
-      "type": "color",
-      "id": "banner_titcolor",
-      "label": "Headline Text Color",
-      "default": "#000000"
+      "type":"color",
+      "id":"banner_titcolor",
+      "label":"Headline Text Color",
+      "default":"#000000"
     },
     {
-      "type": "color",
-      "id": "banner_sub_titcolor",
-      "label": "Sub Headline Text Color",
-      "default": "#000000"
+      "type":"color",
+      "id":"banner_sub_titcolor",
+      "label":"Sub Headline Text Color",
+      "default":"#000000"
     }
   ],
-  "blocks": [
+  "blocks":[
     {
-      "type": "select",
-      "name": "Block Button",
-      "settings": [
+      "type":"select",
+      "name":"Block Button",
+      "settings":[
         {
-          "type": "header",
-          "content": "General Settings"
+          "type":"header",
+          "content":"General Settings"
         },
         {
-          "id": "custom_html",
-          "type": "html",
-          "label": "Custom css",
-          "info": "Write CSS attributes with !important. Ex: background-color:#f00!important"
+          "id":"custom_html",
+          "type":"html",
+          "label":"Custom css",
+          "info":"Write CSS attributes with !important. Ex: background-color:#f00!important"
         },
         {
-          "id": "linktext",
-          "type": "text",
-          "label": "Button Text",
-          "default": "Click Here"
+          "id":"linktext",
+          "type":"text",
+          "label":"Button Text",
+          "default":"Click Here"
         },
         {
-          "type": "select",
-          "id": "button_text_transform",
-          "label": "Button Text Transform",
-          "default": "capitalize",
-          "options": [
+          "type":"select",
+          "id":"button_text_transform",
+          "label":"Button Text Transform",
+          "default":"capitalize",
+          "options":[
             {
-              "value": "none",
-              "label": "Same as imput"
+              "value":"none",
+              "label":"Same as imput"
             },
             {
-              "value": "uppercase",
-              "label": "Uppercase"
+              "value":"uppercase",
+              "label":"Uppercase"
             },
             {
-              "value": "capitalize",
-              "label": "Capitalize"
+              "value":"capitalize",
+              "label":"Capitalize"
             },
             {
-              "value": "lowercase",
-              "label": "Lowercase"
+              "value":"lowercase",
+              "label":"Lowercase"
             }
           ]
         },
         {
-          "type": "checkbox",
-          "id": "enable_button_link",
-          "label": "Enable Button link",
-          "default": false
+          "type":"checkbox",
+          "id":"enable_button_link",
+          "label":"Enable Button link",
+          "default":false
         },
         {
-          "id": "link",
-          "type": "url",
-          "label": "Button Link"
+          "id":"link",
+          "type":"url",
+          "label":"Button Link"
         },
         {
-          "type": "checkbox",
-          "id": "enable_helper_text",
-          "label": "Enable Helper text",
-          "info": "Use the button with a helper text. If this is enabled, text will be shown with the button. You will be able to set the alignment of these elements."
+          "type":"checkbox",
+          "id":"enable_helper_text",
+          "label":"Enable Helper text",
+          "info":"Use the button with a helper text. If this is enabled, text will be shown with the button. You will be able to set the alignment of these elements."
         },
         {
-          "id": "helper_text",
-          "type": "text",
-          "label": "Helper Text",
-          "default": "Helper Text"
+          "id":"helper_text",
+          "type":"text",
+          "label":"Helper Text",
+          "default":"Helper Text"
         },
         {
-          "type": "select",
-          "id": "helper_text_direction",
-          "label": "Helper text direction",
-          "options": [
+          "type":"select",
+          "id":"helper_text_direction",
+          "label":"Helper text direction",
+          "options":[
             {
-              "label": "Right",
-              "value": "reverse"
+              "label":"Right",
+              "value":"reverse"
             },
             {
-              "label": "Left",
-              "value": "row-reverse"
+              "label":"Left",
+              "value":"row-reverse"
             },
             {
-              "label": "Above",
-              "value": "column-reverse"
+              "label":"Above",
+              "value":"column-reverse"
             },
             {
-              "label": "Below",
-              "value": "column"
+              "label":"Below",
+              "value":"column"
             }
           ]
         },
         {
-          "type": "select",
-          "id": "vasta_buttons_hover_effect",
-          "label": "Button Hover Effect",
-          "options": [
+          "type":"select",
+          "id":"vasta_buttons_hover_effect",
+          "label":"Button Hover Effect",
+          "options":[
             {
-              "value": "none",
-              "label": "None"
+              "value":"none",
+              "label":"None"
             },
             {
-              "value": "effect_1",
-              "label": "Curtain"
+              "value":"effect_1",
+              "label":"Curtain"
             },
             {
-              "value": "effect_2",
-              "label": "Fade"
+              "value":"effect_2",
+              "label":"Fade"
             }
           ],
-          "default": "none"
+          "default":"none"
         },
         {
-          "type": "checkbox",
-          "id": "enable_block_button_radius",
-          "label": "Enable rounded button"
+          "type":"checkbox",
+          "id":"enable_block_button_radius",
+          "label":"Enable rounded button"
         },
         {
-          "type": "range",
-          "id": "block_button_radius",
-          "min": 10,
-          "max": 40,
-          "step": 1,
-          "unit": "px",
-          "label": "Rounded button border",
-          "default": 10
+          "type":"range",
+          "id":"block_button_radius",
+          "min":10,
+          "max":40,
+          "step":1,
+          "unit":"px",
+          "label":"Rounded button border",
+          "default":10
         },
         {
-          "type": "header",
-          "content": "Position"
+          "type":"header",
+          "content":"Position"
         },
         {
-          "type": "header",
-          "content": "Desktop"
+          "type":"header",
+          "content":"Desktop"
         },
         {
-          "type": "range",
-          "id": "vasta_button_horizontal_position",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Button Horizontal Position on Desktop",
-          "default": 50
+          "type":"range",
+          "id":"vasta_button_horizontal_position",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "label":"Button Horizontal Position on Desktop",
+          "default":50
         },
         {
-          "type": "range",
-          "id": "vasta_button_vertical_position",
-          "min": 10,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Button Vertical Position on Desktop",
-          "default": 15
+          "type":"range",
+          "id":"vasta_button_vertical_position",
+          "min":10,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "label":"Button Vertical Position on Desktop",
+          "default":15
         },
         {
-          "type": "header",
-          "content": "Tablet"
+          "type":"header",
+          "content":"Tablet"
         },
         {
-          "type": "range",
-          "id": "vasta_button_horizontal_position_tablet",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Button Horizontal Position on Tablet",
-          "default": 50
+          "type":"range",
+          "id":"vasta_button_horizontal_position_tablet",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "label":"Button Horizontal Position on Tablet",
+          "default":50
         },
         {
-          "type": "range",
-          "id": "vasta_button_vertical_position_tablet",
-          "min": 10,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Button Vertical Position on Tablet",
-          "default": 15
+          "type":"range",
+          "id":"vasta_button_vertical_position_tablet",
+          "min":10,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "label":"Button Vertical Position on Tablet",
+          "default":15
         },
         {
-          "type": "header",
-          "content": "Mobile"
+          "type":"header",
+          "content":"Mobile"
         },
         {
-          "type": "checkbox",
-          "id": "show_mobile_buttons",
-          "label": "Show Button On Mobile",
-          "default": false,
-          "info": "This option enable this button on mobile banner."
+          "type":"checkbox",
+          "id":"show_mobile_buttons",
+          "label":"Show Button On Mobile",
+          "default":false,
+          "info":"This option enable this button on mobile banner."
         },
         {
-          "type": "range",
-          "id": "vasta_button_horizontal_position_mobile",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Button Horizontal Position on Mobile",
-          "default": 50
+          "type":"range",
+          "id":"vasta_button_horizontal_position_mobile",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "label":"Button Horizontal Position on Mobile",
+          "default":50
         },
         {
-          "type": "range",
-          "id": "vasta_button_vertical_position_mobile",
-          "min": 10,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Button Vertical Position on Mobile",
-          "default": 15
+          "type":"range",
+          "id":"vasta_button_vertical_position_mobile",
+          "min":10,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "label":"Button Vertical Position on Mobile",
+          "default":15
         },
         {
-          "type": "header",
-          "content": "Dimension"
+          "type":"header",
+          "content":"Dimension"
         },
         {
-          "type": "header",
-          "content": "Desktop"
+          "type":"header",
+          "content":"Desktop"
         },
         {
-          "type": "range",
-          "id": "vasta_button_height",
-          "min": 20,
-          "max": 100,
-          "step": 2,
-          "unit": "px",
-          "label": "Button Height on Desktop",
-          "default": 70
+          "type":"range",
+          "id":"vasta_button_height",
+          "min":20,
+          "max":100,
+          "step":2,
+          "unit":"px",
+          "label":"Button Height on Desktop",
+          "default":70
         },
         {
-          "type": "range",
-          "id": "vasta_button_max_width_desktop",
-          "min": 20,
-          "max": 200,
-          "step": 2,
-          "unit": "px",
-          "label": "Button Max Width on Desktop",
-          "default": 100
+          "type":"range",
+          "id":"vasta_button_max_width_desktop",
+          "min":20,
+          "max":200,
+          "step":2,
+          "unit":"px",
+          "label":"Button Max Width on Desktop",
+          "default":100
         },
         {
-          "type": "header",
-          "content": "Tablet"
+          "type":"header",
+          "content":"Tablet"
         },
         {
-          "type": "range",
-          "id": "vasta_button_height_tablet",
-          "min": 20,
-          "max": 100,
-          "step": 2,
-          "unit": "px",
-          "label": "Button Height on Tablet",
-          "default": 50
+          "type":"range",
+          "id":"vasta_button_height_tablet",
+          "min":20,
+          "max":100,
+          "step":2,
+          "unit":"px",
+          "label":"Button Height on Tablet",
+          "default":50
         },
         {
-          "type": "range",
-          "id": "vasta_button_max_width_tablet",
-          "min": 10,
-          "max": 200,
-          "step": 2,
-          "unit": "px",
-          "label": "Button Max Width on Tablet",
-          "default": 100
+          "type":"range",
+          "id":"vasta_button_max_width_tablet",
+          "min":10,
+          "max":200,
+          "step":2,
+          "unit":"px",
+          "label":"Button Max Width on Tablet",
+          "default":100
         },
         {
-          "type": "header",
-          "content": "Mobile"
+          "type":"header",
+          "content":"Mobile"
         },
         {
-          "type": "range",
-          "id": "vasta_button_height_mobile",
-          "min": 10,
-          "max": 100,
-          "step": 2,
-          "unit": "px",
-          "label": "Button Height on Mobile",
-          "default": 50
+          "type":"range",
+          "id":"vasta_button_height_mobile",
+          "min":10,
+          "max":100,
+          "step":2,
+          "unit":"px",
+          "label":"Button Height on Mobile",
+          "default":50
         },
         {
-          "type": "range",
-          "id": "vasta_button_max_width",
-          "min": 10,
-          "max": 200,
-          "step": 2,
-          "unit": "px",
-          "label": "Button Max Width on Mobile",
-          "default": 100
+          "type":"range",
+          "id":"vasta_button_max_width",
+          "min":10,
+          "max":200,
+          "step":2,
+          "unit":"px",
+          "label":"Button Max Width on Mobile",
+          "default":100
         },
         {
-          "type": "header",
-          "content": "Colors"
+          "type":"header",
+          "content":"Colors"
         },
         {
-          "type": "color",
-          "id": "vasta_buttons_block_color_1",
-          "label": "Button Background Color",
-          "default": "#000"
+          "type":"color",
+          "id":"vasta_buttons_block_color_1",
+          "label":"Button Background Color",
+          "default":"#000"
         },
         {
-          "type": "color",
-          "id": "vasta_buttons_text_block_color_1",
-          "label": "Button Text Color",
-          "default": "#fff"
+          "type":"color",
+          "id":"vasta_buttons_text_block_color_1",
+          "label":"Button Text Color",
+          "default":"#fff"
         },
         {
-          "type": "color",
-          "id": "vasta_border_block_color_1",
-          "label": "Button Border Color",
-          "default": "#fff"
+          "type":"color",
+          "id":"vasta_border_block_color_1",
+          "label":"Button Border Color",
+          "default":"#fff"
         },
         {
-          "type": "color",
-          "id": "vasta_border_block_color_1_hover",
-          "label": "Button Hover Border Color",
-          "default": "#fff"
+          "type":"color",
+          "id":"vasta_border_block_color_1_hover",
+          "label":"Button Hover Border Color",
+          "default":"#fff"
         },
         {
-          "type": "color",
-          "id": "vasta_buttons_block_hover_color_1",
-          "label": "Button Hover Background Color",
-          "default": "#fff"
+          "type":"color",
+          "id":"vasta_buttons_block_hover_color_1",
+          "label":"Button Hover Background Color",
+          "default":"#fff"
         },
         {
-          "type": "color",
-          "id": "vasta_buttons_block_text_hover_color_1",
-          "label": "Button Hover Text Color",
-          "default": "#000"
+          "type":"color",
+          "id":"vasta_buttons_block_text_hover_color_1",
+          "label":"Button Hover Text Color",
+          "default":"#000"
         }
       ]
     },
     {
-      "type": "reviews",
-      "name": "Reviews",
-      "settings": [
+      "type":"reviews",
+      "name":"Reviews",
+      "settings":[
         {
-          "type": "header",
-          "content": "General Settings"
+          "type":"header",
+          "content":"General Settings"
         },
         {
-          "type": "checkbox",
-          "id": "block_review_mobile",
-          "label": "Show Mobile",
-          "default": false
+          "type":"checkbox",
+          "id":"block_review_mobile",
+          "label":"Show Mobile",
+          "default":false
         },
         {
-          "id": "review_name",
-          "type": "text",
-          "label": "Author Name"
+          "id":"review_name",
+          "type":"text",
+          "label":"Author Name"
         },
         {
-          "type": "image_picker",
-          "id": "review_image",
-          "label": "Author Image"
+          "type":"image_picker",
+          "id":"review_image",
+          "label":"Author Image"
         },
         {
-          "type": "text",
-          "id": "review_content",
-          "label": "Review Text"
+          "type":"text",
+          "id":"review_content",
+          "label":"Review Text"
         },
         {
-          "type": "select",
-          "id": "review_stars",
-          "label": "Reviews Stars",
-          "options": [
+          "type":"select",
+          "id":"review_stars",
+          "label":"Reviews Stars",
+          "options":[
             {
-              "value": "1",
-              "label": "1"
+              "value":"1",
+              "label":"1"
             },
             {
-              "value": "2",
-              "label": "2"
+              "value":"2",
+              "label":"2"
             },
             {
-              "value": "3",
-              "label": "3"
+              "value":"3",
+              "label":"3"
             },
             {
-              "value": "4",
-              "label": "4"
+              "value":"4",
+              "label":"4"
             },
             {
-              "value": "5",
-              "label": "5"
+              "value":"5",
+              "label":"5"
             }
           ]
         },
         {
-          "type": "range",
-          "id": "review_border_radius",
-          "min": 0,
-          "max": 30,
-          "step": 1,
-          "label": "Border Radius",
-          "default": 10
+          "type":"range",
+          "id":"review_border_radius",
+          "min":0,
+          "max":30,
+          "step":1,
+          "label":"Border Radius",
+          "default":10
         },
         {
-          "type": "range",
-          "id": "review_background_blur_effect",
-          "min": 0,
-          "max": 30,
-          "step": 0.5,
-          "label": "Border Background Blur Effect Radius",
-          "default": 10.5,
-          "info": "The bigger the value, the blurrier it gets."
+          "type":"range",
+          "id":"review_background_blur_effect",
+          "min":0,
+          "max":30,
+          "step":0.5,
+          "label":"Border Background Blur Effect Radius",
+          "default":10.5,
+          "info":"The bigger the value, the blurrier it gets."
         },
         {
-          "type": "header",
-          "content": "Position"
+          "type":"header",
+          "content":"Position"
         },
         {
-          "type": "paragraph",
-          "content": "Desktop"
+          "type":"paragraph",
+          "content":"Desktop"
         },
         {
-          "id": "enable_align_by_right",
-          "type": "checkbox",
-          "default": false,
-          "label": "Align horizontally based on the right margin"
+          "id":"enable_align_by_right",
+          "type":"checkbox",
+          "default":false,
+          "label":"Align horizontally based on the right margin"
         },
         {
-          "id": "enable_align_by_bottom",
-          "type": "checkbox",
-          "default": false,
-          "label": "Align vertically based on the bottom margin"
+          "id":"enable_align_by_bottom",
+          "type":"checkbox",
+          "default":false,
+          "label":"Align vertically based on the bottom margin"
         },
         {
-          "type": "range",
-          "id": "review_position_x",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Position Horizontal",
-          "default": 10
+          "type":"range",
+          "id":"review_position_x",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "label":"Position Horizontal",
+          "default":10
         },
         {
-          "type": "range",
-          "id": "review_position_y",
-          "label": "Position Vertical",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 10
+          "type":"range",
+          "id":"review_position_y",
+          "label":"Position Vertical",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "default":10
         },
         {
-          "type": "paragraph",
-          "content": "Tablet"
+          "type":"paragraph",
+          "content":"Tablet"
         },
         {
-          "id": "enable_align_by_right_tablet",
-          "type": "checkbox",
-          "default": false,
-          "label": "Align horizontally based on the right margin on Tablet"
+          "id":"enable_align_by_right_tablet",
+          "type":"checkbox",
+          "default":false,
+          "label":"Align horizontally based on the right margin on Tablet"
         },
         {
-          "id": "enable_align_by_bottom_tablet",
-          "type": "checkbox",
-          "default": false,
-          "label": "Align vertically based on the bottom margin on Tablet"
+          "id":"enable_align_by_bottom_tablet",
+          "type":"checkbox",
+          "default":false,
+          "label":"Align vertically based on the bottom margin on Tablet"
         },
         {
-          "type": "range",
-          "id": "tablet_review_position_x",
-          "label": "Position Horizontal",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 10
+          "type":"range",
+          "id":"tablet_review_position_x",
+          "label":"Position Horizontal",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "default":10
         },
         {
-          "type": "range",
-          "id": "tablet_review_position_y",
-          "label": "Position Vertical",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 10
+          "type":"range",
+          "id":"tablet_review_position_y",
+          "label":"Position Vertical",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "default":10
         },
         {
-          "type": "paragraph",
-          "content": "Mobile"
+          "type":"paragraph",
+          "content":"Mobile"
         },
         {
-          "id": "enable_align_by_right_mobile",
-          "type": "checkbox",
-          "default": false,
-          "label": "Align horizontally based on the right margin on Mobile"
+          "id":"enable_align_by_right_mobile",
+          "type":"checkbox",
+          "default":false,
+          "label":"Align horizontally based on the right margin on Mobile"
         },
         {
-          "id": "enable_align_by_bottom_mobile",
-          "type": "checkbox",
-          "default": false,
-          "label": "Align vertically based on the bottom margin on Mobile"
+          "id":"enable_align_by_bottom_mobile",
+          "type":"checkbox",
+          "default":false,
+          "label":"Align vertically based on the bottom margin on Mobile"
         },
         {
-          "type": "range",
-          "id": "mobile_review_position_x",
-          "label": "Position Horizontal",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 10
+          "type":"range",
+          "id":"mobile_review_position_x",
+          "label":"Position Horizontal",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "default":10
         },
         {
-          "type": "range",
-          "id": "mobile_review_position_y",
-          "label": "Position Vertical",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 10
+          "type":"range",
+          "id":"mobile_review_position_y",
+          "label":"Position Vertical",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"%",
+          "default":10
         },
         {
-          "type": "header",
-          "content": "Colors"
+          "type":"header",
+          "content":"Colors"
         },
         {
-          "type": "color",
-          "id": "color_author_name",
-          "label": "Author Name",
-          "default": "#ffffff"
+          "type":"color",
+          "id":"color_author_name",
+          "label":"Author Name",
+          "default":"#ffffff"
         },
         {
-          "type": "color",
-          "id": "color_review_stars",
-          "label": "Review Stars",
-          "default": "#ECB42E"
+          "type":"color",
+          "id":"color_review_stars",
+          "label":"Review Stars",
+          "default":"#ECB42E"
         },
         {
-          "type": "color",
-          "id": "color_review_content",
-          "label": "Review Content",
-          "default": "#ffffff"
+          "type":"color",
+          "id":"color_review_content",
+          "label":"Review Content",
+          "default":"#ffffff"
         },
         {
-          "type": "color",
-          "id": "color_review_border",
-          "label": "Review Border Color",
-          "default": "#ffffff"
+          "type":"color",
+          "id":"color_review_border",
+          "label":"Review Border Color",
+          "default":"#ffffff"
         }
       ]
     }
   ],
-  "presets": [
+  "presets":[
     {
-      "name": "New Banner Layout",
-      "category": "Banner"
+      "name":"New Banner Layout",
+      "category":"Banner"
     }
   ]
 }
