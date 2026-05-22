@@ -1105,17 +1105,6 @@
 }
 </script>
 {% endif %}
-<script>
-  (function() {
-    if (window.location.pathname === '/collections/all') {
-      var params = new URLSearchParams(window.location.search);
-      if (!params.has('sort_by')) {
-        params.set('sort_by', 'best-selling');
-        window.location.replace('/collections/all?' + params.toString());
-      }
-    }
-  })();
-</script>
 {% schema %}
 {
   "name": "Collection ",
