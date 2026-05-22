@@ -434,7 +434,7 @@
     .bb-bis-eyebrow { font-size: 10px; }
     .bb-bis-headline { font-size: 32px; }
     .bb-bis-subhead { font-size: 14px; margin-bottom: 22px; }
-    /* v2.17: extra breathing room below the CTA on mobile so trust badges aren't crammed */
+    /* v2.18: same as v2.17 ‚Äî extra breathing room below the CTA on mobile */
     #button-out-of-stock.bb-bis-cta-restock,
     .btn-choose-variant.bb-bis-cta-restock,
     [data-bb-bis-cta] {
@@ -449,15 +449,25 @@
 
   // Klaviyo Client BIS Subscription API \u2014 public/anonymous endpoint, no server needed.
   // Company ID for Betterbrand Klaviyo: NYkPJ4 (visible in onsite klaviyo.js URL)
+  // v2.18: Klaviyo handles EMAIL only. Phone numbers are routed to Postscript
+  //        (Betterbrand's actual SMS provider) via a parallel POST below.
   var KLAVIYO_COMPANY_ID = 'NYkPJ4';
   var KLAVIYO_BIS_URL = 'https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=' + KLAVIYO_COMPANY_ID;
   var KLAVIYO_REVISION = '2024-10-15';
+
+  // Postscript BIS Subscription API (discovered from sdk.postscript.io/sdk.bundle.js):
+  //   POST https://sdk-api.postscript.io/v2/back_in_stock/subscribe
+  //   body: { product_url, shop_id, variant_id, phone_number }
+  // Betterbrand Postscript shop_id: 225870 (visible in sdk.bundle.js?shopId=...)
+  var POSTSCRIPT_SHOP_ID = 225870;
+  var POSTSCRIPT_BIS_URL = 'https://sdk-api.postscript.io/v2/back_in_stock/subscribe';
+
   var TRIGGER_LABEL = 'Notify Me When It\u2019s Back';
   var DEBUG = true;
   function log()  { if (DEBUG && window.console) console.log.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
   function warn() { if (window.console) console.warn.apply(console, ['[bb-bis]'].concat([].slice.call(arguments))); }
 
-  log('init * v2.17 * 2026-05-21 (mobile: 16px margin below CTA per Curt)');
+  log('init * v2.18 * 2026-05-21 (email -> Klaviyo, phone -> Postscript)');
 
   // Track previous OOS-button text so we can restore it if the variant becomes available again.
   var __bbBisLastOosVariantId = null;
@@ -897,13 +907,18 @@
     var v = window.__bbBisActiveVariant || {};
     var phoneE164 = '+1' + phoneRaw;
 
-    // Klaviyo client BIS subscription payload (JSON:API format).
+    // v2.18: Two parallel subscriptions.
+    // 1) Klaviyo: EMAIL only (Klaviyo is the email provider for Betterbrand)
+    // 2) Postscript: phone number (Postscript is the SMS provider for Betterbrand)
+    // We submit both in parallel; success requires at least one to succeed.
+
+    // ---- 1) Klaviyo client BIS subscription payload (JSON:API format) ----
     // The catalog-variant ID format is "$shopify:::$default:::SHOPIFY_VARIANT_ID".
     var klaviyoPayload = {
       data: {
         type: 'back-in-stock-subscription',
         attributes: {
-          channels: ['EMAIL', 'SMS'],
+          channels: ['EMAIL'],
           profile: {
             data: {
               type: 'profile',
@@ -924,9 +939,21 @@
         }
       }
     };
-    log('submitting BIS subscription:', email, '*', phoneE164, '*', v.id);
 
-    // Also identify the profile via the onsite SDK so it lands in Klaviyo profile properties.
+    // ---- 2) Postscript BIS subscription payload ----
+    var postscriptPayload = {
+      product_url: window.location.href,
+      shop_id: POSTSCRIPT_SHOP_ID,
+      variant_id: String(v.id || ''),
+      phone_number: phoneE164
+    };
+
+    log('submitting BIS subscription:',
+        'email->Klaviyo:', email,
+        '* phone->Postscript:', phoneE164,
+        '* variant:', v.id);
+
+    // Also identify the profile via the onsite Klaviyo SDK so the email lands in profile properties.
     try {
       if (window.klaviyo && typeof window.klaviyo.identify === 'function') {
         window.klaviyo.identify({ $email: email, $phone_number: phoneE164 });
@@ -935,36 +962,80 @@
       }
     } catch (_) {}
 
-    fetch(KLAVIYO_BIS_URL, {
+    var klaviyoReq = fetch(KLAVIYO_BIS_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Revision': KLAVIYO_REVISION
       },
       body: JSON.stringify(klaviyoPayload)
-    })
-    .then(function(r) {
+    }).then(function(r) {
       // Klaviyo returns 202 with empty body on success.
-      if (r.status === 202 || (r.status >= 200 && r.status < 300)) return { ok: true };
-      // Try to parse error JSON.
+      if (r.status === 202 || (r.status >= 200 && r.status < 300)) {
+        log('Klaviyo OK:', r.status);
+        return { provider: 'klaviyo', ok: true };
+      }
       return r.json().then(function(j) {
-        var errMsg = 'Subscription failed.';
+        var errMsg = 'Klaviyo subscription failed.';
         if (j && j.errors && j.errors.length) {
           errMsg = j.errors.map(function(e) { return e.detail || e.title; }).join(' ');
         }
-        return { ok: false, error: errMsg };
-      }).catch(function() { return { ok: false, error: 'Subscription failed (status ' + r.status + ').' }; });
-    })
-    .then(function(res) {
-      if (!res.ok) throw new Error(res.error || 'Subscription failed');
-      log('submit success');
-      formSection.style.display = 'none';
-      successSection.classList.add('bb-bis-show');
-      try { localStorage.setItem('bb_bis_' + (v.id || ''), Date.now().toString()); } catch (_) {}
-    })
-    .catch(function(err) {
+        warn('Klaviyo failed:', r.status, errMsg);
+        return { provider: 'klaviyo', ok: false, error: errMsg };
+      }).catch(function() {
+        warn('Klaviyo failed (no body):', r.status);
+        return { provider: 'klaviyo', ok: false, error: 'Klaviyo status ' + r.status };
+      });
+    }).catch(function(err) {
+      warn('Klaviyo network error:', err.message);
+      return { provider: 'klaviyo', ok: false, error: err.message };
+    });
+
+    var postscriptReq = fetch(POSTSCRIPT_BIS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(postscriptPayload)
+    }).then(function(r) {
+      if (r.ok) {
+        log('Postscript OK:', r.status);
+        return { provider: 'postscript', ok: true };
+      }
+      return r.json().then(function(j) {
+        var errMsg = (j && (j.message || j.error)) || ('Postscript status ' + r.status);
+        warn('Postscript failed:', r.status, errMsg);
+        return { provider: 'postscript', ok: false, error: errMsg };
+      }).catch(function() {
+        warn('Postscript failed (no body):', r.status);
+        return { provider: 'postscript', ok: false, error: 'Postscript status ' + r.status };
+      });
+    }).catch(function(err) {
+      warn('Postscript network error:', err.message);
+      return { provider: 'postscript', ok: false, error: err.message };
+    });
+
+    Promise.all([klaviyoReq, postscriptReq]).then(function(results) {
+      var klaviyoOk = results[0].ok;
+      var postscriptOk = results[1].ok;
+      log('submit results: klaviyo=' + klaviyoOk + ' postscript=' + postscriptOk);
+
+      // Treat as success if AT LEAST ONE provider accepted. We don't want to
+      // block the user if (say) Postscript is briefly down but their email
+      // already went through to Klaviyo.
+      if (klaviyoOk || postscriptOk) {
+        formSection.style.display = 'none';
+        successSection.classList.add('bb-bis-show');
+        try { localStorage.setItem('bb_bis_' + (v.id || ''), Date.now().toString()); } catch (_) {}
+        return;
+      }
+
+      var msg = results.map(function(r) { return r.provider + ': ' + (r.error || 'unknown'); }).join(' / ');
+      throw new Error('Both providers failed \u2014 ' + msg);
+    }).catch(function(err) {
       warn('submit failed:', err.message);
-      errorDiv.textContent = err.message || 'Network error. Please try again.';
+      errorDiv.textContent = 'Network error. Please try again.';
       errorDiv.classList.add('bb-bis-show');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Notify Me When It\u2019s Back';
