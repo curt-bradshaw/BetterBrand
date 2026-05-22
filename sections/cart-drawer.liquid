@@ -1420,15 +1420,6 @@
           </div>
         {% endif %}
 
-        {%- comment -%} Theme app extension blocks (Aftersell cart drawer upsells, etc.) {%- endcomment -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == '@app' -%}
-            <div class="cart-drawer__app-block" {{ block.shopify_attributes }}>
-              {%- render block -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-
         {%- if settings.enable_cart_upsell_drawer and settings.upsell_collection != blank -%}
           {%- render 'cart-drawer-upsell' -%}
         {% endif %}
@@ -1811,9 +1802,6 @@
     }
   ],
   "blocks": [
-    {
-      "type": "@app"
-    },
     {
       "type": "trust_badges_cart",
       "name": "Trust Badge",
