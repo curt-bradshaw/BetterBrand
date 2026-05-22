@@ -378,7 +378,6 @@
       padding: 0 ;
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
     }
 
     .collection-page__grid-products .product-card__reviews {
@@ -1106,6 +1105,17 @@
 }
 </script>
 {% endif %}
+<script>
+  (function() {
+    if (window.location.pathname === '/collections/all') {
+      var params = new URLSearchParams(window.location.search);
+      if (!params.has('sort_by')) {
+        params.set('sort_by', 'best-selling');
+        window.location.replace('/collections/all?' + params.toString());
+      }
+    }
+  })();
+</script>
 {% schema %}
 {
   "name": "Collection ",
