@@ -48,13 +48,13 @@
               <span class="plan-name">
                 {% if v.title contains '(' %}
                   {% assign title_parts = v.title | split: '(' %}
-                  <strong>{{ title_parts[0] | strip }}</strong>
+                  <strong class="patrol-semantic-bold">{{ title_parts[0] | strip }}</strong>
                   {% if title_parts.size > 1 %}
                     {% assign title_inside = title_parts[1] | split: ')' | first | strip %}
-                    <span>(<strong>{{ title_inside }}</strong>)</span>
+                    <span>(<strong class="patrol-semantic-bold">{{ title_inside }}</strong>)</span>
                   {% endif %}
                 {% else %}
-                  <strong>{{ v.title }}</strong>
+                  <strong class="patrol-semantic-bold">{{ v.title }}</strong>
                 {% endif %}
               </span>
             </div>
@@ -73,7 +73,7 @@
                       | divided_by: v.compare_at_price
                     %}
                 {% endcase %}
-                <span><strong>SAVE {{ discount }}%</strong></span>
+                <span><strong class="patrol-semantic-bold">SAVE {{ discount }}%</strong></span>
               </div>
               <div class="plan-price">
                 {% assign variant_title_lower = v.title | downcase %}
@@ -121,15 +121,15 @@
           data-variant-id="{{ last_option_variant.id }}"
         >
           <input type="radio" hidden value="{{ last_option_variant.id }}">
-          <span class="subscription-best"><strong>Best Value</strong></span>
+          <span class="subscription-best"><strong class="patrol-semantic-bold">Best Value</strong></span>
           <div class="content">
             <p class="subscrition-name">
               <span class="subscription-title">
-                <strong>Subscribe & Save</strong>
+                <strong class="patrol-semantic-bold">Subscribe & Save</strong>
               </span>
               <br>
               <span class="subscription-frequency">
-                <strong>{{ last_option_subtitle }}</strong>
+                <strong class="patrol-semantic-bold">{{ last_option_subtitle }}</strong>
               </span>
             </p>
             <div class="plan-right">
@@ -155,7 +155,7 @@
                 {% endif %}
               </div>
               <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>SAVE 20%</strong></span>
+                <span><strong class="patrol-semantic-bold">SAVE 20%</strong></span>
               </div>
             </div>
           </div>
