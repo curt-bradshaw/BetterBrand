@@ -111,9 +111,15 @@
                   {%- if variant.compare_at_price > variant.price -%}
                     <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
                   {%- endif -%}
-                  {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
-                  <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
-                  <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
+                  {%- if section.settings.show_product_card_strikethrough_price -%}
+                    {%- assign discount_percent = section.settings.product_card_discount_percent | default: 0 -%}
+                    {%- assign price_multiplier = 100 | minus: discount_percent -%}
+                    {%- assign discounted_cents = variant.price | times: price_multiplier | divided_by: 100 -%}
+                    <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
+                    <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
+                  {%- else -%}
+                    <span class="product-card__item-price"><strong>{{- variant.price | money -}}</strong></span>
+                  {%- endif -%}
                 {%- endif -%}
               </div>
 
