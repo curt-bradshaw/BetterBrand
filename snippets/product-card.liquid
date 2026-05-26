@@ -112,7 +112,7 @@
                     <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
                   {%- endif -%}
                   {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
-                  {% comment %} <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span> {% endcomment %}
+                  <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
                   <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
                 {%- endif -%}
               </div>
