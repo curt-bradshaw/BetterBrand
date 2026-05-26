@@ -21,7 +21,9 @@
           >
           <div class="ec-caption">
             <p class="ec-title">{{ block.settings.title }}</p>
-            <span class="ec-special-sale-badge"><strong>20% Off</strong></span>
+            {%- if section.settings.show_special_sale_badge and section.settings.special_sale_badge_text != blank -%}
+              <span class="ec-special-sale-badge"><strong>{{ section.settings.special_sale_badge_text }}</strong></span>
+            {%- endif -%}
           </div>
         </div>
       </a>
@@ -231,6 +233,22 @@
       "id": "see_all_link",
       "label": "See All Link",
       "default": "/collections"
+    },
+    {
+      "type": "header",
+      "content": "Special Sale Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_special_sale_badge",
+      "label": "Show special sale badge on each tile",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "special_sale_badge_text",
+      "label": "Badge text",
+      "default": "20% Off"
     }
   ],
   "blocks": [
