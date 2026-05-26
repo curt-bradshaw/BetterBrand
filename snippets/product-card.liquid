@@ -60,7 +60,9 @@
               {%- endif -%}
             {%- endif -%}
           </picture>
-            <span class="product-card__image-corner-badge">20% OFF</span>
+          {%- if section.settings.show_product_card_corner_badge and section.settings.product_card_corner_badge_text != blank -%}
+            <span class="product-card__image-corner-badge">{{ section.settings.product_card_corner_badge_text }}</span>
+          {%- endif -%}
         </div>
 
         <div class="product-card__product-info">
@@ -113,15 +115,17 @@
                   <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
                   <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
                 {%- endif -%}
-    
-                {% if settings.enable_outofstock_label %}
-                  {%- unless variant.available -%}
+              </div>
+
+              {% if settings.enable_outofstock_label %}
+                {%- unless variant.available -%}
+                  <div class="product-card__item-sold-out-wrapper">
                     <span class="product-card__item-sold-out">
                       {{- settings.unavailable_product_label | default: '(Out Of Stock)' -}}
                     </span>
-                  {%- endunless -%}
-                {% endif %}
-              </div>
+                  </div>
+                {%- endunless -%}
+              {% endif %}
             {% else %}
               {% assign local_show_add_to_cart = show_add_to_cart | default: true %}
               {% if local_show_add_to_cart %}
@@ -441,13 +445,25 @@
       margin: 0 4px 0 0;
     }
 
+    .product-card__item-sold-out-wrapper {
+      display: block;
+      width: 100%;
+      margin-top: 6px;
+    }
+
     .product-card__item-sold-out {
       display: block;
+      width: 100%;
       color: var(--color_out_of_stock_label, #a00);
       margin: 10px 0;
       padding: 5px 0;
       background-color: var(--stock_warning_background_color);
       margin-bottom: 12px;
+    }
+
+    .template-collection .product-card__item-sold-out,
+    .template-collection .product-card__item-sold-out-wrapper {
+      display: none !important;
     }
      {
       margin-top: 3px;

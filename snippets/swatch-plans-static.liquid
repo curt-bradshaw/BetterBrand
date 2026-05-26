@@ -86,7 +86,7 @@
               </div>
               {% case curr_idx %}
                 {% when 2 %}
-                  {% assign discount = 30 %}
+                  {% assign discount = 10 %}
                 {% when 3 %}
                   {% assign discount = 15 %}
                 {% else %}
@@ -97,7 +97,7 @@
                   %}
               {% endcase %}
               {%- assign hide_this_badge = false -%}
-              {%- if hide_plan_badge or curr_idx <= 1 or discount == 10 or discount == 20 -%}
+              {%- if hide_plan_badge or curr_idx <= 1 -%}
                 {%- assign hide_this_badge = true -%}
               {%- endif -%}
               <div class="plan-badge {% if hide_this_badge %}hidden{% endif %}">
@@ -138,7 +138,7 @@
             </p>
             <div class="plan-right">
               <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>SAVE 40%</strong></span>
+                <span><strong>SAVE 20%</strong></span>
               </div>
               <div class="plan-price">
                 {% assign show_each = false %}
