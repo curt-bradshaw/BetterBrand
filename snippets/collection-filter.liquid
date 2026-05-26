@@ -82,8 +82,8 @@
           <span class="collection-filter__item-label filter">{{ 'collections.label.sort_by' | t }}</span>
 
           <select aria-label="SortBy" id="filter-sort-by" class="collection-filter__dropdown sort-by filter-select">
-            {% comment %} {%- assign sort_by_collection = collection.sort_by | default: collection.default_sort_by -%} {% endcomment %}
-            {%- assign sort_by_collection = collection.sort_by | default: 'best-selling' -%}
+            {%- assign sort_by_collection = collection.sort_by | default: collection.default_sort_by -%}
+            {% comment %} {%- assign sort_by_collection = collection.sort_by | default: 'best-selling' -%} {% endcomment %}
 
             <option
               value="manual"
