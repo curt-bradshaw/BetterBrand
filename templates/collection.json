@@ -54,6 +54,8 @@
         "default_collection_banner": "shopify://shop_images/aff86614f5440f5458d5c0f3ee901d44bba61383.png",
         "show_product_card_corner_badge": false,
         "product_card_corner_badge_text": "20% OFF",
+        "show_product_card_strikethrough_price": false,
+        "product_card_discount_percent": 20,
         "trusted_image": "shopify://shop_images/Avatars_9d947c6c-4ef0-4ee5-b30e-4a9a3f5b564f.png",
         "trusted_text": "Trusted by +836,000 Customers",
         "enable_soft_banner": true,
