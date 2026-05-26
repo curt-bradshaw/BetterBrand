@@ -144,108 +144,6 @@
         "banner_sub_titcolor": "#234134"
       }
     },
-    "explore_collections_A3LhxL": {
-      "type": "explore-collections",
-      "blocks": {
-        "collection_item_cpKB7a": {
-          "type": "collection_item",
-          "settings": {
-            "title": "Tincture",
-            "image": "shopify://shop_images/Hero_Image_33c0082d-df16-46e8-b1de-2ed5d1581801.png",
-            "link": "shopify://collections/tincture"
-          }
-        },
-        "collection_item_WwTGeE": {
-          "type": "collection_item",
-          "settings": {
-            "title": "Gummies",
-            "image": "shopify://shop_images/Hero_Image_e97cce28-0381-415f-ad08-dfef71dd41f3.png",
-            "link": "shopify://collections/gummies"
-          }
-        },
-        "collection_item_6N8n8N": {
-          "type": "collection_item",
-          "settings": {
-            "title": "Capsules",
-            "image": "shopify://shop_images/Untitled_design_4.png",
-            "link": "https://www.trybetterbrand.com/products/betterlungs"
-          }
-        },
-        "collection_item_R8JHX7": {
-          "type": "collection_item",
-          "settings": {
-            "title": "Tea",
-            "image": "shopify://shop_images/Hero_Image_db520aa4-a88b-492f-a0c1-147534699b12.png",
-            "link": "shopify://products/betterlungs-tea"
-          }
-        }
-      },
-      "block_order": [
-        "collection_item_cpKB7a",
-        "collection_item_WwTGeE",
-        "collection_item_6N8n8N",
-        "collection_item_R8JHX7"
-      ],
-      "custom_css": [],
-      "name": "Explore Collections",
-      "settings": {
-        "heading": "Explore Our Collections",
-        "see_all_text": "See All",
-        "see_all_link": "https://www.trybetterbrand.com/collections/all",
-        "show_special_sale_badge": false,
-        "special_sale_badge_text": "20% Off"
-      }
-    },
-    "better_benefits_QXYyxz": {
-      "type": "better-benefits",
-      "blocks": {
-        "benefit_VTKfce": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/Avatar.png",
-            "title": "Clean Science",
-            "text": "Trusted Ingredients For Real Results"
-          }
-        },
-        "benefit_AHD9zA": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/Avatar_1.png",
-            "title": "Easy Routine",
-            "text": "Wellness That Fits Your Day"
-          }
-        },
-        "benefit_nTr9C8": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/Avatar_2.png",
-            "title": "Natural Support",
-            "text": "Plant-Powered Breathing Benefits"
-          }
-        },
-        "benefit_zHLBkV": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/Avatar_3.png",
-            "title": "Proven Quality",
-            "text": "Pure, Safe, Consistent Formulas"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_VTKfce",
-        "benefit_AHD9zA",
-        "benefit_nTr9C8",
-        "benefit_zHLBkV"
-      ],
-      "name": "Benefits Grid",
-      "settings": {
-        "heading": "Better From Within",
-        "subheading": "Pure Benefits Designed For Everyday Wellness",
-        "margin_top": 0,
-        "mobile_margin_top": 0
-      }
-    },
     "best_sellers_section_gjDgWP": {
       "type": "best-sellers-section",
       "blocks": {
@@ -309,6 +207,108 @@
         "heading": "Our Best Sellers",
         "see_all_link": "https://trybetterbrand.com/collections/best-mullein-extract-for-lungs?_cd=24788657f9f895602ecb8566ca137dfdfafab53f5b1f9ab3c0eb686758b5435a&_uid=121893224747&preview_theme_id=181826650411&preview_token=1idszndjyykol5wcbr3jbsw7g558owat",
         "see_all_text": "See All Products"
+      }
+    },
+    "better_benefits_QXYyxz": {
+      "type": "better-benefits",
+      "blocks": {
+        "benefit_VTKfce": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar.png",
+            "title": "Clean Science",
+            "text": "Trusted Ingredients For Real Results"
+          }
+        },
+        "benefit_AHD9zA": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar_1.png",
+            "title": "Easy Routine",
+            "text": "Wellness That Fits Your Day"
+          }
+        },
+        "benefit_nTr9C8": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar_2.png",
+            "title": "Natural Support",
+            "text": "Plant-Powered Breathing Benefits"
+          }
+        },
+        "benefit_zHLBkV": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar_3.png",
+            "title": "Proven Quality",
+            "text": "Pure, Safe, Consistent Formulas"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_VTKfce",
+        "benefit_AHD9zA",
+        "benefit_nTr9C8",
+        "benefit_zHLBkV"
+      ],
+      "name": "Benefits Grid",
+      "settings": {
+        "heading": "Better From Within",
+        "subheading": "Pure Benefits Designed For Everyday Wellness",
+        "margin_top": 50,
+        "mobile_margin_top": 0
+      }
+    },
+    "explore_collections_A3LhxL": {
+      "type": "explore-collections",
+      "blocks": {
+        "collection_item_cpKB7a": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Tincture",
+            "image": "shopify://shop_images/Hero_Image_33c0082d-df16-46e8-b1de-2ed5d1581801.png",
+            "link": "shopify://collections/tincture"
+          }
+        },
+        "collection_item_WwTGeE": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Gummies",
+            "image": "shopify://shop_images/Hero_Image_e97cce28-0381-415f-ad08-dfef71dd41f3.png",
+            "link": "shopify://collections/gummies"
+          }
+        },
+        "collection_item_6N8n8N": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Capsules",
+            "image": "shopify://shop_images/Untitled_design_4.png",
+            "link": "https://www.trybetterbrand.com/products/betterlungs"
+          }
+        },
+        "collection_item_R8JHX7": {
+          "type": "collection_item",
+          "settings": {
+            "title": "Tea",
+            "image": "shopify://shop_images/Hero_Image_db520aa4-a88b-492f-a0c1-147534699b12.png",
+            "link": "shopify://products/betterlungs-tea"
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_cpKB7a",
+        "collection_item_WwTGeE",
+        "collection_item_6N8n8N",
+        "collection_item_R8JHX7"
+      ],
+      "custom_css": [],
+      "name": "Explore Collections",
+      "settings": {
+        "heading": "Explore Our Collections",
+        "see_all_text": "See All",
+        "see_all_link": "https://www.trybetterbrand.com/collections/all",
+        "show_special_sale_badge": false,
+        "special_sale_badge_text": "20% Off"
       }
     },
     "subscription_bar_3HMcJY": {
@@ -691,9 +691,9 @@
   "order": [
     "banner_style3_xth4VR",
     "new_banner_layout_8VCt8Q",
-    "explore_collections_A3LhxL",
-    "better_benefits_QXYyxz",
     "best_sellers_section_gjDgWP",
+    "better_benefits_QXYyxz",
+    "explore_collections_A3LhxL",
     "subscription_bar_3HMcJY",
     "better_videos_Lx6QYF",
     "absolute_banner_V3trxN",
