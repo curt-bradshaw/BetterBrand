@@ -48,33 +48,18 @@
               <span class="plan-name">
                 {% if v.title contains '(' %}
                   {% assign title_parts = v.title | split: '(' %}
-                  <strong class="patrol-semantic-bold">{{ title_parts[0] | strip }}</strong>
+                  <strong>{{ title_parts[0] | strip }}</strong>
                   {% if title_parts.size > 1 %}
                     {% assign title_inside = title_parts[1] | split: ')' | first | strip %}
-                    <span>(<strong class="patrol-semantic-bold">{{ title_inside }}</strong>)</span>
+                    <span>(<strong>{{ title_inside }}</strong>)</span>
                   {% endif %}
                 {% else %}
-                  <strong class="patrol-semantic-bold">{{ v.title }}</strong>
+                  <strong>{{ v.title }}</strong>
                 {% endif %}
               </span>
             </div>
 
             <div class="plan-right">
-              <div class="plan-badge {% if hide_plan_badge %}hidden{% elsif curr_idx <= 1 %}hidden{% endif %}">
-                {% case curr_idx %}
-                  {% when 2 %}
-                    {% assign discount = 10 %}
-                  {% when 3 %}
-                    {% assign discount = 15 %}
-                  {% else %}
-                    {% assign discount = v.compare_at_price
-                      | minus: v.price
-                      | times: 100
-                      | divided_by: v.compare_at_price
-                    %}
-                {% endcase %}
-                <span><strong class="patrol-semantic-bold">SAVE {{ discount }}%</strong></span>
-              </div>
               <div class="plan-price">
                 {% assign variant_title_lower = v.title | downcase %}
                 {% assign items_count = 0 %}
@@ -99,6 +84,25 @@
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
+              {% case curr_idx %}
+                {% when 2 %}
+                  {% assign discount = 10 %}
+                {% when 3 %}
+                  {% assign discount = 15 %}
+                {% else %}
+                  {% assign discount = v.compare_at_price
+                    | minus: v.price
+                    | times: 100
+                    | divided_by: v.compare_at_price
+                  %}
+              {% endcase %}
+              {%- assign hide_this_badge = false -%}
+              {%- if hide_plan_badge or curr_idx <= 1 -%}
+                {%- assign hide_this_badge = true -%}
+              {%- endif -%}
+              <div class="plan-badge {% if hide_this_badge %}hidden{% endif %}">
+                <span><strong>SAVE {{ discount }}%</strong></span>
+              </div>
             </div>
           </label>
         {% endif %}
@@ -121,18 +125,21 @@
           data-variant-id="{{ last_option_variant.id }}"
         >
           <input type="radio" hidden value="{{ last_option_variant.id }}">
-          <span class="subscription-best"><strong class="patrol-semantic-bold">Best Value</strong></span>
+          <span class="subscription-best"><strong>Best Value</strong></span>
           <div class="content">
             <p class="subscrition-name">
               <span class="subscription-title">
-                <strong class="patrol-semantic-bold">Subscribe & Save</strong>
+                <strong>Subscribe & Save</strong>
               </span>
               <br>
               <span class="subscription-frequency">
-                <strong class="patrol-semantic-bold">{{ last_option_subtitle }}</strong>
+                <strong>{{ last_option_subtitle }}</strong>
               </span>
             </p>
             <div class="plan-right">
+              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
+                <span><strong>SAVE 20%</strong></span>
+              </div>
               <div class="plan-price">
                 {% assign show_each = false %}
                 {% if last_option_variant.metafields.pdp.amount_of_items %}
@@ -153,9 +160,6 @@
                   {% assign price_cents = last_option_allocation_to_use.price | modulo: 100 %}
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
-              </div>
-              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong class="patrol-semantic-bold">SAVE 20%</strong></span>
               </div>
             </div>
           </div>

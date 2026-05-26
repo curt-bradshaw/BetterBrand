@@ -83,6 +83,7 @@
 
           <select aria-label="SortBy" id="filter-sort-by" class="collection-filter__dropdown sort-by filter-select">
             {%- assign sort_by_collection = collection.sort_by | default: collection.default_sort_by -%}
+            {% comment %} {%- assign sort_by_collection = collection.sort_by | default: 'best-selling' -%} {% endcomment %}
 
             <option
               value="manual"

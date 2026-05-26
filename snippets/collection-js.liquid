@@ -56,8 +56,9 @@
           $('#collection-page-content').empty().html($collectionPageContent.html());
         }
       } else {
-        if ($collectionPageContent.find('.product-card__grid-item').length > 0) {
-          $('#collection-page-content').append($collectionPageContent.html());
+        const $newItems = $collectionPageContent.find('.product-card__grid-item');
+        if ($newItems.length > 0) {
+          $('#collection-page-content').append($newItems);
         }
       }
 
@@ -67,7 +68,7 @@
       const $totalItems = $('.product-count__all-collection-items').val();
 
       const productsLoaded = $collectionPageContent.find('.product-card__grid-item').length;
-      const productsPerPage = {{ settings.products_amount }};
+      const productsPerPage = {% if template.suffix == 'bundle' %}{{ settings.products_amount | plus: 0 }}{% else %}50{% endif %};
       const allProductsLoaded = productsPerPage * (list - 1) + productsLoaded;
 
       if(list > 1) {
@@ -124,78 +125,67 @@
 
         loadItems();
       });
-    {%- elsif collection_style == 'loading-more' -%}
+    {%- elsif collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
     /**
-     * Loading More
+     * Load all collection pages (no Load More button).
      */
-    $(document).on('click', '.collection-page__loading-more', function (e) {
-      e.preventDefault();
+    async function loadAllRemainingPages() {
+      const totalPages = parseInt($('#collection-page-content').data('total-pages') || 1, 10);
 
-      const $btn = $(this);
-      const currentPage = list + 1;
-
-      Shopify.replaceState(Shopify.newState('list', currentPage));
-
-      $btn.css('opacity', 0);
-
-      loadItems(true);
-      setTimeout(function(){
-        $btn.closest('.collection-page__loading-more-wrapper').remove();
-      }, 400);
-    });
-
-    {%- elsif collection_style == 'infinite-loading' -%}
-      /**
-      * Infinite Loading More
-      */
-      let lock = false;
-
-      function debounce(callback, timeout = 300) {
-        let timer;
-        return (...args) => {
-          clearTimeout(timer);
-          timer = setTimeout(() => {
-            callback.apply(this, args);
-          }, timeout);
-        };
+      while (list < totalPages) {
+        list += 1;
+        Shopify.replaceState(Shopify.newState('list', list));
+        await loadItems(true);
       }
 
-      $(window).scroll(
-        debounce(async function () {
-          const contentOffsetTop = $('#collection-page-content').offset().top;
-          const contentHeight = $('#collection-page-content').height();
-          const limit = contentHeight + contentOffsetTop;
-          const $window = $(window);
+      $('.collection-page__loading-more-wrapper, .spinner-widget').remove();
+    }
 
-          if ($window.scrollTop() >= limit - 700) {
-            const currentPage = list + 1;
+    async function reloadCollectionGrid() {
+      list = 1;
+      Shopify.replaceState(Shopify.newState('list', 1));
+      await loadItems(false);
+      await loadAllRemainingPages();
+    }
 
-            Shopify.replaceState(Shopify.newState('list', currentPage));
-
-            await loadItems(true);
-          }
-        })
-      );
+    loadAllRemainingPages();
     {%- endif -%}
 
     {% unless template.suffix == 'bundle' %}
 
     $('#filter-by-interest').change(function(){
+      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
+      reloadCollectionGrid();
+      {%- else -%}
       Shopify.replaceState(Shopify.newState('list', 1));
       loadItems();
+      {%- endif -%}
     });
     $('#filter-sort-by').change(function(){
+      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
+      Shopify.replaceState(Shopify.newState('sort_by', $(this).val()));
+      reloadCollectionGrid();
+      {%- else -%}
       Shopify.replaceState(Shopify.newState('list', 1));
       Shopify.replaceState(Shopify.newState('sort_by', $(this).val()));
       loadItems();
+      {%- endif -%}
     });
     $('.collection-facets__item-button').click(function(){
+      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
+      reloadCollectionGrid();
+      {%- else -%}
       Shopify.replaceState(Shopify.newState('list', 1));
       loadItems();
+      {%- endif -%}
     });
     $('.collection-facets__item-option').change(function(){
+      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
+      reloadCollectionGrid();
+      {%- else -%}
       Shopify.replaceState(Shopify.newState('list', 1));
       loadItems();
+      {%- endif -%}
     });
 
     $('.collection-facets__overlay').click(function(){

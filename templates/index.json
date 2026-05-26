@@ -20,7 +20,7 @@
         "custom-padding-top": 0,
         "custom-padding-bottom": 0,
         "homepage_banner_style_3": "shopify://shop_images/spring-sale-1920x1080.webp",
-        "mobile_banner_style_3": "shopify://shop_images/A1C99226-B92D-45E4-AA26-7186EFC82E57.webp",
+        "mobile_banner_style_3": "shopify://shop_images/spring-sale-1920x1080.webp",
         "enable_custom_banner_height": false,
         "banner_max_height": 600,
         "banner_max_height_tablet": 430,
@@ -30,7 +30,7 @@
         "enable_h1": false,
         "homepage_banner_text": "",
         "main_banner_sub_title": "",
-        "homepage_banner_link": "https://www.trybetterbrand.com/products/allergy-support-kit",
+        "homepage_banner_link": "https://www.trybetterbrand.com/collections/all",
         "vasta_headline_align": "center",
         "vasta_headline_align_mobile": "center",
         "font_weight": "normal",
@@ -191,7 +191,9 @@
       "settings": {
         "heading": "Explore Our Collections",
         "see_all_text": "See All",
-        "see_all_link": "https://www.trybetterbrand.com/collections/all"
+        "see_all_link": "https://www.trybetterbrand.com/collections/all",
+        "show_special_sale_badge": false,
+        "special_sale_badge_text": "20% Off"
       }
     },
     "better_benefits_QXYyxz": {
