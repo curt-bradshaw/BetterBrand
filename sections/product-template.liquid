@@ -4213,11 +4213,21 @@
                   placement: 'gallery',
                   suppress_title_on_mobile: pdp_has_mobile_gallery_block
                 -%}
+                {%-
+                  render 'pdp-flavor-variant-selector',
+                  placement: 'gallery',
+                  suppress_title_on_mobile: pdp_has_mobile_gallery_block
+                -%}
               </div>
             {%- when 'title' -%}
               {%- render 'product-title' with block: block, product_title: product.title -%}
               {%-
                 render 'pdp-related-product-links',
+                placement: 'title',
+                suppress_title_on_mobile: pdp_has_mobile_gallery_block
+              -%}
+              {%-
+                render 'pdp-flavor-variant-selector',
                 placement: 'title',
                 suppress_title_on_mobile: pdp_has_mobile_gallery_block
               -%}
