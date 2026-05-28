@@ -46,6 +46,10 @@
           {% if product.handle == 'bundle-save' %}
             {% continue %}
           {% endif %}
+          {% comment %} Hide any product tagged "hidden" from collection pages {% endcomment %}
+          {% if product.tags contains 'hidden' %}
+            {% continue %}
+          {% endif %}
           {% if template.suffix == 'bundle' %}
               {% render 'product-alternative-card', custom_product: product %}
             {% else %}

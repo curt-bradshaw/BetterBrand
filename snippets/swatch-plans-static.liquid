@@ -581,16 +581,12 @@
 
     if (!variantSelect || !productForm) return;
 
-    // Initial check: show quantity only for 1-pack or 1 bottle variants
-    function checkAndShowQuantity() {
-      const productQuantity = document.querySelector('.product-quantity');
-      if (variantCards.length > 1) {
-        productQuantity.style.display = 'none';
-      }
+    // Ensure the quantity selector is visible on load.
+    // (Previously this snippet hid it when multiple variants existed.)
+    const initialProductQuantity = document.querySelector('.product-quantity');
+    if (initialProductQuantity) {
+      initialProductQuantity.style.display = '';
     }
-
-    // Run initial check
-    checkAndShowQuantity();
 
     /* ===============================
        HELPER FUNCTIONS
@@ -607,6 +603,35 @@
           panel.classList.remove('is-active');
         }
       });
+    }
+
+    /*
+     * Scrolls the PDP image slider (.jq-featured-slider, Slick) to the slide
+     * whose data-position matches the new variant's featured image position.
+     * Mirrors the theme's existing VastaSwatch onVariantChange behavior so the
+     * gallery follows pill/card clicks even when VastaSwatch isn't bound to them.
+     */
+    function syncProductSliderToVariant(variantId) {
+      if (!variantId) return;
+      const option = variantSelect.querySelector('option[value="' + variantId + '"]');
+      if (!option) return;
+      const position = parseInt(option.dataset.imagePosition || '0', 10);
+      if (!position) return;
+
+      const run = () => {
+        if (typeof window.jQuery !== 'function') return;
+        const $slider = window.jQuery('.jq-featured-slider');
+        if (!$slider.length || typeof $slider.slick !== 'function') return;
+        const $slide = $slider.find('.slick-slide [data-position="' + position + '"]').first();
+        if (!$slide.length) return;
+        const slideIndex = parseInt($slide.closest('.slick-slide').attr('data-slick-index'), 10);
+        if (!isNaN(slideIndex)) {
+          $slider.slick('slickGoTo', slideIndex);
+        }
+      };
+
+      // Delay slightly so slick is initialised and the change event has settled.
+      setTimeout(run, 60);
     }
 
     function formatMoney(cents) {
@@ -679,6 +704,9 @@
         // Sync expanded feature panel for the new pill UI
         syncPlanFeature(variantId);
 
+        // Sync PDP image slider to the variant's featured image
+        syncProductSliderToVariant(variantId);
+
         // Remove selling plan and active subscription
         if (sellingPlanId) {
           sellingPlanInput.value = sellingPlanId;
@@ -688,14 +716,11 @@
           sellingPlanInput.dispatchEvent(new Event('change', { bubbles: true }));
         }
 
-        // Show quantity only for 1-pack or 1 bottle variants
-        const selectedVariantOption = variantSelect.querySelector(`option[value="${variantId}"]`);
-        const variantTitle = selectedVariantOption ? selectedVariantOption.textContent : '';
-        // const is1Pack = is1PackOr1Bottle(variantTitle);
-        
+        // Keep the quantity selector visible after a variant change
+        // (previously this block hid it; now it stays shown on load and on every selection).
         const productQuantity = document.querySelector('.product-quantity');
         if (productQuantity) {
-          productQuantity.style.display = 'none';
+          productQuantity.style.display = '';
         }
 
         // Update price to selected variant price
