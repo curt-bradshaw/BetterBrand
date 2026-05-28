@@ -605,35 +605,6 @@
       });
     }
 
-    /*
-     * Scrolls the PDP image slider (.jq-featured-slider, Slick) to the slide
-     * whose data-position matches the new variant's featured image position.
-     * Mirrors the theme's existing VastaSwatch onVariantChange behavior so the
-     * gallery follows pill/card clicks even when VastaSwatch isn't bound to them.
-     */
-    function syncProductSliderToVariant(variantId) {
-      if (!variantId) return;
-      const option = variantSelect.querySelector('option[value="' + variantId + '"]');
-      if (!option) return;
-      const position = parseInt(option.dataset.imagePosition || '0', 10);
-      if (!position) return;
-
-      const run = () => {
-        if (typeof window.jQuery !== 'function') return;
-        const $slider = window.jQuery('.jq-featured-slider');
-        if (!$slider.length || typeof $slider.slick !== 'function') return;
-        const $slide = $slider.find('.slick-slide [data-position="' + position + '"]').first();
-        if (!$slide.length) return;
-        const slideIndex = parseInt($slide.closest('.slick-slide').attr('data-slick-index'), 10);
-        if (!isNaN(slideIndex)) {
-          $slider.slick('slickGoTo', slideIndex);
-        }
-      };
-
-      // Delay slightly so slick is initialised and the change event has settled.
-      setTimeout(run, 60);
-    }
-
     function formatMoney(cents) {
       const amount = (parseInt(cents) / 100).toFixed(2);
       // Simple USD format - adjust if needed for other currencies
@@ -703,9 +674,6 @@
 
         // Sync expanded feature panel for the new pill UI
         syncPlanFeature(variantId);
-
-        // Sync PDP image slider to the variant's featured image
-        syncProductSliderToVariant(variantId);
 
         // Remove selling plan and active subscription
         if (sellingPlanId) {
