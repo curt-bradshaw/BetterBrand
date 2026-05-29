@@ -5,14 +5,58 @@
 {%- endcomment -%}
 
 <style>
-/* Hide the theme's global header and footer for this landing page only.
-   This template uses layout/theme.old-layout.liquid, which renders the
-   header via {% sections 'header-group' %} (inside <header>) and the
-   footer via {% sections 'footer-group' %}. We target Shopify's
-   auto-generated section-group wrappers, the individual section IDs
-   from header-group.json / footer-group.json, and the bare <header>. */
-.shopify-section-group-header-group {
-  display: none !important;
+/* ══════════════════════════════════════════════════════════════
+   HIDE THEME CHROME — header, footer and announcement/shipping bar.
+   Matches the same selector set used by lp-founders-story.liquid,
+   covering this theme's wrappers plus common Shopify section IDs
+   so the page renders as a standalone advertorial.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Shipping / announcement bar */
+.essential_annoucement_bar_wrapper,
+[class*="essential_annoucement_bar"],
+[class*="essential_announcement_bar"],
+announcement-bar,
+.announcement-bar,
+.announcement-bar-section,
+#shopify-section-announcement-bar,
+[id*="announcement"],
+[class*="announcement-bar"],
+.shopify-section.shipping-bar,
+[class*="shipping-bar"],
+[id*="shipping_bar"],
+[id*="shipping-bar"] { display: none !important; }
+
+/* Header */
+header.header-content,
+.header-content,
+.site-header,
+#shopify-section-header,
+[class*="site-header"],
+sticky-header,
+.header-wrapper,
+.shopify-section.section-header,
+.shopify-section-header-sticky,
+[class*="section-header"],
+[id*="section-header"] { display: none !important; }
+
+/* Footer */
+footer.footer-content,
+.footer-content,
+.site-footer,
+#shopify-section-footer,
+[class*="site-footer"],
+.shopify-section .ntg-footer,
+.ntg-footer,
+[id*="section-footer"] { display: none !important; }
+
+/* Remove the theme's main-content top padding so the page starts at the top */
+#MainContent,
+main#MainContent,
+.main-content,
+[id="MainContent"] {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 /* ========================================================================
