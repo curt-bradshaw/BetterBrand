@@ -6,7 +6,17 @@
 
 <style>
 /* Hide the theme's global header and footer for this landing page only.
-   Both wrappers are defined in layout/theme.liquid. */
+   This template uses layout/theme.old-layout.liquid, which renders the
+   header via {% sections 'header-group' %} (inside <header>) and the
+   footer via {% sections 'footer-group' %}. We target Shopify's
+   auto-generated section-group wrappers, the individual section IDs
+   from header-group.json / footer-group.json, and the bare <header>. */
+.shopify-section-group-header-group,
+.shopify-section-group-footer-group,
+#shopify-section-header,
+#shopify-section-custom_liquid_mqQzGk,
+#shopify-section-footer,
+body > header,
 .header-content,
 .footer-content {
   display: none !important;
