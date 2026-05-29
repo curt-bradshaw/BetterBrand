@@ -5,6 +5,13 @@
 {%- endcomment -%}
 
 <style>
+/* Hide the theme's global header and footer for this landing page only.
+   Both wrappers are defined in layout/theme.liquid. */
+.header-content,
+.footer-content {
+  display: none !important;
+}
+
 /* ========================================================================
    Grandpa Jackson advertorial v2 — simple, photo-heavy, sans-serif only.
    All tokens from /bb-tokens.css. No serif fonts, no complex chrome.
@@ -1572,7 +1579,7 @@ a.inline-cta:hover {
       <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/mullein-plant_19b86766-68e9-4f45-8bd1-bbbb5380a624.jpg?v=1780079114" alt="A gummy bear held up against a hillside of mullein plants in bloom.">
     </figure>
     <figure class="fig" data-product="bundle">
-      <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/jack-holding-gummies.jpg?v=1780079112" alt="A bottle of BetterLungs Mullein + Chlorophyll drops held up against a hillside of mullein plants in bloom.">
+      <img src="{{ 'drchris-mullein-drops.jpg' | asset_url }}" alt="A bottle of BetterLungs Mullein + Chlorophyll drops held up against a hillside of mullein plants in bloom.">
     </figure>
 
     <p>It's built around <strong>mullein leaf</strong> — an herb people have leaned on for respiratory comfort since Greek and Roman times — dosed and tested by a pharmacist. We've made BetterLungs in a few different formats over the years: gummies, drops, and a nasal Reset Stick.</p>
@@ -1595,7 +1602,7 @@ a.inline-cta:hover {
 
     <!-- PHOTO: Jack holding the product — varies by product line -->
     <figure class="fig" data-product="gummies">
-      <img src="{{ 'drchris-pawpaw-gummies.jpg' | asset_url }}" alt="Jack 'PawPaw' Jackson smiling, holding up a bag of BetterLungs Mullein Gummies. Behind him, a red brick wall painted with the words 'WILLIE NELSON'.">
+      <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/jack-holding-gummies.jpg?v=1780079112" alt="Jack 'PawPaw' Jackson smiling, holding up a bag of BetterLungs Mullein Gummies. Behind him, a red brick wall painted with the words 'WILLIE NELSON'.">
     </figure>
     <figure class="fig" data-product="bundle">
       <img src="{{ 'drchris-pawpaw-bundle.jpg' | asset_url }}" alt="Jack 'PawPaw' Jackson smiling, holding up a BetterLungs nasal Reset Stick and a bottle of Mullein + Chlorophyll drops. Behind him, a red brick wall painted with the words 'WILLIE NELSON'.">
@@ -1607,7 +1614,7 @@ a.inline-cta:hover {
   <!-- CTA -->
   <section class="cta" id="cta" data-product="gummies">
     <h3>This is what I made for my dad. <em>Now I want you to try it.</em></h3>
-    <img src="{{ 'drchris-cta-gummies.png' | asset_url }}" alt="BetterLungs Mullein Gummies" class="cta-bottle">
+    <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummies-bag.png?v=1780079109" alt="BetterLungs Mullein Gummies" class="cta-bottle">
     <div class="cta-eyebrow">Pear Flavored · 60 Gummies · 30-Day Supply</div>
     <p>
       BetterLungs<sup>®</sup> Mullein Gummies. Daily lung support in a pear-flavored gummy. Mullein leaf, dosed and tested by a Doctor of Pharmacy.
@@ -1643,9 +1650,9 @@ a.inline-cta:hover {
   </section>
 
   <div class="seals">
-    <img src="{{ 'drchris-trust-made-usa.png' | asset_url }}" alt="Made in USA">
-    <img src="{{ 'drchris-trust-lab-tested.png' | asset_url }}" alt="Lab tested">
-    <img src="{{ 'drchris-trust-gmp.png' | asset_url }}" alt="GMP certified">
+    <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/seal-made-in-usa.png?v=1780079110" alt="Made in USA">
+    <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/seal-lab-tested.png?v=1780079110" alt="Lab tested">
+    <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/seal-gmp-certified.png?v=1780079110" alt="GMP certified">
   </div>
 
 </article>
