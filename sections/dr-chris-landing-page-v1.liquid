@@ -1444,12 +1444,20 @@ body[data-product="bundle"] [data-product="gummies"] {
   text-align: center;
   margin: 24px 0 28px;
 }
+a.inline-cta,
+a.inline-cta:link,
+a.inline-cta:visited,
+a.inline-cta:hover,
+a.inline-cta:focus,
+a.inline-cta:active {
+  text-decoration: none !important;
+}
 a.inline-cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   background: var(--bb-forest-700);
-  color: var(--bb-cream-50);
+  color: var(--bb-cream-50) !important;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 13px;
@@ -1457,7 +1465,6 @@ a.inline-cta {
   text-transform: uppercase;
   padding: 14px 24px;
   border-radius: var(--radius-pill);
-  text-decoration: none;
   box-shadow: 0 6px 14px -6px rgba(20, 30, 25, 0.4);
   transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
 }
