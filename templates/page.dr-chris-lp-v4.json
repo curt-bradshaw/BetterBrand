@@ -14,14 +14,14 @@
       "disabled": true,
       "settings": {}
     },
-    "dr_chris_landing_page_v2_j9LKhx": {
-      "type": "dr-chris-landing-page-v2",
-      "name": "Dr. Chris Landing Page V2",
+    "dr_chris_landing_page_v4_xfQw7M": {
+      "type": "dr-chris-landing-page-v4",
+      "name": "Dr. Chris Landing Page V4",
       "settings": {}
     }
   },
   "order": [
     "main",
-    "dr_chris_landing_page_v2_j9LKhx"
+    "dr_chris_landing_page_v4_xfQw7M"
   ]
 }
