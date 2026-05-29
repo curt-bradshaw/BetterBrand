@@ -1,0 +1,6 @@
+ignore:
+  # This section is a self-contained "bundler preview" HTML document that embeds
+  # multi-megabyte JSON payloads inside <script> tags. theme-check's HTML parser
+  # mis-tokenises the escaped HTML inside those JSON strings and emits a spurious
+  # "SyntaxError: expected </" at end-of-file. Ignore the file as a whole.
+  - sections/dr-chris-lp-v1.liquid
