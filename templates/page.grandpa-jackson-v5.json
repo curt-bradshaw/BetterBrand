@@ -11,10 +11,17 @@
   "sections": {
     "main": {
       "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "grandpa_jackson_landing_page_v5_AhHqJj": {
+      "type": "grandpa-jackson-landing-page-v5",
+      "name": "Grandpa Landing Page V5",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "grandpa_jackson_landing_page_v5_AhHqJj"
   ]
 }
