@@ -8,6 +8,7 @@
  * ------------------------------------------------------------
  */
 {
+  "layout": "theme.old-layout",
   "sections": {
     "main": {
       "type": "page-template",
