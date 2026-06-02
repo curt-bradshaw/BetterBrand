@@ -7,48 +7,6 @@
 {% comment %} Boolean: true = hide all plan badges; false or unset = show (subject to per-card rules). {% endcomment %}
 {% assign hide_plan_badge = product.metafields.pdp.hide_plan_badge.value | default: false %}
 
-{% comment %}
-  Detect a "Flavor" option and (if present) the first non-flavor option.
-
-  Three rendering modes:
-    1. is_flavor_product && has_other_option  → flavor pills + .plan-card stack for the other option (multi-option)
-    2. is_flavor_product && no other option   → flavor pills + .plan-feature panel
-    3. no flavor option                       → original .plan-card stack
-{% endcomment %}
-{% assign flavor_option_position = 0 %}
-{% for opt in product.options %}
-  {% assign opt_lc = opt | downcase %}
-  {% if opt_lc == 'flavor' or opt_lc == 'flavour' %}
-    {% assign flavor_option_position = forloop.index %}
-    {% break %}
-  {% endif %}
-{% endfor %}
-{% assign is_flavor_product = false %}
-{% if flavor_option_position > 0 %}
-  {% assign is_flavor_product = true %}
-{% endif %}
-
-{% assign other_option_position = 0 %}
-{% if is_flavor_product %}
-  {% for opt in product.options %}
-    {% unless forloop.index == flavor_option_position %}
-      {% assign other_option_position = forloop.index %}
-      {% break %}
-    {% endunless %}
-  {% endfor %}
-{% endif %}
-{% assign has_other_option = false %}
-{% if other_option_position > 0 %}
-  {% assign has_other_option = true %}
-{% endif %}
-
-{% assign flavor_idx = flavor_option_position | minus: 1 %}
-{% assign other_idx = other_option_position | minus: 1 %}
-
-{% if is_flavor_product %}
-  {% assign current_flavor = current_variant.options[flavor_idx] %}
-{% endif %}
-
 {% if last_option_variant_id and last_option_selling_plan_id %}
   {% assign last_option_variant = product.variants | where: 'id', last_option_variant_id | first %}
   {% for allocation in last_option_variant.selling_plan_allocations %}
@@ -62,328 +20,6 @@
 {% if product.variants.size > 1 %}
   <div class="plan-wrapper" id="product-plan-selector">
     <!-- VARIANTS -->
-    {% if is_flavor_product and has_other_option %}
-    {% comment %}
-      MULTI-OPTION: flavor pills on top, original .plan-card stack below for the non-flavor option.
-      A JSON lookup map is emitted so JS can resolve (flavor + other) → variant on every interaction.
-    {% endcomment %}
-    <div class="plan-list plan-list--multi" data-active-variant-id="{{ current_variant.id }}" data-product-id="{{ product.id }}">
-      <h3 class="plan-pills__title" id="plan-pills-title-{{ product.id }}-multi">Choose Your Flavor</h3>
-      <div class="plan-pills" role="tablist" aria-labelledby="plan-pills-title-{{ product.id }}-multi">
-        {%- assign flavor_values = product.options_with_values[flavor_idx].values -%}
-        {% for fv in flavor_values %}
-          {%- assign flavor_image_variant = nil -%}
-          {% for v in product.variants %}
-            {% if v.options[flavor_idx] == fv %}
-              {%- assign flavor_image_variant = v -%}
-              {% break %}
-            {% endif %}
-          {% endfor %}
-          <label
-            class="plan-pill plan-flavor-pill {% if fv == current_flavor %}active{% endif %}"
-            data-flavor-value="{{ fv | escape }}"
-            role="tab"
-            aria-selected="{% if fv == current_flavor %}true{% else %}false{% endif %}"
-            title="{{ fv | escape }}"
-          >
-            <input type="radio" hidden>
-            <span class="plan-pill__thumb">
-              {% if flavor_image_variant.image %}
-                <img class="plan-pill__img" src="{{ flavor_image_variant.image | image_url: width: 160 }}" alt="" role="presentation" width="64" height="64" loading="lazy">
-              {% elsif product.featured_image %}
-                <img class="plan-pill__img" src="{{ product.featured_image | image_url: width: 160 }}" alt="" role="presentation" width="64" height="64" loading="lazy">
-              {% else %}
-                <span class="plan-pill__placeholder" aria-hidden="true"></span>
-              {% endif %}
-            </span>
-            <span class="plan-pill__name">{{ fv }}</span>
-          </label>
-        {% endfor %}
-      </div>
-
-      <div class="plan-list__cards">
-        {%- assign other_values = product.options_with_values[other_idx].values -%}
-        {%- assign curr_idx = 1 -%}
-        {% for ov in other_values %}
-          {%- assign matching_variant = nil -%}
-          {% for v in product.variants %}
-            {% if v.options[flavor_idx] == current_flavor and v.options[other_idx] == ov %}
-              {%- assign matching_variant = v -%}
-              {% break %}
-            {% endif %}
-          {% endfor %}
-          {% comment %} Fallback: render this size with any flavor so JS can swap it when flavor changes {% endcomment %}
-          {% unless matching_variant %}
-            {% for v in product.variants %}
-              {% if v.options[other_idx] == ov and v.available %}
-                {%- assign matching_variant = v -%}
-                {% break %}
-              {% endif %}
-            {% endfor %}
-          {% endunless %}
-
-          {% if matching_variant and matching_variant.available %}
-            {% unless matching_variant.metafields.pdp.hide_on_pdp %}
-              {% case curr_idx %}
-                {% when 2 %}
-                  {% assign discount = 10 %}
-                {% when 3 %}
-                  {% assign discount = 15 %}
-                {% else %}
-                  {% assign discount = matching_variant.compare_at_price
-                    | minus: matching_variant.price
-                    | times: 100
-                    | divided_by: matching_variant.compare_at_price
-                  %}
-              {% endcase %}
-              {%- assign hide_this_badge = false -%}
-              {%- if hide_plan_badge or curr_idx <= 1 -%}
-                {%- assign hide_this_badge = true -%}
-              {%- endif -%}
-
-              {%- assign items_count = 0 -%}
-              {%- assign show_each = false -%}
-              {%- if matching_variant.metafields.pdp.amount_of_items -%}
-                {%- assign items_count = matching_variant.metafields.pdp.amount_of_items | times: 1 -%}
-                {%- assign show_each = true -%}
-              {%- endif -%}
-
-              <label
-                class="plan-card plan-size-card {% if matching_variant.id == current_variant.id %}active{% endif %}"
-                data-variant-id="{{ matching_variant.id }}"
-                data-price="{{ matching_variant.price }}"
-                data-size-value="{{ ov | escape }}"
-                data-card-position="{{ curr_idx }}"
-              >
-                <input type="radio" hidden>
-
-                <div class="plan-left" data-card-image-wrap>
-                  {% if matching_variant.image %}
-                    <img src="{{ matching_variant.image | image_url: width: 120 }}" alt="{{ matching_variant.title }}" width="120" height="120" loading="lazy">
-                  {% elsif product.featured_image %}
-                    <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ matching_variant.title }}" width="120" height="120" loading="lazy">
-                  {% else %}
-                    <div class="image-placeholder"></div>
-                  {% endif %}
-                </div>
-
-                <div class="plan-center">
-                  <span class="plan-name">
-                    <strong>{{ ov }}</strong>
-                  </span>
-                </div>
-
-                <div class="plan-right">
-                  <div class="plan-price" data-card-price data-items="{{ items_count }}">
-                    {% if show_each and items_count > 0 %}
-                      {%- assign per_item_cents = matching_variant.price | divided_by: items_count -%}
-                      {%- assign per_item_dollars = per_item_cents | divided_by: 100 -%}
-                      {%- assign per_item_rem = per_item_cents | modulo: 100 -%}
-                      ${{ per_item_dollars }}.{% if per_item_rem < 10 %}0{% endif %}{{ per_item_rem }}
-                      <span>each</span>
-                    {% else %}
-                      {%- assign pd = matching_variant.price | divided_by: 100 -%}
-                      {%- assign pc = matching_variant.price | modulo: 100 -%}
-                      ${{ pd }}.{% if pc < 10 %}0{% endif %}{{ pc }}
-                    {% endif %}
-                  </div>
-                  <div class="plan-badge {% if hide_this_badge %}hidden{% endif %}" data-card-badge>
-                    <span><strong>SAVE {{ discount }}%</strong></span>
-                  </div>
-                </div>
-              </label>
-              {%- assign curr_idx = curr_idx | plus: 1 -%}
-            {% endunless %}
-          {% endif %}
-        {% endfor %}
-      </div>
-
-      {% comment %} JSON lookup: (flavor|other) → variant data, for live JS resolution {% endcomment %}
-      <script type="application/json" data-plan-variant-lookup>
-        {
-          {%- assign first_emit = true -%}
-          {%- for v in product.variants -%}
-            {%- unless v.available -%}{%- continue -%}{%- endunless -%}
-            {%- assign fv_v = v.options[flavor_idx] -%}
-            {%- assign ov_v = v.options[other_idx] -%}
-            {%- assign items_v = v.metafields.pdp.amount_of_items | default: 0 -%}
-            {%- assign img_url = '' -%}
-            {%- if v.image -%}{%- assign img_url = v.image | image_url: width: 120 -%}{%- elsif product.featured_image -%}{%- assign img_url = product.featured_image | image_url: width: 120 -%}{%- endif -%}
-            {%- assign key = fv_v | append: '|' | append: ov_v -%}
-            {%- if first_emit -%}{%- assign first_emit = false -%}{%- else -%},{%- endif -%}
-            {{ key | json }}: {
-              "id": {{ v.id }},
-              "price": {{ v.price }},
-              "comparePrice": {{ v.compare_at_price | default: 0 }},
-              "items": {{ items_v }},
-              "image": {{ img_url | json }},
-              "title": {{ v.title | json }}
-            }
-          {%- endfor -%}
-        }
-      </script>
-    </div>
-    {% elsif is_flavor_product %}
-    <div class="plan-list plan-list--flavors" data-active-variant-id="{{ current_variant.id }}">
-      <h3 class="plan-pills__title" id="plan-pills-title-{{ product.id }}-flavors">Choose Your Flavor</h3>
-      <div class="plan-pills" role="tablist" aria-labelledby="plan-pills-title-{{ product.id }}-flavors">
-        {% assign curr_idx = 1 %}
-        {% for v in product.variants %}
-          {% if v.metafields.pdp.hide_on_pdp %}
-            {% continue %}
-          {% endif %}
-          {% if v.available %}
-            {%- assign clean_name = v.title -%}
-            {% if v.title contains '(' %}
-              {% assign clean_name = v.title | split: '(' | first | strip %}
-            {% endif %}
-
-            {% case curr_idx %}
-              {% when 2 %}
-                {% assign discount = 10 %}
-              {% when 3 %}
-                {% assign discount = 15 %}
-              {% else %}
-                {% assign discount = v.compare_at_price
-                  | minus: v.price
-                  | times: 100
-                  | divided_by: v.compare_at_price
-                %}
-            {% endcase %}
-            {%- assign hide_this_badge = false -%}
-            {%- if hide_plan_badge or curr_idx <= 1 -%}
-              {%- assign hide_this_badge = true -%}
-            {%- endif -%}
-
-            <label
-              class="plan-card plan-pill {% if v.id == current_variant.id %}active{% endif %}"
-              data-variant-id="{{ v.id }}"
-              data-price="{{ v.price }}"
-              role="tab"
-              aria-selected="{% if v.id == current_variant.id %}true{% else %}false{% endif %}"
-              title="{{ v.title | escape }}"
-            >
-              <input type="radio" hidden>
-              <span class="plan-pill__thumb">
-                {% if v.image %}
-                  <img
-                    class="plan-pill__img"
-                    src="{{ v.image | image_url: width: 160 }}"
-                    alt=""
-                    role="presentation"
-                    width="64"
-                    height="64"
-                    loading="lazy"
-                  >
-                {% elsif product.featured_image %}
-                  <img
-                    class="plan-pill__img"
-                    src="{{ product.featured_image | image_url: width: 160 }}"
-                    alt=""
-                    role="presentation"
-                    width="64"
-                    height="64"
-                    loading="lazy"
-                  >
-                {% else %}
-                  <span class="plan-pill__placeholder" aria-hidden="true"></span>
-                {% endif %}
-              </span>
-              <span class="plan-pill__name">{{ clean_name }}</span>
-            </label>
-          {% endif %}
-          {% assign curr_idx = curr_idx | plus: 1 %}
-        {% endfor %}
-      </div>
-
-      <div class="plan-feature-stack">
-        {% assign curr_idx = 1 %}
-        {% for v in product.variants %}
-          {% if v.metafields.pdp.hide_on_pdp %}
-            {% continue %}
-          {% endif %}
-          {% if v.available %}
-            {% case curr_idx %}
-              {% when 2 %}
-                {% assign discount = 10 %}
-              {% when 3 %}
-                {% assign discount = 15 %}
-              {% else %}
-                {% assign discount = v.compare_at_price
-                  | minus: v.price
-                  | times: 100
-                  | divided_by: v.compare_at_price
-                %}
-            {% endcase %}
-            {%- assign hide_this_badge = false -%}
-            {%- if hide_plan_badge or curr_idx <= 1 -%}
-              {%- assign hide_this_badge = true -%}
-            {%- endif -%}
-
-            {%- assign items_count = 0 -%}
-            {%- assign show_each = false -%}
-            {%- if v.metafields.pdp.amount_of_items -%}
-              {%- assign items_count = v.metafields.pdp.amount_of_items | times: 1 -%}
-              {%- assign show_each = true -%}
-            {%- endif -%}
-
-            {%- assign total_dollars = v.price | divided_by: 100 -%}
-            {%- assign total_cents = v.price | modulo: 100 -%}
-
-            <div
-              class="plan-feature {% if v.id == current_variant.id %}is-active{% endif %}"
-              data-variant-id="{{ v.id }}"
-              role="tabpanel"
-            >
-              <div class="plan-left">
-                {% if v.image %}
-                  <img src="{{ v.image | image_url: width: 120 }}" alt="{{ v.title }}" width="120" height="120" loading="lazy">
-                {% elsif product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ v.title }}" width="120" height="120" loading="lazy">
-                {% else %}
-                  <div class="image-placeholder"></div>
-                {% endif %}
-              </div>
-
-              <div class="plan-center">
-                <span class="plan-name">
-                  {% if v.title contains '(' %}
-                    {% assign title_parts = v.title | split: '(' %}
-                    <strong>{{ title_parts[0] | strip }}</strong>
-                    {% if title_parts.size > 1 %}
-                      {% assign title_inside = title_parts[1] | split: ')' | first | strip %}
-                      <span>(<strong>{{ title_inside }}</strong>)</span>
-                    {% endif %}
-                  {% else %}
-                    <strong>{{ v.title }}</strong>
-                  {% endif %}
-                </span>
-              </div>
-
-              <div class="plan-right">
-                <div class="plan-price">
-                  {% if show_each and items_count > 0 %}
-                    {%- assign per_item_cents = v.price | divided_by: items_count -%}
-                    {%- assign per_item_dollars = per_item_cents | divided_by: 100 -%}
-                    {%- assign per_item_rem = per_item_cents | modulo: 100 -%}
-                    ${{ per_item_dollars }}.{% if per_item_rem < 10 %}0{% endif %}{{ per_item_rem }}
-                    <span>each</span>
-                  {% else %}
-                    ${{ total_dollars }}.{% if total_cents < 10 %}0{% endif %}{{ total_cents }}
-                  {% endif %}
-                </div>
-                <div class="plan-badge {% if hide_this_badge %}hidden{% endif %}">
-                  <span><strong>SAVE {{ discount }}%</strong></span>
-                </div>
-              </div>
-            </div>
-          {% endif %}
-          {% assign curr_idx = curr_idx | plus: 1 %}
-        {% endfor %}
-      </div>
-    </div>
-    {% else %}
-    {% comment %} Original .plan-card stack for non-flavor products {% endcomment %}
     <div class="plan-list">
       {% assign curr_idx = 1 %}
       {% for v in product.variants %}
@@ -400,9 +36,9 @@
 
               <div class="plan-left">
                 {% if v.image %}
-                  <img src="{{ v.image | image_url: width: 120 }}" alt="{{ v.title }}" width="120" height="120" loading="lazy">
+                  <img src="{{ v.image | image_url: width: 120 }}" alt="{{ v.title }}">
                 {% elsif product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ v.title }}" width="120" height="120" loading="lazy">
+                  <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ v.title }}">
                 {% else %}
                   <div class="image-placeholder"></div>
                 {% endif %}
@@ -424,47 +60,44 @@
             </div>
 
             <div class="plan-right">
+              <div class="plan-badge {% if hide_plan_badge %}hidden{% elsif curr_idx <= 1 %}hidden{% endif %}">
+                {% case curr_idx %}
+                  {% when 2 %}
+                    {% assign discount = 10 %}
+                  {% when 3 %}
+                    {% assign discount = 15 %}
+                  {% else %}
+                    {% assign discount = v.compare_at_price
+                      | minus: v.price
+                      | times: 100
+                      | divided_by: v.compare_at_price
+                    %}
+                {% endcase %}
+                <span><strong>SAVE {{ discount }}%</strong></span>
+              </div>
               <div class="plan-price">
                 {% assign variant_title_lower = v.title | downcase %}
                 {% assign items_count = 0 %}
                 {% assign show_each = false %}
-
+                
                 {% if v.metafields.pdp.amount_of_items %}
                   {% assign items_count = v.metafields.pdp.amount_of_items | times: 1 %}
                   {% assign show_each = true %}
                 {% endif %}
-
+                
                 {% if show_each and items_count > 0 %}
+                  {% comment %} Calculate price per bottle/pack {% endcomment %}
                   {% assign total_price_cents = v.price %}
                   {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
                   {% assign price_per_item_dollars = price_per_item_cents | divided_by: 100 %}
                   {% assign cents_remainder = price_per_item_cents | modulo: 100 %}
                   ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
                   <span>each</span>
-                {% else %}
+                {% else %}  
                   {% assign price_dollars = v.price | divided_by: 100 %}
                   {% assign price_cents = v.price | modulo: 100 %}
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
-              </div>
-              {% case curr_idx %}
-                {% when 2 %}
-                  {% assign discount = 10 %}
-                {% when 3 %}
-                  {% assign discount = 15 %}
-                {% else %}
-                  {% assign discount = v.compare_at_price
-                    | minus: v.price
-                    | times: 100
-                    | divided_by: v.compare_at_price
-                  %}
-              {% endcase %}
-              {%- assign hide_this_badge = false -%}
-              {%- if hide_plan_badge or curr_idx <= 1 -%}
-                {%- assign hide_this_badge = true -%}
-              {%- endif -%}
-              <div class="plan-badge {% if hide_this_badge %}hidden{% endif %}">
-                <span><strong>SAVE {{ discount }}%</strong></span>
               </div>
             </div>
           </label>
@@ -472,7 +105,6 @@
         {% assign curr_idx = curr_idx | plus: 1 %}
       {% endfor %}
     </div>
-    {% endif %}
 
     <!-- SELECT REAL SHOPIFY -->
   </div>
@@ -501,9 +133,6 @@
               </span>
             </p>
             <div class="plan-right">
-              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>SAVE 20%</strong></span>
-              </div>
               <div class="plan-price">
                 {% assign show_each = false %}
                 {% if last_option_variant.metafields.pdp.amount_of_items %}
@@ -524,6 +153,9 @@
                   {% assign price_cents = last_option_allocation_to_use.price | modulo: 100 %}
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
+              </div>
+              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
+                <span><strong>SAVE 20%</strong></span>
               </div>
             </div>
           </div>
@@ -581,30 +213,20 @@
 
     if (!variantSelect || !productForm) return;
 
-    // Ensure the quantity selector is visible on load.
-    // (Previously this snippet hid it when multiple variants existed.)
-    const initialProductQuantity = document.querySelector('.product-quantity');
-    if (initialProductQuantity) {
-      initialProductQuantity.style.display = '';
+    // Initial check: show quantity only for 1-pack or 1 bottle variants
+    function checkAndShowQuantity() {
+      const productQuantity = document.querySelector('.product-quantity');
+      if (variantCards.length > 1) {
+        productQuantity.style.display = 'none';
+      }
     }
+
+    // Run initial check
+    checkAndShowQuantity();
 
     /* ===============================
        HELPER FUNCTIONS
     =============================== */
-    function syncPlanFeature(variantId) {
-      const list = document.querySelector('.plan-list');
-      if (!list) return;
-      list.dataset.activeVariantId = variantId;
-      const panels = list.querySelectorAll('.plan-feature');
-      panels.forEach((panel) => {
-        if (panel.dataset.variantId === String(variantId)) {
-          panel.classList.add('is-active');
-        } else {
-          panel.classList.remove('is-active');
-        }
-      });
-    }
-
     function formatMoney(cents) {
       const amount = (parseInt(cents) / 100).toFixed(2);
       // Simple USD format - adjust if needed for other currencies
@@ -672,9 +294,6 @@
         variantCards.forEach((c) => c.classList.remove('active'));
         card.classList.add('active');
 
-        // Sync expanded feature panel for the new pill UI
-        syncPlanFeature(variantId);
-
         // Remove selling plan and active subscription
         if (sellingPlanId) {
           sellingPlanInput.value = sellingPlanId;
@@ -684,11 +303,14 @@
           sellingPlanInput.dispatchEvent(new Event('change', { bubbles: true }));
         }
 
-        // Keep the quantity selector visible after a variant change
-        // (previously this block hid it; now it stays shown on load and on every selection).
+        // Show quantity only for 1-pack or 1 bottle variants
+        const selectedVariantOption = variantSelect.querySelector(`option[value="${variantId}"]`);
+        const variantTitle = selectedVariantOption ? selectedVariantOption.textContent : '';
+        // const is1Pack = is1PackOr1Bottle(variantTitle);
+        
         const productQuantity = document.querySelector('.product-quantity');
         if (productQuantity) {
-          productQuantity.style.display = '';
+          productQuantity.style.display = 'none';
         }
 
         // Update price to selected variant price
@@ -700,104 +322,6 @@
         productForm.dispatchEvent(new Event('change', { bubbles: true }));
       });
     });
-
-    /* ===============================
-       MULTI-OPTION FLAVOR PILLS
-       Resolves (flavor + other) -> variant via inline JSON lookup,
-       then re-syncs the .plan-size-card row (data-variant-id, price, image)
-       and finally simulates a click on the active size card so the existing
-       variant-change pipeline above fires for the resolved variant.
-    =============================== */
-    const multiList = document.querySelector('.plan-list--multi');
-    if (multiList) {
-      const lookupEl = multiList.querySelector('script[data-plan-variant-lookup]');
-      let lookup = {};
-      try {
-        lookup = lookupEl ? JSON.parse(lookupEl.textContent) : {};
-      } catch (err) {
-        console.warn('plan-variant-lookup parse failed', err);
-      }
-
-      const flavorPills = multiList.querySelectorAll('.plan-flavor-pill');
-      const sizeCards = multiList.querySelectorAll('.plan-size-card');
-      let currentFlavor = (multiList.querySelector('.plan-flavor-pill.active') || flavorPills[0])?.dataset.flavorValue;
-
-      function renderPriceHTML(cents, items) {
-        const c = parseInt(cents, 10);
-        if (items > 0) {
-          const perItem = Math.floor(c / items);
-          const d = Math.floor(perItem / 100);
-          const r = perItem % 100;
-          return `$${d}.${r < 10 ? '0' : ''}${r} <span>each</span>`;
-        }
-        const d = Math.floor(c / 100);
-        const r = c % 100;
-        return `$${d}.${r < 10 ? '0' : ''}${r}`;
-      }
-
-      function resyncSizeCards(flavorValue) {
-        sizeCards.forEach((card) => {
-          const sizeValue = card.dataset.sizeValue;
-          const data = lookup[`${flavorValue}|${sizeValue}`];
-          if (!data) {
-            card.hidden = true;
-            return;
-          }
-          card.hidden = false;
-
-          card.dataset.variantId = data.id;
-          card.dataset.price = data.price;
-
-          const img = card.querySelector('[data-card-image-wrap] img');
-          if (img && data.image) {
-            img.src = data.image;
-            img.alt = data.title || '';
-          }
-
-          const priceEl = card.querySelector('[data-card-price]');
-          if (priceEl) {
-            const items = parseInt(priceEl.dataset.items || '0', 10);
-            priceEl.innerHTML = renderPriceHTML(data.price, items);
-          }
-        });
-      }
-
-      function activateFlavor(flavorValue) {
-        if (!flavorValue || flavorValue === currentFlavor) {
-          flavorPills.forEach((p) => {
-            const isActive = p.dataset.flavorValue === flavorValue;
-            p.classList.toggle('active', isActive);
-            p.setAttribute('aria-selected', isActive ? 'true' : 'false');
-          });
-          return;
-        }
-        currentFlavor = flavorValue;
-
-        flavorPills.forEach((p) => {
-          const isActive = p.dataset.flavorValue === flavorValue;
-          p.classList.toggle('active', isActive);
-          p.setAttribute('aria-selected', isActive ? 'true' : 'false');
-        });
-
-        resyncSizeCards(flavorValue);
-
-        // Trigger variant change via the currently active size card (or first visible one).
-        let activeCard = multiList.querySelector('.plan-size-card.active');
-        if (!activeCard || activeCard.hidden) {
-          activeCard = Array.from(sizeCards).find((c) => !c.hidden) || null;
-        }
-        if (activeCard) {
-          activeCard.click();
-        }
-      }
-
-      flavorPills.forEach((pill) => {
-        pill.addEventListener('click', (e) => {
-          e.preventDefault();
-          activateFlavor(pill.dataset.flavorValue);
-        });
-      });
-    }
   });
 </script>
 
@@ -830,17 +354,6 @@
       gap: 10px;
       margin-bottom: 23px;
     }
-    /* Flavor variant of .plan-list uses a slightly larger gap to breathe between the pill row and the feature card. */
-    .plan-list--flavors,
-    .plan-list--multi {
-      gap: 16px;
-    }
-    /* Cards row inside the multi-option layout (uses original .plan-card style with vertical stacking) */
-    .plan-list__cards {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
 
     .plan-badge.hidden {
       display: none;
@@ -851,7 +364,6 @@
       justify-content: space-between;
     }
 
-    /* ===== ORIGINAL PLAN-CARD (non-flavor products) ===== */
     .plan-card {
       display: flex;
       align-items: center;
@@ -895,176 +407,6 @@
     .plan-subtitle {
       font-size: 12px;
       color: #777;
-    }
-
-    /* ===== PILL ROW (variant selector, flavor-selector style) ===== */
-    .plan-pills__title {
-      margin: 0 0 0 !important;
-      padding: 0;
-      font-family: var(--bookmaniaFont, Georgia, serif);
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 1.2;
-      color: #234134;
-      text-align: left;
-    }
-    @media (max-width: 1019px) {
-      .plan-pills__title {
-        text-align: center;
-      }
-    }
-
-    .plan-pills {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: flex-start;
-      gap: 14px 0px;
-      margin: 0;
-      padding: 0;
-      background: transparent;
-      border: 0;
-      border-radius: 0;
-    }
-
-    .plan-card.plan-pill,
-    .plan-pill,
-    .plan-flavor-pill {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 8px;
-      width: 92px;
-      max-width: 100%;
-      padding: 0;
-      height: auto;
-      min-height: 0;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      color: #234134;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-      text-align: center;
-      box-shadow: none;
-      position: relative;
-    }
-    .plan-card.plan-pill:hover,
-    .plan-pill:hover,
-    .plan-flavor-pill:hover {
-      background: transparent;
-      transform: translateY(-2px);
-    }
-    .plan-card.plan-pill:hover .plan-pill__thumb,
-    .plan-pill:hover .plan-pill__thumb,
-    .plan-flavor-pill:hover .plan-pill__thumb {
-      border-color: #234134;
-      box-shadow: 0 0 0 2px #fff, 0 0 0 4px #234134;
-    }
-    .plan-card.plan-pill.active,
-    .plan-pill.active,
-    .plan-flavor-pill.active {
-      background: transparent;
-      color: #234134;
-      box-shadow: none;
-      transform: none;
-    }
-    .plan-card.plan-pill.active .plan-pill__thumb,
-    .plan-pill.active .plan-pill__thumb,
-    .plan-flavor-pill.active .plan-pill__thumb {
-      border-color: #234134;
-      box-shadow: 0 0 0 2px #234134;
-    }
-
-    .plan-pill__thumb {
-      display: block;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-      border: 2px solid #23413433;
-      background: #f5f5f0;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .plan-pill__img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .plan-pill__placeholder {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(145deg, #e8efe4 0%, #d4e0cf 100%);
-    }
-    .plan-pill__name {
-      display: block;
-      width: 100%;
-      font-family: var(--bookmaniaFont, Georgia, serif);
-      font-size: 12px;
-      font-weight: 600;
-      line-height: 1.25;
-      text-align: center;
-      word-break: break-word;
-      hyphens: auto;
-      color: #234134;
-    }
-    .plan-card.plan-pill.active .plan-pill__name,
-    .plan-pill.active .plan-pill__name,
-    .plan-flavor-pill.active .plan-pill__name {
-      font-weight: 700;
-    }
-
-    /* ===== EXPANDED FEATURE PANEL (matches old plan-card design) ===== */
-    .plan-feature-stack {
-      position: relative;
-    }
-    .plan-feature {
-      display: none;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 20px;
-      border: 1px solid #234134;
-      border-radius: 14px;
-      height: 92px;
-      position: relative;
-      background: #ffffff;
-      box-shadow: 0px 0px 4.9px 3px #23413475 inset;
-    }
-    .plan-feature.is-active {
-      display: flex;
-      animation: planFeatureFade 0.2s ease-out;
-    }
-    @keyframes planFeatureFade {
-      from { opacity: 0; transform: translateY(4px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Reused inner pieces from the old plan-card layout */
-    .plan-feature .plan-left {
-      width: 75px;
-      height: 75px;
-      display: flex;
-      align-items: center;
-    }
-    .plan-feature .plan-left img {
-      width: 100%;
-      height: auto;
-    }
-    .plan-feature .plan-center {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .plan-feature .plan-name {
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 0px;
-      color: #234134;
     }
     .plan-right {
       display: flex;
@@ -1233,6 +575,14 @@
         position: relative;
         top: 2px;
       }
+      .plan-card{
+        height: 65px;
+      }
+
+      .plan-left{
+        width: 45px;
+        height: 45px;
+      }
 
       .plan-title {
         font-size: 18px;
@@ -1269,42 +619,6 @@
       .subscription-note {
         font-size: 14px;
         gap: 2px;
-      }
-
-      /* Original .plan-card stack - mobile */
-      .plan-card {
-        height: 65px;
-      }
-      .plan-left {
-        width: 45px;
-        height: 45px;
-      }
-
-      /* Pill UI (flavor-selector style) - mobile */
-      .plan-pills {
-        justify-content: center;
-        gap: 14px 0px;
-      }
-      .plan-card.plan-pill,
-      .plan-pill,
-      .plan-flavor-pill {
-        width: 80px;
-      }
-      .plan-pill__thumb {
-        width: 56px;
-        height: 56px;
-      }
-      .plan-pill__name {
-        font-size: 11px;
-      }
-
-      .plan-feature {
-        height: 65px;
-        padding: 10px 14px;
-        gap: 10px;
-      }
-      .plan-feature .plan-name {
-        font-size: 14px;
       }
     }
 

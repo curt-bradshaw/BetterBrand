@@ -31,22 +31,15 @@
             </div>
 
             <div class="plan-right">
-              {%- assign discount = 0 -%}
-              {%- if forloop.index > 1 and v.compare_at_price > v.price -%}
-                {%- assign discount = v.compare_at_price
-                  | minus: v.price
-                  | times: 100
-                  | divided_by: v.compare_at_price
-                -%}
-              {%- endif -%}
-              {%- assign hide_this_badge = false -%}
-              {%- if forloop.index <= 1 or v.compare_at_price <= v.price or discount == 10 or discount == 20 -%}
-                {%- assign hide_this_badge = true -%}
-              {%- endif -%}
-              <div class="plan-badge {% if hide_this_badge %}hidden{% endif %}">
-                {% unless hide_this_badge %}
+              <div class="plan-badge {% unless forloop.index > 1 and v.compare_at_price > v.price %}hidden{% endunless %}">
+                {% if forloop.index > 1 and v.compare_at_price > v.price %}
+                  {% assign discount = v.compare_at_price
+                    | minus: v.price
+                    | times: 100
+                    | divided_by: v.compare_at_price
+                  %}
                   <span>SAVE {{ discount }}%</span>
-                {% endunless %}
+                {% endif %}
               </div>
               <div class="plan-price">
                 ${{ v.price | divided_by: 100 }}
