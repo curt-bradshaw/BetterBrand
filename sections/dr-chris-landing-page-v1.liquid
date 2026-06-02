@@ -5,6 +5,63 @@
 {%- endcomment -%}
 
 <style>
+/* ══════════════════════════════════════════════════════════════
+   HIDE THEME CHROME — header, footer and announcement/shipping bar.
+   Matches the same selector set used by lp-founders-story.liquid,
+   covering this theme's wrappers plus common Shopify section IDs
+   so the page renders as a standalone advertorial.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Shipping / announcement bar */
+.essential_annoucement_bar_wrapper,
+[class*="essential_annoucement_bar"],
+[class*="essential_announcement_bar"],
+announcement-bar,
+.announcement-bar,
+.announcement-bar-section,
+#shopify-section-announcement-bar,
+[id*="announcement"],
+[class*="announcement-bar"],
+.shopify-section.shipping-bar,
+[class*="shipping-bar"],
+[id*="shipping_bar"],
+[id*="shipping-bar"] { display: none !important; }
+
+/* Header */
+header.header-content,
+.header-content,
+.site-header,
+#shopify-section-header,
+[class*="site-header"],
+sticky-header,
+.header-wrapper,
+.shopify-section.section-header,
+.shopify-section-header-sticky,
+[class*="section-header"],
+[id*="section-header"] { display: none !important; }
+
+/* Footer */
+footer.footer-content,
+.footer-content,
+.site-footer,
+#shopify-section-footer,
+[class*="site-footer"],
+.shopify-section .ntg-footer,
+.ntg-footer,
+[id*="section-footer"] { display: none !important; }
+
+/* "Skip to content" accessibility link (defined in layout/theme.liquid) */
+.patrol-skip-link { display: none !important; }
+
+/* Remove the theme's main-content top padding so the page starts at the top */
+#MainContent,
+main#MainContent,
+.main-content,
+[id="MainContent"] {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
 /* ========================================================================
    Grandpa Jackson advertorial v2 — simple, photo-heavy, sans-serif only.
    All tokens from /bb-tokens.css. No serif fonts, no complex chrome.
@@ -1390,12 +1447,20 @@ body[data-product="bundle"] [data-product="gummies"] {
   text-align: center;
   margin: 24px 0 28px;
 }
+a.inline-cta,
+a.inline-cta:link,
+a.inline-cta:visited,
+a.inline-cta:hover,
+a.inline-cta:focus,
+a.inline-cta:active {
+  text-decoration: none !important;
+}
 a.inline-cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   background: var(--bb-forest-700);
-  color: var(--bb-cream-50);
+  color: var(--bb-cream-50) !important;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 13px;
@@ -1403,7 +1468,6 @@ a.inline-cta {
   text-transform: uppercase;
   padding: 14px 24px;
   border-radius: var(--radius-pill);
-  text-decoration: none;
   box-shadow: 0 6px 14px -6px rgba(20, 30, 25, 0.4);
   transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
 }

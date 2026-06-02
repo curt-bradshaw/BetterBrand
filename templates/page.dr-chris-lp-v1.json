@@ -8,21 +8,20 @@
  * ------------------------------------------------------------
  */
 {
-  "layout": "theme.old-layout",
   "sections": {
     "main": {
       "type": "page-template",
       "disabled": true,
       "settings": {}
     },
-    "dr_chris_landing_page_v3_JULxtx": {
-      "type": "dr-chris-landing-page-v3",
-      "name": "Dr. Chris Landing Page V3",
+    "dr_chris_landing_page_v1_8qNUG6": {
+      "type": "dr-chris-landing-page-v1",
+      "name": "Dr. Chris Landing Page V1",
       "settings": {}
     }
   },
   "order": [
     "main",
-    "dr_chris_landing_page_v3_JULxtx"
+    "dr_chris_landing_page_v1_8qNUG6"
   ]
 }
