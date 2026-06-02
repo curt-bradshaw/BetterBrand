@@ -61,6 +61,13 @@
         }
       }
 
+      // Keep total-pages in sync with the most recent server response so the
+      // auto-loader knows how many pages to fetch after filter/sort changes.
+      const newTotalPages = $collectionPageContent.attr('data-total-pages');
+      if (newTotalPages) {
+        $('#collection-page-content').attr('data-total-pages', newTotalPages);
+      }
+
       const $initialQnt = $('.product-count__initial-quantity');
       const $finalQnt = $('.product-count__final-quantity');
       const $totalQnt = $('.product-count__total-quantity');
@@ -89,6 +96,29 @@
       } else {
         $totalQnt.html($totalItems + ' item');
       };
+    }
+
+    /**
+     * Auto-load every remaining paginated page so the shop page shows all
+     * products on initial load (and after filter/sort changes). Replaces the
+     * old Load-More / infinite-scroll UI.
+     */
+    async function loadAllRemainingPages() {
+      const $content = $('#collection-page-content');
+      if ($content.length === 0) return;
+
+      const totalPages = parseInt($content.attr('data-total-pages') || '1', 10);
+      if (!totalPages || totalPages <= 1) return;
+
+      for (let page = 2; page <= totalPages; page++) {
+        Shopify.replaceState(Shopify.newState('list', page));
+        list = page;
+        await loadItems(true);
+      }
+
+      // Reset the URL back to page 1 so refreshes don't deep-link mid-list.
+      Shopify.replaceState(Shopify.newState('list', 1));
+      list = 1;
     }
 
     /**
@@ -180,22 +210,25 @@
 
     {% unless template.suffix == 'bundle' %}
 
-    $('#filter-by-interest').change(function(){
+    async function reloadAndShowAll() {
       Shopify.replaceState(Shopify.newState('list', 1));
-      loadItems();
+      list = 1;
+      await loadItems();
+      await loadAllRemainingPages();
+    }
+
+    $('#filter-by-interest').change(function(){
+      reloadAndShowAll();
     });
     $('#filter-sort-by').change(function(){
-      Shopify.replaceState(Shopify.newState('list', 1));
       Shopify.replaceState(Shopify.newState('sort_by', $(this).val()));
-      loadItems();
+      reloadAndShowAll();
     });
     $('.collection-facets__item-button').click(function(){
-      Shopify.replaceState(Shopify.newState('list', 1));
-      loadItems();
+      reloadAndShowAll();
     });
     $('.collection-facets__item-option').change(function(){
-      Shopify.replaceState(Shopify.newState('list', 1));
-      loadItems();
+      reloadAndShowAll();
     });
 
     $('.collection-facets__overlay').click(function(){
@@ -204,6 +237,10 @@
     $('.collection-facets__icon').click(function(){
       $(document.body).stop().toggleClass('collection-facets--opened');
     });
+
+    // On initial load, page 1 is server-rendered. Fetch and append the rest
+    // so the shop page shows every product without a Load More click.
+    loadAllRemainingPages();
     {% endunless %}
   })(jQuery);
 </script>
