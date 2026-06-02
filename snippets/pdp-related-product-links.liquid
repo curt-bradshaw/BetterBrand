@@ -34,6 +34,25 @@
           {% if rp == blank %}
             {% continue %}
           {% endif %}
+
+          {%- comment -%}
+            Use a `flavor-selector-<name>` tag to override the caption with a
+            short flavor label (e.g. `flavor-selector-elderberry` → "Elderberry").
+            Falls back to the product title when no such tag exists.
+          {%- endcomment -%}
+          {%- assign flavor_caption = rp.title -%}
+          {%- for rp_tag in rp.tags -%}
+            {%- assign rp_tag_handle = rp_tag | downcase -%}
+            {%- if rp_tag_handle contains 'flavor-selector-' -%}
+              {%- assign flavor_caption = rp_tag_handle
+                | remove: 'flavor-selector-'
+                | replace: '-', ' '
+                | capitalize
+              -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+
           <li class="pdp-related-product-links__item">
             <a
               href="{{ rp.url }}"
@@ -58,7 +77,7 @@
                   <span class="pdp-related-product-links__placeholder" aria-hidden="true"></span>
                 {% endif %}
               </span>
-              <span class="pdp-related-product-links__caption">{{ rp.title | escape }}</span>
+              <span class="pdp-related-product-links__caption">{{ flavor_caption | escape }}</span>
             </a>
           </li>
         {% endfor %}
