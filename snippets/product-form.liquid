@@ -101,6 +101,20 @@
           <span>Available In Stock</span>
         </span>
       </div>
+
+      {%- comment -%}
+        Optional price line under the quantity selector — opt-in per product
+        by adding the tag "display-price". Honors compare-at price for
+        strikethrough when on sale.
+      {%- endcomment -%}
+      {%- if product.tags contains 'display-price' -%}
+        <div class="product-quantity-price">
+          {%- if variant.compare_at_price > variant.price -%}
+            <span class="product-quantity-price__compare">{{ variant.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="product-quantity-price__current">{{ variant.price | money }}</span>
+        </div>
+      {%- endif -%}
     </div>
 
     {%- if section.settings.show_gift_card_recipient and product.gift_card? -%}
@@ -233,6 +247,29 @@
 
   .product-quantity{
     display: {% if product.variants.size < 2 %}flex{% else %}none{% endif %};
+  }
+
+  /* Optional price line under the quantity selector — enabled by the
+     "display-price" product tag. */
+  .product-quantity-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 12px;
+    font-family: var(--bookmaniaFont, Georgia, serif);
+    line-height: 1.2;
+  }
+  .product-quantity-price__compare {
+    color: var(--color-sale, #a00);
+    text-decoration: line-through;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .product-quantity-price__current {
+    color: var(--color-price, rgb(25, 156, 25));
+    font-size: 22px;
+    font-weight: 700;
   }
 
   .product-buy-infos-item span {
