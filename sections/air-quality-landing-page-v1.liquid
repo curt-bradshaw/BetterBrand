@@ -481,7 +481,7 @@
     </div>
   
     <nav class="nav">
-      <a href="/" class="nav-logo"><img src="{{ 'logo-nav.webp' | asset_url }}" alt="Betterbrand"></a>
+      <a href="/" class="nav-logo"><img src="{{ 'logo-nav.webp' | file_url }}" alt="Betterbrand"></a>
       <ul class="nav-links">
         <li><a href="#product">Shop</a></li>
         <li><a href="#ingredients">Ingredients</a></li>
@@ -495,7 +495,7 @@
   
     <section class="hero" id="top">
       <div class="hero-image">
-        <img src="{{ 'hero-figma.webp' | asset_url }}" alt="BetterLungs Mullein + Chlorophyll tincture and box beside a glass with green chlorophyll dispersing, on a marble counter">
+        <img src="{{ 'hero-figma.webp' | file_url }}" alt="BetterLungs Mullein + Chlorophyll tincture and box beside a glass with green chlorophyll dispersing, on a marble counter">
       </div>
       <div class="hero-content">
         <div class="hero-text">
@@ -566,7 +566,7 @@
     <section class="philosophy">
       <div class="philosophy-grid">
         <div class="philosophy-image">
-          <img src="{{ 'philosophy-bottle.webp' | asset_url }}" alt="Woman holding BetterLungs Mullein + Chlorophyll bottle in golden-hour forest">
+          <img src="{{ 'philosophy-bottle.webp' | file_url }}" alt="Woman holding BetterLungs Mullein + Chlorophyll bottle in golden-hour forest">
         </div>
         <div class="philosophy-text">
           <div class="eyebrow">Our Philosophy</div>
@@ -593,8 +593,8 @@
       <div class="testi-video-strip">
         {%- assign testi_videos = 'BBTT-2150,BBTT-2161,BBTT-2170,BBTT-2174,BBTT-2178,BBTT-2192,BBTT-2198,BBTT-2212,BBTT-2225' | split: ',' -%}
         {%- for v in testi_videos -%}
-        <div class="testi-video-card" data-src="{{ v | append: '.mp4' | asset_url }}">
-          <video poster="{{ v | append: '.webp' | asset_url }}" preload="none" playsinline></video>
+        <div class="testi-video-card" data-src="{{ v | append: '.mp4' | file_url }}">
+          <video poster="{{ v | append: '.webp' | file_url }}" preload="none" playsinline></video>
           <span class="testi-play" aria-hidden="true">▶</span>
         </div>
         {%- endfor -%}
@@ -605,14 +605,14 @@
       <div class="product-grid">
         <div class="product-gallery">
           <div class="product-main">
-            <img id="aqv3-product-main-img" src="{{ 'product-hero.webp' | asset_url }}" alt="BetterLungs Mullein + Chlorophyll 3 bottle pack">
+            <img id="aqv3-product-main-img" src="{{ 'product-hero.webp' | file_url }}" alt="BetterLungs Mullein + Chlorophyll 3 bottle pack">
             <span class="product-main-badge" data-aqv3-promo-badge>SAVE UP TO 20%</span>
           </div>
           <div class="product-thumbs">
-            <button class="product-thumb is-selected" data-src="{{ 'product-hero.webp' | asset_url }}"><img src="{{ 'product-hero.webp' | asset_url }}" alt="3 Bottle Pack"></button>
-            <button class="product-thumb" data-src="{{ 'product-breathe-clearer.webp' | asset_url }}"><img src="{{ 'product-breathe-clearer.webp' | asset_url }}" alt="Breathe Clearer"></button>
-            <button class="product-thumb" data-src="{{ 'product-clinical-study.webp' | asset_url }}"><img src="{{ 'product-clinical-study.webp' | asset_url }}" alt="Clinical Study Results"></button>
-            <button class="product-thumb" data-src="{{ 'product-suppfacts.webp' | asset_url }}"><img src="{{ 'product-suppfacts.webp' | asset_url }}" alt="Supplement Facts"></button>
+            <button class="product-thumb is-selected" data-src="{{ 'product-hero.webp' | file_url }}"><img src="{{ 'product-hero.webp' | file_url }}" alt="3 Bottle Pack"></button>
+            <button class="product-thumb" data-src="{{ 'product-breathe-clearer.webp' | file_url }}"><img src="{{ 'product-breathe-clearer.webp' | file_url }}" alt="Breathe Clearer"></button>
+            <button class="product-thumb" data-src="{{ 'product-clinical-study.webp' | file_url }}"><img src="{{ 'product-clinical-study.webp' | file_url }}" alt="Clinical Study Results"></button>
+            <button class="product-thumb" data-src="{{ 'product-suppfacts.webp' | file_url }}"><img src="{{ 'product-suppfacts.webp' | file_url }}" alt="Supplement Facts"></button>
           </div>
         </div>
         <div class="product-info">
@@ -637,7 +637,7 @@
                      data-sub-qty="1"
                      data-sub-href="/cart/{{ otp_1bottle_variant }}:1{% if subsave_1bottle_selling_plan != blank %}?selling_plan={{ subsave_1bottle_selling_plan }}{% endif %}"
                      role="radio" aria-checked="true" tabindex="0">
-                <div class="plan-left"><img src="{{ 'variant-1bottle.webp' | asset_url }}" alt=""></div>
+                <div class="plan-left"><img src="{{ 'variant-1bottle.webp' | file_url }}" alt=""></div>
                 <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
                 <div class="plan-right">
                   <div class="plan-badge hidden"><span>SAVE %</span></div>
@@ -658,7 +658,7 @@
                      data-sub-qty="3"
                      data-sub-href="/cart/{{ otp_3bottle_variant }}:1{% if subsave_selling_plan != blank %}?selling_plan={{ subsave_selling_plan }}{% endif %}"
                      role="radio" aria-checked="false" tabindex="0">
-                <div class="plan-left"><img src="{{ 'variant-3bottles.webp' | asset_url }}" alt=""></div>
+                <div class="plan-left"><img src="{{ 'variant-3bottles.webp' | file_url }}" alt=""></div>
                 <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
                 <div class="plan-right">
                   <div class="plan-badge"><span>SAVE 10%</span></div>
@@ -720,9 +720,9 @@
           </p>
           <!-- PDP-matched trust badges -->
           <div class="pdp-trust-row">
-            <img src="{{ 'trust-made-in-usa.webp' | asset_url }}" alt="Made in USA" class="pdp-trust-badge">
-            <img src="{{ 'trust-lab-tested.webp' | asset_url }}" alt="3rd Party Lab Tested" class="pdp-trust-badge">
-            <img src="{{ 'trust-gmp-certified.webp' | asset_url }}" alt="GMP Certified" class="pdp-trust-badge">
+            <img src="{{ 'trust-made-in-usa.webp' | file_url }}" alt="Made in USA" class="pdp-trust-badge">
+            <img src="{{ 'trust-lab-tested.webp' | file_url }}" alt="3rd Party Lab Tested" class="pdp-trust-badge">
+            <img src="{{ 'trust-gmp-certified.webp' | file_url }}" alt="GMP Certified" class="pdp-trust-badge">
           </div>
           <div class="pdp-guarantee-chip">
             <span class="pdp-guarantee-icon">✦</span>
@@ -730,9 +730,9 @@
           </div>
           <!-- PDP-matched trust badges -->
           <div class="pdp-trust-row">
-            <img src="{{ 'trust-made-in-usa.webp' | asset_url }}" alt="Made in USA" class="pdp-trust-badge">
-            <img src="{{ 'trust-lab-tested.webp' | asset_url }}" alt="3rd Party Lab Tested" class="pdp-trust-badge">
-            <img src="{{ 'trust-gmp-certified.webp' | asset_url }}" alt="GMP Certified" class="pdp-trust-badge">
+            <img src="{{ 'trust-made-in-usa.webp' | file_url }}" alt="Made in USA" class="pdp-trust-badge">
+            <img src="{{ 'trust-lab-tested.webp' | file_url }}" alt="3rd Party Lab Tested" class="pdp-trust-badge">
+            <img src="{{ 'trust-gmp-certified.webp' | file_url }}" alt="GMP Certified" class="pdp-trust-badge">
           </div>
           <div class="pdp-guarantee-chip">
             <span class="pdp-guarantee-icon">✦</span>
@@ -752,11 +752,11 @@
             <div class="col"></div>
             <div class="col col-us">
               <span class="col-label">BetterLungs®</span>
-              <img src="{{ 'compare-betterlungs.webp' | asset_url }}" alt="">
+              <img src="{{ 'compare-betterlungs.webp' | file_url }}" alt="">
             </div>
             <div class="col col-them">
               <span class="col-label">The Other Guys</span>
-              <img src="{{ 'compare-other-guys.webp' | asset_url }}" alt="">
+              <img src="{{ 'compare-other-guys.webp' | file_url }}" alt="">
             </div>
           </div>
           <div class="compare-row"><div class="compare-feature">Contains Chlorophyll (premium ingredient)</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
@@ -778,14 +778,14 @@
         </div>
         <div class="ingr-grid">
           <div class="ingr-card">
-            <div class="ingr-img"><img src="{{ 'ingr-mullein-plant.webp' | asset_url }}" alt="Mullein Leaf"></div>
+            <div class="ingr-img"><img src="{{ 'ingr-mullein-plant.webp' | file_url }}" alt="Mullein Leaf"></div>
             <div class="ingr-name">Mullein Leaf</div>
             <div class="ingr-latin">Verbascum Thapsus (30:1 Extract)</div>
             <div class="ingr-dose">2800 mg</div>
             <p class="ingr-desc">A botanical used for hundreds of years as a respiratory aid. Mullein Leaf <strong>thins and loosens mucus in the airways</strong> so your body can clear it out and pull in more air. We ran our own clinical study to back up what tradition already showed.</p>
           </div>
           <div class="ingr-card">
-            <div class="ingr-img"><img src="{{ 'ingr-chlorophyll.webp' | asset_url }}" alt="Chlorophyll"></div>
+            <div class="ingr-img"><img src="{{ 'ingr-chlorophyll.webp' | file_url }}" alt="Chlorophyll"></div>
             <div class="ingr-name">Chlorophyll</div>
             <div class="ingr-latin">as Sodium Copper Chlorophyllin</div>
             <div class="ingr-dose">100 mg</div>
@@ -801,7 +801,7 @@
   
     <section class="guarantee">
       <div class="guarantee-grid">
-        <div class="guarantee-image"><img src="{{ 'guarantee-365.webp' | asset_url }}" alt="BetterLungs Mullein + Chlorophyll bottle on a sunlit kitchen counter"></div>
+        <div class="guarantee-image"><img src="{{ 'guarantee-365.webp' | file_url }}" alt="BetterLungs Mullein + Chlorophyll bottle on a sunlit kitchen counter"></div>
         <div class="guarantee-text">
           <div class="eyebrow">The Betterbrand Promise</div>
           <h2 class="h2">YOUR BEST BREATHING. GUARANTEED.</h2>
@@ -817,7 +817,7 @@
       <div class="aqv3-suppfacts-modal-card">
         <button type="button" class="aqv3-suppfacts-modal-close" data-aqv3-suppfacts-close aria-label="Close">×</button>
         <h3 class="aqv3-suppfacts-modal-title" id="aqv3-suppfacts-modal-title">Supplement Facts</h3>
-        <img class="aqv3-suppfacts-modal-img" src="{{ 'supplement-facts-panel.webp' | asset_url }}" alt="Supplement Facts Panel — Serving Size 2 Full Droppers, Mullein Leaf Extract 2800mg, Chlorophyll 100mg">
+        <img class="aqv3-suppfacts-modal-img" src="{{ 'supplement-facts-panel.webp' | file_url }}" alt="Supplement Facts Panel — Serving Size 2 Full Droppers, Mullein Leaf Extract 2800mg, Chlorophyll 100mg">
         <div class="aqv3-suppfacts-modal-caption">Other ingredients: Purified Water, Vegetable Glycerine, Natural Flavors. *Refrigerate to preserve freshness.</div>
       </div>
     </div>
@@ -826,7 +826,7 @@
       <div class="footer-inner-wrap">
         <div class="footer-grid">
           <div class="footer-brand">
-            <img src="{{ 'logo-footer.webp' | asset_url }}" alt="Betterbrand">
+            <img src="{{ 'logo-footer.webp' | file_url }}" alt="Betterbrand">
             <p class="footer-tagline">Better Science, Back to Nature. Founded by Dr. Chris Jackson, PharmD &amp; former U.S. Army Combat Medic.</p>
             <a class="footer-email" href="mailto:hello@betterbrandhealth.com">hello@betterbrandhealth.com</a>
           </div>
