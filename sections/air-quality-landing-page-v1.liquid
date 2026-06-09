@@ -44,6 +44,62 @@
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id={{ klaviyo_company_id }}"></script>
   
   <style>
+    /* ══════════════════════════════════════════════════════════════
+       HIDE THEME CHROME — main site header, footer, announcement /
+       shipping bar. The page's own .aqv3 .nav-logo header and
+       .aqv3 .footer block are NOT touched by these selectors.
+       ══════════════════════════════════════════════════════════════ */
+
+    /* Shipping / announcement bar */
+    .essential_annoucement_bar_wrapper,
+    [class*="essential_annoucement_bar"],
+    [class*="essential_announcement_bar"],
+    announcement-bar,
+    .announcement-bar,
+    .announcement-bar-section,
+    #shopify-section-announcement-bar,
+    [id*="announcement"],
+    [class*="announcement-bar"],
+    .shopify-section.shipping-bar,
+    [class*="shipping-bar"],
+    [id*="shipping_bar"],
+    [id*="shipping-bar"] { display: none !important; }
+
+    /* Main site header */
+    header.header-content,
+    .header-content,
+    .site-header,
+    #shopify-section-header,
+    [class*="site-header"],
+    sticky-header,
+    .header-wrapper,
+    .shopify-section.section-header,
+    .shopify-section-header-sticky,
+    [class*="section-header"],
+    [id*="section-header"] { display: none !important; }
+
+    /* Main site footer */
+    footer.footer-content,
+    .footer-content,
+    .site-footer,
+    #shopify-section-footer,
+    [class*="site-footer"],
+    .shopify-section .ntg-footer,
+    .ntg-footer,
+    [id*="section-footer"] { display: none !important; }
+
+    /* "Skip to content" accessibility link (defined in layout/theme.liquid) */
+    .patrol-skip-link { display: none !important; }
+
+    /* Remove theme's main-content top padding so the page starts at the top */
+    #MainContent,
+    main#MainContent,
+    .main-content,
+    [id="MainContent"] {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+
     .aqv3 :root,
     .aqv3 {
       --aqv3-mallard: #1A3A1A;
