@@ -24,6 +24,17 @@
             "product_title_color": "#234134"
           }
         },
+        "description_FXRx6t": {
+          "type": "description",
+          "settings": {
+            "font_size_short_description": 14,
+            "font_size_short_description_tablet": 14,
+            "font_size_short_description_mobile": 12,
+            "font_weight_short_description": "normal",
+            "font_style_short_description": "normal",
+            "description_color": "#252525"
+          }
+        },
         "price_mYynEy": {
           "type": "price",
           "settings": {
@@ -146,6 +157,7 @@
       "block_order": [
         "reviews_yCCePc",
         "title_xraidK",
+        "description_FXRx6t",
         "price_mYynEy",
         "product_images_gJEr4A",
         "product_info_WfBXk4",
