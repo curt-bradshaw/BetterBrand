@@ -103,10 +103,10 @@
               {%- else -%}
                 Get the Seasonal Box | 
                 <span> 
-                <span style="display: none;">Sale Price:</span>
+                <span class="patrol-sr-only" style="display: none;">Sale Price:</span>
                   {{ product.selected_or_first_available_variant.price | money }}
                 </span>
-                <del><span style="display: none;">Regular Price:</span>{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>
+                <del><span class="patrol-sr-only" style="display: none;">Regular Price:</span>{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>
               {%- endif -%}
             </span>
             {%- render 'loading-spinner' -%}
