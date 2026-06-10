@@ -38,6 +38,25 @@
     endif
   
     assign subsave_cadence = sec.subsave_cadence | default: '3 bottles delivered every 3 months · Cancel anytime'
+
+    comment
+    Dynamically resolve BetterLungs selling plan IDs from the live product so subscription
+    cart links work without needing to hardcode plan IDs in section settings.
+    endcomment
+    assign bl_product = all_products['mullein-chlorophyll-tincture']
+    assign sp_monthly_id = ''
+    assign sp_quarterly_id = ''
+    for v in bl_product.variants
+      for spa in v.selling_plan_allocations
+        assign sp_name_lower = spa.selling_plan.name | downcase
+        if sp_name_lower contains 'every month'
+          assign sp_monthly_id = spa.selling_plan.id
+        endif
+        if sp_name_lower contains '3 month'
+          assign sp_quarterly_id = spa.selling_plan.id
+        endif
+      endfor
+    endfor
   -%}
   
   <!-- Klaviyo Onsite (AQ inline form) -->
@@ -720,7 +739,7 @@
                      data-sub-display="$27.95"
                      data-sub-total="27.95"
                      data-sub-qty="1"
-                     data-sub-href="/cart/{{ otp_1bottle_variant }}:1{% if subsave_1bottle_selling_plan != blank %}?selling_plan={{ subsave_1bottle_selling_plan }}{% endif %}"
+                     data-sub-href="/cart/{{ otp_1bottle_variant }}:1{% if sp_monthly_id != blank %}?selling_plan={{ sp_monthly_id }}{% endif %}"
                      role="radio" aria-checked="true" tabindex="0">
                 <div class="plan-left"><img src="{{ 'variant-1bottle.webp' | file_url }}" alt=""></div>
                 <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
@@ -741,7 +760,7 @@
                      data-sub-display="$27.95"
                      data-sub-total="83.85"
                      data-sub-qty="3"
-                     data-sub-href="/cart/{{ otp_3bottle_variant }}:1{% if subsave_selling_plan != blank %}?selling_plan={{ subsave_selling_plan }}{% endif %}"
+                     data-sub-href="/cart/{{ otp_3bottle_variant }}:1{% if sp_quarterly_id != blank %}?selling_plan={{ sp_quarterly_id }}{% endif %}"
                      role="radio" aria-checked="false" tabindex="0">
                 <div class="plan-left"><img src="{{ 'variant-3bottles.webp' | file_url }}" alt=""></div>
                 <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
@@ -759,7 +778,7 @@
               <div class="subscription-group">
                 <label class="subscription-card"
                        data-total="27.95" data-qty="1"
-                       data-href="/cart/{{ otp_1bottle_variant }}:1{% if subsave_1bottle_selling_plan != blank %}?selling_plan={{ subsave_1bottle_selling_plan }}{% endif %}"
+                       data-href="/cart/{{ otp_1bottle_variant }}:1{% if sp_monthly_id != blank %}?selling_plan={{ sp_monthly_id }}{% endif %}"
                        role="radio" aria-checked="false" tabindex="0">
                   <span class="subscription-best">Best Value</span>
                   <div class="content">
