@@ -312,6 +312,7 @@
     .aqv3 .subscription-note strong { color: #234134; font-weight: 700; }
   
     .aqv3 .bb-cta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; background: #f2cb49; color: #234134; font-family: 'Lora', Georgia, serif; font-size: 20px; letter-spacing: 1px; padding: 22px 28px; border-radius: 999px; text-align: center; text-decoration: none; margin-top: 16px; transition: filter 0.15s ease, transform 0.05s ease; box-shadow: 0 6px 18px rgba(242, 203, 73, 0.45); border: 1.5px solid #234134; }
+    .aqv3 button.bb-cta { -webkit-appearance: none; appearance: none; cursor: pointer; width: 100%; }
     .aqv3 .bb-cta:hover { filter: brightness(0.97); }
     .aqv3 .bb-cta:active { transform: translateY(1px); }
     .aqv3 .bb-cta-price { font-weight: 700; font-size: 22px; }
@@ -726,96 +727,108 @@
           </div>
           <h2 class="product-title">BetterLungs® Mullein + Chlorophyll</h2>
   
-          {%- comment -%} PDP swatch-plans port. Source: BetterBrand/david-octane-test-theme/snippets/swatch-plans.liquid {%- endcomment -%}
-          <div class="plan-wrapper" role="radiogroup" aria-label="Choose your plan">
-            <h3 class="plan-title">Choose Your Plan</h3>
-  
-            <div class="plan-list">
-              <label class="plan-card active"
-                     data-variant-id="{{ otp_1bottle_variant }}"
-                     data-total="34.95" data-qty="1"
-                     data-href="/cart/{{ otp_1bottle_variant }}:1"
-                     data-sub-cadence="1 Bottle, Every 30 Days"
-                     data-sub-display="$27.95"
-                     data-sub-total="27.95"
-                     data-sub-qty="1"
-                     data-sub-href="/cart/{{ otp_1bottle_variant }}:1{% if sp_monthly_id != blank %}?selling_plan={{ sp_monthly_id }}{% endif %}"
-                     role="radio" aria-checked="true" tabindex="0">
-                <div class="plan-left"><img src="{{ 'variant-1bottle.webp' | file_url }}" alt=""></div>
-                <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
-                <div class="plan-right">
-                  <div class="plan-badge hidden"><span>SAVE %</span></div>
-                  <div class="plan-price-stack">
-                    <div class="plan-price">$34.95</div>
-                    <div class="plan-each">each</div>
-                  </div>
-                </div>
-              </label>
-  
-              <label class="plan-card"
-                     data-variant-id="{{ otp_3bottle_variant }}"
-                     data-total="94.35" data-qty="3"
-                     data-href="/cart/{{ otp_3bottle_variant }}:1"
-                     data-sub-cadence="3 Bottles, Every 3 Months"
-                     data-sub-display="$27.95"
-                     data-sub-total="83.85"
-                     data-sub-qty="3"
-                     data-sub-href="/cart/{{ otp_3bottle_variant }}:1{% if sp_quarterly_id != blank %}?selling_plan={{ sp_quarterly_id }}{% endif %}"
-                     role="radio" aria-checked="false" tabindex="0">
-                <div class="plan-left"><img src="{{ 'variant-3bottles.webp' | file_url }}" alt=""></div>
-                <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
-                <div class="plan-right">
-                  <div class="plan-badge"><span>SAVE 10%</span></div>
-                  <div class="plan-price-stack">
-                    <div class="plan-price">$31.45</div>
-                    <div class="plan-each">each</div>
-                  </div>
-                </div>
-              </label>
-            </div>
-  
-            <div class="subscription-wrapper">
-              <div class="subscription-group">
-                <label class="subscription-card"
-                       data-total="27.95" data-qty="1"
-                       data-href="/cart/{{ otp_1bottle_variant }}:1{% if sp_monthly_id != blank %}?selling_plan={{ sp_monthly_id }}{% endif %}"
-                       role="radio" aria-checked="false" tabindex="0">
-                  <span class="subscription-best">Best Value</span>
-                  <div class="content">
-                    <p class="subscrition-name">
-                      <span class="subscription-title">Subscribe &amp; Save</span><br>
-                      <span class="subscription-frequency" data-sub-cadence>1 Bottle, Every 30 Days</span>
-                    </p>
-                    <div class="plan-right">
-                      <div class="plan-badge"><span>SAVE 20%</span></div>
-                      <div class="plan-price-stack">
-                        <div class="plan-price"><span data-sub-price>$27.95</span></div>
-                        <div class="plan-each">each</div>
-                      </div>
+          {%- comment -%}
+            Buy box — uses Shopify form submission (POST /cart/add) the same way PDPs do.
+            Subscription cards are rendered live from the product's selling_plan_allocations
+            so plan IDs are always correct and the selling_plan field is set by the form.
+          {%- endcomment -%}
+
+          <form id="aqv3-product-form" method="post" action="/cart/add">
+            <input type="hidden" name="id" id="aqv3-variant-id" value="{{ otp_1bottle_variant }}">
+            <input type="hidden" name="selling_plan" id="aqv3-selling-plan" value="">
+
+            <div class="plan-wrapper" role="radiogroup" aria-label="Choose your plan">
+              <h3 class="plan-title">Choose Your Plan</h3>
+
+              <div class="plan-list">
+                <label class="plan-card active"
+                       data-variant-id="{{ otp_1bottle_variant }}"
+                       data-total="34.95" data-qty="1"
+                       role="radio" aria-checked="true" tabindex="0">
+                  <div class="plan-left"><img src="{{ 'variant-1bottle.webp' | file_url }}" alt=""></div>
+                  <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
+                  <div class="plan-right">
+                    <div class="plan-badge hidden"><span>SAVE %</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$34.95</div>
+                      <div class="plan-each">each</div>
                     </div>
                   </div>
-                  <div class="subscription-note">
-                    <span><strong>FREE</strong> Shipping</span>
-                    <span>Change, Pause or Cancel Anytime</span>
+                </label>
+
+                <label class="plan-card"
+                       data-variant-id="{{ otp_3bottle_variant }}"
+                       data-total="94.35" data-qty="3"
+                       role="radio" aria-checked="false" tabindex="0">
+                  <div class="plan-left"><img src="{{ 'variant-3bottles.webp' | file_url }}" alt=""></div>
+                  <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
+                  <div class="plan-right">
+                    <div class="plan-badge"><span>SAVE 10%</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$31.45</div>
+                      <div class="plan-each">each</div>
+                    </div>
                   </div>
                 </label>
               </div>
+
+              <div class="subscription-wrapper">
+                {%- for v in bl_product.variants -%}
+                  {%- assign v_id_str = v.id | append: '' -%}
+                  {%- if v_id_str == otp_1bottle_variant or v_id_str == otp_3bottle_variant -%}
+                    {%- if v.selling_plan_allocations.size > 0 -%}
+                      {%- assign sub_group_qty = 1 -%}
+                      {%- if v_id_str == otp_3bottle_variant -%}{%- assign sub_group_qty = 3 -%}{%- endif -%}
+                      <div class="subscription-group" data-variant-id="{{ v.id }}" data-qty="{{ sub_group_qty }}"{% if v_id_str != otp_1bottle_variant %} hidden{% endif %}>
+                        {%- assign first_sub = true -%}
+                        {%- for allocation in v.selling_plan_allocations -%}
+                          {%- assign plan = allocation.selling_plan -%}
+                          <label class="subscription-card" data-price="{{ allocation.price }}" role="radio" aria-checked="false" tabindex="0">
+                            <input type="radio" hidden name="selling_plan_radio" value="{{ plan.id }}">
+                            {%- if first_sub -%}
+                              <span class="subscription-best">Best Value</span>
+                              {%- assign first_sub = false -%}
+                            {%- endif -%}
+                            <div class="content">
+                              <p class="subscrition-name">
+                                <span class="subscription-title">Subscribe &amp; Save</span><br>
+                                <span class="subscription-frequency">{{ plan.options[0].value }}</span>
+                              </p>
+                              <div class="plan-right">
+                                <div class="plan-badge"><span>SAVE 20%</span></div>
+                                <div class="plan-price-stack">
+                                  <div class="plan-price">{{ allocation.price | money }}</div>
+                                  <div class="plan-each">each</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="subscription-note">
+                              <span><strong>FREE</strong> Shipping</span>
+                              <span>Change, Pause or Cancel Anytime</span>
+                            </div>
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
             </div>
-          </div>
-  
-          <a id="aqv3-bb-cta" href="/cart/{{ otp_1bottle_variant }}:1" class="bb-cta">
-            <span class="bb-cta-price">$34.95</span>
-            <span class="bb-cta-sep">|</span>
-            <span class="bb-cta-text">ADD TO CART</span>
-            <span class="bb-cta-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="9" cy="20" r="1.5"></circle>
-                <circle cx="18" cy="20" r="1.5"></circle>
-                <path d="M2 3h3l2.5 11.5a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L22 7H6"></path>
-              </svg>
-            </span>
-            <span class="bb-cta-count">(1 Item)</span>
-          </a>
+
+            <button type="submit" id="aqv3-bb-cta" class="bb-cta">
+              <span class="bb-cta-price">$34.95</span>
+              <span class="bb-cta-sep">|</span>
+              <span class="bb-cta-text">ADD TO CART</span>
+              <span class="bb-cta-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="9" cy="20" r="1.5"></circle>
+                  <circle cx="18" cy="20" r="1.5"></circle>
+                  <path d="M2 3h3l2.5 11.5a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L22 7H6"></path>
+                </svg>
+              </span>
+              <span class="bb-cta-count">(1 Item)</span>
+            </button>
+          </form>
   
           <p class="bb-hsa">
             <strong>HSA/FSA eligible</strong>
@@ -995,61 +1008,64 @@
         tick(); setInterval(tick, 1000);
       }
   
-      // PDP swatch-plans port (Curt 2026-06-05 v3). Subscribe card mirrors plan-card quantity.
-      var bbCta = root.querySelector('#aqv3-bb-cta');
-      var planCards = root.querySelectorAll('.plan-card');
-      var subCard = root.querySelector('.subscription-card');
-      if (bbCta && planCards.length && subCard) {
-        var allCards = [].concat([].slice.call(planCards), [subCard]);
-        var priceEl = bbCta.querySelector('.bb-cta-price');
-        var countEl = bbCta.querySelector('.bb-cta-count');
-        var subCadenceEl = subCard.querySelector('[data-sub-cadence]');
-        var subPriceEl = subCard.querySelector('[data-sub-price]');
-  
-        function updateCTA(total, qty, href) {
-          if (priceEl && !isNaN(total)) priceEl.textContent = '$' + total.toFixed(2);
-          if (countEl) countEl.textContent = '(' + qty + ' Item' + (qty === 1 ? '' : 's') + ')';
-          if (href) bbCta.href = href;
-        }
-  
-        function syncSubscribeCardToPlan(planCard) {
-          var cadence = planCard.dataset.subCadence || '';
-          var subDisplay = planCard.dataset.subDisplay || '';
-          var subTotal = planCard.dataset.subTotal || '';
-          var subQty = planCard.dataset.subQty || '';
-          var subHref = planCard.dataset.subHref || '';
-          if (subCadenceEl) subCadenceEl.textContent = cadence;
-          if (subPriceEl) subPriceEl.textContent = subDisplay;
-          subCard.dataset.total = subTotal;
-          subCard.dataset.qty = subQty;
-          subCard.dataset.href = subHref;
-          if (subCard.classList.contains('active')) {
-            updateCTA(parseFloat(subTotal || '0'), parseInt(subQty || '1', 10), subHref);
-          }
-        }
-  
-        function activateCard(card) {
-          allCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
-          card.classList.add('active');
-          card.setAttribute('aria-checked', 'true');
-          updateCTA(parseFloat(card.dataset.total || '0'), parseInt(card.dataset.qty || '1', 10), card.dataset.href);
-        }
-  
+      // Buy box — form-based, same mechanism as PDP swatch-plans.liquid
+      var variantInput  = root.querySelector('#aqv3-variant-id');
+      var planInput     = root.querySelector('#aqv3-selling-plan');
+      var bbCta         = root.querySelector('#aqv3-bb-cta');
+      var planCards     = root.querySelectorAll('.plan-card');
+      var subGroups     = root.querySelectorAll('.subscription-group');
+      var allSubCards   = root.querySelectorAll('.subscription-card');
+      var priceEl       = bbCta ? bbCta.querySelector('.bb-cta-price') : null;
+      var countEl       = bbCta ? bbCta.querySelector('.bb-cta-count') : null;
+
+      function updateCTA(total, qty) {
+        if (priceEl && !isNaN(total)) priceEl.textContent = '$' + total.toFixed(2);
+        if (countEl) countEl.textContent = '(' + qty + ' Item' + (qty === 1 ? '' : 's') + ')';
+      }
+
+      if (variantInput && planInput && planCards.length) {
+        // Variant card click — switch variant, clear subscription
         planCards.forEach(function (card) {
-          card.addEventListener('click', function (e) {
-            e.preventDefault();
-            syncSubscribeCardToPlan(card);
-            activateCard(card);
+          card.addEventListener('click', function () {
+            variantInput.value = card.dataset.variantId;
+            planInput.value = '';
+
+            planCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+            card.classList.add('active');
+            card.setAttribute('aria-checked', 'true');
+
+            allSubCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+
+            subGroups.forEach(function (g) {
+              g.hidden = g.dataset.variantId !== card.dataset.variantId;
+            });
+
+            updateCTA(parseFloat(card.dataset.total || '0'), parseInt(card.dataset.qty || '1', 10));
           });
         });
-  
-        subCard.addEventListener('click', function (e) {
-          e.preventDefault();
-          activateCard(subCard);
+
+        // Subscription card click — set selling plan input (same as swatch-plans.liquid)
+        allSubCards.forEach(function (card) {
+          card.addEventListener('click', function () {
+            var radio = card.querySelector('input[type="radio"]');
+            if (radio) planInput.value = radio.value;
+
+            planCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+            allSubCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+            card.classList.add('active');
+            card.setAttribute('aria-checked', 'true');
+
+            // Price: cents → dollars; qty from the subscription-group's data-qty
+            var group = card.closest('.subscription-group');
+            var qty = group ? parseInt(group.dataset.qty || '1', 10) : 1;
+            var priceCents = parseInt(card.dataset.price || '0', 10);
+            updateCTA(priceCents / 100, qty);
+          });
         });
-  
-        var initiallyActive = root.querySelector('.plan-card.active') || planCards[0];
-        if (initiallyActive) syncSubscribeCardToPlan(initiallyActive);
+
+        // Init CTA price from the initially active plan card
+        var initCard = root.querySelector('.plan-card.active') || planCards[0];
+        if (initCard) updateCTA(parseFloat(initCard.dataset.total || '0'), parseInt(initCard.dataset.qty || '1', 10));
       }
   
       var sfModal = root.querySelector('[data-aqv3-suppfacts-modal]');
