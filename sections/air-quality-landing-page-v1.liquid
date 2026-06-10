@@ -647,13 +647,42 @@
       </div>
       <!-- Customer testimonial video strip — horizontal scroll, inline play -->
       <div class="testi-video-strip">
-        {%- assign testi_videos = 'BBTT-2150,BBTT-2161,BBTT-2170,BBTT-2174,BBTT-2178,BBTT-2192,BBTT-2198,BBTT-2212,BBTT-2225' | split: ',' -%}
-        {%- for v in testi_videos -%}
-        <div class="testi-video-card" data-src="{{ v | append: '.mp4' | file_url }}">
-          <video poster="{{ v | append: '.webp' | file_url }}" preload="none" playsinline></video>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/b6610c414b5a44eeaeab66c45b3430cd/b6610c414b5a44eeaeab66c45b3430cd.SD-480p-0.9Mbps-86198088.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2150.jpg?v=1781109132" preload="none" playsinline></video>
           <span class="testi-play" aria-hidden="true">▶</span>
         </div>
-        {%- endfor -%}
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/8dbb7318a0444f9786ba7d6f5b62e83d/8dbb7318a0444f9786ba7d6f5b62e83d.SD-480p-0.9Mbps-86198089.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2161.jpg?v=1781109132" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/9f38cc535c8c46e7abbcc3ed678e340c/9f38cc535c8c46e7abbcc3ed678e340c.SD-480p-0.9Mbps-86198090.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2170.jpg?v=1781109132" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/cc58ed932da24899848979619144a040/cc58ed932da24899848979619144a040.SD-480p-0.9Mbps-86198091.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2174.jpg?v=1781109132" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/7c6be1ddebbc41c19cf565987821ec44/7c6be1ddebbc41c19cf565987821ec44.SD-480p-0.9Mbps-86198092.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2178.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/f4b353f73e1b41feb236a39c481460aa/f4b353f73e1b41feb236a39c481460aa.SD-480p-0.9Mbps-86198093.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2192.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/c158fe32a9854c99968bb0cbead67b02/c158fe32a9854c99968bb0cbead67b02.SD-480p-0.9Mbps-86198094.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2198.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/8d0d3d00b4a64171a7b645f6141a67dd/8d0d3d00b4a64171a7b645f6141a67dd.SD-480p-0.9Mbps-86198095.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2212.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/00ef006d690a46b4b34f72ae62f8c232/00ef006d690a46b4b34f72ae62f8c232.SD-480p-0.9Mbps-86198096.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2225.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
       </div>
     </section>
   
@@ -1052,7 +1081,7 @@
               other.classList.remove('is-playing');
             }
           });
-          if (!video.src) video.src = card.dataset.src; video.controls = true;
+          if (!video.src) { video.src = card.dataset.src; video.controls = true; }
           video.play().catch(() => {});
           card.classList.add('is-playing');
         };
