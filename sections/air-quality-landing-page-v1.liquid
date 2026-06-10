@@ -154,17 +154,32 @@
     .aqv3 * { box-sizing: border-box; }
     .aqv3 { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: var(--aqv3-mallard); background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; max-width: 100vw; }
     .aqv3 h1, .aqv3 h2, .aqv3 h3, .aqv3 h4 { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 400; margin: 0; }
-    /* !important on font-weight beats inline/embedded styles injected by
+    /* Responsive heading scale — clamp() lets every h1/h2/h3 scale smoothly
+       between min and max so no per-breakpoint font-size overrides are needed.
+       Unitless line-heights so leading scales with the font-size.
+       !important on font-weight beats inline/embedded styles injected by
        third-party widgets like the Klaviyo form. */
-    .aqv3 h1 { font-weight: 700 !important; }
-    .aqv3 h2 { font-size: 40px; line-height: 42px; font-weight: 700 !important; }
+    .aqv3 h1 {
+      font-size: clamp(36px, 5vw, 52px);
+      line-height: 1.05;
+      font-weight: 700 !important;
+    }
+    .aqv3 h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+      font-weight: 700 !important;
+    }
+    .aqv3 h3 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      line-height: 1.2;
+    }
 
     /* Klaviyo form headline — keep the hero .hero-headline at its native size
        but match the h2 sizing for the title Klaviyo renders above the opt-in. */
     .aqv3 .air-report h1,
     .aqv3 [class*="klaviyo-form-"] h1 {
-      font-size: 40px !important;
-      line-height: 42px !important;
+      font-size: clamp(28px, 4vw, 40px) !important;
+      line-height: 1.1 !important;
     }
     .aqv3 p, .aqv3 ul, .aqv3 form { margin: 0; }
     .aqv3 a { color: inherit; text-decoration: none; }
@@ -198,7 +213,7 @@
     .aqv3 .hero-rating-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .aqv3 .hero-stars { color: var(--aqv3-ronchi); font-size: 18px; letter-spacing: 2px; line-height: 1; }
     .aqv3 .hero-stars-label { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 500; }
-    .aqv3 .hero-headline { color: #fff; font-size: 52px; line-height: 0.96; letter-spacing: 1.4px; }
+    .aqv3 .hero-headline { color: #fff; font-size: clamp(36px, 5vw, 52px); line-height: 1.05; letter-spacing: 1.4px; }
     .aqv3 .hero-headline span.accent { color: var(--aqv3-ronchi); display: block; }
     .aqv3 .hero-subtitle { color: var(--aqv3-tasman); font-weight: 500; font-size: 18px; letter-spacing: 0.3px; }
     .aqv3 .hero-badges { display: flex; flex-wrap: wrap; gap: 20px; }
@@ -212,7 +227,7 @@
     .aqv3 .section { padding: 80px 24px; }
     .aqv3 .section-inner { max-width: 1200px; margin: 0 auto; }
     .aqv3 .eyebrow { color: var(--aqv3-killarney); font-weight: 800; font-size: 11px; letter-spacing: 1.54px; text-transform: uppercase; }
-    .aqv3 .h2 { color: var(--aqv3-mallard); font-size: 40px; line-height: 42px; letter-spacing: 1.04px; }
+    .aqv3 .h2 { color: var(--aqv3-mallard); font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: 1.04px; }
     .aqv3 .body-copy { color: var(--aqv3-tom-thumb); font-size: 16px; line-height: 27.2px; }
   
     .aqv3 .why { background: #fff; }
@@ -292,7 +307,7 @@
     .aqv3 .product-stars-row { display: flex; align-items: center; gap: 8px; }
     .aqv3 .product-stars { color: var(--aqv3-ronchi); font-size: 18px; letter-spacing: 2px; }
     .aqv3 .product-rating { font-size: 13px; color: var(--aqv3-tom-thumb); text-decoration: underline; }
-    .aqv3 .product-title { padding-top: 8px; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 800; font-size: 40px; line-height: 1.05; letter-spacing: -0.5px; color: var(--aqv3-mallard); text-transform: none; }
+    .aqv3 .product-title { padding-top: 8px; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 800; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -0.5px; color: var(--aqv3-mallard); text-transform: none; }
   
     /* ---------- PDP swatch-plans port (Curt 2026-06-04 v3) ----------
        Source: snippets/swatch-plans.liquid in BetterBrand/david-octane-test-theme.
@@ -381,7 +396,7 @@
     .aqv3 .reviews { background: #fff; padding: 80px 24px; }
     .aqv3 .reviews-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
     .aqv3 .reviews-header-left { display: flex; flex-direction: column; gap: 12px; }
-    .aqv3 .reviews-h2 { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 40px; line-height: 42px; color: var(--aqv3-mallard); letter-spacing: 1.04px; }
+    .aqv3 .reviews-h2 { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; color: var(--aqv3-mallard); letter-spacing: 1.04px; }
     .aqv3 .reviews-h2 .accent { color: var(--aqv3-ronchi); }
     .aqv3 .video-row { display: flex; gap: 16px; overflow-x: auto; padding: 40px 0 8px; max-width: 1200px; margin: 0 auto; scroll-snap-type: x mandatory; }
     .aqv3 .video-card { flex: 0 0 200px; height: 355px; background: var(--aqv3-gray-nurse); border: 2px solid var(--aqv3-tasman); border-radius: 16px; padding: 2px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; scroll-snap-align: start; }
@@ -429,7 +444,7 @@
     .aqv3-suppfacts-modal-card { background: #fff; border-radius: 16px; max-width: 480px; width: 100%; max-height: 90vh; overflow: auto; padding: 28px 24px 24px; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.4); display: flex; flex-direction: column; gap: 16px; align-items: center; }
     .aqv3-suppfacts-modal-close { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 18px; border: 0; background: var(--aqv3-gray-nurse); color: var(--aqv3-mallard); font-size: 22px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .aqv3-suppfacts-modal-close:hover { background: var(--aqv3-surf-crest); }
-    .aqv3-suppfacts-modal-title { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 26px; letter-spacing: 0.78px; color: var(--aqv3-mallard); text-align: center; margin: 0; }
+    .aqv3-suppfacts-modal-title { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 28px); line-height: 1.2; letter-spacing: 0.78px; color: var(--aqv3-mallard); text-align: center; margin: 0; }
     .aqv3-suppfacts-modal-img { width: 100%; max-width: 400px; border-radius: 12px; border: 1px solid var(--aqv3-tasman); display: block; }
     .aqv3-suppfacts-modal-caption { font-size: 12px; color: var(--aqv3-laurel); text-align: center; line-height: 1.5; padding: 0 12px; }
   
@@ -521,7 +536,6 @@
       .aqv3 .bb-cta-text { font-size: 14px; letter-spacing: 1.4px; }
       .aqv3 .bb-cta-icon svg { width: 18px; height: 18px; }
       .aqv3 .bb-cta-count { font-size: 14px; }
-      .aqv3 .hero-headline { font-size: 52px; line-height: 0.94; }
       .aqv3 .why-grid, .aqv3 .philosophy-grid, .aqv3 .guarantee-grid, .aqv3 .product-grid { grid-template-columns: 1fr; gap: 24px; }
       .aqv3 .philosophy-text, .aqv3 .guarantee-text { align-items: center; text-align: center; }
       .aqv3 .philosophy-text .body-copy, .aqv3 .guarantee-text .body-copy { text-align: center; }
@@ -536,9 +550,8 @@
       .aqv3 .testi-play { width: 54px; height: 54px; font-size: 18px; }
       .aqv3 .testi-page { grid-template-columns: 1fr; }
       .aqv3 .footer-grid { grid-template-columns: 1fr 1fr; }
-      .aqv3 .h2 { font-size: 40px; line-height: 42px; }
-      .aqv3 .reviews-h2 { font-size: 40px; line-height: 42px; }
-      .aqv3 .product-title { font-size: 36px; line-height: 36px; }
+      /* h1/h2/h3 + .product-title scale via clamp() at the base rules — no
+         per-breakpoint font-size overrides needed. */
       .aqv3 .nav-links { display: none; }
       .aqv3 .nav-toggle { display: none !important; } /* Tate 2026-06-03: removed hamburger on mobile */
       .aqv3 .nav-cta { display: none; }
@@ -546,7 +559,6 @@
       .aqv3 .reviews-header .btn-primary { width: auto; }
     }
     @media (max-width: 560px) {
-      .aqv3 .hero-headline { font-size: 52px; line-height: 0.94; }
       .aqv3 .footer-grid { grid-template-columns: 1fr; }
       .aqv3 .air-report-form { grid-template-columns: 1fr; }
       .aqv3 .air-report-form .full, .aqv3 .air-report-form button, .aqv3 .air-report-disclaimer { grid-column: 1; }
