@@ -1086,7 +1086,7 @@
           card.classList.add('is-playing');
         };
         playOverlay.addEventListener('click', handlePlay);
-        card.addEventListener('click', (e) => { if (!video.src && e.target !== video) handlePlay(); });
+        card.addEventListener('click', () => { if (!video.src) handlePlay(); });
         video.addEventListener('play', () => card.classList.add('is-playing'));
         video.addEventListener('pause', () => card.classList.remove('is-playing'));
         video.addEventListener('ended', () => card.classList.remove('is-playing'));
