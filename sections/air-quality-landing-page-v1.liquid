@@ -773,45 +773,62 @@
               </div>
 
               <div class="subscription-wrapper">
-                {%- for v in bl_product.variants -%}
-                  {%- assign v_id_str = v.id | append: '' -%}
-                  {%- if v_id_str == otp_1bottle_variant or v_id_str == otp_3bottle_variant -%}
-                    {%- if v.selling_plan_allocations.size > 0 -%}
-                      {%- assign sub_group_qty = 1 -%}
-                      {%- if v_id_str == otp_3bottle_variant -%}{%- assign sub_group_qty = 3 -%}{%- endif -%}
-                      <div class="subscription-group" data-variant-id="{{ v.id }}" data-qty="{{ sub_group_qty }}"{% if v_id_str != otp_1bottle_variant %} hidden{% endif %}>
-                        {%- assign first_sub = true -%}
-                        {%- for allocation in v.selling_plan_allocations -%}
-                          {%- assign plan = allocation.selling_plan -%}
-                          <label class="subscription-card" data-price="{{ allocation.price }}" role="radio" aria-checked="false" tabindex="0">
-                            <input type="radio" hidden name="selling_plan_radio" value="{{ plan.id }}">
-                            {%- if first_sub -%}
-                              <span class="subscription-best">Best Value</span>
-                              {%- assign first_sub = false -%}
-                            {%- endif -%}
-                            <div class="content">
-                              <p class="subscrition-name">
-                                <span class="subscription-title">Subscribe &amp; Save</span><br>
-                                <span class="subscription-frequency">{{ plan.options[0].value }}</span>
-                              </p>
-                              <div class="plan-right">
-                                <div class="plan-badge"><span>SAVE 20%</span></div>
-                                <div class="plan-price-stack">
-                                  <div class="plan-price">{{ allocation.price | money }}</div>
-                                  <div class="plan-each">each</div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="subscription-note">
-                              <span><strong>FREE</strong> Shipping</span>
-                              <span>Change, Pause or Cancel Anytime</span>
-                            </div>
-                          </label>
-                        {%- endfor -%}
+                {%- comment -%}
+                  Subscription groups are hardcoded because selling_plan_allocations is only
+                  populated for the current product on a product template — it returns empty
+                  when accessed via all_products on a page template. Plan IDs verified via
+                  Shopify Admin API on 2026-06-10.
+                    1-bottle: plan 118714663211 "Deliver every month"
+                    3-bottle: plan 117893955883 "Delivery Every 3 Months"
+                {%- endcomment -%}
+
+                <div class="subscription-group" data-variant-id="{{ otp_1bottle_variant }}" data-qty="1">
+                  <label class="subscription-card" data-price="2795" role="radio" aria-checked="false" tabindex="0">
+                    <input type="radio" hidden name="selling_plan_radio" value="118714663211">
+                    <span class="subscription-best">Best Value</span>
+                    <div class="content">
+                      <p class="subscrition-name">
+                        <span class="subscription-title">Subscribe &amp; Save</span><br>
+                        <span class="subscription-frequency">Deliver every month</span>
+                      </p>
+                      <div class="plan-right">
+                        <div class="plan-badge"><span>SAVE 20%</span></div>
+                        <div class="plan-price-stack">
+                          <div class="plan-price">$27.95</div>
+                          <div class="plan-each">each</div>
+                        </div>
                       </div>
-                    {%- endif -%}
-                  {%- endif -%}
-                {%- endfor -%}
+                    </div>
+                    <div class="subscription-note">
+                      <span><strong>FREE</strong> Shipping</span>
+                      <span>Change, Pause or Cancel Anytime</span>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="subscription-group" data-variant-id="{{ otp_3bottle_variant }}" data-qty="3" hidden>
+                  <label class="subscription-card" data-price="8385" role="radio" aria-checked="false" tabindex="0">
+                    <input type="radio" hidden name="selling_plan_radio" value="117893955883">
+                    <span class="subscription-best">Best Value</span>
+                    <div class="content">
+                      <p class="subscrition-name">
+                        <span class="subscription-title">Subscribe &amp; Save</span><br>
+                        <span class="subscription-frequency">Delivery Every 3 Months</span>
+                      </p>
+                      <div class="plan-right">
+                        <div class="plan-badge"><span>SAVE 20%</span></div>
+                        <div class="plan-price-stack">
+                          <div class="plan-price">$27.95</div>
+                          <div class="plan-each">each</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="subscription-note">
+                      <span><strong>FREE</strong> Shipping</span>
+                      <span>Change, Pause or Cancel Anytime</span>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
 
