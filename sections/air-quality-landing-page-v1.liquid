@@ -1084,6 +1084,18 @@
         var initCard = root.querySelector('.plan-card.active') || planCards[0];
         if (initCard) updateCTA(parseFloat(initCard.dataset.total || '0'), parseInt(initCard.dataset.qty || '1', 10));
       }
+
+      // Intercept form submit → add to cart via AJAX then redirect straight to checkout
+      var productForm = root.querySelector('#aqv3-product-form');
+      if (productForm) {
+        productForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          fetch('/cart/add.js', { method: 'POST', body: new FormData(productForm) })
+            .then(function (r) { return r.json(); })
+            .then(function () { window.location.href = '/checkout'; })
+            .catch(function () { productForm.submit(); });
+        });
+      }
   
       var sfModal = root.querySelector('[data-aqv3-suppfacts-modal]');
       var sfOpen = root.querySelector('[data-aqv3-suppfacts-open]');
