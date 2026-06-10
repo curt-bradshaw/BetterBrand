@@ -154,8 +154,10 @@
     .aqv3 * { box-sizing: border-box; }
     .aqv3 { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: var(--aqv3-mallard); background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; max-width: 100vw; }
     .aqv3 h1, .aqv3 h2, .aqv3 h3, .aqv3 h4 { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 400; margin: 0; }
-    .aqv3 h1 { font-weight: 700; }
-    .aqv3 h2 { font-size: 40px; line-height: 42px; font-weight: 700; }
+    /* !important on font-weight beats inline/embedded styles injected by
+       third-party widgets like the Klaviyo form. */
+    .aqv3 h1 { font-weight: 700 !important; }
+    .aqv3 h2 { font-size: 40px; line-height: 42px; font-weight: 700 !important; }
     .aqv3 p, .aqv3 ul, .aqv3 form { margin: 0; }
     .aqv3 a { color: inherit; text-decoration: none; }
     .aqv3 img { max-width: 100%; display: block; }
