@@ -147,7 +147,7 @@
     "product_add_to_cart_text_color": "#fff",
     "product_add_to_cart_background_hover": "#C1A237",
     "product_add_to_cart_text_color_hover": "#fff",
-    "enable_price_atc": true,
+    "enable_price_atc": false,
     "button_add_to_cart": false,
     "atc_progress_bar": true,
     "enable_add_to_cart_sticky": true,
