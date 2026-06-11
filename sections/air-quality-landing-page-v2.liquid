@@ -162,9 +162,6 @@
   .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; }
   .nav-links a { color: var(--green-kelp); font-weight: 700; font-size: 13px; letter-spacing: 0.78px; text-transform: uppercase; }
   .nav-cta { background: var(--ronchi); color: var(--mallard); font-weight: 800; font-size: 13px; letter-spacing: 1.04px; text-transform: uppercase; padding: 10px 22px; border-radius: 50px; white-space: nowrap; }
-  .nav-toggle { display: none; flex-direction: column; gap: 4px; padding: 8px; }
-  .nav-toggle span { width: 22px; height: 2px; background: var(--mallard); }
-
   /* ===== universal ===== */
   .section { padding: 96px 24px; }
   .section-inner { max-width: 1200px; margin: 0 auto; }
@@ -572,7 +569,6 @@
     .hero-image { order: 1; width: 100%; }
     .hero-image img { max-width: 100%; width: 100%; height: auto; border-radius: 0; box-shadow: none; display: block; }
     .nav-links { display: none; }
-    .nav-toggle { display: flex; }
     .ps-grid, .tb-grid, .hiw-steps, .scoop-grid { grid-template-columns: 1fr; gap: 16px; }
     .testi-video-card { flex: 0 0 180px; }
     .clinical-grid, .welcome-kit-inner, .faq-grid { grid-template-columns: 1fr; gap: 36px; }
@@ -736,7 +732,6 @@
     <li><a href="#reviews">Reviews</a></li>
   </ul>
   <a href="#welcome-kit" class="nav-cta">Shop<span class="nav-cta-long"> BetterLungs®</span></a>
-  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- ===== HERO ===== -->
@@ -1415,17 +1410,6 @@
     });
   })();
 
-  // Mobile menu toggle
-  document.querySelector('.nav-toggle')?.addEventListener('click', () => {
-    const links = document.querySelector('.nav-links');
-    if (!links) return;
-    const isOpen = links.dataset.open === '1';
-    if (isOpen) { links.removeAttribute('style'); links.dataset.open = '0'; }
-    else {
-      Object.assign(links.style, { display: 'flex', position: 'absolute', top: '64px', left: '0', right: '0', background: '#fff', flexDirection: 'column', padding: '20px', borderBottom: '1px solid #e5e5e5', zIndex: '40', gap: '12px' });
-      links.dataset.open = '1';
-    }
-  });
 </script>
 
 
