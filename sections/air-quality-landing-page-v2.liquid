@@ -177,7 +177,11 @@
   .btn-on-dark { background: var(--ronchi); color: var(--mallard); }
 
   /* ===== HERO (AG1 split: text left, image right) ===== */
-  .hero { background: var(--spring-wood); display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 620px; padding: 56px 64px; gap: 60px; }
+  /* Columns capped at their natural max-widths (matches .hero-content max-width 580 +
+     .hero-image img max-width 640) and centered within the full-width section so the
+     two halves don't drift to opposite edges on large monitors. minmax(0, X) lets
+     columns shrink below X on narrower viewports before the mobile breakpoint takes over. */
+  .hero { background: var(--spring-wood); display: grid; grid-template-columns: minmax(0, 580px) minmax(0, 640px); justify-content: center; align-items: center; min-height: 620px; padding: 56px 64px; gap: 60px; }
   .hero-content { display: flex; flex-direction: column; gap: 20px; max-width: 580px; }
   .hero-rating-row { display: flex; align-items: center; gap: 12px; }
   .hero-stars { color: var(--ronchi-deep); font-size: 17px; letter-spacing: 1.8px; }
