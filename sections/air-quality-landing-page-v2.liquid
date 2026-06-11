@@ -52,6 +52,14 @@
   [class*="section-header"],
   [id*="section-header"] { display: none !important; }
 
+  /* Nuke the entire <header> element from theme.old-layout.liquid (line 549).
+     The header-group also includes a 'custom_liquid_mqQzGk' section without
+     the section-header class, so per-class selectors above miss it and leave
+     residual whitespace. Safe because v2's own nav is a separate <nav class="nav">
+     sibling, not a child of <header>. */
+  .ntg-wrapper > header,
+  body > header { display: none !important; }
+
   footer.footer-content,
   .footer-content,
   .site-footer,
@@ -63,6 +71,10 @@
 
   .patrol-skip-link { display: none !important; }
 
+  /* Reset every layout wrapper between <body> and the section so theme-injected
+     padding/margin doesn't push the page down. */
+  .ntg-wrapper,
+  .ntg-main,
   #MainContent,
   main#MainContent,
   .main-content,
