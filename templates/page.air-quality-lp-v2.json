@@ -14,29 +14,9 @@
       "type": "page-template",
       "disabled": true,
       "settings": {}
-    },
-    "air_quality_landing_page_v1_cbB8Q9": {
-      "type": "air-quality-landing-page-v1",
-      "name": "AQ Quality Opt-in V3",
-      "settings": {
-        "klaviyo_company_id": "NYkPJ4",
-        "klaviyo_form_id": "W2ZwsL",
-        "form_action": "/api/aq-optin",
-        "trustpilot_businessunit_id": "6403507cda3f50147669ca41",
-        "trustpilot_template_id": "54ad5defc6454f065c28af8b",
-        "trustpilot_height": "240px",
-        "trustpilot_stars": "4,5",
-        "product_url": "",
-        "subsave_variant": "50211235954987",
-        "subsave_selling_plan": "",
-        "subsave_cadence": "3 bottles delivered every 3 months · Cancel anytime",
-        "otp_1bottle_variant": "50211235922219",
-        "otp_3bottle_variant": "50211235954987"
-      }
     }
   },
   "order": [
-    "main",
-    "air_quality_landing_page_v1_cbB8Q9"
+    "main"
   ]
 }
