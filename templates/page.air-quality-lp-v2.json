@@ -1,0 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.old-layout",
+  "sections": {
+    "main": {
+      "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "air_quality_landing_page_v2_j6MmtV": {
+      "type": "air-quality-landing-page-v2",
+      "name": "AQ Quality Opt-in V4",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "air_quality_landing_page_v2_j6MmtV"
+  ]
+}
