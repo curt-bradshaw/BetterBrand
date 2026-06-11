@@ -14,9 +14,15 @@
       "type": "page-template",
       "disabled": true,
       "settings": {}
+    },
+    "air_quality_landing_page_v2_j6MmtV": {
+      "type": "air-quality-landing-page-v2",
+      "name": "AQ Quality Opt-in V4",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "air_quality_landing_page_v2_j6MmtV"
   ]
 }
