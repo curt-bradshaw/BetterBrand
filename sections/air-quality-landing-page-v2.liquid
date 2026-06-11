@@ -214,14 +214,16 @@
     padding: 0 24px;
   }
   .air-report-inner {
-    max-width: 980px;
+    max-width: 600px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  .air-report .klaviyo-form-W2ZwsL { width: 100%; }
+  /* Match v1's Klaviyo form width — 600px max, centered. */
+  .air-report [class*="klaviyo-form-"],
+  .air-report .klaviyo-form-W2ZwsL { width: 100%; max-width: 600px; margin: 0 auto; }
   /* Strip Klaviyo's injected gold border + inner card background + outer padding so form sits flat & tight */
   .air-report .klaviyo-form-W2ZwsL form.klaviyo-form,
   .air-report form.klaviyo-form {
