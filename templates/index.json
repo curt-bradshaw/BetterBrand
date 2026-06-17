@@ -698,12 +698,22 @@
         "heading": "Frequently Asked Questions",
         "text": "<p>Any Questions? We got you!</p>"
       }
+    },
+    "product_badges_nkhPKp": {
+      "type": "product-badges",
+      "name": "Product badges",
+      "settings": {
+        "background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "banner_style3_xth4VR",
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
+    "product_badges_nkhPKp",
     "explore_collections_A3LhxL",
     "stats_question_UeytgW",
     "better_reviews_cxReWP",
