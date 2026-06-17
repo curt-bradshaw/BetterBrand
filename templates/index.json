@@ -712,73 +712,83 @@
         "text": "<p>Any Questions? We got you!</p>"
       }
     },
-    "us_vs_them_3rmmY6": {
-      "type": "us-vs-them",
+    "us_vs_them_v2_LCQ3Yj": {
+      "type": "us-vs-them-v2",
       "blocks": {
-        "brand_anC3er": {
+        "feature_T7pdzd": {
+          "type": "feature",
+          "settings": {
+            "label": "Approach"
+          }
+        },
+        "feature_RDJ4b6": {
+          "type": "feature",
+          "settings": {
+            "label": "Customer Feedback"
+          }
+        },
+        "feature_MdxTTp": {
+          "type": "feature",
+          "settings": {
+            "label": "Research-Backed"
+          }
+        },
+        "feature_CRrcq9": {
+          "type": "feature",
+          "settings": {
+            "label": "Clean Ingredients"
+          }
+        },
+        "feature_nVGM7p": {
+          "type": "feature",
+          "settings": {
+            "label": "Money-Back Guarantee"
+          }
+        },
+        "brand_Fndb3n": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/Betterbrand_Logo_HD_1.png",
-            "title": "BetterBrand",
-            "highlight": "true",
-            "values": ""
+            "logo": "shopify://shop_images/betterbrand-wordmark.svg",
+            "logo_url": "",
+            "title": "BETTERBRAND",
+            "badge": "",
+            "highlight": true,
+            "values": "check\ncheck\ncheck\ncheck\ncheck"
           }
         },
-        "brand_WUEQGF": {
+        "brand_heqBDq": {
           "type": "brand",
           "settings": {
-            "title": "OTHER BRANDS",
-            "highlight": "false",
-            "values": ""
-          }
-        },
-        "feature_hAfbNr": {
-          "type": "feature",
-          "settings": {
-            "label": "Better Breathing in 30 Days"
-          }
-        },
-        "feature_4pYTty": {
-          "type": "feature",
-          "settings": {
-            "label": "Doctor Formulated"
-          }
-        },
-        "feature_BLTpeh": {
-          "type": "feature",
-          "settings": {
-            "label": "Natural Ingredients"
-          }
-        },
-        "feature_nVQ7QU": {
-          "type": "feature",
-          "settings": {
-            "label": "Money Back Guarantee"
-          }
-        },
-        "feature_XDHnA6": {
-          "type": "feature",
-          "settings": {
-            "label": "Loved by 1M+ People"
+            "logo_url": "",
+            "title": "Other Brands",
+            "badge": "",
+            "highlight": false,
+            "values": "check\nx\nx\nx\nx"
           }
         }
       },
       "block_order": [
-        "brand_anC3er",
-        "brand_WUEQGF",
-        "feature_hAfbNr",
-        "feature_4pYTty",
-        "feature_BLTpeh",
-        "feature_nVQ7QU",
-        "feature_XDHnA6"
+        "feature_T7pdzd",
+        "feature_RDJ4b6",
+        "feature_MdxTTp",
+        "feature_CRrcq9",
+        "feature_nVGM7p",
+        "brand_Fndb3n",
+        "brand_heqBDq"
       ],
-      "custom_css": [
-        ".comparison__overlay {background-color: #234134;}"
-      ],
-      "name": "US vs Them",
+      "name": "US vs Them V2",
       "settings": {
         "heading": "US Vs. THEM",
-        "subheading": "Lorem Ipsum Dolor Sit Amet Consectetur."
+        "subheading": "Best-Rated. Doctor-Formulated. Works or Your Money Back.",
+        "overlay_opacity": 70,
+        "bg_color": "#1e3b2d",
+        "panel_color": "#0d2018",
+        "highlight_color": "#3f745d",
+        "accent_color": "#f2c94c",
+        "text_color": "#ffffff",
+        "corner_radius": 18,
+        "cta_text": "",
+        "cta_url": ""
       }
     }
   },
@@ -800,6 +810,6 @@
     "shop_by_necessity_7bd7Nh",
     "you_may_also_8W89b9",
     "faq_section_7NrfTG",
-    "us_vs_them_3rmmY6"
+    "us_vs_them_v2_LCQ3Yj"
   ]
 }
