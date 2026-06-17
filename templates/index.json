@@ -545,6 +545,86 @@
         "button_link": "shopify://collections/lung-detox"
       }
     },
+    "us_vs_them_v2_LCQ3Yj": {
+      "type": "us-vs-them-v2",
+      "blocks": {
+        "feature_T7pdzd": {
+          "type": "feature",
+          "settings": {
+            "label": "Approach"
+          }
+        },
+        "feature_RDJ4b6": {
+          "type": "feature",
+          "settings": {
+            "label": "Customer Feedback"
+          }
+        },
+        "feature_MdxTTp": {
+          "type": "feature",
+          "settings": {
+            "label": "Research-Backed"
+          }
+        },
+        "feature_CRrcq9": {
+          "type": "feature",
+          "settings": {
+            "label": "Clean Ingredients"
+          }
+        },
+        "feature_nVGM7p": {
+          "type": "feature",
+          "settings": {
+            "label": "Money-Back Guarantee"
+          }
+        },
+        "brand_Fndb3n": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/betterbrand-wordmark.svg",
+            "logo_url": "",
+            "title": "BETTERBRAND",
+            "badge": "",
+            "highlight": true,
+            "values": "check\ncheck\ncheck\ncheck\ncheck"
+          }
+        },
+        "brand_heqBDq": {
+          "type": "brand",
+          "settings": {
+            "logo_url": "",
+            "title": "Other Brands",
+            "badge": "",
+            "highlight": false,
+            "values": "check\nx\nx\nx\nx"
+          }
+        }
+      },
+      "block_order": [
+        "feature_T7pdzd",
+        "feature_RDJ4b6",
+        "feature_MdxTTp",
+        "feature_CRrcq9",
+        "feature_nVGM7p",
+        "brand_Fndb3n",
+        "brand_heqBDq"
+      ],
+      "name": "US vs Them V2",
+      "settings": {
+        "heading": "US Vs. THEM",
+        "subheading": "Best-Rated. Doctor-Formulated. Works or Your Money Back.",
+        "overlay_opacity": 70,
+        "bg_color": "#1e3b2d",
+        "panel_color": "#0d2018",
+        "highlight_color": "#3f745d",
+        "accent_color": "#f2c94c",
+        "text_color": "#ffffff",
+        "title_color": "#ffffff",
+        "corner_radius": 18,
+        "cta_text": "",
+        "cta_url": ""
+      }
+    },
     "new_our_story_7kYVat": {
       "type": "new-our-story",
       "name": "Our story",
@@ -711,85 +791,6 @@
         "heading": "Frequently Asked Questions",
         "text": "<p>Any Questions? We got you!</p>"
       }
-    },
-    "us_vs_them_v2_LCQ3Yj": {
-      "type": "us-vs-them-v2",
-      "blocks": {
-        "feature_T7pdzd": {
-          "type": "feature",
-          "settings": {
-            "label": "Approach"
-          }
-        },
-        "feature_RDJ4b6": {
-          "type": "feature",
-          "settings": {
-            "label": "Customer Feedback"
-          }
-        },
-        "feature_MdxTTp": {
-          "type": "feature",
-          "settings": {
-            "label": "Research-Backed"
-          }
-        },
-        "feature_CRrcq9": {
-          "type": "feature",
-          "settings": {
-            "label": "Clean Ingredients"
-          }
-        },
-        "feature_nVGM7p": {
-          "type": "feature",
-          "settings": {
-            "label": "Money-Back Guarantee"
-          }
-        },
-        "brand_Fndb3n": {
-          "type": "brand",
-          "settings": {
-            "logo": "shopify://shop_images/betterbrand-wordmark.svg",
-            "logo_url": "",
-            "title": "BETTERBRAND",
-            "badge": "",
-            "highlight": true,
-            "values": "check\ncheck\ncheck\ncheck\ncheck"
-          }
-        },
-        "brand_heqBDq": {
-          "type": "brand",
-          "settings": {
-            "logo_url": "",
-            "title": "Other Brands",
-            "badge": "",
-            "highlight": false,
-            "values": "check\nx\nx\nx\nx"
-          }
-        }
-      },
-      "block_order": [
-        "feature_T7pdzd",
-        "feature_RDJ4b6",
-        "feature_MdxTTp",
-        "feature_CRrcq9",
-        "feature_nVGM7p",
-        "brand_Fndb3n",
-        "brand_heqBDq"
-      ],
-      "name": "US vs Them V2",
-      "settings": {
-        "heading": "US Vs. THEM",
-        "subheading": "Best-Rated. Doctor-Formulated. Works or Your Money Back.",
-        "overlay_opacity": 70,
-        "bg_color": "#1e3b2d",
-        "panel_color": "#0d2018",
-        "highlight_color": "#3f745d",
-        "accent_color": "#f2c94c",
-        "text_color": "#ffffff",
-        "corner_radius": 18,
-        "cta_text": "",
-        "cta_url": ""
-      }
     }
   },
   "order": [
@@ -805,11 +806,11 @@
     "better_videos_Lx6QYF",
     "subscription_bar_3HMcJY",
     "absolute_banner_V3trxN",
+    "us_vs_them_v2_LCQ3Yj",
     "new_our_story_7kYVat",
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
     "you_may_also_8W89b9",
-    "faq_section_7NrfTG",
-    "us_vs_them_v2_LCQ3Yj"
+    "faq_section_7NrfTG"
   ]
 }
