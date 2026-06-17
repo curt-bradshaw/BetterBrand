@@ -325,16 +325,6 @@
             "review_text": "I have COP D in the 3 weeks that I took that my lines have never felt better. I will buy again"
           }
         },
-        "review_cBhNrd": {
-          "type": "review",
-          "settings": {
-            "image": "shopify://shop_images/Frame_1618873746.png",
-            "name": "Michelle C.",
-            "location": "United States",
-            "review_title": "Better Lungs for Energy and Easier Breathing",
-            "review_text": "It is good for overall good health. This product gives you energy and helps you breath better. I love Better Lungs!"
-          }
-        },
         "review_Ghag3d": {
           "type": "review",
           "settings": {
@@ -344,12 +334,22 @@
             "review_title": "A Surprising Boost to My Breathing",
             "review_text": "I smoke daily and I'd say it improves my breathing by like 15-20%. Which is awesome. I can't really ask more from a product like this."
           }
+        },
+        "review_cBhNrd": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746.png",
+            "name": "Michelle C.",
+            "location": "United States",
+            "review_title": "Better Lungs for Energy and Easier Breathing",
+            "review_text": "It is good for overall good health. This product gives you energy and helps you breath better. I love Better Lungs!"
+          }
         }
       },
       "block_order": [
         "review_rFnbpq",
-        "review_cBhNrd",
-        "review_Ghag3d"
+        "review_Ghag3d",
+        "review_cBhNrd"
       ],
       "custom_css": [
         ".bfw-videos {padding: 40px 20px; text-align: center;}"
