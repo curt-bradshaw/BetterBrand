@@ -718,15 +718,16 @@
         "brand_anC3er": {
           "type": "brand",
           "settings": {
-            "title": "sdfsdfsdfsdf",
-            "highlight": "false",
+            "logo": "shopify://shop_images/Betterbrand_Logo_HD_1.png",
+            "title": "BetterBrand",
+            "highlight": "true",
             "values": ""
           }
         },
         "brand_WUEQGF": {
           "type": "brand",
           "settings": {
-            "title": "sdfsdfsdf",
+            "title": "OTHER BRANDS",
             "highlight": "false",
             "values": ""
           }
