@@ -711,75 +711,6 @@
         "heading": "Frequently Asked Questions",
         "text": "<p>Any Questions? We got you!</p>"
       }
-    },
-    "us_vs_them_3rmmY6": {
-      "type": "us-vs-them",
-      "blocks": {
-        "brand_anC3er": {
-          "type": "brand",
-          "settings": {
-            "logo": "shopify://shop_images/Betterbrand_Logo_HD_1.png",
-            "title": "BetterBrand",
-            "highlight": "true",
-            "values": ""
-          }
-        },
-        "brand_WUEQGF": {
-          "type": "brand",
-          "settings": {
-            "title": "OTHER BRANDS",
-            "highlight": "false",
-            "values": ""
-          }
-        },
-        "feature_hAfbNr": {
-          "type": "feature",
-          "settings": {
-            "label": "Better Breathing in 30 Days"
-          }
-        },
-        "feature_4pYTty": {
-          "type": "feature",
-          "settings": {
-            "label": "Doctor Formulated"
-          }
-        },
-        "feature_BLTpeh": {
-          "type": "feature",
-          "settings": {
-            "label": "Natural Ingredients"
-          }
-        },
-        "feature_nVQ7QU": {
-          "type": "feature",
-          "settings": {
-            "label": "Money Back Guarantee"
-          }
-        },
-        "feature_XDHnA6": {
-          "type": "feature",
-          "settings": {
-            "label": "Loved by 1M+ People"
-          }
-        }
-      },
-      "block_order": [
-        "brand_anC3er",
-        "brand_WUEQGF",
-        "feature_hAfbNr",
-        "feature_4pYTty",
-        "feature_BLTpeh",
-        "feature_nVQ7QU",
-        "feature_XDHnA6"
-      ],
-      "custom_css": [
-        ".comparison__overlay {background-color: #234134;}"
-      ],
-      "name": "US vs Them",
-      "settings": {
-        "heading": "US Vs. THEM",
-        "subheading": "Lorem Ipsum Dolor Sit Amet Consectetur."
-      }
     }
   },
   "order": [
@@ -799,7 +730,6 @@
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
     "you_may_also_8W89b9",
-    "faq_section_7NrfTG",
-    "us_vs_them_3rmmY6"
+    "faq_section_7NrfTG"
   ]
 }
