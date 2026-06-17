@@ -306,8 +306,6 @@
       "name": "Banner With Stats",
       "settings": {
         "background_img": "shopify://shop_images/banner-with-stats-desk.png",
-        "background_img_tablet": "shopify://shop_images/banner-with-stats-tablet.png",
-        "background_img_mobile": "shopify://shop_images/banner-with-stats-mob.png",
         "title": "#1 US Lung Support Supplement",
         "subtitle": "Betterbrand supplements are made with clean ingredients and real science, designed to help you breathe easier,&nbsp;naturally.",
         "button_text": "Bundle and Save",
