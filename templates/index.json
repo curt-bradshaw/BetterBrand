@@ -212,6 +212,18 @@
         "see_all_text": "See All Products"
       }
     },
+    "product_badges_nkhPKp": {
+      "type": "product-badges",
+      "name": "Product badges",
+      "settings": {
+        "product_badge_icon1": "shopify://shop_images/Frame_1618873767.png",
+        "product_badge_icon2": "shopify://shop_images/Frame_1618873766.png",
+        "product_badge_icon3": "shopify://shop_images/Frame_1618873768_1.png",
+        "background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
     "explore_collections_A3LhxL": {
       "type": "explore-collections",
       "blocks": {
@@ -704,6 +716,7 @@
     "banner_style3_xth4VR",
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
+    "product_badges_nkhPKp",
     "explore_collections_A3LhxL",
     "stats_question_UeytgW",
     "better_reviews_cxReWP",
