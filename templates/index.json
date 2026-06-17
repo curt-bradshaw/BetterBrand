@@ -375,6 +375,7 @@
     },
     "absolute_banner_V3trxN": {
       "type": "absolute-banner",
+      "disabled": true,
       "name": "Absolute Banner",
       "settings": {
         "bg_image_desktop": "shopify://shop_images/Banner_1.png",
