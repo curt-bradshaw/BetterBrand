@@ -362,6 +362,47 @@
         "button_link": "https://www.trybetterbrand.com/pages/reviews"
       }
     },
+    "icon_benefits_je4yXF": {
+      "type": "icon-benefits",
+      "blocks": {
+        "benefit_EyQMjh": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar.svg",
+            "text": "Made [BREAK_MOBILE]in USA"
+          }
+        },
+        "benefit_GHKaea": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar_1.svg",
+            "text": "Made in GMP [BREAK_MOBILE]Facility"
+          }
+        },
+        "benefit_EMm3Vm": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/fi_16780038.svg",
+            "text": "Third-Party [BREAK_MOBILE]Tested"
+          }
+        },
+        "benefit_g9wraT": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/fi_14748972.svg",
+            "text": "Natural [BREAK_MOBILE]Ingredients"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_EyQMjh",
+        "benefit_GHKaea",
+        "benefit_EMm3Vm",
+        "benefit_g9wraT"
+      ],
+      "name": "Icon benefits row",
+      "settings": {}
+    },
     "better_benefits_QXYyxz": {
       "type": "better-benefits",
       "blocks": {
@@ -485,47 +526,6 @@
         "button_label": "See More",
         "button_link": "shopify://collections/lung-detox"
       }
-    },
-    "icon_benefits_je4yXF": {
-      "type": "icon-benefits",
-      "blocks": {
-        "benefit_EyQMjh": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/Avatar.svg",
-            "text": "Made [BREAK_MOBILE]in USA"
-          }
-        },
-        "benefit_GHKaea": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/Avatar_1.svg",
-            "text": "Made in GMP [BREAK_MOBILE]Facility"
-          }
-        },
-        "benefit_EMm3Vm": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/fi_16780038.svg",
-            "text": "Third-Party [BREAK_MOBILE]Tested"
-          }
-        },
-        "benefit_g9wraT": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shopify://shop_images/fi_14748972.svg",
-            "text": "Natural [BREAK_MOBILE]Ingredients"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_EyQMjh",
-        "benefit_GHKaea",
-        "benefit_EMm3Vm",
-        "benefit_g9wraT"
-      ],
-      "name": "Icon benefits row",
-      "settings": {}
     },
     "new_our_story_7kYVat": {
       "type": "new-our-story",
@@ -702,11 +702,11 @@
     "explore_collections_A3LhxL",
     "stats_question_UeytgW",
     "better_reviews_cxReWP",
+    "icon_benefits_je4yXF",
     "better_benefits_QXYyxz",
     "better_videos_Lx6QYF",
     "subscription_bar_3HMcJY",
     "absolute_banner_V3trxN",
-    "icon_benefits_je4yXF",
     "new_our_story_7kYVat",
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
