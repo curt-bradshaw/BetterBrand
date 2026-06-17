@@ -278,7 +278,7 @@
         "stat_UQE4dQ": {
           "type": "stat",
           "settings": {
-            "number": "836k",
+            "number": "1M",
             "label": "Satisfied [BREAK_MOBILE]Customers"
           }
         },
