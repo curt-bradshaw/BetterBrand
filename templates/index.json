@@ -553,13 +553,13 @@
         "feature_T7pdzd": {
           "type": "feature",
           "settings": {
-            "label": "Approach"
+            "label": "Ratings"
           }
         },
         "feature_RDJ4b6": {
           "type": "feature",
           "settings": {
-            "label": "Customer Feedback"
+            "label": "Doctor Formulated"
           }
         },
         "feature_MdxTTp": {
@@ -588,7 +588,7 @@
             "title": "BETTERBRAND",
             "badge": "",
             "highlight": true,
-            "values": "check\ncheck\ncheck\ncheck\ncheck"
+            "values": "stars: 5\ncheck\ncheck\ncheck\ncheck"
           }
         },
         "brand_heqBDq": {
@@ -598,7 +598,7 @@
             "title": "Other Brands",
             "badge": "",
             "highlight": false,
-            "values": "check\nx\nx\nx\nx"
+            "values": "stars: 3\nx\nx\nx\nx"
           }
         }
       },
