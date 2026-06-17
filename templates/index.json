@@ -285,7 +285,7 @@
         "stat_MAeymb": {
           "type": "stat",
           "settings": {
-            "number": "1.4M",
+            "number": "1.8M",
             "label": "Products [BREAK_MOBILE]Sold"
           }
         },
