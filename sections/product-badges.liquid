@@ -38,6 +38,19 @@
         }}
       </div>
     {% endif %}
+
+    {% if section.settings.product_badge_icon4 != blank %}
+      <div class="product-badge-icon">
+        {{
+          section.settings.product_badge_icon4
+          | image_url: width: 298
+          | image_tag:
+            alt: section.settings.product_badge_icon4.alt,
+            loading: 'lazy',
+            widths: '100, 149, 298'
+        }}
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -100,6 +113,11 @@
       "type": "image_picker",
       "id": "product_badge_icon3",
       "label": "Badge icon 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_badge_icon4",
+      "label": "Badge icon 4"
     },
     {
       "type": "color",
