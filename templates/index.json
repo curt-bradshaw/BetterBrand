@@ -732,44 +732,44 @@
             "values": ""
           }
         },
+        "feature_hAfbNr": {
+          "type": "feature",
+          "settings": {
+            "label": "Better Breathing in 30 Days"
+          }
+        },
         "feature_4pYTty": {
           "type": "feature",
           "settings": {
-            "label": ""
+            "label": "Doctor Formulated"
           }
         },
         "feature_BLTpeh": {
           "type": "feature",
           "settings": {
-            "label": ""
+            "label": "Natural Ingredients"
           }
         },
         "feature_nVQ7QU": {
           "type": "feature",
           "settings": {
-            "label": ""
-          }
-        },
-        "feature_hAfbNr": {
-          "type": "feature",
-          "settings": {
-            "label": ""
+            "label": "Money Back Guarantee"
           }
         },
         "feature_XDHnA6": {
           "type": "feature",
           "settings": {
-            "label": ""
+            "label": "Loved by 1M+ People"
           }
         }
       },
       "block_order": [
         "brand_anC3er",
         "brand_WUEQGF",
+        "feature_hAfbNr",
         "feature_4pYTty",
         "feature_BLTpeh",
         "feature_nVQ7QU",
-        "feature_hAfbNr",
         "feature_XDHnA6"
       ],
       "custom_css": [
