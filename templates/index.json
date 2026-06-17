@@ -712,31 +712,72 @@
         "text": "<p>Any Questions? We got you!</p>"
       }
     },
-    "how_to_use_seasonal_7LJxC3": {
-      "type": "how-to-use-seasonal",
+    "us_vs_them_3rmmY6": {
+      "type": "us-vs-them",
       "blocks": {
-        "step_maAeAa": {
-          "type": "step",
+        "brand_anC3er": {
+          "type": "brand",
           "settings": {
-            "step_description": ""
+            "title": "sdfsdfsdfsdf",
+            "highlight": "false",
+            "values": ""
           }
         },
-        "step_jGnKqq": {
-          "type": "step",
+        "brand_WUEQGF": {
+          "type": "brand",
           "settings": {
-            "step_description": ""
+            "title": "sdfsdfsdf",
+            "highlight": "false",
+            "values": ""
+          }
+        },
+        "feature_4pYTty": {
+          "type": "feature",
+          "settings": {
+            "label": ""
+          }
+        },
+        "feature_BLTpeh": {
+          "type": "feature",
+          "settings": {
+            "label": ""
+          }
+        },
+        "feature_nVQ7QU": {
+          "type": "feature",
+          "settings": {
+            "label": ""
+          }
+        },
+        "feature_hAfbNr": {
+          "type": "feature",
+          "settings": {
+            "label": ""
+          }
+        },
+        "feature_XDHnA6": {
+          "type": "feature",
+          "settings": {
+            "label": ""
           }
         }
       },
       "block_order": [
-        "step_maAeAa",
-        "step_jGnKqq"
+        "brand_anC3er",
+        "brand_WUEQGF",
+        "feature_4pYTty",
+        "feature_BLTpeh",
+        "feature_nVQ7QU",
+        "feature_hAfbNr",
+        "feature_XDHnA6"
       ],
-      "name": "How To Use v2",
+      "custom_css": [
+        ".comparison__overlay {background-color: #234134;}"
+      ],
+      "name": "US vs Them",
       "settings": {
-        "heading": "How To Use",
-        "text_color": "#000000",
-        "background_color": "#F0FAEB"
+        "heading": "US Vs. THEM",
+        "subheading": "Lorem Ipsum Dolor Sit Amet Consectetur."
       }
     }
   },
@@ -758,6 +799,6 @@
     "shop_by_necessity_7bd7Nh",
     "you_may_also_8W89b9",
     "faq_section_7NrfTG",
-    "how_to_use_seasonal_7LJxC3"
+    "us_vs_them_3rmmY6"
   ]
 }
