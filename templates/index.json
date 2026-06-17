@@ -271,14 +271,14 @@
         "stat_TLCXai": {
           "type": "stat",
           "settings": {
-            "number": "500M",
+            "number": "500M+",
             "label": "Views On [BREAK_MOBILE]Socials"
           }
         },
         "stat_UQE4dQ": {
           "type": "stat",
           "settings": {
-            "number": "1M",
+            "number": "1M+",
             "label": "Satisfied [BREAK_MOBILE]Customers"
           }
         },
