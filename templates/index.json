@@ -147,6 +147,18 @@
     "best_sellers_section_gjDgWP": {
       "type": "best-sellers-section",
       "blocks": {
+        "product_item_tifnAA": {
+          "type": "product_item",
+          "settings": {
+            "product": "betterlungs®-mullein-chlorophyll",
+            "image": "shopify://shop_images/IMG-3611_1fe9d25e-ee09-4fd9-ba98-6865ef9e4276.png",
+            "product_url": "shopify://products/betterlungs®-mullein-chlorophyll",
+            "badge": "",
+            "title": "BetterLungs®  Mullein + Chlorophyll",
+            "rating": "5.0",
+            "reviews": "238"
+          }
+        },
         "product_item_dCPNkb": {
           "type": "product_item",
           "settings": {
@@ -171,18 +183,6 @@
             "reviews": "238"
           }
         },
-        "product_item_tifnAA": {
-          "type": "product_item",
-          "settings": {
-            "product": "betterlungs®-mullein-chlorophyll",
-            "image": "shopify://shop_images/IMG-3611_1fe9d25e-ee09-4fd9-ba98-6865ef9e4276.png",
-            "product_url": "shopify://products/betterlungs®-mullein-chlorophyll",
-            "badge": "",
-            "title": "BetterLungs®  Mullein + Chlorophyll",
-            "rating": "5.0",
-            "reviews": "238"
-          }
-        },
         "product_item_JeCzKQ": {
           "type": "product_item",
           "settings": {
@@ -197,9 +197,9 @@
         }
       },
       "block_order": [
+        "product_item_tifnAA",
         "product_item_dCPNkb",
         "product_item_HB7T7P",
-        "product_item_tifnAA",
         "product_item_JeCzKQ"
       ],
       "custom_css": [
