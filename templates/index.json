@@ -711,6 +711,33 @@
         "heading": "Frequently Asked Questions",
         "text": "<p>Any Questions? We got you!</p>"
       }
+    },
+    "how_to_use_seasonal_7LJxC3": {
+      "type": "how-to-use-seasonal",
+      "blocks": {
+        "step_maAeAa": {
+          "type": "step",
+          "settings": {
+            "step_description": ""
+          }
+        },
+        "step_jGnKqq": {
+          "type": "step",
+          "settings": {
+            "step_description": ""
+          }
+        }
+      },
+      "block_order": [
+        "step_maAeAa",
+        "step_jGnKqq"
+      ],
+      "name": "How To Use v2",
+      "settings": {
+        "heading": "How To Use",
+        "text_color": "#000000",
+        "background_color": "#F0FAEB"
+      }
     }
   },
   "order": [
@@ -730,6 +757,7 @@
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
     "you_may_also_8W89b9",
-    "faq_section_7NrfTG"
+    "faq_section_7NrfTG",
+    "how_to_use_seasonal_7LJxC3"
   ]
 }
