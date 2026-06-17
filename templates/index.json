@@ -503,6 +503,7 @@
     },
     "subscription_bar_3HMcJY": {
       "type": "subscription-bar",
+      "disabled": true,
       "name": "Subscription Bar",
       "settings": {
         "background_image": "shopify://shop_images/Corpo_4.png",
