@@ -73,6 +73,7 @@
 .stats-banner {
     position: relative;
     padding: 80px 0px;
+    background-color: {{ section.settings.background_color }};
   }
 
 .stats-banner__content {
@@ -418,6 +419,12 @@
       "type": "image_picker",
       "id": "background_img_mobile",
       "label": "Background Banner Image (Mobile - below 767px)"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
     },
     {
       "type": "text",
