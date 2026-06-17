@@ -351,6 +351,9 @@
         "review_Ghag3d",
         "review_rFnbpq"
       ],
+      "custom_css": [
+        ".bfw-videos {padding: 40px 20px; text-align: center;}"
+      ],
       "name": "Better Reviews",
       "settings": {
         "heading": "Real Results. [BREAK_MOBILE]Real People.",
