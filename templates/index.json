@@ -402,7 +402,7 @@
         "benefit_g9wraT"
       ],
       "custom_css": [
-        ".icon-benefits__container {padding: 20px; }"
+        ".icon-benefits__container {padding: 20px; border-top: 1px solid #f1f1f1;}"
       ],
       "name": "Icon benefits row",
       "settings": {}
