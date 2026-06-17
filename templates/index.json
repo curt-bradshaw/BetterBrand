@@ -401,6 +401,9 @@
         "benefit_EMm3Vm",
         "benefit_g9wraT"
       ],
+      "custom_css": [
+        ".icon-benefits__container {padding: 20px; }"
+      ],
       "name": "Icon benefits row",
       "settings": {}
     },
