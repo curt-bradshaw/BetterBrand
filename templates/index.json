@@ -265,6 +265,55 @@
         "special_sale_badge_text": "20% Off"
       }
     },
+    "stats_question_UeytgW": {
+      "type": "stats-question",
+      "blocks": {
+        "stat_TLCXai": {
+          "type": "stat",
+          "settings": {
+            "number": "6",
+            "label": "Years In [BREAK_MOBILE]Business"
+          }
+        },
+        "stat_UQE4dQ": {
+          "type": "stat",
+          "settings": {
+            "number": "836k",
+            "label": "Satisfied [BREAK_MOBILE]Customers"
+          }
+        },
+        "stat_MAeymb": {
+          "type": "stat",
+          "settings": {
+            "number": "1.4M",
+            "label": "Products [BREAK_MOBILE]Sold"
+          }
+        },
+        "stat_4JfpKw": {
+          "type": "stat",
+          "settings": {
+            "number": "4.5",
+            "label": "Rating [BREAK_MOBILE]Stars"
+          }
+        }
+      },
+      "block_order": [
+        "stat_TLCXai",
+        "stat_UQE4dQ",
+        "stat_MAeymb",
+        "stat_4JfpKw"
+      ],
+      "name": "Banner With Stats",
+      "settings": {
+        "background_img": "shopify://shop_images/banner-with-stats-desk.png",
+        "background_img_tablet": "shopify://shop_images/banner-with-stats-tablet.png",
+        "background_img_mobile": "shopify://shop_images/banner-with-stats-mob.png",
+        "title": "#1 US Lung Support Supplement",
+        "subtitle": "Betterbrand supplements are made with clean ingredients and real science, designed to help you breathe easier,&nbsp;naturally.",
+        "button_text": "Bundle and Save",
+        "button_url": "https://www.trybetterbrand.com/products/bundle-save?page=addProductsPage1&currentFlow=byob"
+      }
+    },
     "better_benefits_QXYyxz": {
       "type": "better-benefits",
       "blocks": {
@@ -428,55 +477,6 @@
       ],
       "name": "Icon benefits row",
       "settings": {}
-    },
-    "stats_question_UeytgW": {
-      "type": "stats-question",
-      "blocks": {
-        "stat_TLCXai": {
-          "type": "stat",
-          "settings": {
-            "number": "6",
-            "label": "Years In [BREAK_MOBILE]Business"
-          }
-        },
-        "stat_UQE4dQ": {
-          "type": "stat",
-          "settings": {
-            "number": "836k",
-            "label": "Satisfied [BREAK_MOBILE]Customers"
-          }
-        },
-        "stat_MAeymb": {
-          "type": "stat",
-          "settings": {
-            "number": "1.4M",
-            "label": "Products [BREAK_MOBILE]Sold"
-          }
-        },
-        "stat_4JfpKw": {
-          "type": "stat",
-          "settings": {
-            "number": "4.5",
-            "label": "Rating [BREAK_MOBILE]Stars"
-          }
-        }
-      },
-      "block_order": [
-        "stat_TLCXai",
-        "stat_UQE4dQ",
-        "stat_MAeymb",
-        "stat_4JfpKw"
-      ],
-      "name": "Banner With Stats",
-      "settings": {
-        "background_img": "shopify://shop_images/banner-with-stats-desk.png",
-        "background_img_tablet": "shopify://shop_images/banner-with-stats-tablet.png",
-        "background_img_mobile": "shopify://shop_images/banner-with-stats-mob.png",
-        "title": "#1 US Lung Support Supplement",
-        "subtitle": "Betterbrand supplements are made with clean ingredients and real science, designed to help you breathe easier,&nbsp;naturally.",
-        "button_text": "Bundle and Save",
-        "button_url": "https://www.trybetterbrand.com/products/bundle-save?page=addProductsPage1&currentFlow=byob"
-      }
     },
     "new_our_story_7kYVat": {
       "type": "new-our-story",
@@ -698,12 +698,12 @@
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
     "explore_collections_A3LhxL",
+    "stats_question_UeytgW",
     "better_benefits_QXYyxz",
     "subscription_bar_3HMcJY",
     "better_videos_Lx6QYF",
     "absolute_banner_V3trxN",
     "icon_benefits_je4yXF",
-    "stats_question_UeytgW",
     "new_our_story_7kYVat",
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
