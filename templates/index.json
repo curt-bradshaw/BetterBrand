@@ -19,8 +19,8 @@
         "custom-margin-bottom": 0,
         "custom-padding-top": 0,
         "custom-padding-bottom": 0,
-        "homepage_banner_style_3": "shopify://shop_images/c009072e-b2a6-4a25-96c7-22448b1284d6_1.webp",
-        "mobile_banner_style_3": "shopify://shop_images/image_1_43704aee-f329-4855-a7f6-0680cb5ee9e9.webp",
+        "homepage_banner_style_3": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
+        "mobile_banner_style_3": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
         "enable_custom_banner_height": false,
         "banner_max_height": 600,
         "banner_max_height_tablet": 430,
@@ -151,7 +151,7 @@
           "type": "product_item",
           "settings": {
             "product": "betterlungs®-mullein-chlorophyll",
-            "image": "shopify://shop_images/IMG-3611_1fe9d25e-ee09-4fd9-ba98-6865ef9e4276.png",
+            "image": "shopify://shop_images/5c7ce9fa-2d41-4839-8672-4911d0746518.webp",
             "product_url": "shopify://products/betterlungs®-mullein-chlorophyll",
             "badge": "",
             "title": "BetterLungs®  Mullein + Chlorophyll",
@@ -163,7 +163,7 @@
           "type": "product_item",
           "settings": {
             "product": "betterlungs",
-            "image": "shopify://shop_images/New_Lungs_1_4c510cd9-5088-4615-8203-ec90352a0a7e.png",
+            "image": "shopify://shop_images/440a2d16-6bdf-40a7-8406-c3d3ae60ea8e.webp",
             "product_url": "shopify://products/betterlungs-old",
             "badge": "",
             "title": "BetterLungs® Capsules",
@@ -175,7 +175,7 @@
           "type": "product_item",
           "settings": {
             "product": "betterlungs-r-mullein-gummies",
-            "image": "shopify://shop_images/17_600d55f8-d11f-41f1-b1d2-560db009d65a.png",
+            "image": "shopify://shop_images/image_442362d6-7a83-4912-bdf9-6b4cbe3e1bdc.webp",
             "product_url": "shopify://products/betterlungs-r-mullein-gummies",
             "badge": "",
             "title": "BetterLungs®  Mullein Gummies",
@@ -187,7 +187,7 @@
           "type": "product_item",
           "settings": {
             "product": "betterlungs-tea-2-pack",
-            "image": "shopify://shop_images/Elderberry_Tincture_d8298694-a9f0-48fb-93f7-50fe4cc90c30.png",
+            "image": "shopify://shop_images/ea271c10-4aa7-459d-81ea-f987407b1479.webp",
             "product_url": "shopify://products/betterlungs-tea",
             "badge": "",
             "title": "BetterLungs®  Tea",
@@ -306,6 +306,7 @@
       "name": "Banner With Stats",
       "settings": {
         "background_img": "shopify://shop_images/banner-with-stats-desk.png",
+        "background_color": "#f0ffe9",
         "title": "#1 US Lung Support Supplement",
         "subtitle": "Betterbrand supplements are made with clean ingredients and real science, designed to help you breathe easier,&nbsp;naturally.",
         "button_text": "Bundle and Save",
@@ -359,7 +360,7 @@
         "heading": "Real Results. [BREAK_MOBILE]Real People.",
         "subtitle": "Trusted by +1 Million Customers",
         "button_label": "Show All Reviews",
-        "button_link": "https://www.trybetterbrand.com/pages/reviews"
+        "button_link": "shopify://pages/reviews"
       }
     },
     "icon_benefits_je4yXF": {
@@ -399,6 +400,9 @@
         "benefit_GHKaea",
         "benefit_EMm3Vm",
         "benefit_g9wraT"
+      ],
+      "custom_css": [
+        ".icon-benefits__container {padding: 20px; border-top: 1px solid #f1f1f1;}"
       ],
       "name": "Icon benefits row",
       "settings": {}
