@@ -748,6 +748,7 @@
         "brand_Fndb3n": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/betterbrand-wordmark.svg",
             "logo_url": "",
             "title": "BETTERBRAND",
             "badge": "",
