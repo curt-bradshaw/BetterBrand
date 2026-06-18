@@ -51,6 +51,22 @@
         "banner_mobile_height": 200
       }
     },
+    "klaviyo_form_embed_air_report": {
+      "type": "klaviyo-form-embed",
+      "name": "Klaviyo form embed",
+      "settings": {
+        "company_id": "NYkPJ4",
+        "form_id": "W2ZwsL",
+        "background_color": "#ffffff",
+        "max_width": 700,
+        "border_radius": 18,
+        "shadow_opacity": 16,
+        "padding_top": 44,
+        "padding_bottom": 44,
+        "mobile_padding_top": 44,
+        "mobile_padding_bottom": 44
+      }
+    },
     "new_banner_layout_8VCt8Q": {
       "type": "new-banner-layout",
       "disabled": true,
@@ -798,6 +814,7 @@
   },
   "order": [
     "banner_style3_xth4VR",
+    "klaviyo_form_embed_air_report",
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
     "product_badges_nkhPKp",
