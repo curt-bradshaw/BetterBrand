@@ -318,6 +318,9 @@
         "stat_MAeymb",
         "stat_4JfpKw"
       ],
+      "custom_css": [
+        ".stats-banner__btn {background: #234134; color: #ffffff;}"
+      ],
       "name": "Banner With Stats",
       "settings": {
         "background_img": "shopify://shop_images/banner-with-stats-desk.png",
