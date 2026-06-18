@@ -12,6 +12,10 @@
     "main": {
       "type": "product-template",
       "blocks": {
+        "judge_me_reviews_preview_badge_RUabMQ": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
         "reviews_yCCePc": {
           "type": "reviews",
           "settings": {
@@ -155,6 +159,7 @@
         }
       },
       "block_order": [
+        "judge_me_reviews_preview_badge_RUabMQ",
         "reviews_yCCePc",
         "title_xraidK",
         "description_FXRx6t",
