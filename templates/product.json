@@ -658,6 +658,25 @@
       ],
       "disabled": true,
       "settings": {}
+    },
+    "178181158844c7c9fd": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_7ETyXi": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_7ETyXi"
+      ],
+      "disabled": true,
+      "settings": {}
     }
   },
   "order": [
@@ -672,6 +691,7 @@
     "loox-reviews",
     "recently_viewed_product_template_9PcgAE",
     "faq_section_7NrfTG",
-    "1778525589b9b2b9eb"
+    "1778525589b9b2b9eb",
+    "178181158844c7c9fd"
   ]
 }
