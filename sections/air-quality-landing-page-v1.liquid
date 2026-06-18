@@ -602,7 +602,13 @@
       <div class="air-report-inner">
         <!-- Klaviyo inline AQ opt-in -->
         {% comment %} <div class="klaviyo-form-{{ klaviyo_form_id }}"></div> {% endcomment %}
-        <div class="klaviyo-form-W2ZwsL"></div>
+        {% comment %} <div class="klaviyo-form-W2ZwsL"></div> {% endcomment %}
+        <style>
+            .kl-embed { width: 100%; padding: 44px 20px; background: #fff; }
+            .klaviyo-form-W2ZwsL { width: 100%; max-width: 700px; margin: 0 auto;
+              border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px rgba(26,58,26,0.16); }
+          </style>
+          <section class="kl-embed"><div class="klaviyo-form-W2ZwsL"></div></section>
       </div>
     </section>
 
