@@ -51,22 +51,6 @@
         "banner_mobile_height": 200
       }
     },
-    "klaviyo_form_embed_air_report": {
-      "type": "klaviyo-form-embed",
-      "name": "Klaviyo form embed",
-      "settings": {
-        "company_id": "NYkPJ4",
-        "form_id": "W2ZwsL",
-        "background_color": "#ffffff",
-        "max_width": 700,
-        "border_radius": 18,
-        "shadow_opacity": 16,
-        "padding_top": 44,
-        "padding_bottom": 44,
-        "mobile_padding_top": 44,
-        "mobile_padding_bottom": 44
-      }
-    },
     "new_banner_layout_8VCt8Q": {
       "type": "new-banner-layout",
       "disabled": true,
@@ -338,7 +322,7 @@
       "name": "Banner With Stats",
       "settings": {
         "background_img": "shopify://shop_images/banner-with-stats-desk.png",
-        "background_color": "#DBE8DF",
+        "background_color": "#dbe8df",
         "title": "#1 US Lung Support Supplement",
         "subtitle": "Betterbrand supplements are made with clean ingredients and real science, designed to help you breathe easier,&nbsp;naturally.",
         "button_text": "Bundle and Save",
@@ -393,6 +377,22 @@
         "subtitle": "Trusted by +1 Million Customers",
         "button_label": "Show All Reviews",
         "button_link": "shopify://pages/reviews"
+      }
+    },
+    "klaviyo_form_embed_air_report": {
+      "type": "klaviyo-form-embed",
+      "name": "Klaviyo form embed",
+      "settings": {
+        "company_id": "NYkPJ4",
+        "form_id": "W2ZwsL",
+        "background_color": "#ffffff",
+        "max_width": 700,
+        "border_radius": 18,
+        "shadow_opacity": 16,
+        "padding_top": 44,
+        "padding_bottom": 44,
+        "mobile_padding_top": 44,
+        "mobile_padding_bottom": 44
       }
     },
     "icon_benefits_je4yXF": {
@@ -814,13 +814,13 @@
   },
   "order": [
     "banner_style3_xth4VR",
-    "klaviyo_form_embed_air_report",
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
     "product_badges_nkhPKp",
     "explore_collections_A3LhxL",
     "stats_question_UeytgW",
     "better_reviews_cxReWP",
+    "klaviyo_form_embed_air_report",
     "icon_benefits_je4yXF",
     "better_benefits_QXYyxz",
     "better_videos_Lx6QYF",
