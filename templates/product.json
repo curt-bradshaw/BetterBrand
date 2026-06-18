@@ -542,6 +542,7 @@
     },
     "trustpilot_JmWUPQ": {
       "type": "trustpilot",
+      "disabled": true,
       "custom_css": [],
       "name": "Trustpilot Reviews",
       "settings": {}
