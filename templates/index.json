@@ -203,7 +203,7 @@
         "product_item_JeCzKQ"
       ],
       "custom_css": [
-        ".best-sellers-section {background-color: #ffffff; padding: 40px 0;}"
+        ".best-sellers-section {background-color: #ffffff; padding: 40px 0 0;}"
       ],
       "name": "Best Sellers Grid",
       "settings": {
@@ -218,6 +218,11 @@
       "settings": {
         "product_badge_icon1": "shopify://shop_images/money-back-icon.jpg",
         "background_color": "#ffffff",
+        "badge_width": 248,
+        "badge_height": 140,
+        "badge_gap": 14,
+        "mobile_badge_width": 180,
+        "mobile_badge_gap": 10,
         "padding_top": 0,
         "padding_bottom": 0
       }
@@ -548,13 +553,13 @@
         "feature_T7pdzd": {
           "type": "feature",
           "settings": {
-            "label": "Approach"
+            "label": "Ratings"
           }
         },
         "feature_RDJ4b6": {
           "type": "feature",
           "settings": {
-            "label": "Customer Feedback"
+            "label": "Doctor-Formulated"
           }
         },
         "feature_MdxTTp": {
@@ -583,7 +588,7 @@
             "title": "BETTERBRAND",
             "badge": "",
             "highlight": true,
-            "values": "check\ncheck\ncheck\ncheck\ncheck"
+            "values": "stars: 5\ncheck\ncheck\ncheck\ncheck"
           }
         },
         "brand_heqBDq": {
@@ -593,7 +598,7 @@
             "title": "Other Brands",
             "badge": "",
             "highlight": false,
-            "values": "check\nx\nx\nx\nx"
+            "values": "stars: 3\nx\nx\nx\nx"
           }
         }
       },
