@@ -106,7 +106,7 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; overflow-x: hidden; }
-  body { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: var(--mallard); background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; max-width: 100vw; line-height: 1.5; }
+  body { font-family: 'MierA', -apple-system, system-ui, sans-serif; color: var(--mallard); background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; max-width: 100vw; line-height: 1.5; }
 
   /* Inter for every element on the page. v1 scopes this under .aqv3, but v2
      has no scoping wrapper — body is fine because all theme chrome is hidden.
@@ -114,10 +114,10 @@
      would otherwise inherit their own font stacks. Iframed widgets like
      Trustpilot are out of reach and styled by their own scripts. */
   body, body *, body *::before, body *::after {
-    font-family: 'Inter', -apple-system, system-ui, sans-serif !important;
+    font-family: 'MierA', -apple-system, system-ui, sans-serif !important;
   }
 
-  h1, h2, h3, h4 { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 400; }
+  h1, h2, h3, h4 { font-family: 'MierA', -apple-system, system-ui, sans-serif; font-weight: 400; }
 
   /* Responsive heading scale — mirrored from air-quality-landing-page-v1.liquid.
      clamp() lets every h1/h2/h3 scale smoothly between min and max so no
@@ -168,7 +168,7 @@
   .eyebrow { color: var(--killarney); font-weight: 800; font-size: 11px; letter-spacing: 1.54px; text-transform: uppercase; }
   .h2 { color: var(--mallard); font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: 1.04px; }
   .h2 .accent { color: var(--ronchi); }
-  .h3 { color: var(--mallard); font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 28px); line-height: 1.2; }
+  .h3 { color: var(--mallard); font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 28px); line-height: 1.2; }
   .body-copy { color: var(--tom-thumb); font-size: 17px; line-height: 1.55; }
   .btn-primary { display: inline-flex; align-items: center; justify-content: center; background: var(--ronchi); color: var(--mallard); font-weight: 800; font-size: 14px; letter-spacing: 1.12px; text-transform: uppercase; padding: 16px 36px; border-radius: 50px; text-align: center; transition: filter .15s ease; }
   .btn-primary:hover { filter: brightness(0.96); }
@@ -186,7 +186,7 @@
   .hero-rating-row { display: flex; align-items: center; gap: 12px; }
   .hero-stars { color: var(--ronchi-deep); font-size: 17px; letter-spacing: 1.8px; }
   .hero-stars-label { color: var(--tom-thumb); font-size: 13px; font-weight: 600; letter-spacing: 0.4px; }
-  .hero-headline { color: var(--mallard); font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: clamp(35px, 5vw, 52px); line-height: 1.05; letter-spacing: 1.4px; }
+  .hero-headline { color: var(--mallard); font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: clamp(35px, 5vw, 52px); line-height: 1.05; letter-spacing: 1.4px; }
   .hero-headline span.accent { color: var(--ronchi-deep); display: inline; }
   .hero-subtitle { color: var(--tom-thumb); font-weight: 400; font-size: 18px; line-height: 1.5; max-width: 500px; }
   .hero-cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding-top: 6px; }
@@ -294,7 +294,7 @@
   .ig-card img { width: 100%; height: 100%; object-fit: cover; }
   .ig-card .ig-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.92) 100%); padding: 20px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; }
   .ig-card .ig-cat { color: var(--ronchi); font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
-  .ig-card .ig-name { color: #fff; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 24px; letter-spacing: 0.6px; line-height: 1; }
+  .ig-card .ig-name { color: #fff; font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: 24px; letter-spacing: 0.6px; line-height: 1; }
   .ig-card .ig-desc { color: rgba(255,255,255,0.85); font-size: 12.5px; line-height: 1.4; }
   .ig-supp-row { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
   .ig-supp-link { color: #fff; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 999px; padding: 12px 22px; font-size: 12.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; }
@@ -306,7 +306,7 @@
   .hiw-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
   .hiw-step { display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 2px solid var(--surf-crest); }
   .hiw-step-eyebrow { color: var(--killarney); font-weight: 800; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; }
-  .hiw-step-name { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: var(--mallard); font-size: 28px; letter-spacing: 0.6px; line-height: 1; }
+  .hiw-step-name { font-family: 'MierA', -apple-system, system-ui, sans-serif; color: var(--mallard); font-size: 28px; letter-spacing: 0.6px; line-height: 1; }
   .hiw-step-desc { color: var(--tom-thumb); font-size: 15px; line-height: 1.55; }
   .hiw-img-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 48px; }
   .hiw-img-row img { width: 100%; height: auto; max-height: 420px; object-fit: cover; border-radius: 14px; }
@@ -319,7 +319,7 @@
   .tb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .tb-card { background: var(--mallard-deep); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
   .tb-card .role { color: var(--ronchi); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800; }
-  .tb-card .name { color: #fff; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 24px; letter-spacing: 0.6px; line-height: 1.05; }
+  .tb-card .name { color: #fff; font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: 24px; letter-spacing: 0.6px; line-height: 1.05; }
   .tb-card .quote { color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.55; flex: 1; }
   .tb-card .stars { color: var(--ronchi); letter-spacing: 1.5px; font-size: 14px; }
   .tb-card .source { color: rgba(255,255,255,0.55); font-size: 11px; letter-spacing: 0.9px; text-transform: uppercase; font-weight: 700; }
@@ -336,8 +336,8 @@
   .smarter-row.total { font-weight: 800; }
   .smarter-row.total .label, .smarter-row.total .cost { font-size: 17px; }
   .smarter-row.compare { background: var(--spring-wood); margin: 0 -8px; padding: 18px 12px; border-radius: 12px; border: 2px solid var(--ronchi); margin-top: 12px; border-bottom: 2px solid var(--ronchi); }
-  .smarter-row.compare .label { color: var(--mallard); font-weight: 800; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 22px; letter-spacing: 0.5px; }
-  .smarter-row.compare .cost { color: var(--mallard); font-weight: 800; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 26px; letter-spacing: 0.5px; }
+  .smarter-row.compare .label { color: var(--mallard); font-weight: 800; font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: 22px; letter-spacing: 0.5px; }
+  .smarter-row.compare .cost { color: var(--mallard); font-weight: 800; font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: 26px; letter-spacing: 0.5px; }
   .smarter-footnote { color: var(--laurel); font-size: 11px; padding-top: 12px; font-style: italic; }
 
   /* ===== WHAT PEOPLE ARE SAYING (review grid) ===== */
@@ -403,7 +403,7 @@
     position: absolute; top: 22px; left: 22px;
     background: var(--ronchi);
     color: var(--mallard);
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-family: 'MierA', -apple-system, system-ui, sans-serif;
     font-weight: 700; font-size: 13px; letter-spacing: 0.5px;
     padding: 10px 18px;
     border-radius: 999px;
@@ -430,7 +430,7 @@
   .product-stars { color: var(--ronchi-deep); letter-spacing: 1.5px; font-size: 16px; }
   .product-rating { color: var(--tom-thumb); font-size: 13.5px; text-decoration: underline; }
   .product-title {
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-family: 'MierA', -apple-system, system-ui, sans-serif;
     font-weight: 800;
     font-size: clamp(28px, 4vw, 40px);
     line-height: 1.1;
@@ -439,7 +439,7 @@
     text-transform: none;
     padding-top: 8px;
   }
-  .plan-wrapper { width: 100%; font-family: 'Inter', -apple-system, system-ui, sans-serif; padding-top: 6px; }
+  .plan-wrapper { width: 100%; font-family: 'MierA', -apple-system, system-ui, sans-serif; padding-top: 6px; }
   .plan-list { display: flex; flex-direction: column; gap: 10px; }
   .plan-card { display: flex; align-items: center; gap: 14px; padding: 10px 16px; border: 1.5px solid var(--mallard); border-radius: 14px; background: #fff; cursor: pointer; transition: all 0.15s ease; min-height: 86px; }
   .plan-card.active { box-shadow: 0 0 0 2px var(--mallard) inset; }
@@ -463,7 +463,7 @@
     display: inline-block;
     background: var(--ronchi);
     color: var(--mallard);
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-family: 'MierA', -apple-system, system-ui, sans-serif;
     font-weight: 700;
     font-size: 13px;
     padding: 4px 16px;
@@ -484,7 +484,7 @@
     width: 100%;
     padding: 18px 18px 16px;
     display: block;
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-family: 'MierA', -apple-system, system-ui, sans-serif;
   }
   .subscription-card.active { box-shadow: 0 0 0 2px var(--mallard) inset; }
   .sub-card-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
@@ -494,14 +494,14 @@
   .sub-card-meta { font-size: 13px; color: var(--mallard); padding-top: 8px; line-height: 1.5; }
   .sub-card-meta strong { font-weight: 700; }
   .sub-card-meta span { display: block; }
-  .bb-cta { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; background: var(--ronchi); color: var(--mallard); font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 18px; padding: 20px 24px; border-radius: 999px; text-decoration: none; margin-top: 18px; border: 1.5px solid var(--mallard); box-shadow: 0 6px 18px rgba(232, 200, 74, 0.45); transition: filter 0.15s; cursor: pointer; -webkit-appearance: none; appearance: none; }
+  .bb-cta { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; background: var(--ronchi); color: var(--mallard); font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: 18px; padding: 20px 24px; border-radius: 999px; text-decoration: none; margin-top: 18px; border: 1.5px solid var(--mallard); box-shadow: 0 6px 18px rgba(232, 200, 74, 0.45); transition: filter 0.15s; cursor: pointer; -webkit-appearance: none; appearance: none; }
   .bb-cta:hover { filter: brightness(0.97); }
   .bb-cta-text { font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; font-size: 16px; }
   .bb-cta-price { font-weight: 700; font-size: 20px; }
   .bb-cta-sep { opacity: 0.55; padding: 0 2px; }
   .bb-cta-icon svg { width: 22px; height: 22px; stroke: var(--mallard); fill: none; stroke-width: 2; }
   .bb-cta-count { font-weight: 600; font-size: 15px; opacity: 0.85; }
-  .bb-hsa { display: flex; justify-content: center; align-items: center; gap: 6px; font-size: 13px; color: var(--mallard); padding-top: 12px; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+  .bb-hsa { display: flex; justify-content: center; align-items: center; gap: 6px; font-size: 13px; color: var(--mallard); padding-top: 12px; font-family: 'MierA', -apple-system, system-ui, sans-serif; }
   .bb-hsa strong { color: var(--mallard); font-weight: 700; }
   .bb-hsa-sep { opacity: 0.5; }
   .pdp-trust-row { display: flex; justify-content: center; align-items: center; gap: 18px; padding-top: 18px; flex-wrap: wrap; }
@@ -544,7 +544,7 @@
   .scoop-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
   .scoop-card .scoop-overlay { position: absolute; inset: 0; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%); }
   .scoop-card .scoop-eyebrow { color: var(--ronchi); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 800; }
-  .scoop-card .scoop-title { color: #fff; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 26px; letter-spacing: 0.6px; line-height: 1.05; padding-top: 6px; }
+  .scoop-card .scoop-title { color: #fff; font-family: 'MierA', -apple-system, system-ui, sans-serif; font-size: 26px; letter-spacing: 0.6px; line-height: 1.05; padding-top: 6px; }
 
   /* ===== FOOTER ===== */
   footer { background: var(--mallard-deep); color: rgba(255,255,255,0.85); padding: 64px 24px 32px; overflow-x: hidden; }
