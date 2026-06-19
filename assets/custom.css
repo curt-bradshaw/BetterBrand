@@ -82,7 +82,7 @@ p {
 a.button {
     font-family: 'MierA';
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 800;
 }
 sup {
     font-size: 20px;
@@ -278,7 +278,7 @@ svg.left-arrow {
 .footer-text a.button.button--primary {
     color: #234134;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 800;
     font-family: 'MierA';
     padding: 18px 40px;
     border-radius:9px;
@@ -394,7 +394,7 @@ button.cst-btn-my.button.button--primary {
     background-color: #f1ca49!important;
     color: #234134!important;
     font-family: 'MierA';
-    font-weight: 700;
+    font-weight: 800;
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0;
