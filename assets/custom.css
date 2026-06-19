@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Soehne';
+    font-family: 'MierA';
     src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.eot?v=1756433649.eot');
     src: url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.eot?v=1756433649.eot?#iefix') format('embedded-opentype'),
         url('https://cdn.shopify.com/s/files/1/0735/8886/7304/files/GrotesqueMT-Condensed.woff2?v=1756433649.woff2') format('woff2'),
@@ -64,7 +64,8 @@ h2,h4,p {
     margin: 0px;
 }
 h2 {
- font-family: 'Soehne' !Important;
+ font-family: 'MierA' !Important;
+ font-weight: 700;
 }
 h3{
      font-family: 'MierA';
@@ -104,14 +105,14 @@ sup {
         text-align: center;
 }
 .how-cst .title {
-    font-family: 'Soehne';
+    font-family: 'MierA';
     font-size: 56px;
     line-height: 56px;
     color: #234134;
     padding-bottom:10px;
 }
 .how-cst h2.title.inline-richtext.h1 p {
-    font-family: 'Soehne';
+    font-family: 'MierA';
     color: #234134;
 }
 .how-cst  a {
@@ -214,7 +215,7 @@ sup {
     text-decoration: none;
 }
 .faq-section .collapsible-content__heading {
-    font-family: 'Soehne';
+    font-family: 'MierA';
     font-size: 56px;
 }
 .faq-section .collapsible-row-layout .accordion .accordion__content {
