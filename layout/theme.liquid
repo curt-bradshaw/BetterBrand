@@ -123,6 +123,7 @@
     {% comment %} {% include "omega_twitter_multi_pixel" %} {% endcomment %}
 
     {{ 'output.css' | asset_url | stylesheet_tag }}
+    {{ 'ntg-custom-style.css' | asset_url | stylesheet_tag }}
     {%- render 'lazyload-head' -%}
 
     <link rel="preconnect dns-prefetch" href="https://cdn.shopify.com">

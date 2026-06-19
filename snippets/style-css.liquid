@@ -17,34 +17,45 @@
 {%- endif -%}
   {% endcomment %}
 
-  <style>
-    @import url("https://use.typekit.net/ncf7bkg.css");
-  </style>
-
 <style scoped>
-  {% comment %}
-  {{ settings.general_font | font_face: font_display: 'swap' }}
-  {{ settings.copy_body_font | font_face: font_display: 'swap' }}
-  {{ settings.copy_bold_body_font | font_face: font_display: 'swap' }}
-  {% endcomment %}
-
   @font-face {
-    font-family: 'SuisseIntlMono';
+    font-family: 'MierA';
     src:
-      url('{{ "suisse-intl-mono-webfont.woff2" | file_url }}') format('woff2'),
-      url('{{ "suisse-intl-mono-webfont.woff" | file_url }}') format('woff'),
-      url('{{ "suisse-intl-mono-webfont.ttf" | file_url }}') format('truetype');
+      url('{{ "MierA-Regular.woff2" | asset_url }}') format('woff2'),
+      url('{{ "MierA-Regular.woff" | asset_url }}') format('woff');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
-    font-family: 'SuisseIntlMono';
+    font-family: 'MierA';
     src:
-      url('{{ "suisseintlmono-bold-webfont.woff2" | file_url }}') format('woff2'),
-      url('{{ "suisseintlmono-bold-webfont.woff" | file_url }}') format('woff'),
-      url('{{ "suisseintlmono-bold-webfont.ttf" | file_url }}') format('truetype');
+      url('{{ "MierA-Bold.woff2" | asset_url }}') format('woff2'),
+      url('{{ "MierA-Bold.woff" | asset_url }}') format('woff');
     font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'MierA';
+    src:
+      url('{{ "MierA-ExtraBold.woff2" | asset_url }}') format('woff2'),
+      url('{{ "MierA-ExtraBold.woff" | asset_url }}') format('woff');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Soehne';
+    src: url('{{ "soehne-dreiviertelfett.woff2" | asset_url }}') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'TiemposText';
+    src: url('{{ "tiempos-text-regular.woff2" | asset_url }}') format('woff2');
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
@@ -94,9 +105,9 @@
       --large-up '(min-width: #{--grid-large})',
       --widescreen '(min-width: #{--grid-widescreen})'
     );
-    --bookmaniaFont: 'bookmania', serif;
-    --headerFont: 'SuisseIntlMono', sans-serif;
-    --copyBodyFont: 'SuisseIntlMono', sans-serif;
+    --bookmaniaFont: 'Soehne', sans-serif;
+    --headerFont: 'Soehne', sans-serif;
+    --copyBodyFont: 'MierA', sans-serif;
     --h1Size: {{ settings.typography_h1_font_size }}px;
     --h1SizeTablet: {{ settings.typography_h1_font_size_tablet }}px;
     --h1SizeMobile: {{ settings.typography_h1_font_size_mobile }}px;
