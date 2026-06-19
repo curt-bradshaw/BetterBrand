@@ -1,0 +1,219 @@
+<section class="product-badges-section">
+  <div class="product-badges">
+    {% if section.settings.product_badge_icon1 != blank %}
+      <div class="product-badge-icon">
+        {{
+          section.settings.product_badge_icon1
+          | image_url: width: 298
+          | image_tag:
+            alt: section.settings.product_badge_icon1.alt,
+            loading: 'lazy',
+            widths: '100, 149, 298'
+        }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.product_badge_icon2 != blank %}
+      <div class="product-badge-icon">
+        {{
+          section.settings.product_badge_icon2
+          | image_url: width: 298
+          | image_tag:
+            alt: section.settings.product_badge_icon2.alt,
+            loading: 'lazy',
+            widths: '100, 149, 298'
+        }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.product_badge_icon3 != blank %}
+      <div class="product-badge-icon">
+        {{
+          section.settings.product_badge_icon3
+          | image_url: width: 298
+          | image_tag:
+            alt: section.settings.product_badge_icon3.alt,
+            loading: 'lazy',
+            widths: '100, 149, 298'
+        }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.product_badge_icon4 != blank %}
+      <div class="product-badge-icon">
+        {{
+          section.settings.product_badge_icon4
+          | image_url: width: 298
+          | image_tag:
+            alt: section.settings.product_badge_icon4.alt,
+            loading: 'lazy',
+            widths: '100, 149, 298'
+        }}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% style %}
+  #shopify-section-{{ section.id }} .product-badges-section {
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .product-badges {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.badge_gap }}px;
+    min-height: {{ section.settings.badge_height }}px;
+  }
+
+  #shopify-section-{{ section.id }} .product-badge-icon {
+    width: 100%;
+    max-width: {{ section.settings.badge_width }}px;
+    max-height: {{ section.settings.badge_height }}px;
+  }
+
+  #shopify-section-{{ section.id }} .product-badges img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  @media screen and (max-width: 1019px) {
+    #shopify-section-{{ section.id }} .product-badges {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} .product-badges {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      gap: {{ section.settings.mobile_badge_gap }}px;
+    }
+
+    #shopify-section-{{ section.id }} .product-badge-icon {
+      max-width: {{ section.settings.mobile_badge_width }}px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Product badges",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "product_badge_icon1",
+      "label": "Badge icon 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_badge_icon2",
+      "label": "Badge icon 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_badge_icon3",
+      "label": "Badge icon 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_badge_icon4",
+      "label": "Badge icon 4"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Badge sizing"
+    },
+    {
+      "type": "range",
+      "id": "badge_width",
+      "label": "Badge width",
+      "min": 80,
+      "max": 280,
+      "step": 4,
+      "unit": "px",
+      "default": 148
+    },
+    {
+      "type": "range",
+      "id": "badge_height",
+      "label": "Badge height",
+      "min": 80,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "badge_gap",
+      "label": "Badge gap",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_badge_width",
+      "label": "Mobile badge width",
+      "min": 60,
+      "max": 280,
+      "step": 4,
+      "unit": "px",
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "mobile_badge_gap",
+      "label": "Mobile badge gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product badges"
+    }
+  ]
+}
+{% endschema %}
