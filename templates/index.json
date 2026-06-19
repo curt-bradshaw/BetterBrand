@@ -19,8 +19,8 @@
         "custom-margin-bottom": 0,
         "custom-padding-top": 0,
         "custom-padding-bottom": 0,
-        "homepage_banner_style_3": "shopify://shop_images/c009072e-b2a6-4a25-96c7-22448b1284d6_1.webp",
-        "mobile_banner_style_3": "shopify://shop_images/image_1_43704aee-f329-4855-a7f6-0680cb5ee9e9.webp",
+        "homepage_banner_style_3": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
+        "mobile_banner_style_3": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
         "enable_custom_banner_height": false,
         "banner_max_height": 600,
         "banner_max_height_tablet": 430,
@@ -144,6 +144,89 @@
         "banner_sub_titcolor": "#234134"
       }
     },
+    "best_sellers_section_gjDgWP": {
+      "type": "best-sellers-section",
+      "blocks": {
+        "product_item_tifnAA": {
+          "type": "product_item",
+          "settings": {
+            "product": "betterlungs®-mullein-chlorophyll",
+            "image": "shopify://shop_images/5c7ce9fa-2d41-4839-8672-4911d0746518.webp",
+            "product_url": "shopify://products/betterlungs®-mullein-chlorophyll",
+            "badge": "",
+            "title": "BetterLungs®  Mullein + Chlorophyll",
+            "rating": "5.0",
+            "reviews": "238"
+          }
+        },
+        "product_item_dCPNkb": {
+          "type": "product_item",
+          "settings": {
+            "product": "betterlungs",
+            "image": "shopify://shop_images/440a2d16-6bdf-40a7-8406-c3d3ae60ea8e.webp",
+            "product_url": "shopify://products/betterlungs-old",
+            "badge": "",
+            "title": "BetterLungs® Capsules",
+            "rating": "5.0",
+            "reviews": "238"
+          }
+        },
+        "product_item_HB7T7P": {
+          "type": "product_item",
+          "settings": {
+            "product": "betterlungs-r-mullein-gummies",
+            "image": "shopify://shop_images/image_442362d6-7a83-4912-bdf9-6b4cbe3e1bdc.webp",
+            "product_url": "shopify://products/betterlungs-r-mullein-gummies",
+            "badge": "",
+            "title": "BetterLungs®  Mullein Gummies",
+            "rating": "5.0",
+            "reviews": "238"
+          }
+        },
+        "product_item_JeCzKQ": {
+          "type": "product_item",
+          "settings": {
+            "product": "betterlungs-tea-2-pack",
+            "image": "shopify://shop_images/ea271c10-4aa7-459d-81ea-f987407b1479.webp",
+            "product_url": "shopify://products/betterlungs-tea",
+            "badge": "",
+            "title": "BetterLungs®  Tea",
+            "rating": "5.0",
+            "reviews": "238"
+          }
+        }
+      },
+      "block_order": [
+        "product_item_tifnAA",
+        "product_item_dCPNkb",
+        "product_item_HB7T7P",
+        "product_item_JeCzKQ"
+      ],
+      "custom_css": [
+        ".best-sellers-section {background-color: #ffffff; padding: 40px 0 0;}"
+      ],
+      "name": "Best Sellers Grid",
+      "settings": {
+        "heading": "Shop Best Sellers",
+        "see_all_link": "https://trybetterbrand.com/collections/best-mullein-extract-for-lungs?_cd=24788657f9f895602ecb8566ca137dfdfafab53f5b1f9ab3c0eb686758b5435a&_uid=121893224747&preview_theme_id=181826650411&preview_token=1idszndjyykol5wcbr3jbsw7g558owat",
+        "see_all_text": "See All Products"
+      }
+    },
+    "product_badges_nkhPKp": {
+      "type": "product-badges",
+      "name": "Product badges",
+      "settings": {
+        "product_badge_icon1": "shopify://shop_images/money-back-icon.jpg",
+        "background_color": "#ffffff",
+        "badge_width": 248,
+        "badge_height": 140,
+        "badge_gap": 14,
+        "mobile_badge_width": 280,
+        "mobile_badge_gap": 10,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "explore_collections_A3LhxL": {
       "type": "explore-collections",
       "blocks": {
@@ -186,6 +269,7 @@
         "collection_item_6N8n8N",
         "collection_item_R8JHX7"
       ],
+      "disabled": true,
       "custom_css": [],
       "name": "Explore Collections",
       "settings": {
@@ -195,6 +279,165 @@
         "show_special_sale_badge": false,
         "special_sale_badge_text": "20% Off"
       }
+    },
+    "stats_question_UeytgW": {
+      "type": "stats-question",
+      "blocks": {
+        "stat_TLCXai": {
+          "type": "stat",
+          "settings": {
+            "number": "500M+",
+            "label": "Views On [BREAK_MOBILE]Socials"
+          }
+        },
+        "stat_UQE4dQ": {
+          "type": "stat",
+          "settings": {
+            "number": "1M+",
+            "label": "Satisfied [BREAK_MOBILE]Customers"
+          }
+        },
+        "stat_MAeymb": {
+          "type": "stat",
+          "settings": {
+            "number": "1.8M",
+            "label": "Products [BREAK_MOBILE]Sold"
+          }
+        },
+        "stat_4JfpKw": {
+          "type": "stat",
+          "settings": {
+            "number": "4.5",
+            "label": "Rating [BREAK_MOBILE]Stars"
+          }
+        }
+      },
+      "block_order": [
+        "stat_TLCXai",
+        "stat_UQE4dQ",
+        "stat_MAeymb",
+        "stat_4JfpKw"
+      ],
+      "custom_css": [],
+      "name": "Banner With Stats",
+      "settings": {
+        "background_img": "shopify://shop_images/banner-with-stats-desk.png",
+        "background_color": "#dbe8df",
+        "title": "#1 US Lung Support Supplement",
+        "subtitle": "Betterbrand supplements are made with clean ingredients and real science, designed to help you breathe easier,&nbsp;naturally.",
+        "button_text": "Bundle and Save",
+        "button_url": "https://www.trybetterbrand.com/products/bundle-save?page=addProductsPage1&currentFlow=byob"
+      }
+    },
+    "better_reviews_cxReWP": {
+      "type": "better-reviews",
+      "blocks": {
+        "review_rFnbpq": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746_2.png",
+            "name": "Judie M.",
+            "location": "United States",
+            "review_title": "Positive Results After 3 Weeks",
+            "review_text": "I have COPD. In the 3 weeks that I have taken these products, my lungs have never felt better. I will definitely buy again."
+          }
+        },
+        "review_Ghag3d": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746_1.png",
+            "name": "Ahmad Herwitz",
+            "location": "United States",
+            "review_title": "A Surprising Boost to My Breathing",
+            "review_text": "I smoke daily and I'd say it improves my breathing by like 15-20%. Which is awesome. I can't really ask more from a product like this."
+          }
+        },
+        "review_cBhNrd": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746.png",
+            "name": "Michelle C.",
+            "location": "United States",
+            "review_title": "Better Lungs for Energy and Easier Breathing",
+            "review_text": "It is good for overall good health. This product gives you energy and helps you breath better. I love Better Lungs!"
+          }
+        }
+      },
+      "block_order": [
+        "review_rFnbpq",
+        "review_Ghag3d",
+        "review_cBhNrd"
+      ],
+      "custom_css": [
+        ".bfw-videos {padding: 40px 20px; text-align: center;}"
+      ],
+      "name": "Better Reviews",
+      "settings": {
+        "heading": "Real Results. [BREAK_MOBILE]Real People.",
+        "subtitle": "Trusted by +1 Million Customers",
+        "button_label": "Show All Reviews",
+        "button_link": "shopify://pages/reviews"
+      }
+    },
+    "klaviyo_form_embed_air_report": {
+      "type": "klaviyo-form-embed",
+      "name": "Klaviyo form embed",
+      "settings": {
+        "company_id": "NYkPJ4",
+        "form_id": "W2ZwsL",
+        "background_color": "#ffffff",
+        "max_width": 700,
+        "border_radius": 18,
+        "shadow_opacity": 16,
+        "padding_top": 44,
+        "padding_bottom": 44,
+        "mobile_padding_top": 44,
+        "mobile_padding_bottom": 44
+      }
+    },
+    "icon_benefits_je4yXF": {
+      "type": "icon-benefits",
+      "blocks": {
+        "benefit_EyQMjh": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar.svg",
+            "text": "Made [BREAK_MOBILE]in USA"
+          }
+        },
+        "benefit_GHKaea": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Avatar_1.svg",
+            "text": "Made in GMP [BREAK_MOBILE]Facility"
+          }
+        },
+        "benefit_EMm3Vm": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/fi_16780038.svg",
+            "text": "Third-Party [BREAK_MOBILE]Tested"
+          }
+        },
+        "benefit_g9wraT": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/fi_14748972.svg",
+            "text": "Natural [BREAK_MOBILE]Ingredients"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_EyQMjh",
+        "benefit_GHKaea",
+        "benefit_EMm3Vm",
+        "benefit_g9wraT"
+      ],
+      "custom_css": [
+        ".icon-benefits__container {padding: 20px; border-top: 1px solid #f1f1f1;}"
+      ],
+      "name": "Icon benefits row",
+      "settings": {}
     },
     "better_benefits_QXYyxz": {
       "type": "better-benefits",
@@ -238,88 +481,13 @@
         "benefit_nTr9C8",
         "benefit_zHLBkV"
       ],
+      "disabled": true,
       "name": "Benefits Grid",
       "settings": {
         "heading": "Better From Within",
         "subheading": "Pure Benefits Designed For Everyday Wellness",
-        "margin_top": 0,
-        "mobile_margin_top": 0
-      }
-    },
-    "best_sellers_section_gjDgWP": {
-      "type": "best-sellers-section",
-      "blocks": {
-        "product_item_dCPNkb": {
-          "type": "product_item",
-          "settings": {
-            "product": "betterlungs",
-            "image": "shopify://shop_images/New_Lungs_1_4c510cd9-5088-4615-8203-ec90352a0a7e.png",
-            "product_url": "shopify://products/betterlungs-old",
-            "badge": "",
-            "title": "BetterLungs® Capsules",
-            "rating": "5.0",
-            "reviews": "238"
-          }
-        },
-        "product_item_HB7T7P": {
-          "type": "product_item",
-          "settings": {
-            "product": "betterlungs-r-mullein-gummies",
-            "image": "shopify://shop_images/17_600d55f8-d11f-41f1-b1d2-560db009d65a.png",
-            "product_url": "shopify://products/betterlungs-r-mullein-gummies",
-            "badge": "",
-            "title": "BetterLungs®  Mullein Gummies",
-            "rating": "5.0",
-            "reviews": "238"
-          }
-        },
-        "product_item_tifnAA": {
-          "type": "product_item",
-          "settings": {
-            "product": "betterlungs®-mullein-chlorophyll",
-            "image": "shopify://shop_images/IMG-3611_1fe9d25e-ee09-4fd9-ba98-6865ef9e4276.png",
-            "product_url": "shopify://products/betterlungs®-mullein-chlorophyll",
-            "badge": "",
-            "title": "BetterLungs®  Mullein + Chlorophyll",
-            "rating": "5.0",
-            "reviews": "238"
-          }
-        },
-        "product_item_JeCzKQ": {
-          "type": "product_item",
-          "settings": {
-            "product": "betterlungs-tea-2-pack",
-            "image": "shopify://shop_images/Elderberry_Tincture_d8298694-a9f0-48fb-93f7-50fe4cc90c30.png",
-            "product_url": "shopify://products/betterlungs-tea",
-            "badge": "",
-            "title": "BetterLungs®  Tea",
-            "rating": "5.0",
-            "reviews": "238"
-          }
-        }
-      },
-      "block_order": [
-        "product_item_dCPNkb",
-        "product_item_HB7T7P",
-        "product_item_tifnAA",
-        "product_item_JeCzKQ"
-      ],
-      "name": "Best Sellers Grid",
-      "settings": {
-        "heading": "Our Best Sellers",
-        "see_all_link": "https://trybetterbrand.com/collections/best-mullein-extract-for-lungs?_cd=24788657f9f895602ecb8566ca137dfdfafab53f5b1f9ab3c0eb686758b5435a&_uid=121893224747&preview_theme_id=181826650411&preview_token=1idszndjyykol5wcbr3jbsw7g558owat",
-        "see_all_text": "See All Products"
-      }
-    },
-    "subscription_bar_3HMcJY": {
-      "type": "subscription-bar",
-      "name": "Subscription Bar",
-      "settings": {
-        "background_image": "shopify://shop_images/Corpo_4.png",
-        "background_image_mobile": "shopify://shop_images/Corpo_7.png",
-        "text": "Better Breathing On Repeat",
-        "button_label": "SUBSCRIBE TO SAVE 20%",
-        "button_link": "https://www.trybetterbrand.com/products/betterlungs%C2%AE-mullein-chlorophyll"
+        "margin_top": 30,
+        "mobile_margin_top": 30
       }
     },
     "better_videos_Lx6QYF": {
@@ -365,12 +533,25 @@
       ],
       "name": "Better Videos",
       "settings": {
-        "heading": "Better From Within",
-        "subheading": "Pure Benefits Designed For Everyday Wellness"
+        "heading": "#1 Most Talked About Lung Supplement",
+        "subheading": "+500 Million Views on Facebook, Instagram and TikTok."
+      }
+    },
+    "subscription_bar_3HMcJY": {
+      "type": "subscription-bar",
+      "disabled": true,
+      "name": "Subscription Bar",
+      "settings": {
+        "background_image": "shopify://shop_images/Corpo_4.png",
+        "background_image_mobile": "shopify://shop_images/Corpo_7.png",
+        "text": "Better Breathing On Repeat",
+        "button_label": "SUBSCRIBE TO SAVE 20%",
+        "button_link": "https://www.trybetterbrand.com/products/betterlungs%C2%AE-mullein-chlorophyll"
       }
     },
     "absolute_banner_V3trxN": {
       "type": "absolute-banner",
+      "disabled": true,
       "name": "Absolute Banner",
       "settings": {
         "bg_image_desktop": "shopify://shop_images/Banner_1.png",
@@ -383,94 +564,84 @@
         "button_link": "shopify://collections/lung-detox"
       }
     },
-    "icon_benefits_je4yXF": {
-      "type": "icon-benefits",
+    "us_vs_them_v2_LCQ3Yj": {
+      "type": "us-vs-them-v2",
       "blocks": {
-        "benefit_EyQMjh": {
-          "type": "benefit",
+        "feature_T7pdzd": {
+          "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/Avatar.svg",
-            "text": "Made [BREAK_MOBILE]in USA"
+            "label": "Ratings"
           }
         },
-        "benefit_GHKaea": {
-          "type": "benefit",
+        "feature_RDJ4b6": {
+          "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/Avatar_1.svg",
-            "text": "Made in GMP [BREAK_MOBILE]Facility"
+            "label": "Doctor-Formulated"
           }
         },
-        "benefit_EMm3Vm": {
-          "type": "benefit",
+        "feature_MdxTTp": {
+          "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/fi_16780038.svg",
-            "text": "Third-Party [BREAK_MOBILE]Tested"
+            "label": "Research-Backed"
           }
         },
-        "benefit_g9wraT": {
-          "type": "benefit",
+        "feature_CRrcq9": {
+          "type": "feature",
           "settings": {
-            "icon": "shopify://shop_images/fi_14748972.svg",
-            "text": "Natural [BREAK_MOBILE]Ingredients"
+            "label": "Clean Ingredients"
+          }
+        },
+        "feature_nVGM7p": {
+          "type": "feature",
+          "settings": {
+            "label": "Money-Back Guarantee"
+          }
+        },
+        "brand_Fndb3n": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/betterbrand-wordmark.svg",
+            "logo_url": "",
+            "title": "BETTERBRAND",
+            "badge": "",
+            "highlight": true,
+            "values": "stars: 5\ncheck\ncheck\ncheck\ncheck"
+          }
+        },
+        "brand_heqBDq": {
+          "type": "brand",
+          "settings": {
+            "logo_url": "",
+            "title": "Other Brands",
+            "badge": "",
+            "highlight": false,
+            "values": "stars: 3\nx\nx\nx\nx"
           }
         }
       },
       "block_order": [
-        "benefit_EyQMjh",
-        "benefit_GHKaea",
-        "benefit_EMm3Vm",
-        "benefit_g9wraT"
+        "feature_T7pdzd",
+        "feature_RDJ4b6",
+        "feature_MdxTTp",
+        "feature_CRrcq9",
+        "feature_nVGM7p",
+        "brand_Fndb3n",
+        "brand_heqBDq"
       ],
-      "name": "Icon benefits row",
-      "settings": {}
-    },
-    "stats_question_UeytgW": {
-      "type": "stats-question",
-      "blocks": {
-        "stat_TLCXai": {
-          "type": "stat",
-          "settings": {
-            "number": "6",
-            "label": "Years In [BREAK_MOBILE]Business"
-          }
-        },
-        "stat_UQE4dQ": {
-          "type": "stat",
-          "settings": {
-            "number": "836k",
-            "label": "Satisfied [BREAK_MOBILE]Customers"
-          }
-        },
-        "stat_MAeymb": {
-          "type": "stat",
-          "settings": {
-            "number": "1.4M",
-            "label": "Products [BREAK_MOBILE]Sold"
-          }
-        },
-        "stat_4JfpKw": {
-          "type": "stat",
-          "settings": {
-            "number": "4.5",
-            "label": "Rating [BREAK_MOBILE]Stars"
-          }
-        }
-      },
-      "block_order": [
-        "stat_TLCXai",
-        "stat_UQE4dQ",
-        "stat_MAeymb",
-        "stat_4JfpKw"
-      ],
-      "name": "Banner With Stats",
+      "name": "US vs Them V2",
       "settings": {
-        "background_img": "shopify://shop_images/banner-with-stats-desk.png",
-        "background_img_tablet": "shopify://shop_images/banner-with-stats-tablet.png",
-        "background_img_mobile": "shopify://shop_images/banner-with-stats-mob.png",
-        "title": "#1 US Lung Support Supplement",
-        "subtitle": "Betterbrand supplements are made with clean ingredients and real science, designed to help you breathe easier,&nbsp;naturally.",
-        "button_text": "Bundle and Save",
-        "button_url": "https://www.trybetterbrand.com/products/bundle-save?page=addProductsPage1&currentFlow=byob"
+        "heading": "US Vs. THEM",
+        "subheading": "Best-Rated. Doctor-Formulated. Works or Your Money Back.",
+        "overlay_opacity": 70,
+        "bg_color": "#1e3b2d",
+        "panel_color": "#0d2018",
+        "highlight_color": "#3f745d",
+        "accent_color": "#f2c94c",
+        "text_color": "#ffffff",
+        "title_color": "#ffffff",
+        "corner_radius": 18,
+        "cta_text": "",
+        "cta_url": ""
       }
     },
     "new_our_story_7kYVat": {
@@ -569,53 +740,6 @@
         "subheading": "Find the Support Your Body Needs"
       }
     },
-    "better_reviews_cxReWP": {
-      "type": "better-reviews",
-      "blocks": {
-        "review_cBhNrd": {
-          "type": "review",
-          "settings": {
-            "image": "shopify://shop_images/Frame_1618873746.png",
-            "name": "Michelle C.",
-            "location": "United States",
-            "review_title": "Better Lungs for Energy and Easier Breathing",
-            "review_text": "It is good for overall good health. This product gives you energy and helps you breath better. I love Better Lungs!"
-          }
-        },
-        "review_Ghag3d": {
-          "type": "review",
-          "settings": {
-            "image": "shopify://shop_images/Frame_1618873746_1.png",
-            "name": "Ahmad Herwitz",
-            "location": "United States",
-            "review_title": "A Surprising Boost to My Breathing",
-            "review_text": "I smoke daily and I'd say it improves my breathing by like 15-20%. Which is awesome. I can't really ask more from a product like this."
-          }
-        },
-        "review_rFnbpq": {
-          "type": "review",
-          "settings": {
-            "image": "shopify://shop_images/Frame_1618873746_2.png",
-            "name": "Judie M.",
-            "location": "United States",
-            "review_title": "Positive Results After 3 Weeks",
-            "review_text": "I have COP D in the 3 weeks that I took that my lines have never felt better. I will buy again"
-          }
-        }
-      },
-      "block_order": [
-        "review_cBhNrd",
-        "review_Ghag3d",
-        "review_rFnbpq"
-      ],
-      "name": "Better Reviews",
-      "settings": {
-        "heading": "Meet The [BREAK_MOBILE]Betterbrand Community",
-        "subtitle": "Trusted by +836,000 Customers",
-        "button_label": "Show All Reviews",
-        "button_link": "https://www.trybetterbrand.com/pages/reviews"
-      }
-    },
     "you_may_also_8W89b9": {
       "type": "you-may-also",
       "name": "You May Also",
@@ -691,18 +815,21 @@
   "order": [
     "banner_style3_xth4VR",
     "new_banner_layout_8VCt8Q",
-    "explore_collections_A3LhxL",
-    "better_benefits_QXYyxz",
     "best_sellers_section_gjDgWP",
-    "subscription_bar_3HMcJY",
-    "better_videos_Lx6QYF",
-    "absolute_banner_V3trxN",
-    "icon_benefits_je4yXF",
+    "product_badges_nkhPKp",
+    "explore_collections_A3LhxL",
     "stats_question_UeytgW",
+    "better_reviews_cxReWP",
+    "klaviyo_form_embed_air_report",
+    "icon_benefits_je4yXF",
+    "better_benefits_QXYyxz",
+    "better_videos_Lx6QYF",
+    "subscription_bar_3HMcJY",
+    "absolute_banner_V3trxN",
+    "us_vs_them_v2_LCQ3Yj",
     "new_our_story_7kYVat",
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
-    "better_reviews_cxReWP",
     "you_may_also_8W89b9",
     "faq_section_7NrfTG"
   ]

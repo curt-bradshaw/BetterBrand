@@ -1,0 +1,1279 @@
+{%- comment -%}
+  ====================================================================
+  AQ V3 — Free Air Quality Report Landing Page
+  ====================================================================
+  Drop-in Shopify section template, ported pixel-accurate from Figma
+  node 87:3053 (file 8Sq9pE6WMKryjJTCs6RiuU).
+
+  Install:
+    1. Upload all PNGs from ./assets/ to theme Assets/ (filenames unchanged).
+    2. Save this file as sections/aq-quality-optin.liquid.
+    3. Create templates/page.aq-quality-optin.json:
+         {"sections":{"aq":{"type":"aq-quality-optin","settings":{}}},
+          "order":["aq"]}
+    4. Online Store → Pages → Add page → Template page.aq-quality-optin.
+  ====================================================================
+{%- endcomment -%}
+
+{%- liquid
+    assign sec = section.settings
+    assign form_action = sec.form_action | default: '/api/aq-optin'
+    assign klaviyo_company_id = sec.klaviyo_company_id | default: 'NYkPJ4'
+    assign klaviyo_form_id = sec.klaviyo_form_id | default: 'W2ZwsL'
+    assign product_url = sec.product_url | default: 'https://trybetterbrand.com/products/mullein-chlorophyll-tincture'
+    assign subsave_variant = sec.subsave_variant | default: '50211235954987'
+    assign subsave_selling_plan = sec.subsave_selling_plan | default: ''
+    assign otp_1bottle_variant = sec.otp_1bottle_variant | default: '50211235922219'
+    assign otp_3bottle_variant = sec.otp_3bottle_variant | default: '50211235954987'
+  
+    comment
+    Cart permalink format: /cart/{variant_id}:{quantity}[?selling_plan=ID]
+    Lands user on /cart on trybetterbrand.com with item added, where they tap "Checkout".
+    Add subsave_selling_plan ID in section settings once subscription Selling Plan is published.
+    endcomment
+  
+    assign subsave_url = '/cart/' | append: subsave_variant | append: ':1'
+    if subsave_selling_plan != ''
+      assign subsave_url = subsave_url | append: '?selling_plan=' | append: subsave_selling_plan
+    endif
+  
+    assign subsave_cadence = sec.subsave_cadence | default: '3 bottles delivered every 3 months · Cancel anytime'
+
+    comment
+    Dynamically resolve BetterLungs selling plan IDs from the live product so subscription
+    cart links work without needing to hardcode plan IDs in section settings.
+    endcomment
+    assign bl_product = all_products['mullein-chlorophyll-tincture']
+    assign sp_monthly_id = ''
+    assign sp_quarterly_id = ''
+    for v in bl_product.variants
+      for spa in v.selling_plan_allocations
+        assign sp_name_lower = spa.selling_plan.name | downcase
+        if sp_name_lower contains 'every month'
+          assign sp_monthly_id = spa.selling_plan.id
+        endif
+        if sp_name_lower contains '3 month'
+          assign sp_quarterly_id = spa.selling_plan.id
+        endif
+      endfor
+    endfor
+  -%}
+  
+  <!-- Klaviyo Onsite (AQ inline form) -->
+  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id={{ klaviyo_company_id }}"></script>
+  
+  <style>
+    /* ══════════════════════════════════════════════════════════════
+       HIDE THEME CHROME — main site header, footer, announcement /
+       shipping bar. The page's own .aqv3 .nav-logo header and
+       .aqv3 .footer block are NOT touched by these selectors.
+       ══════════════════════════════════════════════════════════════ */
+
+    /* Shipping / announcement bar */
+    .essential_annoucement_bar_wrapper,
+    [class*="essential_annoucement_bar"],
+    [class*="essential_announcement_bar"],
+    announcement-bar,
+    .announcement-bar,
+    .announcement-bar-section,
+    #shopify-section-announcement-bar,
+    [id*="announcement"],
+    [class*="announcement-bar"],
+    .shopify-section.shipping-bar,
+    [class*="shipping-bar"],
+    [id*="shipping_bar"],
+    [id*="shipping-bar"] { display: none !important; }
+
+    /* Main site header */
+    header.header-content,
+    .header-content,
+    .site-header,
+    #shopify-section-header,
+    [class*="site-header"],
+    sticky-header,
+    .header-wrapper,
+    .shopify-section.section-header,
+    .shopify-section-header-sticky,
+    [class*="section-header"],
+    [id*="section-header"] { display: none !important; }
+
+    /* Main site footer */
+    footer.footer-content,
+    .footer-content,
+    .site-footer,
+    #shopify-section-footer,
+    [class*="site-footer"],
+    .shopify-section .ntg-footer,
+    .ntg-footer,
+    [id*="section-footer"] { display: none !important; }
+
+    /* "Skip to content" accessibility link (defined in layout/theme.liquid) */
+    .patrol-skip-link { display: none !important; }
+
+    /* Remove theme's main-content top padding so the page starts at the top */
+    #MainContent,
+    main#MainContent,
+    .main-content,
+    [id="MainContent"] {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+
+    /* Inter for every element inside this landing page. Covers inline DOM
+       rendered by third-party widgets (Klaviyo etc.). Iframed widgets like
+       Trustpilot are out of reach and styled by their own scripts. */
+    .aqv3, .aqv3 *, .aqv3 *::before, .aqv3 *::after {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif !important;
+    }
+
+    .aqv3 :root,
+    .aqv3 {
+      --aqv3-mallard: #1A3A1A;
+      --aqv3-mallard-92: rgba(26,58,26,0.92);
+      --aqv3-green-kelp: #1A2E1A;
+      --aqv3-killarney: #2D5A2D;
+      --aqv3-tom-thumb: #3D5C3D;
+      --aqv3-sea-green: #2E7D32;
+      --aqv3-hippie: #4A7C4A;
+      --aqv3-laurel: #6B8C6B;
+      --aqv3-tasman: #D0DDD0;
+      --aqv3-surf-crest: #D4E8D4;
+      --aqv3-gray-nurse: #E8F0E8;
+      --aqv3-spring-wood: #F4F8F2;
+      --aqv3-snow-drift: #F0F5F0;
+      --aqv3-gray-98: #F9FAF9;
+      --aqv3-mine-shaft: #2A2A2A;
+      --aqv3-silver-chalice: #AAAAAA;
+      --aqv3-mercury: #E5E5E5;
+      --aqv3-racing-green: #0D1F0D;
+      --aqv3-ronchi: #E8C84A;
+      --aqv3-tall-poppy: #C0392B;
+      --aqv3-c62828: #C62828;
+      --aqv3-denim: #1A6BCC;
+    }
+    .aqv3 * { box-sizing: border-box; }
+    .aqv3 { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: var(--aqv3-mallard); background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; max-width: 100vw; }
+    .aqv3 h1, .aqv3 h2, .aqv3 h3, .aqv3 h4 { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 400; margin: 0; }
+    /* Responsive heading scale — clamp() lets every h1/h2/h3 scale smoothly
+       between min and max so no per-breakpoint font-size overrides are needed.
+       Unitless line-heights so leading scales with the font-size.
+       !important on font-weight beats inline/embedded styles injected by
+       third-party widgets like the Klaviyo form. */
+    .aqv3 h1 {
+      font-size: clamp(35px, 5vw, 52px);
+      line-height: 1.05;
+      font-weight: 700 !important;
+      text-transform: uppercase;
+    }
+    .aqv3 h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+      font-weight: 700 !important;
+    }
+    .aqv3 h3 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      line-height: 1.2;
+    }
+
+    /* Klaviyo form headline — keep the hero .hero-headline at its native size
+       but match the h2 sizing for the title Klaviyo renders above the opt-in. */
+    .aqv3 .kl-embed h1 {
+      font-size: clamp(28px, 4vw, 40px) !important;
+      line-height: 1.1 !important;
+    }
+    @media (max-width: 767px) {
+      .aqv3 .kl-embed h1 span {
+        font-size: 30px !important;
+        line-height: 1.1 !important;
+      }
+    }
+    .aqv3 p, .aqv3 ul, .aqv3 form { margin: 0; }
+    .aqv3 a { color: inherit; text-decoration: none; }
+    .aqv3 img { max-width: 100%; display: block; }
+    .aqv3 button { font-family: inherit; cursor: pointer; border: 0; background: 0; }
+  
+    .aqv3 .announcement-bar { background: var(--aqv3-mallard); height: 32px; display: flex; align-items: center; justify-content: center; padding: 8px 12px; overflow: hidden; }
+    .aqv3 .announcement-inner { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .aqv3 .announcement-bar span { color: #fff; font-weight: 600; font-size: 13px; letter-spacing: 0.78px; text-transform: uppercase; white-space: nowrap; }
+    .aqv3 .announcement-bar a { color: var(--aqv3-ronchi); font-weight: 600; font-size: 13px; letter-spacing: 0.78px; text-transform: uppercase; text-decoration: underline; white-space: nowrap; }
+    .aqv3 .announcement-bar-mobile { display: none; }
+  
+    .aqv3 .nav { background: #fff; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; border-bottom: 1px solid var(--aqv3-mercury); position: sticky; top: 0; z-index: 50; }
+    .aqv3 .nav-logo img { height: 28px; width: auto; }
+    .aqv3 .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; padding: 0; margin: 0; }
+    .aqv3 .nav-links a { color: var(--aqv3-green-kelp); font-weight: 700; font-size: 13px; letter-spacing: 0.78px; text-transform: uppercase; }
+    .aqv3 .nav-cta, .aqv3 .nav-cta-mobile { background: var(--aqv3-ronchi); color: var(--aqv3-mallard); font-weight: 800; font-size: 13px; letter-spacing: 1.04px; text-transform: uppercase; padding: 10px 22px; border-radius: 50px; white-space: nowrap; }
+    .aqv3 .nav-cta-mobile { display: none; padding: 8px 16px; font-size: 12px; letter-spacing: 0.8px; }
+    .aqv3 .nav-toggle { display: none; flex-direction: column; gap: 4px; padding: 8px; }
+    .aqv3 .nav-toggle span { width: 22px; height: 2px; background: var(--aqv3-mallard); }
+  
+    .aqv3 .btn-primary { display: inline-block; background: var(--aqv3-ronchi); color: var(--aqv3-mallard); font-weight: 800; font-size: 14px; letter-spacing: 1.12px; text-transform: uppercase; padding: 14px 36px; border-radius: 50px; text-align: center; }
+    .aqv3 .btn-outline { display: inline-block; background: transparent; color: var(--aqv3-mallard); font-weight: 700; font-size: 14px; letter-spacing: 0.85px; text-transform: uppercase; padding: 12px 26px; border-radius: 50px; border: 2px solid var(--aqv3-mallard); }
+  
+    .aqv3 .hero { background: var(--aqv3-mallard); display: grid; grid-template-columns: 1fr 1fr; }
+    .aqv3 .hero-image { background: var(--aqv3-mallard); position: relative; overflow: hidden; min-height: 580px; }
+    .aqv3 .hero-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 22% center; }
+    .aqv3 .hero-content { background: var(--aqv3-mallard-92); display: flex; align-items: center; padding: 64px 56px; }
+    .aqv3 .hero-text { display: flex; flex-direction: column; gap: 18px; min-width: 0; max-width: 100%; width: 100%; }
+    .aqv3 .hero-text-top, .aqv3 .hero-text-bottom { display: contents; }
+    .aqv3 .hero-rating-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .aqv3 .hero-stars { color: var(--aqv3-ronchi); font-size: 18px; letter-spacing: 2px; line-height: 1; }
+    .aqv3 .hero-stars-label { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 500; }
+    .aqv3 .hero-headline { color: #fff; font-size: clamp(35px, 5vw, 52px); line-height: 1.05; letter-spacing: 1.4px; }
+    .aqv3 .hero-headline span.accent { color: var(--aqv3-ronchi); display: block; }
+    .aqv3 .hero-subtitle { color: var(--aqv3-tasman); font-weight: 500; font-size: 18px; letter-spacing: 0.3px; }
+    .aqv3 .hero-badges { display: flex; flex-wrap: wrap; gap: 20px; }
+    .aqv3 .hero-badge { color: rgba(255,255,255,0.92); font-weight: 700; font-size: 12px; letter-spacing: 0.72px; text-transform: uppercase; }
+    .aqv3 .hero-badge::before { content: "✓ "; color: var(--aqv3-ronchi); }
+    .aqv3 .hero .btn-primary { font-size: 15px; padding: 16px 44px; letter-spacing: 1.2px; align-self: flex-start; }
+    .aqv3 .hero-cta-group { display: flex; flex-direction: column; gap: 12px; }
+    .aqv3 .hero-trust-line { color: rgba(255,255,255,0.65); font-size: 11px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase; }
+    .aqv3 .hero-trust-line .sep { color: var(--aqv3-ronchi); margin: 0 8px; }
+  
+    .aqv3 .section { padding: 40px 24px; }
+    .aqv3 .section-inner { max-width: 1200px; margin: 0 auto; }
+    .aqv3 .eyebrow { color: var(--aqv3-killarney); font-weight: 800; font-size: 11px; letter-spacing: 1.54px; text-transform: uppercase; }
+    .aqv3 .h2 { color: var(--aqv3-mallard); font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: 1.04px; }
+    .aqv3 .body-copy { color: var(--aqv3-tom-thumb); font-size: 16px; line-height: 27.2px; }
+  
+    .aqv3 .why { background: #fff; }
+    .aqv3 .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .aqv3 .why-block { display: flex; flex-direction: column; gap: 8px; }
+    .aqv3 .why-block .eyebrow.problem,
+    .aqv3 .why-block .eyebrow.solution { color: var(--aqv3-tall-poppy); padding-top: 20px; }
+    .aqv3 .why-block p { color: var(--aqv3-tom-thumb); font-size: 15px; line-height: 25.5px; }
+    .aqv3 .why-block strong { font-weight: 700; }
+    .aqv3 .benefit-cards { display: flex; flex-direction: column; gap: 20px; }
+    .aqv3 .benefit-card { display: flex; gap: 16px; align-items: flex-start; }
+    .aqv3 .benefit-icon { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 12px; background: var(--aqv3-gray-nurse); display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--aqv3-green-kelp); }
+    .aqv3 .benefit-body { display: flex; flex-direction: column; gap: 4px; }
+    .aqv3 .benefit-title { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 22px; letter-spacing: 0.66px; color: var(--aqv3-mallard); }
+    .aqv3 .benefit-text { color: var(--aqv3-tom-thumb); font-size: 14px; line-height: 22.4px; }
+  
+    .aqv3 .philosophy { background: var(--aqv3-gray-98); padding: 40px 24px; }
+    .aqv3 .philosophy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto; align-items: center; }
+    .aqv3 .philosophy-image { aspect-ratio: 1/1; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+    .aqv3 .philosophy-image img { width: 100%; height: 100%; object-fit: cover; }
+    .aqv3 .philosophy-text { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .aqv3 .philosophy-text .body-copy strong { font-weight: 700; color: var(--aqv3-mallard); }
+  
+    .kl-embed { width: 100%; padding: 44px 20px; background: #fff; }
+    .klaviyo-form-W2ZwsL { width: 100%; max-width: 700px; margin: 0 auto;
+      border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px rgba(26,58,26,0.16); }
+  
+    .aqv3 .real-results { background: var(--aqv3-spring-wood); padding: 40px 24px; }
+    /* Customer testimonial video strip — horizontal scroll, plays inline */
+    .aqv3 .testi-video-strip { display: flex; justify-content: center; gap: 16px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; padding: 4px 24px 16px; margin-inline: -24px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+    .aqv3 .testi-video-strip::-webkit-scrollbar { height: 6px; }
+    .aqv3 .testi-video-strip::-webkit-scrollbar-track { background: transparent; }
+    .aqv3 .testi-video-strip::-webkit-scrollbar-thumb { background: var(--aqv3-tasman); border-radius: 3px; }
+    .aqv3 .testi-video-card { position: relative; flex: 0 0 280px; aspect-ratio: 9/16; border-radius: 16px; overflow: hidden; background: var(--aqv3-mallard); box-shadow: 0 6px 20px rgba(26,58,26,0.12); scroll-snap-align: start; cursor: pointer; }
+    .aqv3 .testi-video-card video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+    .aqv3 .testi-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.92); color: var(--aqv3-mallard); font-size: 22px; display: flex; align-items: center; justify-content: center; padding-left: 4px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); pointer-events: none; transition: opacity 0.2s ease; }
+    .aqv3 .testi-video-card.is-playing .testi-play { opacity: 0; }
+    .aqv3 .real-results-header { text-align: center; display: flex; flex-direction: column; gap: 11px; align-items: center; margin-bottom: 40px; }
+    .aqv3 .real-results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .aqv3 .review-card { background: #fff; border: 1px solid var(--aqv3-surf-crest); border-radius: 16px; padding: 29px 25px; display: flex; flex-direction: column; gap: 12px; }
+    .aqv3 .review-card .stars { color: var(--aqv3-ronchi); font-size: 17.6px; letter-spacing: 2px; }
+    .aqv3 .review-quote { font-style: italic; font-size: 15.5px; line-height: 25.61px; color: var(--aqv3-mine-shaft); }
+    .aqv3 .review-name-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .aqv3 .review-name { font-weight: 700; font-size: 14.1px; color: var(--aqv3-mallard); }
+    .aqv3 .review-verified { font-size: 14.1px; color: var(--aqv3-hippie); }
+  
+    .aqv3 .product { background: var(--aqv3-snow-drift); padding: 40px 24px; }
+    .aqv3 .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1200px; margin: 0 auto; align-items: start; }
+    .aqv3 .product-gallery { display: flex; flex-direction: column; gap: 16px; }
+    .aqv3 .product-main { aspect-ratio: 1/1; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+    .aqv3 .product-main { position: relative; }
+    .aqv3 .product-main img { width: 100%; height: 100%; object-fit: cover; }
+    .aqv3 .product-main-badge { position: absolute; top: 18px; left: 18px; background: var(--aqv3-ronchi); color: var(--aqv3-mallard); font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 18px; letter-spacing: 1.2px; padding: 10px 18px; border-radius: 999px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); z-index: 2; }
+    .aqv3 .product-thumbs { display: flex; gap: 10px; }
+    .aqv3 .product-thumb { width: 72px; height: 72px; border-radius: 8px; border: 2px solid var(--aqv3-tasman); overflow: hidden; background: #fff; cursor: pointer; padding: 0; }
+    .aqv3 .product-thumb.is-selected { border-color: var(--aqv3-killarney); }
+    .aqv3 .product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .aqv3 .product-info { display: flex; flex-direction: column; gap: 6px; }
+    .aqv3 .product-stars-row { display: flex; align-items: center; gap: 8px; }
+    .aqv3 .product-stars { color: var(--aqv3-ronchi); font-size: 18px; letter-spacing: 2px; }
+    .aqv3 .product-rating { font-size: 13px; color: var(--aqv3-tom-thumb); text-decoration: underline; }
+    .aqv3 .product-title { padding-top: 8px; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-weight: 800; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -0.5px; color: var(--aqv3-mallard); text-transform: none; }
+  
+    /* ---------- PDP swatch-plans port (Curt 2026-06-04 v3) ----------
+       Source: snippets/swatch-plans.liquid in BetterBrand/david-octane-test-theme.
+       Typeface: Lora serif to approximate Bookmania. */
+    .aqv3 .plan-wrapper { width: 100%; padding-top: 8px; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+    .aqv3 .plan-title { display: none; }
+    .aqv3 .plan-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .aqv3 .plan-card { display: flex; align-items: center; gap: 14px; padding: 10px 20px; border: 1px solid #234134; border-radius: 14px; background: #fff; cursor: pointer; transition: all 0.2s ease; height: 92px; position: relative; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+    .aqv3 .plan-card.active { box-shadow: 0 0 4.9px 3px #23413475 inset; }
+    .aqv3 .plan-left { width: 70px; height: 70px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .aqv3 .plan-left img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .aqv3 .plan-center { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+    .aqv3 .plan-name { font-size: 18px; font-weight: 700; line-height: 1.2; color: #234134; }
+    /* PDP-matched: badge sits left of price via row-reverse */
+    .aqv3 .plan-right { display: flex; flex-direction: row; align-items: center; gap: 10px; flex-shrink: 0; }
+    .aqv3 .plan-price-stack { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+    .aqv3 .plan-price { font-size: 20px; font-weight: 700; color: #234134; line-height: 1.2; white-space: nowrap; flex-shrink: 0; text-align: right; }
+    .aqv3 .plan-price span[data-sub-price] { font-size: 20px; font-weight: 700; color: #234134; }
+    .aqv3 .plan-each { font-size: 14px; font-weight: 400; color: #234134; line-height: 1; text-align: right; }
+    .aqv3 .plan-badge { background: #234134; color: #ffffff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 22px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.3px; min-height: 36px; box-sizing: border-box; }
+    .aqv3 .plan-badge span { color: #ffffff; }
+    .aqv3 .plan-badge.hidden { visibility: hidden; }
+    .aqv3 .subscription-wrapper { margin-bottom: 12px; }
+    .aqv3 .subscription-group { display: flex; flex-direction: column; gap: 12px; }
+    .aqv3 .subscription-group[hidden] { display: none !important; }
+    .aqv3 .subscription-card { border: 1px solid #234134; border-radius: 10px; padding: 20px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; background: #fff; font-family: 'Inter', -apple-system, system-ui, sans-serif; margin-top: 22px; }
+    .aqv3 .subscription-card.active { box-shadow: 0 0 4.9px 3px #23413475 inset; }
+    .aqv3 .subscription-best { background: #f2cb49; color: #234134; font-size: 14px; font-weight: 700; padding: 4px 12px; border-radius: 35px; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); border: 1px solid #234134; white-space: nowrap; z-index: 1; line-height: 1.2; }
+    .aqv3 .subscription-card .content { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: nowrap; }
+    .aqv3 .subscription-card .content > .plan-right { flex-shrink: 0; }
+    .aqv3 .subscrition-name { font-size: 18px; font-weight: 700; line-height: 1.2; color: #234134; margin: 0; min-width: 0; }
+    .aqv3 .subscription-title { font-size: 18px; font-weight: 700; color: #234134; }
+    .aqv3 .subscription-frequency { color: #234134; font-weight: 400; font-size: 15px; }
+    .aqv3 .subscription-note { display: flex; flex-direction: column; gap: 5px; font-size: 16px; font-weight: 400; color: #234134; margin-top: 8px; }
+    .aqv3 .subscription-note span { line-height: 1.2; }
+    .aqv3 .subscription-note strong { color: #234134; font-weight: 700; }
+  
+    .aqv3 .bb-cta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; background: #f2cb49; color: #234134; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 20px; letter-spacing: 1px; padding: 22px 28px; border-radius: 999px; text-align: center; text-decoration: none; margin-top: 16px; transition: filter 0.15s ease, transform 0.05s ease; box-shadow: 0 6px 18px rgba(242, 203, 73, 0.45); border: 1.5px solid #234134; }
+    .aqv3 button.bb-cta { -webkit-appearance: none; appearance: none; cursor: pointer; width: 100%; }
+    .aqv3 .bb-cta:hover { filter: brightness(0.97); }
+    .aqv3 .bb-cta:active { transform: translateY(1px); }
+    .aqv3 .bb-cta-price { font-weight: 700; font-size: 22px; }
+    .aqv3 .bb-cta-sep { opacity: 0.55; font-weight: 400; padding: 0 2px; }
+    .aqv3 .bb-cta-text { font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; font-size: 18px; }
+    .aqv3 .bb-cta-icon { display: inline-flex; align-items: center; }
+    .aqv3 .bb-cta-icon svg { width: 22px; height: 22px; stroke: #234134; fill: none; stroke-width: 2; }
+    .aqv3 .bb-cta-count { font-weight: 600; font-size: 17px; opacity: 0.85; }
+  
+    .aqv3 .bb-hsa { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; color: #234134; padding-top: 12px; font-family: 'Inter', -apple-system, system-ui, sans-serif; }
+    .aqv3 .bb-hsa strong { color: #234134; font-weight: 700; }
+    .aqv3 .bb-hsa-sep { opacity: 0.5; }
+    .aqv3 .bb-hsa-learn { color: #234134; text-decoration: underline; font-weight: 700; }
+    .aqv3 .bb-hsa-icon { display: inline-flex; width: 18px; height: 18px; border: 1.5px solid #234134; border-radius: 50%; align-items: center; justify-content: center; font-size: 10px; color: #234134; font-weight: 800; }
+  
+    .aqv3 .pdp-trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 24px; }
+    .aqv3 .pdp-trust .badge { display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; border-radius: 50%; background: #e8f0e8; border: 1.5px solid #234134; color: #234134; text-align: center; padding: 14px; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 13px; font-weight: 700; line-height: 1.15; letter-spacing: 0.3px; text-transform: uppercase; }
+    .aqv3 .pdp-trust .badge .icon { font-size: 22px; margin-bottom: 6px; line-height: 1; }
+    .aqv3 .pdp-trust .badge .label { display: block; }
+    .aqv3 .product-badge { align-self: flex-start; background: var(--aqv3-ronchi); border-radius: 20px; padding: 4px 12px; font-weight: 700; font-size: 13px; letter-spacing: 0.78px; color: var(--aqv3-mallard); text-transform: uppercase; }
+    .aqv3 .product-price-row { display: flex; align-items: baseline; gap: 9px; padding-top: 2px; }
+    .aqv3 .product-price { font-weight: 800; font-size: 26px; color: var(--aqv3-mallard); }
+    .aqv3 .product-price-was { font-size: 20px; color: var(--aqv3-laurel); text-decoration: line-through; }
+    .aqv3 .product-desc { color: var(--aqv3-tom-thumb); font-size: 15px; line-height: 24.75px; }
+    .aqv3 .product-ship-row { display: flex; gap: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.26px; padding-top: 10px; align-items: center; }
+    .aqv3 .product-ship-row .icon { color: var(--aqv3-killarney); }
+    .aqv3 .product-ship-row .label { color: var(--aqv3-mallard); }
+    .aqv3 .product-ship-row .tail { color: var(--aqv3-killarney); }
+    .aqv3 .product-countdown { display: flex; gap: 6px; padding: 10px 0; align-items: center; flex-wrap: wrap; }
+    .aqv3 .product-countdown .label { font-weight: 600; font-size: 13px; color: var(--aqv3-tom-thumb); }
+    .aqv3 .product-countdown .time { font-weight: 800; font-size: 13px; color: var(--aqv3-mallard); letter-spacing: 0.52px; }
+    .aqv3 .product-cta { display: block; background: var(--aqv3-ronchi); color: var(--aqv3-mallard); font-weight: 800; font-size: 16px; letter-spacing: 0.96px; text-transform: uppercase; padding: 18px 24px; border-radius: 50px; text-align: center; margin-top: 8px; }
+    .aqv3 .product-one-time { text-align: center; padding-top: 6px; font-weight: 700; font-size: 14px; color: var(--aqv3-denim); text-decoration: underline; display: block; }
+    .aqv3 .subsave-cadence { text-align: center; font-size: 12px; color: var(--aqv3-tom-thumb); font-weight: 600; letter-spacing: 0.3px; padding-top: 8px; }
+    .aqv3 .otp-block { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 1px solid var(--aqv3-surf-crest); margin-top: 14px; }
+    .aqv3 .otp-label { font-size: 12px; color: var(--aqv3-tom-thumb); text-align: center; font-weight: 600; letter-spacing: 0.2px; }
+    .aqv3 .otp-qty-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #fff; border: 2px solid var(--aqv3-tasman); border-radius: 50px; padding: 4px; }
+    .aqv3 .otp-qty { border: 0; background: transparent; color: var(--aqv3-tom-thumb); font-family: inherit; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; padding: 10px 14px; border-radius: 50px; cursor: pointer; text-transform: uppercase; transition: background 0.15s ease, color 0.15s ease; }
+    .aqv3 .otp-qty.is-selected { background: var(--aqv3-mallard); color: #fff; }
+    .aqv3 .otp-qty:hover:not(.is-selected) { background: var(--aqv3-gray-nurse); }
+    /* PDP-matched: 3 circular trust badges + 365-Day Guarantee chip */
+    .aqv3 .pdp-trust-row { display: flex; justify-content: center; align-items: center; gap: 16px; padding-top: 22px; flex-wrap: wrap; }
+    .aqv3 .pdp-trust-badge { width: 96px; height: 96px; object-fit: contain; flex-shrink: 0; }
+    .aqv3 .pdp-guarantee-chip { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 14px auto 0; padding: 10px 18px; background: var(--aqv3-spring-wood); border: 1px solid var(--aqv3-surf-crest); border-radius: 999px; font-weight: 700; font-size: 14px; color: var(--aqv3-mallard); width: fit-content; }
+    .aqv3 .pdp-guarantee-icon { color: var(--aqv3-killarney); font-size: 14px; line-height: 1; }
+  
+    .aqv3 .reviews { background: #fff; padding: 80px 24px; }
+    .aqv3 .reviews-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+    .aqv3 .reviews-header-left { display: flex; flex-direction: column; gap: 12px; }
+    .aqv3 .reviews-h2 { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; color: var(--aqv3-mallard); letter-spacing: 1.04px; }
+    .aqv3 .reviews-h2 .accent { color: var(--aqv3-ronchi); }
+    .aqv3 .video-row { display: flex; gap: 16px; overflow-x: auto; padding: 40px 0 8px; max-width: 1200px; margin: 0 auto; scroll-snap-type: x mandatory; }
+    .aqv3 .video-card { flex: 0 0 200px; height: 355px; background: var(--aqv3-gray-nurse); border: 2px solid var(--aqv3-tasman); border-radius: 16px; padding: 2px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; scroll-snap-align: start; }
+    .aqv3 .video-tiktok-pill { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.6); border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 10px; letter-spacing: 0.6px; color: #fff; }
+    .aqv3 .video-play { width: 56px; height: 56px; border-radius: 28px; background: var(--aqv3-mallard); display: flex; align-items: center; justify-content: center; color: var(--aqv3-ronchi); font-size: 22px; padding-left: 4px; }
+    .aqv3 .video-label { font-weight: 700; font-size: 12px; letter-spacing: 0.72px; text-transform: uppercase; color: var(--aqv3-tom-thumb); text-align: center; }
+    .aqv3 .video-sub { font-size: 11px; color: var(--aqv3-laurel); text-align: center; }
+  
+    .aqv3 .ingredients { background: var(--aqv3-gray-98); padding: 40px 24px; }
+    .aqv3 .ingredients-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+    .aqv3 .ingredients .body-copy { max-width: 680px; padding-top: 3px; text-align: center; }
+    .aqv3 .compare-table { width: 100%; max-width: 880px; background: #fff; border: 2px solid var(--aqv3-surf-crest); border-radius: 16px; overflow: hidden; margin-top: 32px; }
+    .aqv3 .compare-header { background: var(--aqv3-mallard); display: grid; grid-template-columns: 33.333% 33.333% 33.334%; padding: 16px 0 8px; }
+    .aqv3 .compare-header .col { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px; min-width: 0; }
+    .aqv3 .compare-header .col-label { font-weight: 700; font-size: 13px; letter-spacing: 0.66px; text-transform: uppercase; text-align: center; }
+    .aqv3 .compare-header .col-us .col-label { color: var(--aqv3-ronchi); }
+    .aqv3 .compare-header .col-them .col-label { color: #fff; }
+    .aqv3 .compare-header .col img { width: 88px; max-width: 100%; height: auto; border-radius: 8px; }
+    .aqv3 .compare-header .col-them img { opacity: 0.7; filter: grayscale(0.4); }
+    .aqv3 .compare-row { display: grid; grid-template-columns: 33.333% 33.333% 33.334%; border-top: 1px solid var(--aqv3-surf-crest); align-items: center; }
+    .aqv3 .compare-row:nth-child(odd) { background: #fff; }
+    .aqv3 .compare-row:nth-child(even) { background: var(--aqv3-spring-wood); }
+    .aqv3 .compare-feature { padding: 14px 21px; font-weight: 600; font-size: 14.1px; color: var(--aqv3-mallard); text-align: left; border-right: 1px solid var(--aqv3-surf-crest); }
+    .aqv3 .compare-yes { text-align: center; font-weight: 700; font-size: 19.2px; color: var(--aqv3-sea-green); padding: 14px 8px; border-right: 1px solid var(--aqv3-surf-crest); }
+    .aqv3 .compare-no { text-align: center; font-weight: 700; font-size: 19.2px; color: var(--aqv3-c62828); padding: 14px 8px; }
+  
+    .aqv3 .how-it-works { background: var(--aqv3-gray-98); padding: 40px 24px; }
+    .aqv3 .how-inner { max-width: 1100px; margin: 0 auto; padding-top: 0; display: flex; flex-direction: column; gap: 32px; align-items: center; }
+    .aqv3 .how-header { display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; }
+    .aqv3 .how-header .body-copy { max-width: 680px; }
+    .aqv3 .ingr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; }
+    .aqv3 .ingr-card { background: #fff; border: 1px solid var(--aqv3-tasman); border-radius: 16px; padding: 33px; display: flex; flex-direction: column; gap: 4px; }
+    .aqv3 .ingr-img { width: 100%; height: 200px; border-radius: 12px; overflow: hidden; }
+    .aqv3 .ingr-img img { width: 100%; height: 100%; object-fit: cover; }
+    .aqv3 .ingr-name { padding-top: 12px; font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 28px; letter-spacing: 1.12px; color: var(--aqv3-mallard); }
+    .aqv3 .ingr-latin { font-style: italic; font-size: 12px; color: var(--aqv3-laurel); padding-bottom: 8px; }
+    .aqv3 .ingr-dose { align-self: flex-start; background: var(--aqv3-ronchi); border-radius: 20px; padding: 4px 14px; font-weight: 800; font-size: 14px; letter-spacing: 0.56px; color: var(--aqv3-mallard); }
+    .aqv3 .ingr-desc { padding-top: 12px; font-size: 15px; line-height: 25.5px; color: var(--aqv3-tom-thumb); }
+    .aqv3 .ingr-desc strong { font-weight: 700; }
+    .aqv3 .suppfacts { display: flex; flex-direction: column; align-items: center; gap: 16px; padding-top: 37px; }
+    .aqv3 .other-ingr { font-size: 13px; color: var(--aqv3-laurel); text-align: center; padding-top: 13px; }
+  
+    .aqv3-suppfacts-modal { position: fixed; inset: 0; background: rgba(13,31,13,0.75); display: none; align-items: center; justify-content: center; padding: 24px; z-index: 1000; backdrop-filter: blur(2px); }
+    .aqv3-suppfacts-modal.is-open { display: flex; }
+    .aqv3-suppfacts-modal-card { background: #fff; border-radius: 16px; max-width: 480px; width: 100%; max-height: 90vh; overflow: auto; padding: 28px 24px 24px; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.4); display: flex; flex-direction: column; gap: 16px; align-items: center; }
+    .aqv3-suppfacts-modal-close { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 18px; border: 0; background: var(--aqv3-gray-nurse); color: var(--aqv3-mallard); font-size: 22px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .aqv3-suppfacts-modal-close:hover { background: var(--aqv3-surf-crest); }
+    .aqv3-suppfacts-modal-title { font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 28px); line-height: 1.2; letter-spacing: 0.78px; color: var(--aqv3-mallard); text-align: center; margin: 0; }
+    .aqv3-suppfacts-modal-img { width: 100%; max-width: 400px; border-radius: 12px; border: 1px solid var(--aqv3-tasman); display: block; }
+    .aqv3-suppfacts-modal-caption { font-size: 12px; color: var(--aqv3-laurel); text-align: center; line-height: 1.5; padding: 0 12px; }
+  
+    .aqv3 .guarantee { background: var(--aqv3-mallard); padding: 40px 24px; }
+    .aqv3 .guarantee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; max-width: 1200px; margin: 0 auto; align-items: center; }
+    .aqv3 .guarantee-image { aspect-ratio: 1/1; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.35); background: var(--aqv3-mallard); }
+    .aqv3 .guarantee-image img { width: 100%; height: 100%; object-fit: cover; }
+    .aqv3 .guarantee-text { display: flex; flex-direction: column; gap: 16px; color: #fff; align-items: flex-start; }
+    .aqv3 .guarantee-text .eyebrow { color: var(--aqv3-ronchi); }
+    .aqv3 .guarantee-text .h2 { color: #fff; }
+    .aqv3 .guarantee-text .body-copy { color: rgba(255,255,255,0.8); }
+  
+    .aqv3 .testimonials { background: var(--aqv3-snow-drift); padding: 40px 24px; }
+    .aqv3 .testimonials-inner { max-width: 1200px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; gap: 11px; align-items: center; }
+    .aqv3 .testi-track { overflow: hidden; margin-top: 32px; width: 100%; }
+    .aqv3 .testi-page { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .aqv3 .testi-card { background: #fff; border-radius: 12px; padding: 32px 28px; display: flex; flex-direction: column; gap: 12.8px; box-shadow: 0 4px 10px rgba(0,0,0,0.06); text-align: left; }
+    .aqv3 .testi-card .stars { color: var(--aqv3-ronchi); font-size: 18px; letter-spacing: 2px; }
+    .aqv3 .testi-quote { color: var(--aqv3-green-kelp); font-size: 15px; line-height: 24.75px; }
+    .aqv3 .testi-name-row { display: flex; align-items: center; gap: 6px; padding-top: 7px; }
+    .aqv3 .testi-name { font-weight: 700; font-size: 14px; color: var(--aqv3-mallard); }
+    .aqv3 .testi-check { width: 18px; height: 18px; border-radius: 9px; background: var(--aqv3-killarney); color: #fff; font-weight: 700; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+    .aqv3 .carousel-controls { display: flex; gap: 16px; justify-content: center; padding-top: 32px; align-items: center; }
+    .aqv3 .carousel-arrow { width: 40px; height: 40px; border-radius: 20px; border: 2px solid var(--aqv3-killarney); color: var(--aqv3-killarney); font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 16px; background: transparent; }
+    .aqv3 .carousel-dots { display: flex; gap: 8px; align-items: center; }
+    .aqv3 .carousel-dot { width: 10px; height: 10px; border-radius: 5px; background: var(--aqv3-tasman); display: inline-block; }
+    .aqv3 .carousel-dot.is-active { background: var(--aqv3-killarney); }
+  
+    .aqv3 .footer { background: var(--aqv3-racing-green); padding: 48px 24px 32px; color: #fff; }
+    .aqv3 .footer-inner-wrap { max-width: 1200px; margin: 0 auto; }
+    .aqv3 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 21px; }
+    .aqv3 .footer-brand { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .aqv3 .footer-brand img { height: 30px; width: auto; align-self: flex-start; flex: 0 0 auto; }
+    .aqv3 .footer-tagline { color: rgba(255,255,255,0.55); font-size: 13px; line-height: 20.8px; }
+    .aqv3 .footer-email { color: var(--aqv3-ronchi); font-size: 13px; padding-top: 4px; }
+    .aqv3 .footer-col-title { color: #fff; font-weight: 800; font-size: 11px; letter-spacing: 1.54px; text-transform: uppercase; }
+    .aqv3 .footer-col { display: flex; flex-direction: column; gap: 14px; }
+    .aqv3 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; padding: 0; margin: 0; }
+    .aqv3 .footer-col ul a { color: rgba(255,255,255,0.5); font-size: 13px; }
+    .aqv3 .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 25px; }
+    .aqv3 .footer-bottom span { color: rgba(255,255,255,0.55); font-size: 12px; white-space: nowrap; }
+    .aqv3 .footer-disclaimer { color: rgba(255,255,255,0.25); font-size: 11px; line-height: 17.6px; padding-top: 18px; }
+  
+    @media (max-width: 960px) {
+      .aqv3 .announcement-bar-mobile { display: flex; }
+      .aqv3 .announcement-inner-desktop { display: none; }
+      .aqv3 .announcement-bar span, .aqv3 .announcement-bar a { font-size: 11px; letter-spacing: 0.6px; }
+  
+      /* Tate 2026-06-03: tighten all mobile vertical padding */
+      .aqv3 .section, .aqv3 .philosophy, .aqv3 .real-results, .aqv3 .product, .aqv3 .reviews, .aqv3 .ingredients, .aqv3 .guarantee, .aqv3 .testimonials { padding-top: 40px; padding-bottom: 40px; }
+      .aqv3 .how-inner { padding-top: 0; }
+  
+      .aqv3 .hero { grid-template-columns: 1fr; min-height: auto; }
+      .aqv3 .hero-image { padding: 0; width: 100%; height: clamp(260px, 56vw, 480px); min-height: 0; }
+      .aqv3 .hero-image img { object-position: center center; }
+      .aqv3 .hero-content { padding: 32px 24px; }
+  
+      /* Buy box mobile (matches PDP @ ≤767px) */
+      .aqv3 .plan-card { min-height: 65px; height: auto; padding: 10px 12px; gap: 10px; }
+      .aqv3 .plan-left { width: 40px; height: 40px; flex-shrink: 0; }
+      .aqv3 .plan-center { min-width: 0; flex: 1 1 auto; }
+      .aqv3 .plan-name { font-size: 13px; line-height: 1.25; display: block; }
+      .aqv3 .plan-right { gap: 8px; }
+      .aqv3 .plan-price-stack { gap: 1px; }
+      .aqv3 .plan-price { font-size: 15px; }
+      .aqv3 .plan-price span[data-sub-price] { font-size: 15px; font-weight: 700; }
+      .aqv3 .plan-each { font-size: 11px; }
+      .aqv3 .plan-badge { font-size: 9px; padding: 3px 8px; min-width: 0; letter-spacing: 0.3px; line-height: 1.2; }
+      .aqv3 .subscription-card { padding: 18px 12px; }
+      .aqv3 .subscription-card .content { gap: 12px; align-items: center; }
+      .aqv3 .subscrition-name { line-height: 1.3; font-size: 14px; }
+      .aqv3 .subscription-frequency, .aqv3 .subscription-title { font-size: 13px; }
+      .aqv3 .subscription-note { font-size: 12.5px; gap: 2px; padding-top: 6px; }
+      .aqv3 .subscription-best { font-size: 11px; padding: 3px 10px; }
+  
+      /* Compact ATC button on mobile — fits one line */
+      .aqv3 .bb-cta {
+        padding: 14px 18px;
+        gap: 8px;
+        margin-top: 12px;
+        font-size: 16px;
+        box-shadow: 0 4px 12px rgba(242, 203, 73, 0.4);
+      }
+      .aqv3 .bb-cta-price { font-size: 17px; }
+      .aqv3 .bb-cta-sep { padding: 0 1px; }
+      .aqv3 .bb-cta-text { font-size: 14px; letter-spacing: 1.4px; }
+      .aqv3 .bb-cta-icon svg { width: 18px; height: 18px; }
+      .aqv3 .bb-cta-count { font-size: 14px; }
+      .aqv3 .why-grid, .aqv3 .philosophy-grid, .aqv3 .guarantee-grid, .aqv3 .product-grid { grid-template-columns: 1fr; gap: 24px; }
+      .aqv3 .philosophy-text, .aqv3 .guarantee-text { align-items: center; text-align: center; }
+      .aqv3 .philosophy-text .body-copy, .aqv3 .guarantee-text .body-copy { text-align: center; }
+      .aqv3 .reviews-header { justify-content: center; text-align: center; }
+      .aqv3 .reviews-header-left { align-items: center; }
+      .aqv3 .ingr-grid { display: grid; grid-auto-flow: column; grid-auto-columns: 82%; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; padding-bottom: 12px; margin-inline: -16px; padding-inline: 16px; scrollbar-width: thin; }
+      .aqv3 .ingr-card { scroll-snap-align: start; }
+      .aqv3 .real-results-grid { grid-template-columns: 1fr; }
+      /* Mobile testimonial strip: tighter cards */
+      .aqv3 .testi-video-strip { gap: 12px; padding-inline: 16px; margin-inline: -16px; }
+      .aqv3 .testi-video-card { flex-basis: 240px; }
+      .aqv3 .testi-play { width: 54px; height: 54px; font-size: 18px; }
+      .aqv3 .testi-page { grid-template-columns: 1fr; }
+      .aqv3 .footer-grid { grid-template-columns: 1fr 1fr; }
+      /* h1/h2/h3 + .product-title scale via clamp() at the base rules — no
+         per-breakpoint font-size overrides needed. */
+      .aqv3 .nav-links { display: none; }
+      .aqv3 .nav-toggle { display: none !important; } /* Tate 2026-06-03: removed hamburger on mobile */
+      .aqv3 .nav-cta { display: none; }
+      .aqv3 .nav-cta-mobile { display: inline-block; }
+      .aqv3 .reviews-header .btn-primary { width: auto; }
+    }
+    @media (max-width: 560px) {
+      .aqv3 .footer-grid { grid-template-columns: 1fr; }
+      /* Tate 2026-06-03: comparison table mobile pass v3 — lock columns to fixed percentages
+         so row borders align perfectly regardless of cell content width. */
+      .aqv3 .compare-header { grid-template-columns: 30% 35% 35%; padding: 20px 0 12px; }
+      .aqv3 .compare-row { grid-template-columns: 30% 35% 35%; }
+      .aqv3 .compare-header .col img { width: 96px; }
+      .aqv3 .compare-header .col { gap: 12px; }
+      .aqv3 .compare-header .col-label { font-size: 11px; letter-spacing: 0.55px; }
+      .aqv3 .compare-feature { padding: 14px 12px; font-size: 13px; }
+      .aqv3 .compare-yes, .aqv3 .compare-no { font-size: 17px; padding: 14px 4px; }
+    }
+  </style>
+  
+  <div class="aqv3">
+  
+    <div class="announcement-bar">
+      <div class="announcement-inner announcement-inner-desktop">
+        <span>FREE SHIPPING &amp; FREE 365-DAY RETURNS &nbsp;|&nbsp;</span>
+        <a href="#product">SHOP NOW</a>
+      </div>
+      <div class="announcement-inner announcement-bar-mobile">
+        <span>FREE SHIPPING + 365-DAY RETURNS &nbsp;·&nbsp;</span>
+        <a href="#product">SHOP</a>
+      </div>
+    </div>
+  
+    <nav class="nav">
+      <a href="#" class="nav-logo"><img src="{{ 'logo-nav.webp' | file_url }}" alt="Betterbrand"></a>
+      <ul class="nav-links">
+        <li><a href="#product">Shop</a></li>
+        <li><a href="#ingredients">Ingredients</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+      <a href="#product" class="nav-cta">Shop BetterLungs®</a>
+      <a href="#product" class="nav-cta-mobile">Shop</a>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+
+    <section class="kl-embed"><div class="klaviyo-form-W2ZwsL"></div></section>
+
+    <section class="section why">
+      <div class="section-inner">
+        <div class="why-grid">
+          <div>
+            <h2 class="h2">LET'S TALK ABOUT YOUR AIR</h2>
+            <div class="why-block">
+              <div class="eyebrow problem">The Problem</div>
+              <p>The air you breathe carries pollutants, allergens, and microparticles your lungs weren't built to filter. You feel it as <strong>shortness of breath, low energy, and that constant throat clearing</strong> you've stopped noticing.</p>
+            </div>
+            <div class="why-block">
+              <div class="eyebrow solution">The Solution</div>
+              <p>BetterLungs® pairs <strong>2,800mg of Mullein</strong> with 100mg of Chlorophyll in a daily tincture. Both ingredients have clinical research behind them for airway support, and a pharmacist set the dose.</p>
+            </div>
+          </div>
+          <div class="benefit-cards">
+            <div class="benefit-card">
+              <div class="benefit-icon">🌿</div>
+              <div class="benefit-body">
+                <div class="benefit-title">Clearer Airways</div>
+                <div class="benefit-text">Mullein helps thin and loosen mucus so your lungs can pull in more air. People have used it for this for hundreds of years.</div>
+              </div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">⚡</div>
+              <div class="benefit-body">
+                <div class="benefit-title">More Energy</div>
+                <div class="benefit-text">When your lungs work better, more oxygen reaches your blood. 80% of customers report higher energy within 30 days.</div>
+              </div>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🛡️</div>
+              <div class="benefit-body">
+                <div class="benefit-title">Environmental Resilience</div>
+                <div class="benefit-text">Chlorophyll helps your body bind and clear environmental toxins, and it pushes back on oxidative stress from daily exposure.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="philosophy">
+      <div class="philosophy-grid">
+        <div class="philosophy-image">
+          <img src="{{ 'philosophy-bottle.webp' | file_url }}" alt="Woman holding BetterLungs Mullein + Chlorophyll bottle in golden-hour forest">
+        </div>
+        <div class="philosophy-text">
+          <div class="eyebrow">Our Philosophy</div>
+          <h2 class="h2">GET MORE ENERGY FROM EVERY BREATH.</h2>
+          <p class="body-copy">Every breath should fuel you, not wear you out. A Doctor of Pharmacy and former combat medic built BetterLungs® for one job: give your lungs the support they need every day. <strong>80% of customers reported higher energy within 30 days.</strong> Better breathing. Better focus. That's the whole pitch.</p>
+          <a href="#product" class="btn-primary">Shop BetterLungs®</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero" id="top">
+      <div class="hero-image">
+        <img src="{{ 'hero-figma.webp' | file_url }}" alt="BetterLungs Mullein + Chlorophyll tincture and box beside a glass with green chlorophyll dispersing, on a marble counter">
+      </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-text-top">
+            <div class="hero-rating-row">
+              <span class="hero-stars">★★★★★</span>
+              <span class="hero-stars-label">4.7 stars · 2,400+ reviews</span>
+            </div>
+            <h1 class="hero-headline">
+              CLEARER LUNGS
+              <span class="accent">STARTS TODAY.</span>
+            </h1>
+            <p class="hero-subtitle">No matter what your free Air Quality Report says, BetterLungs® Mullein + Chlorophyll Tincture Is formulated to help you breathe easier</p>
+          </div>
+          <div class="hero-text-bottom">
+            <div class="hero-badges">
+              <span class="hero-badge">Free Shipping</span>
+              <span class="hero-badge">365-Day Returns</span>
+            </div>
+            <a href="#product" class="btn-primary">Shop BetterLungs®</a>
+            <div class="hero-trust-line">Doctor-Formulated<span class="sep">·</span>Lab Tested<span class="sep">·</span>Made in USA</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="real-results" id="reviews">
+      <div class="real-results-header">
+        <div class="eyebrow">Customer Stories</div>
+        <h2 class="h2">REAL RESULTS FROM REAL PEOPLE</h2>
+      </div>
+      <!-- Customer testimonial video strip — horizontal scroll, inline play -->
+      <div class="testi-video-strip">
+        {% comment %} <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/b6610c414b5a44eeaeab66c45b3430cd/b6610c414b5a44eeaeab66c45b3430cd.SD-480p-0.9Mbps-86198088.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2150.jpg?v=1781109132" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/8dbb7318a0444f9786ba7d6f5b62e83d/8dbb7318a0444f9786ba7d6f5b62e83d.SD-480p-0.9Mbps-86198089.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2161.jpg?v=1781109132" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/9f38cc535c8c46e7abbcc3ed678e340c/9f38cc535c8c46e7abbcc3ed678e340c.SD-480p-0.9Mbps-86198090.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2170.jpg?v=1781109132" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/cc58ed932da24899848979619144a040/cc58ed932da24899848979619144a040.SD-480p-0.9Mbps-86198091.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2174.jpg?v=1781109132" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div> {% endcomment %}
+        {% comment %} <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/7c6be1ddebbc41c19cf565987821ec44/7c6be1ddebbc41c19cf565987821ec44.SD-480p-0.9Mbps-86198092.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2178.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div> {% endcomment %}
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/f4b353f73e1b41feb236a39c481460aa/f4b353f73e1b41feb236a39c481460aa.SD-480p-0.9Mbps-86198093.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2192.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/c158fe32a9854c99968bb0cbead67b02/c158fe32a9854c99968bb0cbead67b02.SD-480p-0.9Mbps-86198094.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2198.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/8d0d3d00b4a64171a7b645f6141a67dd/8d0d3d00b4a64171a7b645f6141a67dd.SD-480p-0.9Mbps-86198095.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2212.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div>
+        {% comment %} <div class="testi-video-card" data-src="https://cdn.shopify.com/videos/c/vp/00ef006d690a46b4b34f72ae62f8c232/00ef006d690a46b4b34f72ae62f8c232.SD-480p-0.9Mbps-86198096.mp4">
+          <video poster="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/BBTT-2225.jpg?v=1781109131" preload="none" playsinline></video>
+          <span class="testi-play" aria-hidden="true">▶</span>
+        </div> {% endcomment %}
+      </div>
+    </section>
+  
+    <section class="product" id="product">
+      <div class="product-grid">
+        <div class="product-gallery">
+          <div class="product-main">
+            <img id="aqv3-product-main-img" src="{{ 'product-hero.webp' | file_url }}" alt="BetterLungs Mullein + Chlorophyll 3 bottle pack">
+            <span class="product-main-badge" data-aqv3-promo-badge>SAVE UP TO 20%</span>
+          </div>
+          <div class="product-thumbs">
+            <button class="product-thumb is-selected" data-src="{{ 'product-hero.webp' | file_url }}"><img src="{{ 'product-hero.webp' | file_url }}" alt="3 Bottle Pack"></button>
+            <button class="product-thumb" data-src="{{ 'product-breathe-clearer.webp' | file_url }}"><img src="{{ 'product-breathe-clearer.webp' | file_url }}" alt="Breathe Clearer"></button>
+            <button class="product-thumb" data-src="{{ 'product-clinical-study.webp' | file_url }}"><img src="{{ 'product-clinical-study.webp' | file_url }}" alt="Clinical Study Results"></button>
+            <button class="product-thumb" data-src="{{ 'product-suppfacts.webp' | file_url }}"><img src="{{ 'product-suppfacts.webp' | file_url }}" alt="Supplement Facts"></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-stars-row">
+            <span class="product-stars">★★★★★</span>
+            <span class="product-rating">4.7 stars · 2,400+ Reviews</span>
+          </div>
+          <h2 class="product-title">BetterLungs® Mullein + Chlorophyll</h2>
+  
+          {%- comment -%}
+            Buy box — uses Shopify form submission (POST /cart/add) the same way PDPs do.
+            Subscription cards are rendered live from the product's selling_plan_allocations
+            so plan IDs are always correct and the selling_plan field is set by the form.
+          {%- endcomment -%}
+
+          <form id="aqv3-product-form" method="post" action="/cart/add">
+            <input type="hidden" name="id" id="aqv3-variant-id" value="{{ otp_1bottle_variant }}">
+            <input type="hidden" name="selling_plan" id="aqv3-selling-plan" value="">
+
+            <div class="plan-wrapper" role="radiogroup" aria-label="Choose your plan">
+              <h3 class="plan-title">Choose Your Plan</h3>
+
+              <div class="plan-list">
+                <label class="plan-card active"
+                       data-variant-id="{{ otp_1bottle_variant }}"
+                       data-total="34.95" data-qty="1"
+                       role="radio" aria-checked="true" tabindex="0">
+                  <div class="plan-left"><img src="{{ 'variant-1bottle.webp' | file_url }}" alt=""></div>
+                  <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
+                  <div class="plan-right">
+                    <div class="plan-badge hidden"><span>SAVE %</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$34.95</div>
+                      <div class="plan-each">each</div>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="plan-card"
+                       data-variant-id="{{ otp_3bottle_variant }}"
+                       data-total="94.35" data-qty="3"
+                       role="radio" aria-checked="false" tabindex="0">
+                  <div class="plan-left"><img src="{{ 'variant-3bottles.webp' | file_url }}" alt=""></div>
+                  <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
+                  <div class="plan-right">
+                    <div class="plan-badge"><span>SAVE 10%</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$31.45</div>
+                      <div class="plan-each">each</div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <div class="subscription-wrapper">
+                {%- comment -%}
+                  Subscription groups are hardcoded because selling_plan_allocations is only
+                  populated for the current product on a product template — it returns empty
+                  when accessed via all_products on a page template. Plan IDs verified via
+                  Shopify Admin API on 2026-06-10.
+                    1-bottle: plan 118714663211 "Deliver every month"
+                    3-bottle: plan 117893955883 "Delivery Every 3 Months"
+                {%- endcomment -%}
+
+                <div class="subscription-group" data-variant-id="{{ otp_1bottle_variant }}" data-qty="1">
+                  <label class="subscription-card" data-price="2795" role="radio" aria-checked="false" tabindex="0">
+                    <input type="radio" hidden name="selling_plan_radio" value="118714663211">
+                    <span class="subscription-best">Best Value</span>
+                    <div class="content">
+                      <p class="subscrition-name">
+                        <span class="subscription-title">Subscribe &amp; Save</span><br>
+                        <span class="subscription-frequency">Deliver every month</span>
+                      </p>
+                      <div class="plan-right">
+                        <div class="plan-badge"><span>SAVE 20%</span></div>
+                        <div class="plan-price-stack">
+                          <div class="plan-price">$27.95</div>
+                          <div class="plan-each">each</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="subscription-note">
+                      <span><strong>FREE</strong> Shipping</span>
+                      <span>Change, Pause or Cancel Anytime</span>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="subscription-group" data-variant-id="{{ otp_3bottle_variant }}" data-qty="3" hidden>
+                  <label class="subscription-card" data-price="8385" role="radio" aria-checked="false" tabindex="0">
+                    <input type="radio" hidden name="selling_plan_radio" value="117893955883">
+                    <span class="subscription-best">Best Value</span>
+                    <div class="content">
+                      <p class="subscrition-name">
+                        <span class="subscription-title">Subscribe &amp; Save</span><br>
+                        <span class="subscription-frequency">Delivery Every 3 Months</span>
+                      </p>
+                      <div class="plan-right">
+                        <div class="plan-badge"><span>SAVE 20%</span></div>
+                        <div class="plan-price-stack">
+                          <div class="plan-price">$27.95</div>
+                          <div class="plan-each">each</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="subscription-note">
+                      <span><strong>FREE</strong> Shipping</span>
+                      <span>Change, Pause or Cancel Anytime</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="aqv3-bb-cta" class="bb-cta">
+              <span class="bb-cta-price">$34.95</span>
+              <span class="bb-cta-sep">|</span>
+              <span class="bb-cta-text">ADD TO CART</span>
+              <span class="bb-cta-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="9" cy="20" r="1.5"></circle>
+                  <circle cx="18" cy="20" r="1.5"></circle>
+                  <path d="M2 3h3l2.5 11.5a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L22 7H6"></path>
+                </svg>
+              </span>
+              <span class="bb-cta-count">(1 Item)</span>
+            </button>
+          </form>
+  
+          <p class="bb-hsa">
+            <strong>HSA/FSA eligible</strong>
+            <span class="bb-hsa-sep">·</span>
+            Save an average of 30%
+          </p>
+          <!-- PDP-matched trust badges -->
+          <div class="pdp-trust-row">
+            <img src="{{ 'trust-made-in-usa.webp' | file_url }}" alt="Made in USA" class="pdp-trust-badge">
+            <img src="{{ 'trust-lab-tested.webp' | file_url }}" alt="3rd Party Lab Tested" class="pdp-trust-badge">
+            <img src="{{ 'trust-gmp-certified.webp' | file_url }}" alt="GMP Certified" class="pdp-trust-badge">
+          </div>
+          <div class="pdp-guarantee-chip">
+            <span class="pdp-guarantee-icon">✦</span>
+            <span>365-Day Guarantee*</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="ingredients" id="ingredients">
+      <div class="ingredients-inner">
+        <div class="eyebrow">Why It Matters</div>
+        <h2 class="h2">BUILT DIFFERENT FOR BETTER RESULTS</h2>
+        <p class="body-copy">Here's how we compare to the rest.</p>
+        <div class="compare-table">
+          <div class="compare-header">
+            <div class="col"></div>
+            <div class="col col-us">
+              <span class="col-label">BetterLungs®</span>
+              <img src="{{ 'compare-betterlungs.webp' | file_url }}" alt="">
+            </div>
+            <div class="col col-them">
+              <span class="col-label">The Other Guys</span>
+              <img src="{{ 'compare-other-guys.webp' | file_url }}" alt="">
+            </div>
+          </div>
+          <div class="compare-row"><div class="compare-feature">Contains Chlorophyll (premium ingredient)</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+          <div class="compare-row"><div class="compare-feature">Pharmacist-formulated</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+          <div class="compare-row"><div class="compare-feature">Clinical study backing</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+          <div class="compare-row"><div class="compare-feature">Transparent dosing</div><div class="compare-yes">✓ (2800mg)</div><div class="compare-no">✗</div></div>
+          <div class="compare-row"><div class="compare-feature">HSA/FSA eligible</div><div class="compare-yes">✓</div><div class="compare-no">✗</div></div>
+          <div class="compare-row"><div class="compare-feature">Money-back guarantee</div><div class="compare-yes">365 Days</div><div class="compare-no">30–60 Days</div></div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="how-it-works" id="how-it-works">
+      <div class="how-inner">
+        <div class="how-header">
+          <div class="eyebrow">What's Inside</div>
+          <h2 class="h2">JUST TWO POWERFUL INGREDIENTS.</h2>
+          <p class="body-copy">No fillers. Just the two clinically studied botanicals your lungs need, in an alcohol-free liquid.</p>
+        </div>
+        <div class="ingr-grid">
+          <div class="ingr-card">
+            <div class="ingr-img"><img src="{{ 'ingr-mullein-plant.webp' | file_url }}" alt="Mullein Leaf"></div>
+            <div class="ingr-name">Mullein Leaf</div>
+            <div class="ingr-latin">Verbascum Thapsus (30:1 Extract)</div>
+            <div class="ingr-dose">2800 mg</div>
+            <p class="ingr-desc">A botanical used for hundreds of years as a respiratory aid. Mullein Leaf <strong>thins and loosens mucus in the airways</strong> so your body can clear it out and pull in more air. We ran our own clinical study to back up what tradition already showed.</p>
+          </div>
+          <div class="ingr-card">
+            <div class="ingr-img"><img src="{{ 'ingr-chlorophyll.webp' | file_url }}" alt="Chlorophyll"></div>
+            <div class="ingr-name">Chlorophyll</div>
+            <div class="ingr-latin">as Sodium Copper Chlorophyllin</div>
+            <div class="ingr-dose">100 mg</div>
+            <p class="ingr-desc">The pigment that makes plants green. <strong>Chlorophyll binds to environmental toxins and helps your cells use oxygen better</strong>, working with Mullein so your body can clear what your lungs pull in.*</p>
+          </div>
+        </div>
+        <div class="suppfacts">
+          <button type="button" class="btn-outline" data-aqv3-suppfacts-open>View Full Supplement Facts</button>
+          <div class="other-ingr">Other ingredients: Purified Water, Vegetable Glycerine, Natural Flavors &nbsp;|&nbsp; *Refrigerate to preserve freshness.</div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="guarantee">
+      <div class="guarantee-grid">
+        <div class="guarantee-image"><img src="{{ 'guarantee-365.webp' | file_url }}" alt="BetterLungs Mullein + Chlorophyll bottle on a sunlit kitchen counter"></div>
+        <div class="guarantee-text">
+          <div class="eyebrow">The Betterbrand Promise</div>
+          <h2 class="h2">YOUR BEST BREATHING. GUARANTEED.</h2>
+          <p class="body-copy">Pollution, allergens, and years of exposure add up. Your body can bounce back from a lot of it when you give it what it needs.</p>
+          <p class="body-copy">Try BetterLungs® Mullein + Chlorophyll for 365 days. If you don't get clearer airways, easier breathing, and more energy, we'll refund you. No hoops. No questions.</p>
+          <a href="#product" class="btn-primary">Shop BetterLungs®</a>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Supplement Facts modal (hidden by default) -->
+    <div class="aqv3-suppfacts-modal" data-aqv3-suppfacts-modal role="dialog" aria-modal="true" aria-labelledby="aqv3-suppfacts-modal-title" aria-hidden="true">
+      <div class="aqv3-suppfacts-modal-card">
+        <button type="button" class="aqv3-suppfacts-modal-close" data-aqv3-suppfacts-close aria-label="Close">×</button>
+        <h3 class="aqv3-suppfacts-modal-title" id="aqv3-suppfacts-modal-title">Supplement Facts</h3>
+        <img class="aqv3-suppfacts-modal-img" src="{{ 'supplement-facts-panel.webp' | file_url }}" alt="Supplement Facts Panel — Serving Size 2 Full Droppers, Mullein Leaf Extract 2800mg, Chlorophyll 100mg">
+        <div class="aqv3-suppfacts-modal-caption">Other ingredients: Purified Water, Vegetable Glycerine, Natural Flavors. *Refrigerate to preserve freshness.</div>
+      </div>
+    </div>
+  
+    <footer class="footer">
+      <div class="footer-inner-wrap">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="{{ 'logo-footer.webp' | file_url }}" alt="Betterbrand">
+            <p class="footer-tagline">Better Science, Back to Nature. Founded by Dr. Chris Jackson, PharmD &amp; former U.S. Army Combat Medic.</p>
+            <a class="footer-email" href="mailto:hello@betterbrandhealth.com">hello@betterbrandhealth.com</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Shop</div>
+            <ul>
+              <li><a href="/products/betterlungs">BetterLungs® Capsules</a></li>
+              <li><a href="/products/betterlungs%C2%AE-mullein-chlorophyll">Mullein + Chlorophyll</a></li>
+              <li><a href="/products/betterlungs-r-mullein-gummies">Mullein Gummies</a></li>
+              <li><a href="/products/betterlungs-tea">Mullein Tea</a></li>
+              <li><a href="/collections/all">All Products</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Company</div>
+            <ul>
+              <li><a href="/pages/our-story">Our Story</a></li>
+              <li><a href="/blogs/learn">Blog</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Support</div>
+            <ul>
+              <li><a href="/pages/help-center">Help Center</a></li>
+              <li><a href="/policies/refund-policy">Refund Policy</a></li>
+              <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+              <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+              <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© {{ 'now' | date: '%Y' }} Betterbrand Health. All rights reserved.</span>
+          <span>1-877-851-8979</span>
+        </div>
+        <p class="footer-disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary. Consult your physician before starting any new dietary supplement, especially if you are pregnant, nursing, taking medication, or have a medical condition.</p>
+      </div>
+    </footer>
+  
+  </div>
+  
+  <script>
+    (function () {
+      var root = document.currentScript.previousElementSibling;
+      // walk back to find .aqv3
+      while (root && !root.classList.contains('aqv3')) root = root.previousElementSibling;
+      if (!root) root = document;
+  
+      root.querySelectorAll('.product-thumb').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          root.querySelectorAll('.product-thumb').forEach(function (b) { b.classList.remove('is-selected'); });
+          btn.classList.add('is-selected');
+          var src = btn.dataset.src;
+          var img = root.querySelector('#aqv3-product-main-img');
+          if (src && img) img.src = src;
+          // Hide promo badge when viewing non-hero slides
+          var badge = root.querySelector('[data-aqv3-promo-badge]');
+          if (badge) badge.style.display = /product-hero\.webp/.test(src || '') ? '' : 'none';
+        });
+      });
+  
+      var cd = root.querySelector('#aqv3-countdown');
+      if (cd) {
+        var seconds = 2 * 60 * 60;
+        function tick() {
+          var h = Math.floor(seconds / 3600);
+          var m = Math.floor((seconds % 3600) / 60);
+          var s = seconds % 60;
+          cd.textContent = h + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+          if (seconds > 0) seconds--;
+        }
+        tick(); setInterval(tick, 1000);
+      }
+  
+      // Buy box — form-based, same mechanism as PDP swatch-plans.liquid
+      var variantInput  = root.querySelector('#aqv3-variant-id');
+      var planInput     = root.querySelector('#aqv3-selling-plan');
+      var bbCta         = root.querySelector('#aqv3-bb-cta');
+      var planCards     = root.querySelectorAll('.plan-card');
+      var subGroups     = root.querySelectorAll('.subscription-group');
+      var allSubCards   = root.querySelectorAll('.subscription-card');
+      var priceEl       = bbCta ? bbCta.querySelector('.bb-cta-price') : null;
+      var countEl       = bbCta ? bbCta.querySelector('.bb-cta-count') : null;
+
+      function updateCTA(total, qty) {
+        if (priceEl && !isNaN(total)) priceEl.textContent = '$' + total.toFixed(2);
+        if (countEl) countEl.textContent = '(' + qty + ' Item' + (qty === 1 ? '' : 's') + ')';
+      }
+
+      if (variantInput && planInput && planCards.length) {
+        // Variant card click — switch variant, clear subscription
+        planCards.forEach(function (card) {
+          card.addEventListener('click', function () {
+            variantInput.value = card.dataset.variantId;
+            planInput.value = '';
+
+            planCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+            card.classList.add('active');
+            card.setAttribute('aria-checked', 'true');
+
+            allSubCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+
+            subGroups.forEach(function (g) {
+              g.hidden = g.dataset.variantId !== card.dataset.variantId;
+            });
+
+            updateCTA(parseFloat(card.dataset.total || '0'), parseInt(card.dataset.qty || '1', 10));
+          });
+        });
+
+        // Subscription card click — set selling plan input (same as swatch-plans.liquid)
+        allSubCards.forEach(function (card) {
+          card.addEventListener('click', function () {
+            var radio = card.querySelector('input[type="radio"]');
+            if (radio) planInput.value = radio.value;
+
+            planCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+            allSubCards.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+            card.classList.add('active');
+            card.setAttribute('aria-checked', 'true');
+
+            // Price: cents → dollars; qty from the subscription-group's data-qty
+            var group = card.closest('.subscription-group');
+            var qty = group ? parseInt(group.dataset.qty || '1', 10) : 1;
+            var priceCents = parseInt(card.dataset.price || '0', 10);
+            updateCTA(priceCents / 100, qty);
+          });
+        });
+
+        // Init CTA price from the initially active plan card
+        var initCard = root.querySelector('.plan-card.active') || planCards[0];
+        if (initCard) updateCTA(parseFloat(initCard.dataset.total || '0'), parseInt(initCard.dataset.qty || '1', 10));
+      }
+
+      // Intercept form submit → add to cart via AJAX then redirect straight to checkout
+      var productForm = root.querySelector('#aqv3-product-form');
+      if (productForm) {
+        productForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          fetch('/cart/add.js', { method: 'POST', body: new FormData(productForm) })
+            .then(function (r) { return r.json(); })
+            .then(function () { window.location.href = '/checkout'; })
+            .catch(function () { productForm.submit(); });
+        });
+      }
+  
+      var sfModal = root.querySelector('[data-aqv3-suppfacts-modal]');
+      var sfOpen = root.querySelector('[data-aqv3-suppfacts-open]');
+      var sfClose = root.querySelector('[data-aqv3-suppfacts-close]');
+      if (sfModal && sfOpen) {
+        var openSf = function () { sfModal.classList.add('is-open'); sfModal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; };
+        var closeSf = function () { sfModal.classList.remove('is-open'); sfModal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
+        sfOpen.addEventListener('click', function (e) { e.preventDefault(); openSf(); });
+        sfClose && sfClose.addEventListener('click', closeSf);
+        sfModal.addEventListener('click', function (e) { if (e.target === sfModal) closeSf(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSf(); });
+      }
+  
+      var toggle = root.querySelector('.nav-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', function () {
+          var links = root.querySelector('.nav-links');
+          if (!links) return;
+          var isOpen = links.dataset.open === '1';
+          if (isOpen) {
+            links.removeAttribute('style');
+            links.dataset.open = '0';
+          } else {
+            Object.assign(links.style, {
+              display: 'flex', position: 'absolute', top: '64px', left: '0', right: '0',
+              background: '#fff', flexDirection: 'column', padding: '20px',
+              borderBottom: '1px solid #e5e5e5', zIndex: '40', gap: '12px',
+            });
+            links.dataset.open = '1';
+          }
+        });
+      }
+    })();
+  
+    /* Testimonial videos — inline play, lazy-load src on first click, pause others */
+    (function() {
+      const cards = document.querySelectorAll('.aqv3 .testi-video-card');
+      if (!cards.length) return;
+      cards.forEach(card => {
+        const video = card.querySelector('video');
+        const playOverlay = card.querySelector('.testi-play');
+        const handlePlay = () => {
+          cards.forEach(other => {
+            if (other !== card) {
+              const v = other.querySelector('video');
+              if (v && !v.paused) v.pause();
+              other.classList.remove('is-playing');
+            }
+          });
+          if (!video.src) { video.src = card.dataset.src; video.controls = true; }
+          video.play().catch(() => {});
+          card.classList.add('is-playing');
+        };
+        playOverlay.addEventListener('click', handlePlay);
+        card.addEventListener('click', () => { if (!video.src) handlePlay(); });
+        video.addEventListener('play', () => card.classList.add('is-playing'));
+        video.addEventListener('pause', () => card.classList.remove('is-playing'));
+        video.addEventListener('ended', () => card.classList.remove('is-playing'));
+      });
+    })();
+  </script>
+  
+  {% schema %}
+  {
+    "name": "AQ Quality Opt-in V3",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Klaviyo inline AQ opt-in form"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_company_id",
+        "label": "Klaviyo company / public ID",
+        "default": "NYkPJ4"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_form_id",
+        "label": "Klaviyo form ID (AQ inline)",
+        "info": "Default W2ZwsL is the live AQ lander inline form wired to the AQ Worker flow Vfaz5K.",
+        "default": "W2ZwsL"
+      },
+      {
+        "type": "text",
+        "id": "form_action",
+        "label": "Form action URL (legacy — only used if Klaviyo embed is replaced)",
+        "default": "/api/aq-optin"
+      },
+      {
+        "type": "header",
+        "content": "Trustpilot — Real Results widget"
+      },
+      {
+        "type": "text",
+        "id": "trustpilot_businessunit_id",
+        "label": "Trustpilot business unit ID",
+        "info": "Found on trustpilot.com/businesses/.../profile. Betterbrand Health = 6403507cda3f50147669ca41",
+        "default": "6403507cda3f50147669ca41"
+      },
+      {
+        "type": "select",
+        "id": "trustpilot_template_id",
+        "label": "Widget template",
+        "default": "54ad5defc6454f065c28af8b",
+        "options": [
+          { "value": "54ad5defc6454f065c28af8b", "label": "Slider (horizontal scroll)" },
+          { "value": "539adbd6dec7e10e686debee", "label": "Grid (all reviews visible)" },
+          { "value": "53aa8912dec7e10d38f59f36", "label": "Carousel (3 reviews + score badge)" },
+          { "value": "539ad60defb9600b94d7df2c", "label": "Mini Carousel" },
+          { "value": "5419b6ffb0d04a076446a9af", "label": "List" }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "trustpilot_height",
+        "label": "Widget height (e.g. 240px slider, 900px grid)",
+        "default": "240px"
+      },
+      {
+        "type": "text",
+        "id": "trustpilot_stars",
+        "label": "Star filter (comma-sep — 1,2,3,4,5 = all reviews; 4,5 = best only)",
+        "default": "4,5"
+      },
+      {
+        "type": "url",
+        "id": "product_url",
+        "label": "Product PDP URL (fallback if cart permalinks fail)",
+        "info": "Falls back to https://trybetterbrand.com/products/mullein-chlorophyll-tincture when left blank."
+      },
+      {
+        "type": "header",
+        "content": "Cart permalinks — Subscribe & One-time"
+      },
+      {
+        "type": "text",
+        "id": "subsave_variant",
+        "label": "Subscribe & Save — variant ID (Mullein+Chlorophyll 3-pack default)",
+        "default": "50211235954987"
+      },
+      {
+        "type": "text",
+        "id": "subsave_selling_plan",
+        "label": "Subscribe & Save — Selling Plan ID (leave blank if no sub plan yet)",
+        "info": "Find the Selling Plan ID in Shopify Admin → Products → [Product] → Selling Plans. When set, the URL becomes /cart/{variant}:1?selling_plan={id}"
+      },
+      {
+        "type": "text",
+        "id": "subsave_cadence",
+        "label": "Subscribe & Save — cadence label (shown under the CTA)",
+        "default": "3 bottles delivered every 3 months · Cancel anytime"
+      },
+      {
+        "type": "text",
+        "id": "otp_1bottle_variant",
+        "label": "One-time Purchase — 1 Bottle variant ID",
+        "default": "50211235922219"
+      },
+      {
+        "type": "text",
+        "id": "otp_3bottle_variant",
+        "label": "One-time Purchase — 3 Bottles variant ID",
+        "default": "50211235954987"
+      }
+    ],
+    "presets": [
+      { "name": "AQ Quality Opt-in V3" }
+    ]
+  }
+  {% endschema %}
+  

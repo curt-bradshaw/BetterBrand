@@ -73,6 +73,7 @@
 .stats-banner {
     position: relative;
     padding: 80px 0px;
+    background-color: {{ section.settings.background_color }};
   }
 
 .stats-banner__content {
@@ -163,8 +164,8 @@
   padding: 20px 32px;
   border-radius: 40px;
   border: 1px solid #234134;
-  background: #FFFFFF26;
-  color: #234134;
+  background: #234134;
+  color: #ffffff;
   transition: all 0.3s ease;
   align-items: center;
   justify-content: center;
@@ -206,6 +207,10 @@
 @media (max-width: 767px) {
   .stats-banner {
     padding: 40px 0px;
+  }
+
+  .stats-banner__bg {
+    display: none;
   }
 
   .stats-banner__stats {
@@ -252,10 +257,21 @@
 (function() {
   function parseNumberWithSuffix(value) {
     const str = String(value).trim();
-    const match = str.match(/^([\d.]+)([kKmMbBtT]?)$/);
+    const hasLeadingPlus = str.startsWith('+');
+    const hasTrailingPlus = str.endsWith('+');
+    const normalized = str.replace(/^\+/, '').replace(/\+$/, '');
+    const match = normalized.match(/^([\d.]+)([kKmMbBtT]?)$/);
     
     if (!match) {
-      return { number: parseFloat(str), suffix: '', original: str };
+      const number = parseFloat(normalized);
+      return {
+        number: number,
+        suffix: '',
+        numericValue: number,
+        original: str,
+        hasLeadingPlus: hasLeadingPlus,
+        hasTrailingPlus: hasTrailingPlus
+      };
     }
     
     const number = parseFloat(match[1]);
@@ -281,14 +297,21 @@
       number: number,
       suffix: suffix,
       numericValue: number * multiplier,
-      original: str
+      original: str,
+      hasLeadingPlus: hasLeadingPlus,
+      hasTrailingPlus: hasTrailingPlus
     };
   }
   
-  function formatNumberWithSuffix(value, suffix, original) {
+  function formatNumberWithSuffix(value, targetData) {
+    const suffix = targetData.suffix;
+    const hasLeadingPlus = targetData.hasLeadingPlus;
+    const hasTrailingPlus = targetData.hasTrailingPlus;
+
     if (!suffix) {
       const isDecimal = value % 1 !== 0;
-      return isDecimal ? value.toFixed(1) : Math.floor(value).toString();
+      const formattedNumber = isDecimal ? value.toFixed(1) : Math.floor(value).toString();
+      return (hasLeadingPlus ? '+' : '') + formattedNumber + (hasTrailingPlus ? '+' : '');
     }
     
     const suffixLower = suffix.toLowerCase();
@@ -312,7 +335,7 @@
     const isDecimal = displayValue % 1 !== 0;
     const formatted = isDecimal ? displayValue.toFixed(1) : Math.floor(displayValue).toString();
     
-    return formatted + displaySuffix;
+    return (hasLeadingPlus ? '+' : '') + formatted + displaySuffix + (hasTrailingPlus ? '+' : '');
   }
   
   function animateNumber(element, targetData, duration) {
@@ -327,7 +350,7 @@
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       const current = start + (targetValue - start) * easeOutQuart;
       
-      element.textContent = formatNumberWithSuffix(current, targetData.suffix, targetData.original);
+      element.textContent = formatNumberWithSuffix(current, targetData);
       
       if (progress < 1) {
         requestAnimationFrame(update);
@@ -396,6 +419,12 @@
       "type": "image_picker",
       "id": "background_img_mobile",
       "label": "Background Banner Image (Mobile - below 767px)"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
     },
     {
       "type": "text",

@@ -12,6 +12,10 @@
     "main": {
       "type": "product-template",
       "blocks": {
+        "judge_me_reviews_preview_badge_RUabMQ": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
         "reviews_yCCePc": {
           "type": "reviews",
           "settings": {
@@ -22,6 +26,17 @@
           "type": "title",
           "settings": {
             "product_title_color": "#234134"
+          }
+        },
+        "description_FXRx6t": {
+          "type": "description",
+          "settings": {
+            "font_size_short_description": 14,
+            "font_size_short_description_tablet": 14,
+            "font_size_short_description_mobile": 12,
+            "font_weight_short_description": "normal",
+            "font_style_short_description": "normal",
+            "description_color": "#252525"
           }
         },
         "price_mYynEy": {
@@ -144,8 +159,10 @@
         }
       },
       "block_order": [
+        "judge_me_reviews_preview_badge_RUabMQ",
         "reviews_yCCePc",
         "title_xraidK",
+        "description_FXRx6t",
         "price_mYynEy",
         "product_images_gJEr4A",
         "product_info_WfBXk4",
@@ -525,6 +542,7 @@
     },
     "trustpilot_JmWUPQ": {
       "type": "trustpilot",
+      "disabled": true,
       "custom_css": [],
       "name": "Trustpilot Reviews",
       "settings": {}
@@ -646,6 +664,24 @@
       ],
       "disabled": true,
       "settings": {}
+    },
+    "1781813054ad61734d": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_GfUV7m": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_GfUV7m"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -660,6 +696,7 @@
     "loox-reviews",
     "recently_viewed_product_template_9PcgAE",
     "faq_section_7NrfTG",
-    "1778525589b9b2b9eb"
+    "1778525589b9b2b9eb",
+    "1781813054ad61734d"
   ]
 }

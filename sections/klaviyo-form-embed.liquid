@@ -1,0 +1,145 @@
+{%- assign form_id = section.settings.form_id | strip | default: 'W2ZwsL' -%}
+{%- assign company_id = section.settings.company_id | strip | default: 'NYkPJ4' -%}
+
+{%- if company_id != blank -%}
+  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id={{ company_id | escape }}"></script>
+{%- endif -%}
+
+<section class="kl-embed">
+  <div class="kl-embed__form">
+    <div class="klaviyo-form-{{ form_id | escape }}"></div>
+  </div>
+</section>
+
+{% style %}
+  #shopify-section-{{ section.id }} .kl-embed {
+    width: 100%;
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .kl-embed__form {
+    width: 100%;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    border-radius: {{ section.settings.border_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 18px 44px rgba(26, 58, 26, {{ section.settings.shadow_opacity | divided_by: 100.0 }});
+  }
+
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .kl-embed {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Klaviyo form embed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "company_id",
+      "label": "Klaviyo company ID",
+      "default": "NYkPJ4"
+    },
+    {
+      "type": "text",
+      "id": "form_id",
+      "label": "Klaviyo form ID",
+      "default": "W2ZwsL"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Form max width",
+      "min": 400,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "label": "Shadow opacity",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "%",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    }
+  ],
+  "presets": [
+    {
+      "name": "Klaviyo form embed"
+    }
+  ]
+}
+{% endschema %}
