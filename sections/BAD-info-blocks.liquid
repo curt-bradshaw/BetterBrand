@@ -119,12 +119,12 @@
   }
 
   .{{ unique_class }} h2 {
-    font-family: 'Bookmania', serif;
+    font-family: 'Soehne', serif;
     font-size: 27px;
   }
 
   .{{ unique_class }} p {
-    font-family: 'Suisse Intl Mono', monospace;
+    font-family: 'MierA', monospace;
     font-size: 16px;
   }
 
@@ -166,10 +166,10 @@
           <img src="{{ block.settings.profile_image | img_url: 'large' }}" alt="Profile Image" class="BAD-profile-img">
         {% endif %}
         <div>
-          <h2 style="color: {{ block.settings.heading_color }};font-family: bookmania;">
+          <h2 style="color: {{ block.settings.heading_color }};font-family: 'Soehne';">
             {{ block.settings.heading }}
           </h2>
-          <p style="color: {{ block.settings.text_color }};font-family: suisse_intl_mono;">
+          <p style="color: {{ block.settings.text_color }};font-family: 'MierA';">
             {{ block.settings.content }}
           </p>
         </div>
