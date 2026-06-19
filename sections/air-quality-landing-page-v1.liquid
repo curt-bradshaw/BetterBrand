@@ -177,10 +177,15 @@
 
     /* Klaviyo form headline — keep the hero .hero-headline at its native size
        but match the h2 sizing for the title Klaviyo renders above the opt-in. */
-    .aqv3 .air-report h1,
-    .aqv3 [class*="klaviyo-form-"] h1 {
+    .aqv3 .kl-embed h1 {
       font-size: clamp(28px, 4vw, 40px) !important;
       line-height: 1.1 !important;
+    }
+    @media (max-width: 767px) {
+      .aqv3 .kl-embed h1 span {
+        font-size: 30px !important;
+        line-height: 1.1 !important;
+      }
     }
     .aqv3 p, .aqv3 ul, .aqv3 form { margin: 0; }
     .aqv3 a { color: inherit; text-decoration: none; }
@@ -252,27 +257,9 @@
     .aqv3 .philosophy-text { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
     .aqv3 .philosophy-text .body-copy strong { font-weight: 700; color: var(--aqv3-mallard); }
   
-    .aqv3 .air-report { background: var(--aqv3-gray-nurse); border-top: 3px solid var(--aqv3-ronchi); border-bottom: 3px solid var(--aqv3-ronchi); padding: 40px 24px; }
-    .aqv3 .air-report-inner { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 11px; align-items: center; text-align: center; }
-    .aqv3 .air-report .h2,
-    .aqv3 .air-report .body-copy { text-align: center; }
-    .aqv3 .air-report-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; padding-top: 20px; }
-    .aqv3 .air-report-form .full { grid-column: 1 / span 2; }
-    .aqv3 .air-report-form input { width: 100%; background: #fff; border: 2px solid var(--aqv3-tasman); border-radius: 8px; padding: 16px 18px; font: 400 15px 'Inter', sans-serif; color: var(--aqv3-mallard); height: 51px; }
-    .aqv3 .air-report-form input::placeholder { color: var(--aqv3-silver-chalice); }
-    .aqv3 .air-report-form button { grid-column: 1 / span 2; background: var(--aqv3-mallard); color: #fff; font-weight: 800; font-size: 14px; letter-spacing: 1.12px; text-transform: uppercase; padding: 16px 24px; border-radius: 50px; width: 100%; }
-    .aqv3 .air-report-disclaimer { grid-column: 1 / span 2; color: var(--aqv3-laurel); font-size: 11px; line-height: 16.5px; text-align: center; padding-top: 12px; }
-    .aqv3 .air-report-disclaimer a { text-decoration: underline; }
-  
-    /* Klaviyo embed: strip card chrome so the form blends into the section like the original inline template */
-    .aqv3 [class*="klaviyo-form-"] { width: 100%; max-width: 600px; margin: 0 auto; }
-    .aqv3 [class*="klaviyo-form-"] > div > form[data-testid^="klaviyo-form-"],
-    .aqv3 [class*="klaviyo-form-"] form.klaviyo-form {
-      border: 0 !important;
-      background: transparent !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-    }
+    .kl-embed { width: 100%; padding: 44px 20px; background: #fff; }
+    .klaviyo-form-W2ZwsL { width: 100%; max-width: 700px; margin: 0 auto;
+      border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px rgba(26,58,26,0.16); }
   
     .aqv3 .real-results { background: var(--aqv3-spring-wood); padding: 40px 24px; }
     /* Customer testimonial video strip — horizontal scroll, plays inline */
@@ -558,8 +545,6 @@
     }
     @media (max-width: 560px) {
       .aqv3 .footer-grid { grid-template-columns: 1fr; }
-      .aqv3 .air-report-form { grid-template-columns: 1fr; }
-      .aqv3 .air-report-form .full, .aqv3 .air-report-form button, .aqv3 .air-report-disclaimer { grid-column: 1; }
       /* Tate 2026-06-03: comparison table mobile pass v3 — lock columns to fixed percentages
          so row borders align perfectly regardless of cell content width. */
       .aqv3 .compare-header { grid-template-columns: 30% 35% 35%; padding: 20px 0 12px; }
@@ -598,13 +583,7 @@
       <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </nav>
 
-    <section class="air-report" id="air-report">
-      <div class="air-report-inner">
-        <!-- Klaviyo inline AQ opt-in -->
-        {% comment %} <div class="klaviyo-form-{{ klaviyo_form_id }}"></div> {% endcomment %}
-        <div class="klaviyo-form-W2ZwsL"></div>
-      </div>
-    </section>
+    <section class="kl-embed"><div class="klaviyo-form-W2ZwsL"></div></section>
 
     <section class="section why">
       <div class="section-inner">
