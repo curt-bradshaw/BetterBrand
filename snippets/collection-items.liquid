@@ -46,6 +46,9 @@
           {% if product.handle == 'bundle-save' %}
             {% continue %}
           {% endif %}
+          {% if product.tags contains 'hidden-on-shop' %}
+            {% continue %}
+          {% endif %}
           {% if template.suffix == 'bundle' %}
               {% render 'product-alternative-card', custom_product: product %}
             {% else %}
