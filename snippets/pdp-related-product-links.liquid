@@ -91,7 +91,7 @@
     }
     @media (max-width: 1019px) {
       {% if suppress_title_on_mobile %}
-        .pdp-related-product-links-root--title {
+        .pdp-related-product-links-root--{{ placement }} {
           display: none !important;
         }
       {% endif %}

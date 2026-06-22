@@ -4201,6 +4201,7 @@
                 class="no-desktop product-half half-img {% if settings.enable_sticky_product_slider %}product-slider-sticky{% endif %}"
               >
                 {%- render 'product-sliders' -%}
+                {%- render 'pdp-related-product-links', placement: 'gallery' -%}
               </div>
             {%- when 'title' -%}
               {%- render 'product-title' with block: block, product_title: product.title -%}
@@ -4221,7 +4222,7 @@
               {% endunless %}
             {%- when 'description' -%}
               {%- render 'product-description' with product: product, block: block -%}
-              {%- render 'pdp-related-product-links', placement: 'description' -%}
+              {%- render 'pdp-related-product-links', placement: 'description', suppress_title_on_mobile: true -%}
             {%- when 'product_form' -%}
               {%- render 'product-form' with settings: settings, product: product, section.id: section.id, block: block -%}
             {% when 'product_badges' %}
