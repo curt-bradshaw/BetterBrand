@@ -18,6 +18,19 @@
 {% assign related_products = product.metafields.pdp.related_product_links.value %}
 
 {% if related_products != blank %}
+  <script>
+    (function () {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var showFlavors = params.get('show_flavors');
+
+        if (showFlavors === '1' || showFlavors === 'true') {
+          document.documentElement.classList.add('pdp-flavor-selector-enabled');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <div class="pdp-related-product-links-root pdp-related-product-links-root--{{ placement }}">
     <h2
       class="pdp-related-product-links__heading"
@@ -58,7 +71,7 @@
 
           <li class="pdp-related-product-links__item">
             <a
-              href="{{ rp.url }}"
+              href="{{ rp.url }}?show_flavors=1"
               class="pdp-related-product-links__link{% if rp.id == product.id %} pdp-related-product-links__link--current{% endif %}"
               title="{{ rp.title | escape }}"
               {% if rp.id == product.id %}
@@ -92,7 +105,16 @@
   </div>
 
   <style>
+    .pdp-related-product-links-root {
+      display: none;
+    }
+    html.pdp-flavor-selector-enabled .pdp-related-product-links-root {
+      display: block;
+    }
     .pdp-related-product-links-root--gallery {
+      display: none;
+    }
+    html.pdp-flavor-selector-enabled .pdp-related-product-links-root--gallery {
       display: none;
     }
     @media (max-width: 1019px) {
@@ -101,7 +123,7 @@
           display: none !important;
         }
       {% endif %}
-      .pdp-related-product-links-root--gallery {
+      html.pdp-flavor-selector-enabled .pdp-related-product-links-root--gallery {
         display: block;
         width: 100%;
       }
