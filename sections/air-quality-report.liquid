@@ -310,6 +310,7 @@
 
   .subscription-wrapper { margin-bottom: 12px; }
   .subscription-group { display: flex; flex-direction: column; gap: 12px; }
+  .subscription-group[hidden] { display: none !important; }
   .subscription-card { border: 1px solid #234134; border-radius: 10px; padding: 20px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; background: #fff; font-family: 'MierA', -apple-system, sans-serif; margin-top: 22px; }
   .subscription-card.active { box-shadow: 0 0 4.9px 3px #23413475 inset; }
   .subscription-best { background: #f2cb49; color: #234134; font-size: 14px; font-weight: 700; padding: 4px 12px; border-radius: 35px; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); border: 1px solid #234134; white-space: nowrap; z-index: 1; line-height: 1.2; }
@@ -323,6 +324,7 @@
   .subscription-note strong { color: #234134; font-weight: 700; }
 
   .bb-cta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; background: #f2cb49; color: #234134; font-family: 'MierA', -apple-system, sans-serif; font-size: 20px; letter-spacing: 1px; padding: 22px 28px; border-radius: 999px; text-align: center; text-decoration: none; margin-top: 16px; transition: filter 0.15s ease, transform 0.05s ease; box-shadow: 0 6px 18px rgba(242, 203, 73, 0.45); border: 1.5px solid #234134; }
+  button.bb-cta { -webkit-appearance: none; appearance: none; cursor: pointer; width: 100%; }
   .bb-cta:hover { filter: brightness(0.97); }
   .bb-cta:active { transform: translateY(1px); }
   .bb-cta-price { font-weight: 700; font-size: 22px; }
@@ -709,93 +711,108 @@
       </div>
       <h2 class="product-title">BetterLungs® Mullein + Chlorophyll</h2>
 
-      <div class="plan-wrapper" role="radiogroup" aria-label="Choose your plan">
-        <div class="plan-list">
-          <label class="plan-card active"
-                 data-variant-id="50211235922219"
-                 data-total="34.95" data-qty="1"
-                 data-href="https://www.trybetterbrand.com/cart/50211235922219:1"
-                 data-sub-cadence="1 Bottle, Every 30 Days"
-                 data-sub-display="$27.95"
-                 data-sub-total="27.95"
-                 data-sub-qty="1"
-                 data-sub-href="https://www.trybetterbrand.com/cart/50211235922219:1"
-                 role="radio" aria-checked="true" tabindex="0">
-            <div class="plan-left"><img src="https://bb-aq-v3-lander.pages.dev/assets/variant-1bottle.png" alt=""></div>
-            <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
-            <div class="plan-right">
-              <div class="plan-badge hidden"><span>SAVE %</span></div>
-              <div class="plan-price-stack">
-                <div class="plan-price">$34.95</div>
-                <div class="plan-each">each</div>
-              </div>
-            </div>
-          </label>
+      <form id="aqr-product-form" method="post" action="{{ routes.cart_add_url }}">
+        <input type="hidden" name="id" id="aqr-variant-id" value="50211235922219">
+        <input type="hidden" name="selling_plan" id="aqr-selling-plan" value="">
 
-          <label class="plan-card"
-                 data-variant-id="50211235954987"
-                 data-total="94.35" data-qty="3"
-                 data-href="https://www.trybetterbrand.com/cart/50211235954987:1"
-                 data-sub-cadence="3 Bottles, Every 3 Months"
-                 data-sub-display="$27.95"
-                 data-sub-total="83.85"
-                 data-sub-qty="3"
-                 data-sub-href="https://www.trybetterbrand.com/cart/50211235954987:1"
-                 role="radio" aria-checked="false" tabindex="0">
-            <div class="plan-left"><img src="https://bb-aq-v3-lander.pages.dev/assets/variant-3bottles.png" alt=""></div>
-            <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
-            <div class="plan-right">
-              <div class="plan-badge"><span>SAVE 10%</span></div>
-              <div class="plan-price-stack">
-                <div class="plan-price">$31.45</div>
-                <div class="plan-each">each</div>
-              </div>
-            </div>
-          </label>
-        </div>
-
-        <div class="subscription-wrapper">
-          <div class="subscription-group">
-            <label class="subscription-card"
-                   data-total="27.95" data-qty="1"
-                   data-href="https://www.trybetterbrand.com/cart/50211235922219:1"
-                   role="radio" aria-checked="false" tabindex="0">
-              <span class="subscription-best">Best Value</span>
-              <div class="content">
-                <p class="subscrition-name">
-                  <span class="subscription-title">Subscribe &amp; Save</span><br>
-                  <span class="subscription-frequency" data-sub-cadence>1 Bottle, Every 30 Days</span>
-                </p>
-                <div class="plan-right">
-                  <div class="plan-badge"><span>SAVE 20%</span></div>
-                  <div class="plan-price-stack">
-                    <div class="plan-price"><span data-sub-price>$27.95</span></div>
-                    <div class="plan-each">each</div>
-                  </div>
+        <div class="plan-wrapper" role="radiogroup" aria-label="Choose your plan">
+          <div class="plan-list">
+            <label class="plan-card active"
+                   data-variant-id="50211235922219"
+                   data-total="34.95" data-qty="1"
+                   role="radio" aria-checked="true" tabindex="0">
+              <div class="plan-left"><img src="https://bb-aq-v3-lander.pages.dev/assets/variant-1bottle.png" width="70" height="70" alt=""></div>
+              <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
+              <div class="plan-right">
+                <div class="plan-badge hidden"><span>SAVE %</span></div>
+                <div class="plan-price-stack">
+                  <div class="plan-price">$34.95</div>
+                  <div class="plan-each">each</div>
                 </div>
               </div>
-              <div class="subscription-note">
-                <span><strong>FREE</strong> Shipping</span>
-                <span>Change, Pause or Cancel Anytime</span>
+            </label>
+
+            <label class="plan-card"
+                   data-variant-id="50211235954987"
+                   data-total="94.35" data-qty="3"
+                   role="radio" aria-checked="false" tabindex="0">
+              <div class="plan-left"><img src="https://bb-aq-v3-lander.pages.dev/assets/variant-3bottles.png" width="70" height="70" alt=""></div>
+              <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
+              <div class="plan-right">
+                <div class="plan-badge"><span>SAVE 10%</span></div>
+                <div class="plan-price-stack">
+                  <div class="plan-price">$31.45</div>
+                  <div class="plan-each">each</div>
+                </div>
               </div>
             </label>
           </div>
-        </div>
-      </div>
 
-      <a id="bb-cta" href="https://www.trybetterbrand.com/cart/50211235922219:1" class="bb-cta">
-        <span class="bb-cta-price">$34.95</span>
-        <span class="bb-cta-sep">|</span>
-        <span class="bb-cta-text">Add to Cart</span>
-        <span class="bb-cta-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9" cy="20" r="1.5"></circle>
-            <circle cx="18" cy="20" r="1.5"></circle>
-            <path d="M2 3h3l2.5 11.5a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L22 7H6"></path>
-          </svg>
-        </span>
-        <span class="bb-cta-count">(1 Item)</span>
-      </a>
+          <div class="subscription-wrapper">
+            <div class="subscription-group" data-variant-id="50211235922219" data-qty="1">
+              <label class="subscription-card" data-price="2795" role="radio" aria-checked="false" tabindex="0">
+                <input type="radio" hidden name="selling_plan_radio" value="118714663211">
+                <span class="subscription-best">Best Value</span>
+                <div class="content">
+                  <p class="subscrition-name">
+                    <span class="subscription-title">Subscribe &amp; Save</span><br>
+                    <span class="subscription-frequency">Deliver every month</span>
+                  </p>
+                  <div class="plan-right">
+                    <div class="plan-badge"><span>SAVE 20%</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$27.95</div>
+                      <div class="plan-each">each</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="subscription-note">
+                  <span><strong>FREE</strong> Shipping</span>
+                  <span>Change, Pause or Cancel Anytime</span>
+                </div>
+              </label>
+            </div>
+
+            <div class="subscription-group" data-variant-id="50211235954987" data-qty="3" hidden>
+              <label class="subscription-card" data-price="8385" role="radio" aria-checked="false" tabindex="0">
+                <input type="radio" hidden name="selling_plan_radio" value="117893955883">
+                <span class="subscription-best">Best Value</span>
+                <div class="content">
+                  <p class="subscrition-name">
+                    <span class="subscription-title">Subscribe &amp; Save</span><br>
+                    <span class="subscription-frequency">Delivery Every 3 Months</span>
+                  </p>
+                  <div class="plan-right">
+                    <div class="plan-badge"><span>SAVE 20%</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$27.95</div>
+                      <div class="plan-each">each</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="subscription-note">
+                  <span><strong>FREE</strong> Shipping</span>
+                  <span>Change, Pause or Cancel Anytime</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="bb-cta" class="bb-cta">
+          <span class="bb-cta-price">$34.95</span>
+          <span class="bb-cta-sep">|</span>
+          <span class="bb-cta-text">Add to Cart</span>
+          <span class="bb-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="20" r="1.5"></circle>
+              <circle cx="18" cy="20" r="1.5"></circle>
+              <path d="M2 3h3l2.5 11.5a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L22 7H6"></path>
+            </svg>
+          </span>
+          <span class="bb-cta-count">(1 Item)</span>
+        </button>
+      </form>
 
       <p class="bb-hsa"><strong>HSA/FSA eligible</strong><span class="bb-hsa-sep">·</span>Save an average of 30%</p>
       <div class="pdp-trust-row">
@@ -1060,48 +1077,67 @@
     });
   });
 
-  // PDP swatch-plans: plan + subscription cards are one radio group; Subscribe mirrors active qty
+  // PDP swatch-plans: form-based variant + selling plan selection.
   (function () {
-    const cta = document.getElementById('bb-cta');
-    const planCards = document.querySelectorAll('.plan-card');
-    const subCard = document.querySelector('.subscription-card');
-    if (!cta || !planCards.length || !subCard) return;
-    const allCards = [...planCards, subCard];
+    const productForm = document.getElementById('aqr-product-form');
+    if (!productForm) return;
+    const cta = productForm.querySelector('#bb-cta');
+    const variantInput = document.getElementById('aqr-variant-id');
+    const planInput = document.getElementById('aqr-selling-plan');
+    const planCards = productForm.querySelectorAll('.plan-card');
+    const subGroups = productForm.querySelectorAll('.subscription-group');
+    const allSubCards = productForm.querySelectorAll('.subscription-card');
+    if (!cta || !variantInput || !planInput || !planCards.length) return;
     const priceEl = cta.querySelector('.bb-cta-price');
     const countEl = cta.querySelector('.bb-cta-count');
-    const subCadenceEl = subCard.querySelector('[data-sub-cadence]');
-    const subPriceEl = subCard.querySelector('[data-sub-price]');
 
-    function updateCTA(total, qty, href) {
+    function updateCTA(total, qty) {
       if (priceEl && Number.isFinite(total)) priceEl.textContent = '$' + total.toFixed(2);
       if (countEl) countEl.textContent = '(' + qty + ' Item' + (qty === 1 ? '' : 's') + ')';
-      if (href) cta.href = href;
     }
-    function syncSubscribeCardToPlan(planCard) {
-      const cadence = planCard.dataset.subCadence || '';
-      const subDisplay = planCard.dataset.subDisplay || '';
-      const subTotal = planCard.dataset.subTotal || '';
-      const subQty = planCard.dataset.subQty || '';
-      const subHref = planCard.dataset.subHref || '';
-      if (subCadenceEl) subCadenceEl.textContent = cadence;
-      if (subPriceEl) subPriceEl.textContent = subDisplay;
-      subCard.dataset.total = subTotal;
-      subCard.dataset.qty = subQty;
-      subCard.dataset.href = subHref;
-      if (subCard.classList.contains('active')) {
-        updateCTA(parseFloat(subTotal || '0'), parseInt(subQty || '1', 10), subHref);
-      }
-    }
-    function activate(card) {
-      allCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+
+    planCards.forEach(card => card.addEventListener('click', () => {
+      variantInput.value = card.dataset.variantId || '';
+      planInput.value = '';
+
+      planCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
       card.classList.add('active');
       card.setAttribute('aria-checked', 'true');
-      updateCTA(parseFloat(card.dataset.total || '0'), parseInt(card.dataset.qty || '1', 10), card.dataset.href);
-    }
-    planCards.forEach(card => card.addEventListener('click', (e) => { e.preventDefault(); syncSubscribeCardToPlan(card); activate(card); }));
-    subCard.addEventListener('click', (e) => { e.preventDefault(); activate(subCard); });
-    const initiallyActive = document.querySelector('.plan-card.active') || planCards[0];
-    if (initiallyActive) syncSubscribeCardToPlan(initiallyActive);
+
+      allSubCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+      subGroups.forEach(group => {
+        group.hidden = group.dataset.variantId !== card.dataset.variantId;
+      });
+
+      updateCTA(parseFloat(card.dataset.total || '0'), parseInt(card.dataset.qty || '1', 10));
+    }));
+
+    allSubCards.forEach(card => card.addEventListener('click', () => {
+      const radio = card.querySelector('input[type="radio"]');
+      const group = card.closest('.subscription-group');
+      if (radio) planInput.value = radio.value;
+      if (group && group.dataset.variantId) variantInput.value = group.dataset.variantId;
+
+      planCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+      allSubCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+      card.classList.add('active');
+      card.setAttribute('aria-checked', 'true');
+
+      const qty = group ? parseInt(group.dataset.qty || '1', 10) : 1;
+      const priceCents = parseInt(card.dataset.price || '0', 10);
+      updateCTA(priceCents / 100, qty);
+    }));
+
+    const initiallyActive = productForm.querySelector('.plan-card.active') || planCards[0];
+    if (initiallyActive) updateCTA(parseFloat(initiallyActive.dataset.total || '0'), parseInt(initiallyActive.dataset.qty || '1', 10));
+
+    productForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      fetch('/cart/add.js', { method: 'POST', body: new FormData(productForm) })
+        .then(r => r.json())
+        .then(() => { window.location.href = '/checkout'; })
+        .catch(() => { productForm.submit(); });
+    });
   })();
 
   // supplement facts modal
