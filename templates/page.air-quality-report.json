@@ -11,10 +11,17 @@
   "sections": {
     "main": {
       "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "air_quality_report_cnCYDd": {
+      "type": "air-quality-report",
+      "name": "Air Quality Report",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "air_quality_report_cnCYDd"
   ]
 }
