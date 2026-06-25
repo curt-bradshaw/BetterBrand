@@ -1,0 +1,1308 @@
+{% layout none %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+  {{ content_for_header }}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BetterLungs® · The Air Report: What's Really In Your Air?</title>
+<meta name="description" content="Get a free, personalized air quality report for where you live, then learn how to support the one air filter you can't replace: your lungs.">
+<!-- Brand fonts (rebrand 2026) self-hosted via @font-face below: Söhne / Mier A / Tiempos -->
+<!-- Klaviyo Onsite (AQ inline form W2ZwsL) -->
+<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=NYkPJ4"></script>
+<style>
+  /* ---- Brand fonts (rebrand 2026) ---- */
+  @font-face { font-family: 'Sohne'; src: url('https://bb-aq-v3-lander.pages.dev/assets/fonts/soehne-dreiviertelfett.woff2?v=1') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'MierA'; src: url('https://bb-aq-v3-lander.pages.dev/assets/fonts/MierA-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'MierA'; src: url('https://bb-aq-v3-lander.pages.dev/assets/fonts/MierA-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'MierA'; src: url('https://bb-aq-v3-lander.pages.dev/assets/fonts/MierA-ExtraBold.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Tiempos'; src: url('https://bb-aq-v3-lander.pages.dev/assets/fonts/tiempos-text-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+
+  :root {
+    --bone: #FAF9F8;
+    --bone-2: #F1EDE7;
+    --ink: #212121;
+    --muted: #6E6A62;
+    --line: #E4DFD7;
+    --green: #1A3A1A;
+    --green-deep: #0D1F0D;
+    --green-soft: #2D5A2D;
+    --gold: #F2CB49;
+    --gold-deep: #234134;
+    --red: #C62828;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+  body,
+  .air-quality-report-page {
+    font-family: 'MierA', -apple-system, system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--bone);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  .air-quality-report-page,
+  .air-quality-report-page * {
+    font-family: 'MierA', -apple-system, system-ui, sans-serif !important;
+  }
+  .air-quality-report-page .display,
+  .air-quality-report-page .ar-worst-num,
+  .air-quality-report-page .ar-worst-label,
+  .air-quality-report-page .ar-chip-num,
+  .air-quality-report-page .edu-card-name,
+  .air-quality-report-page .edu-stat .num,
+  .air-quality-report-page .product-main-badge,
+  .air-quality-report-page .ingr-name,
+  .air-quality-report-page .routine-when,
+  .air-quality-report-page .compare-table thead th,
+  .air-quality-report-page .suppfacts-modal-title {
+    font-family: 'Sohne', -apple-system, system-ui, sans-serif !important;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; border: 0; background: 0; }
+
+  /* Hide theme chrome only on pages where this section is rendered.
+     This keeps the custom .nav and .footer inside this file visible. */
+  .ntg-wrapper > header,
+  body > header,
+  #shopify-section-header,
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper,
+  .shopify-section.section-header,
+  .shopify-section-header-sticky,
+  [class*="section-header"],
+  [id*="section-header"],
+  #shopify-section-footer,
+  [class*="site-footer"],
+  .shopify-section .ntg-footer,
+  .ntg-footer,
+  [id*="section-footer"] {
+    display: none !important;
+  }
+
+  .ntg-wrapper,
+  .ntg-main,
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* display type — Söhne Dreiviertelfett (brand headers), sentence case */
+  .display { font-family: 'Sohne', -apple-system, sans-serif; font-weight: 700; line-height: 1.03; letter-spacing: -0.8px; }
+  .eyebrow { font-family: 'MierA', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--green-soft); }
+  .eyebrow.gold { color: #B8902A; }
+
+  /* flat editorial buttons — BetterLungs GREEN, gold accent variant */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--green); color: #fff; font-family: 'MierA', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.4px; padding: 16px 30px; border-radius: 6px; transition: filter 0.15s ease, transform 0.05s ease; }
+  .btn:hover { filter: brightness(1.12); }
+  .btn:active { transform: translateY(1px); }
+  .btn-gold { background: var(--gold); color: var(--gold-deep); }
+  .air-quality-report-page .btn-gold {
+    width: auto !important;
+    max-width: max-content;
+    align-self: flex-start;
+    flex: 0 0 auto;
+  }
+  .btn-light { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+
+  /* ---------- announcement ---------- */
+  .topbar { background: var(--bone); border-bottom: 1px solid var(--line); text-align: center; padding: 9px 16px; }
+  .topbar span { font-size: 12px; letter-spacing: 0.4px; color: var(--ink); font-weight: 500; }
+  .topbar b { font-weight: 700; }
+
+  /* ---------- nav ---------- */
+  .nav { background: var(--bone); height: 66px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); }
+  .nav-logo img { height: 26px; width: auto; }
+  .nav-links { list-style: none; display: flex; align-items: center; gap: 34px; }
+  .nav-links a { font-weight: 600; font-size: 12.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink); }
+  .nav-links a:hover { color: var(--green-soft); }
+  .nav-cta { font-weight: 600; font-size: 12.5px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink); border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+
+  /* ---------- hero (asymmetric editorial split on bone) ---------- */
+  .hero { background: var(--bone); padding: 54px 40px 66px; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero-grid { max-width: none; display: grid; grid-template-columns: 1.04fr 0.96fr; gap: 56px; align-items: center; }
+  .hero-copy { display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 22px; }
+  .hero-eyebrow { color: var(--green-soft); font-family: 'MierA', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; }
+  .hero h1 { color: var(--ink); font-size: clamp(38px, 5vw, 72px); }
+  .hero p { color: var(--muted); font-size: clamp(16px, 1.4vw, 19px); max-width: 500px; line-height: 1.6; }
+  .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 2px; }
+  .hero .btn { font-size: 15px; padding: 18px 38px; box-shadow: 0 10px 26px rgba(242,203,73,0.5); }
+
+  .hero-media { position: relative; aspect-ratio: 1/1; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(13,31,13,0.26); }
+  .hero-media::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(13,31,13,0) 48%, rgba(13,31,13,0.55) 100%); }
+
+  /* floating product chip, now docked inside the hero media frame */
+  .float-card { position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 2; display: flex; align-items: center; gap: 13px; background: rgba(250,249,248,0.97); border-radius: 12px; padding: 11px 16px 11px 11px; box-shadow: 0 10px 28px rgba(0,0,0,0.24); }
+  .float-card img { width: 52px; height: 52px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+  .float-card .fc-name { font-weight: 700; font-size: 13px; color: var(--ink); line-height: 1.2; }
+  .float-card .fc-sub { font-size: 12px; color: var(--muted); }
+  .float-card .fc-price { font-weight: 700; font-size: 13px; color: var(--green); padding-top: 2px; }
+
+  /* ---------- section base ---------- */
+  .section { padding: 92px 24px; }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  .center { text-align: center; }
+  .section-title { color: var(--ink); font-size: clamp(36px, 5vw, 60px); padding: 0; }
+  .lede { color: var(--muted); font-size: 17px; line-height: 1.7; max-width: 640px; }
+
+  /* ---------- the air report (form) ---------- */
+  .report { background: var(--bone); padding: 88px 24px 80px; text-align: center; }
+  .report-inner { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .report h2 { color: var(--ink); font-size: clamp(40px, 6vw, 76px); }
+  .report .lede { margin: 0 auto; }
+  .kl-embed { width: 100%; margin-top: 26px; }
+  .klaviyo-form-W2ZwsL { width: 100%; max-width: 640px; margin: 0 auto; border-radius: 14px; overflow: hidden; box-shadow: 0 18px 44px rgba(26,58,26,0.16); }
+  .free-strip-inner { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; margin-top: 26px; }
+  .free-chip { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--green-soft); }
+  .free-chip .x { color: var(--gold); font-size: 14px; }
+
+  /* ---------- custom air-report form + live results ---------- */
+  .air-card { width: 100%; max-width: 640px; margin: 26px auto 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 18px 44px rgba(26,58,26,0.12); padding: 30px 28px; text-align: left; }
+  .air-form { display: flex; flex-direction: column; gap: 12px; }
+  .af-row { display: flex; gap: 12px; }
+  .af-row > * { flex: 1; min-width: 0; }
+  .air-input { width: 100%; font-family: 'MierA', sans-serif; font-size: 16px; color: var(--ink); background: var(--bone); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; transition: border-color .15s ease, box-shadow .15s ease; }
+  .air-input::placeholder { color: #9a958c; }
+  .air-input:focus { outline: none; border-color: var(--green-soft); box-shadow: 0 0 0 3px rgba(45,90,45,.12); background: #fff; }
+  .air-submit { margin-top: 4px; width: 100%; background: var(--gold); color: var(--gold-deep); font-family: 'MierA', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: .4px; padding: 16px; border-radius: 10px; transition: filter .15s ease, transform .05s ease; }
+  .air-submit:hover { filter: brightness(.97); }
+  .air-submit:active { transform: translateY(1px); }
+  .air-submit[disabled] { opacity: .7; cursor: default; }
+  .air-consent { font-size: 11px; line-height: 1.5; color: var(--muted); margin-top: 2px; }
+  .air-consent a { color: var(--green-soft); text-decoration: underline; }
+  .air-err { font-size: 13px; color: var(--red); font-weight: 600; margin: 0; }
+
+  .air-results { display: flex; flex-direction: column; gap: 16px; animation: rqfade .4s ease; }
+  .ar-loc { font-size: 12.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--green-soft); }
+  .ar-loc b { color: var(--ink); }
+  .ar-worst { display: flex; align-items: center; gap: 18px; background: #FBEDED; border: 1px solid #F0C9C9; border-radius: 14px; padding: 20px 22px; }
+  .ar-worst-num { font-family: 'Sohne', -apple-system, sans-serif; font-weight: 600; font-size: 70px; line-height: .82; color: var(--red); flex-shrink: 0; }
+  .ar-worst-meta { display: flex; flex-direction: column; gap: 3px; }
+  .ar-worst-label { font-family: 'Sohne', -apple-system, sans-serif; text-transform: uppercase; font-weight: 500; font-size: 21px; color: var(--ink); letter-spacing: .3px; }
+  .ar-worst-cat { font-weight: 700; font-size: 12.5px; letter-spacing: .4px; text-transform: uppercase; color: var(--red); }
+  .ar-worst-tag { font-size: 12px; color: var(--muted); }
+  .ar-rest { display: flex; gap: 10px; }
+  .ar-chip { flex: 1; background: var(--bone); border: 1px solid var(--line); border-radius: 12px; padding: 14px 10px; text-align: center; }
+  .ar-chip-num { font-family: 'Sohne', -apple-system, sans-serif; font-weight: 600; font-size: 30px; line-height: 1; color: var(--ink); }
+  .ar-chip-label { font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  .ar-chip-cat { font-size: 11px; margin-top: 2px; }
+  .ar-pollen { font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+  .ar-pollen b { color: var(--ink); }
+  .ar-foot { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin: 0; }
+  .ar-foot b { color: var(--ink); }
+  .ar-cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--green); color: #fff; font-family: 'MierA', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: .5px; padding: 14px 22px; border-radius: 8px; align-self: flex-start; }
+  .ar-cta:hover { filter: brightness(1.12); }
+
+  /* ---------- rehook ---------- */
+  .rehook { background: var(--green-deep); padding: 80px 24px 84px; text-align: center; }
+  .rehook-inner { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .rehook .eyebrow { color: var(--gold); }
+  .rehook h2 { color: #fff; font-size: clamp(34px, 5vw, 60px); }
+  .rehook p { color: rgba(255,255,255,0.82); font-size: 17px; line-height: 1.6; max-width: 580px; }
+  .rehook-arrow { color: var(--gold); font-size: 30px; margin-top: 4px; animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+  /* ---------- education: four numbers ---------- */
+  .edu { background: var(--bone); }
+  .edu-head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  .edu-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-top: 48px; }
+  .edu-card { background: var(--bone); padding: 34px 32px; display: flex; flex-direction: column; gap: 12px; }
+  .edu-card-name { font-family: 'Sohne', -apple-system, sans-serif; text-transform: uppercase; font-weight: 500; font-size: 24px; letter-spacing: 0.2px; color: var(--ink); }
+  .edu-card-plain { font-size: 15px; line-height: 1.6; color: var(--muted); }
+  .edu-stat { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding-top: 4px; }
+  .edu-stat .num { font-family: 'Sohne', -apple-system, sans-serif; font-weight: 600; font-size: 46px; line-height: 0.9; color: var(--red); }
+  .edu-stat .lbl { font-size: 12px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: var(--red); }
+  .edu-why { font-size: 14px; line-height: 1.55; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+  .edu-why b { color: var(--ink); }
+  .edu-invisible { margin-top: 28px; background: var(--green); color: #fff; border-radius: 14px; padding: 28px 32px; font-size: 17px; line-height: 1.7; display: grid; grid-template-columns: 1.05fr 1fr; gap: 30px; align-items: center; overflow: hidden; }
+  .edu-invisible b { color: var(--gold); }
+  .edu-invisible-media { border-radius: 10px; overflow: hidden; aspect-ratio: 16/10; }
+  .edu-invisible-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ---------- reframe ---------- */
+  .reframe { position: relative; isolation: isolate; overflow: hidden; padding: 104px 24px; background: var(--green-deep); }
+  .reframe::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url('https://bb-aq-v3-lander.pages.dev/assets/aqi-form-bg.png') center 35% / cover no-repeat; opacity: 0.45; }
+  .reframe::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(13,31,13,0.82) 0%, rgba(13,31,13,0.92) 100%); }
+  .reframe-inner { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; color: #fff; }
+  .reframe .eyebrow { color: var(--gold); }
+  .reframe h2 { color: #fff; font-size: clamp(40px, 6vw, 78px); }
+  .reframe p { font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.86); }
+  .reframe p b { color: #fff; }
+  .reframe-energy { background: rgba(242,203,73,0.12); border: 1px solid rgba(242,203,73,0.4); border-radius: 12px; padding: 22px 24px; font-size: 16px; line-height: 1.6; }
+  .reframe-energy b { color: var(--gold); }
+  .reframe-figure { margin: 6px 0; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 48px rgba(0,0,0,0.38); }
+  .reframe-figure img { width: 100%; display: block; }
+  .reframe-figure figcaption { font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,0.92); background: rgba(13,31,13,0.78); padding: 13px 18px; text-align: center; }
+  .reframe-figure figcaption b { color: var(--gold); }
+
+  /* ---------- real results, by concern (Jolie pattern) ---------- */
+  .results { background: var(--bone-2); }
+  .results-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 60px; align-items: center; }
+  .results-photo { aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; background: var(--green); }
+  .results-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .results-right { display: flex; flex-direction: column; gap: 22px; }
+  .results-right .section-title { font-size: clamp(30px, 4vw, 46px); }
+  .results-quote { font-size: clamp(20px, 2.4vw, 28px); line-height: 1.45; color: var(--ink); font-weight: 500; }
+  .results-attr-row { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; }
+  .results-attr .nm { font-weight: 700; font-size: 14px; color: var(--ink); }
+  .results-attr .loc { font-size: 13px; color: var(--muted); }
+  .results-about { font-size: 13px; color: var(--muted); }
+  .results-about a { color: var(--green-soft); text-decoration: underline; font-weight: 600; }
+  .concern-chips { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 6px; }
+  .chip { background: #fff; border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase; padding: 10px 15px; border-radius: 6px; transition: all 0.15s ease; }
+  .chip:hover { border-color: var(--green-soft); }
+  .chip.active { background: var(--green); color: #fff; border-color: var(--green); }
+  .results-pick { font-size: 13.5px; color: var(--muted); margin-top: -10px; }
+  .rq-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 28px 30px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 8px 26px rgba(0,0,0,0.05); }
+  .rq-stars { color: var(--gold); font-size: 18px; letter-spacing: 3px; line-height: 1; }
+  .rq-card .results-quote { font-size: clamp(19px, 2.2vw, 26px); }
+  .rq-person { display: flex; align-items: center; gap: 14px; }
+  .rq-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--green); color: #fff; font-weight: 700; font-size: 16px; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rq-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .rq-name-row { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .rq-name-row .nm { font-weight: 700; font-size: 15px; color: var(--ink); }
+  .rq-verified { font-size: 12px; font-weight: 700; color: var(--green-soft); }
+  .rq-meta .loc { font-size: 13px; color: var(--muted); line-height: 1.4; }
+  .rq-card.swap { animation: rqfade 0.38s ease; }
+  @keyframes rqfade { from { opacity: 0.2; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- product / buy box (PDP swatch-plans port) ---------- */
+  .product { background: var(--bone); padding: 92px 24px; }
+  .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1120px; margin: 0 auto; align-items: start; }
+  .product-gallery { display: flex; flex-direction: column; gap: 16px; }
+  .product-main { aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 16px 44px rgba(0,0,0,0.08); position: relative; }
+  .product-main img { width: 100%; height: 100%; object-fit: cover; }
+  .product-main-badge { position: absolute; top: 16px; left: 16px; background: var(--gold); color: var(--gold-deep); font-family: 'Sohne', -apple-system, sans-serif; font-size: 16px; letter-spacing: 0.8px; text-transform: uppercase; padding: 8px 16px; border-radius: 6px; z-index: 2; }
+  .product-thumbs { display: flex; gap: 10px; }
+  .product-thumb { width: 70px; height: 70px; border-radius: 7px; border: 2px solid var(--line); overflow: hidden; background: #fff; cursor: pointer; padding: 0; }
+  .product-thumb.is-selected { border-color: var(--green); }
+  .product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .product-info { display: flex; flex-direction: column; gap: 6px; }
+  .product-stars-row { display: flex; align-items: center; gap: 8px; }
+  .product-stars { color: var(--gold); font-size: 18px; letter-spacing: 2px; }
+  .product-rating { font-size: 13px; color: var(--muted); text-decoration: underline; }
+  .product-title { font-family: 'MierA', -apple-system, sans-serif; font-weight: 700; font-size: 32px; line-height: 1.12; letter-spacing: -0.3px; color: var(--ink); padding-top: 6px; }
+
+  /* PDP swatch-plans port — EXACT match to live BetterBrand PDP buy box (#234134 green / #f2cb49 gold) */
+  .plan-wrapper { width: 100%; padding-top: 8px; font-family: 'MierA', -apple-system, sans-serif; }
+  .plan-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .plan-card { display: flex; align-items: center; gap: 14px; padding: 10px 20px; border: 1px solid #234134; border-radius: 14px; background: #fff; cursor: pointer; transition: all 0.2s ease; height: 92px; position: relative; font-family: 'MierA', -apple-system, sans-serif; }
+  .plan-card.active { box-shadow: 0 0 4.9px 3px #23413475 inset; }
+  .plan-left { width: 70px; height: 70px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .plan-left img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .plan-center { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+  .plan-name { font-size: 18px; font-weight: 700; line-height: 1.2; color: #234134; }
+  .plan-right { display: flex; flex-direction: row; align-items: center; gap: 10px; flex-shrink: 0; }
+  .plan-price-stack { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .plan-price { font-size: 20px; font-weight: 700; color: #234134; line-height: 1.2; white-space: nowrap; flex-shrink: 0; text-align: right; }
+  .plan-price span[data-sub-price] { font-size: 20px; font-weight: 700; color: #234134; }
+  .plan-each { font-size: 14px; font-weight: 400; color: #234134; line-height: 1; text-align: right; }
+  .plan-badge { background: #234134; color: #ffffff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 22px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.3px; min-height: 36px; box-sizing: border-box; }
+  .plan-badge span { color: #ffffff; }
+  .plan-badge.hidden { visibility: hidden; }
+
+  .subscription-wrapper { margin-bottom: 12px; }
+  .subscription-group { display: flex; flex-direction: column; gap: 12px; }
+  .subscription-group[hidden] { display: none !important; }
+  .subscription-card { border: 1px solid #234134; border-radius: 10px; padding: 20px; cursor: pointer; position: relative; transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: center; background: #fff; font-family: 'MierA', -apple-system, sans-serif; margin-top: 22px; }
+  .subscription-card.active { box-shadow: 0 0 4.9px 3px #23413475 inset; }
+  .subscription-best { background: #f2cb49; color: #234134; font-size: 14px; font-weight: 700; padding: 4px 12px; border-radius: 35px; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); border: 1px solid #234134; white-space: nowrap; z-index: 1; line-height: 1.2; }
+  .subscription-card .content { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: nowrap; }
+  .subscription-card .content > .plan-right { flex-shrink: 0; }
+  .subscrition-name { font-size: 18px; font-weight: 700; line-height: 1.2; color: #234134; margin: 0; min-width: 0; }
+  .subscription-title { font-size: 18px; font-weight: 700; color: #234134; }
+  .subscription-frequency { color: #234134; font-weight: 400; font-size: 15px; }
+  .subscription-note { display: flex; flex-direction: column; gap: 5px; font-size: 16px; font-weight: 400; color: #234134; margin-top: 8px; }
+  .subscription-note span { line-height: 1.2; }
+  .subscription-note strong { color: #234134; font-weight: 700; }
+
+  .bb-cta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; background: #f2cb49; color: #234134; font-family: 'MierA', -apple-system, sans-serif; font-size: 20px; letter-spacing: 1px; padding: 22px 28px; border-radius: 999px; text-align: center; text-decoration: none; margin-top: 16px; transition: filter 0.15s ease, transform 0.05s ease; box-shadow: 0 6px 18px rgba(242, 203, 73, 0.45); border: 1.5px solid #234134; }
+  button.bb-cta { -webkit-appearance: none; appearance: none; cursor: pointer; width: 100%; }
+  .bb-cta:hover { filter: brightness(0.97); }
+  .bb-cta:active { transform: translateY(1px); }
+  .bb-cta-price { font-weight: 700; font-size: 22px; }
+  .bb-cta-sep { opacity: 0.55; font-weight: 400; padding: 0 2px; }
+  .bb-cta-text { font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 18px; }
+  .bb-cta-icon { display: inline-flex; align-items: center; }
+  .bb-cta-icon svg { width: 22px; height: 22px; stroke: #234134; fill: none; stroke-width: 2; }
+  .bb-cta-count { font-weight: 600; font-size: 17px; opacity: 0.85; }
+  .bb-hsa { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; color: #234134; padding-top: 12px; font-family: 'MierA', -apple-system, sans-serif; }
+  .bb-hsa strong { color: #234134; font-weight: 700; }
+  .bb-hsa-sep { opacity: 0.5; }
+  .pdp-trust-row { display: flex; justify-content: center; align-items: center; gap: 16px; padding-top: 22px; flex-wrap: wrap; }
+  .pdp-trust-badge { width: 96px; height: 96px; object-fit: contain; flex-shrink: 0; }
+  .pdp-guarantee-chip { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 14px auto 0; padding: 10px 18px; background: var(--bone-2); border: 1px solid var(--line); border-radius: 999px; font-weight: 700; font-size: 14px; color: var(--ink); width: fit-content; }
+  .pdp-guarantee-icon { color: #234134; display: inline-flex; align-items: center; line-height: 1; }
+  .pdp-guarantee-icon svg { display: block; }
+
+  /* ---------- ingredients ---------- */
+  .ingredients { background: var(--bone-2); }
+  .ingr-head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  .ingr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; }
+  .ingr-card { background: var(--bone); border: 1px solid var(--line); border-radius: 14px; padding: 32px; display: flex; flex-direction: column; gap: 6px; }
+  .ingr-img { width: 100%; height: 200px; border-radius: 10px; overflow: hidden; }
+  .ingr-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ingr-name { font-family: 'Sohne', -apple-system, sans-serif; text-transform: uppercase; font-weight: 500; font-size: 28px; color: var(--ink); padding-top: 14px; }
+  .ingr-latin { font-style: italic; font-size: 12px; color: var(--muted); }
+  .ingr-dose { align-self: flex-start; background: var(--gold); border-radius: 8px; padding: 4px 14px; font-weight: 800; font-size: 14px; color: var(--gold-deep); margin-top: 8px; }
+  .ingr-desc { padding-top: 12px; font-size: 15px; line-height: 1.65; color: var(--muted); }
+  .ingr-desc b { color: var(--ink); font-weight: 700; }
+  .suppfacts { display: flex; flex-direction: column; align-items: center; gap: 14px; padding-top: 36px; }
+  .other-ingr { font-size: 13px; color: var(--muted); text-align: center; }
+
+  /* ---------- first 30 days routine timeline (clean, no drop-caps) ---------- */
+  .routine { background: var(--bone); }
+  .routine-head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  .routine-track { max-width: 660px; margin: 48px auto 0; }
+  .routine-step { display: flex; gap: 18px; align-items: flex-start; position: relative; padding-bottom: 30px; }
+  .routine-step:last-child { padding-bottom: 0; }
+  .routine-marker { position: relative; flex-shrink: 0; width: 16px; display: flex; justify-content: center; padding-top: 4px; }
+  .routine-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(242,203,73,0.22); z-index: 1; }
+  .routine-step:not(:last-child) .routine-marker::after { content: ""; position: absolute; top: 18px; bottom: -30px; left: 50%; transform: translateX(-50%); width: 2px; background: var(--line); }
+  .routine-content { flex: 1; }
+  .routine-when { font-family: 'Sohne', -apple-system, sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.3px; color: var(--green); margin-bottom: 4px; }
+  .routine-text { font-size: 15px; line-height: 1.6; color: var(--muted); }
+  .routine-text b { color: var(--ink); font-weight: 700; }
+
+  /* ---------- how it stacks up (comparison, no drop-caps) ---------- */
+  .compare { background: var(--bone-2); }
+  .compare-head { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+  .compare-wrap { margin-top: 44px; overflow-x: auto; }
+  .compare-table { width: 100%; min-width: 480px; border-collapse: collapse; background: var(--bone); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .compare-table th, .compare-table td { padding: 15px 12px; text-align: center; border-bottom: 1px solid var(--line); }
+  .compare-table tbody tr:last-child td { border-bottom: 0; }
+  .compare-table thead th { font-family: 'Sohne', -apple-system, sans-serif; font-weight: 700; font-size: 13px; color: var(--muted); vertical-align: bottom; }
+  .compare-table thead th.ct-hero { color: var(--green); font-size: 14px; }
+  .compare-table th:first-child, .compare-table td:first-child { text-align: left; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .compare-table td.ct-hero { background: rgba(45,90,45,0.06); }
+  .compare-table thead th.ct-hero { background: rgba(45,90,45,0.09); }
+  .ct-y { color: var(--green-soft); font-weight: 800; font-size: 17px; }
+  .ct-n { color: #cfcabf; font-weight: 700; font-size: 16px; }
+  .compare-foot { text-align: center; font-size: 12px; color: var(--muted); margin-top: 16px; }
+
+  /* ---------- guarantee ---------- */
+  .guarantee { background: var(--green); padding: 92px 24px; }
+  .guarantee-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; max-width: 1120px; margin: 0 auto; align-items: center; }
+  .guarantee-image { aspect-ratio: 1/1; border-radius: 14px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.32); }
+  .guarantee-image img { width: 100%; height: 100%; object-fit: cover; }
+  .guarantee-text { display: flex; flex-direction: column; gap: 18px; color: #fff; align-items: flex-start; }
+  .guarantee-text .eyebrow { color: var(--gold); }
+  .guarantee-text h2 { color: #fff; font-size: clamp(34px, 4.5vw, 56px); }
+  .guarantee-text p { color: rgba(255,255,255,0.84); font-size: 16px; line-height: 1.7; }
+
+  /* ---------- education / blog ---------- */
+  .learn { background: var(--bone); }
+  .learn-head { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .learn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+  .learn-card { background: var(--bone); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .learn-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(0,0,0,0.08); }
+  .learn-card-img { height: 168px; background: var(--green-soft); overflow: hidden; }
+  .learn-card-img img { width: 100%; height: 100%; object-fit: cover; }
+  .learn-card-body { padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 8px; }
+  .learn-read { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+  .learn-title { font-weight: 700; font-size: 17px; line-height: 1.35; color: var(--ink); }
+
+  /* ---------- footer ---------- */
+  .footer { background: var(--green-deep); padding: 56px 24px 36px; color: #fff; }
+  .footer-wrap { max-width: 1120px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 24px; }
+  .footer-brand { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .footer-brand img { height: 28px; }
+  .footer-tagline { color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.6; }
+  .footer-email { color: var(--gold); font-size: 13px; }
+  .footer-col-title { font-weight: 800; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
+  .footer-col { display: flex; flex-direction: column; gap: 14px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col ul a { color: rgba(255,255,255,0.5); font-size: 13px; }
+  .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; }
+  .footer-bottom span { color: rgba(255,255,255,0.5); font-size: 12px; }
+  .footer-disclaimer { color: rgba(255,255,255,0.28); font-size: 11px; line-height: 1.6; padding-top: 16px; }
+
+  /* ---------- supplement facts modal ---------- */
+  .suppfacts-modal { position: fixed; inset: 0; background: rgba(13,31,13,0.75); display: none; align-items: center; justify-content: center; padding: 24px; z-index: 100; }
+  .suppfacts-modal.is-open { display: flex; }
+  .suppfacts-modal-card { background: var(--bone); border-radius: 14px; max-width: 460px; width: 100%; max-height: 90vh; overflow: auto; padding: 28px 24px 24px; position: relative; display: flex; flex-direction: column; gap: 16px; align-items: center; }
+  .suppfacts-modal-close { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 18px; background: var(--bone-2); color: var(--ink); font-size: 22px; display: flex; align-items: center; justify-content: center; }
+  .suppfacts-modal-title { font-family: 'Sohne', -apple-system, sans-serif; text-transform: uppercase; font-size: 26px; color: var(--ink); }
+  .suppfacts-modal-img { width: 100%; max-width: 400px; border-radius: 10px; border: 1px solid var(--line); }
+  .suppfacts-modal-caption { font-size: 12px; color: var(--muted); text-align: center; line-height: 1.5; }
+
+  /* ---------- hero trust bar ---------- */
+  .hero-trust { display: flex; align-items: center; gap: 7px 14px; flex-wrap: wrap; padding-top: 4px; color: var(--ink); font-family: 'MierA', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.2px; }
+  .hero-trust .htr-stars { color: var(--gold); letter-spacing: 1.5px; }
+  .hero-trust .ht-dot { opacity: 0.4; }
+
+  /* ---------- stat-credibility footnote ---------- */
+  .edu-source { font-size: 12.5px; line-height: 1.55; color: var(--muted); text-align: center; max-width: 700px; margin: 20px auto 0; }
+  .edu-source b { color: var(--ink); font-weight: 700; }
+
+  /* ---------- sticky mobile CTA bar ---------- */
+  .sticky-cta { position: fixed; left: 14px; right: 14px; bottom: 14px; z-index: 60; display: none; align-items: center; justify-content: center; gap: 9px; background: var(--gold); color: var(--gold-deep); font-family: 'MierA', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.3px; padding: 15px 20px; border-radius: 999px; box-shadow: 0 8px 26px rgba(13,31,13,0.30); transform: translateY(200%); transition: transform 0.3s ease; }
+  .sticky-cta b { font-weight: 800; }
+  .sticky-cta .sc-icon { font-size: 14px; }
+  .sticky-cta.is-visible { transform: translateY(0); }
+
+  /* ---------- background video loops (hero + invisible-particles callout) ---------- */
+  .hero-video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; }
+  .edu-invisible-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 960px) {
+    .sticky-cta { display: flex; }
+    .footer { padding-bottom: 92px; }
+    .nav { padding: 0 18px; height: 58px; }
+    .nav-links { display: none; }
+    .nav-logo img { height: 22px; }
+    .section { padding: 66px 20px; }
+    .lead { display: flex; flex-direction: column-reverse; }
+    .report { padding: 44px 20px 40px; }
+    .rehook { padding: 60px 20px 64px; }
+    .product, .guarantee { padding: 66px 20px; }
+    .hero { padding: 38px 20px 46px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+    .hero-media { aspect-ratio: 5/4; max-height: none; }
+    .edu-cards { grid-template-columns: 1fr; }
+    .edu-invisible { grid-template-columns: 1fr; gap: 22px; }
+    .results-grid { grid-template-columns: 1fr; gap: 28px; }
+    .results-photo { aspect-ratio: 16/10; }
+    .product-grid, .guarantee-grid, .ingr-grid { grid-template-columns: 1fr; gap: 28px; }
+    .learn-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .reframe { padding: 70px 20px; }
+    .plan-card { height: auto; min-height: 70px; padding: 12px; gap: 10px; }
+    .plan-left { width: 44px; height: 44px; }
+    .plan-name { font-size: 14px; }
+    .plan-price { font-size: 16px; }
+    .plan-each { font-size: 11px; }
+    .plan-badge { font-size: 10px; padding: 5px 9px; min-height: 30px; }
+  }
+  @media (max-width: 560px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    /* keep the hero trust line on a single inline row (stars + rating), drop the extras */
+    .hero-trust { flex-wrap: nowrap; white-space: nowrap; gap: 8px; }
+    .htr-extra { display: none; }
+    /* buy-box CTA: keep it on one tidy line on phones */
+    .bb-cta { gap: 8px; padding: 17px 14px; letter-spacing: 0.4px; }
+    .bb-cta-price { font-size: 17px; }
+    .bb-cta-sep { padding: 0; }
+    .bb-cta-text { font-size: 14px; letter-spacing: 1px; }
+    .bb-cta-count { font-size: 13px; }
+    .bb-cta-icon svg { width: 17px; height: 17px; }
+    /* comparison table: fit 5 columns on phones */
+    .compare-table { min-width: 0; }
+    .compare-table th, .compare-table td { padding: 11px 5px; }
+    .compare-table th:first-child, .compare-table td:first-child { font-size: 11.5px; line-height: 1.3; }
+    .compare-table thead th { font-size: 10.5px; }
+    .compare-table thead th.ct-hero { font-size: 11px; }
+    .ct-y { font-size: 14px; }
+    .ct-n { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="air-quality-report-page">
+
+<div class="topbar">
+  <span><b>★ Free personalized air quality report</b> &nbsp;·&nbsp; No purchase necessary &nbsp;·&nbsp; 60-second check</span>
+</div>
+
+<nav class="nav">
+  <a href="#top" class="nav-logo"><img src="https://bb-aq-v3-lander.pages.dev/assets/logo-nav.png" alt="Betterbrand"></a>
+  <ul class="nav-links">
+    <li><a href="#air-report">The Report</a></li>
+    <li><a href="#learn">Learn</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#product">Shop</a></li>
+  </ul>
+  <a href="#air-report" class="nav-cta">Check My Air</a>
+</nav>
+
+<!-- HERO: full-bleed air photo + huge condensed headline (Jolie treatment) -->
+<div class="lead">
+<header class="hero" id="top">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <span class="hero-eyebrow">The Air Report</span>
+      <h1 class="display">Do you really know what you're breathing?</h1>
+      <p>Pollution, pollen, smoke, and particles you can't see drift through the air where you live every single day. See exactly what's in yours, free, in 60 seconds.</p>
+      <div class="hero-cta-row">
+        <a href="#air-report" class="btn btn-gold">Get my free air report</a>
+      </div>
+      <div class="hero-trust">
+        <span class="htr-stars">★★★★★</span>
+        <span>4.7 from 2,400+ reviews</span>
+        <span class="ht-dot htr-extra">·</span>
+        <span class="htr-extra">365-day guarantee</span>
+        <span class="ht-dot htr-extra">·</span>
+        <span class="htr-extra">No purchase necessary</span>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img class="hero-video" src="https://bb-aq-v3-lander.pages.dev/assets/aqi-form-bg.png" alt="A hazy, smog-covered city skyline">
+      <a href="#product" class="float-card">
+        <img src="https://bb-aq-v3-lander.pages.dev/assets/product-hero.jpg" alt="BetterLungs Mullein + Chlorophyll">
+        <div>
+          <div class="fc-name">BetterLungs® Mullein + Chlorophyll</div>
+          <div class="fc-sub">Daily lung support tincture</div>
+          <div class="fc-price">From $27.95</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- THE AIR REPORT: live Klaviyo form W2ZwsL -->
+<section class="report" id="air-report">
+  <div class="report-inner">
+    <span class="eyebrow gold">The Air Report</span>
+    <h2 class="display">What's really in your air?</h2>
+    <p class="lede">Enter where you live and see exactly what's in your air right now. We'll send the full personalized report to your inbox.</p>
+    <div class="air-card" id="air-card">
+      <form class="air-form" id="air-form" novalidate>
+        <div class="af-row">
+          <input class="air-input" name="first_name" placeholder="First name" autocomplete="given-name">
+          <input class="air-input" name="zip" placeholder="ZIP code" inputmode="numeric" maxlength="5" autocomplete="postal-code" required>
+        </div>
+        <input class="air-input" name="email" type="email" placeholder="Email address" autocomplete="email" required>
+        <input class="air-input" name="phone" type="tel" placeholder="Mobile number (optional)" autocomplete="tel">
+        <button type="submit" class="air-submit">Check my air &rarr;</button>
+        <p class="air-err" hidden></p>
+        <p class="air-consent">By submitting, you agree to receive informational and marketing emails/texts from Betterbrand. Consent is not a condition of purchase. Msg &amp; data rates may apply. Reply STOP to cancel. <a href="https://trybetterbrand.com/policies/privacy-policy">Privacy</a> &amp; <a href="https://trybetterbrand.com/policies/terms-of-service">Terms</a>.</p>
+      </form>
+      <div class="air-results" id="air-results" hidden></div>
+    </div>
+    <div class="free-strip-inner">
+      <span class="free-chip"><span class="x">✦</span> 100% Free Report</span>
+      <span class="free-chip"><span class="x">✦</span> No Purchase Necessary</span>
+      <span class="free-chip"><span class="x">✦</span> Takes 60 Seconds</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- REHOOK: scroll for results (don't sell yet) -->
+<section class="rehook">
+  <div class="rehook-inner">
+    <span class="eyebrow">The part nobody checks</span>
+    <h2 class="display">Most people have never seen what's really in the air they breathe.</h2>
+    <p>Once you see the numbers for where you live, they're hard to un-see. Here's what to look for in your report. Keep scrolling.</p>
+    <span class="rehook-arrow" aria-hidden="true">↓</span>
+  </div>
+</section>
+
+<!-- EDUCATION: four numbers -->
+<section class="section edu" id="learn">
+  <div class="wrap">
+    <div class="edu-head">
+      <span class="eyebrow gold">Your Air Quality Report, Explained</span>
+      <h2 class="display section-title">Four numbers that decide what you breathe</h2>
+      <p class="lede">Your report cherry-picks the worst readings for your zip, the same way the pros do. Here's what the four that spike highest actually mean, and how far past the safe limit they can climb where you live.</p>
+    </div>
+    <div class="edu-cards">
+      <div class="edu-card">
+        <div class="edu-card-name">PM2.5 · Fine Particles</div>
+        <p class="edu-card-plain">Smoke, exhaust, and combustion soot so fine it slips straight past your nose and settles deep in your lungs.</p>
+        <div class="edu-stat"><span class="num">Up to 50×</span><span class="lbl">over the safe limit on a wildfire-smoke day</span></div>
+        <p class="edu-why"><b>Why it matters:</b> these are the particles your lungs work hardest to clear out.</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-card-name">PM10 · Coarse Particles</div>
+        <p class="edu-card-plain">Road dust, construction grit, and pollen fragments kicked up into the air you breathe all day long.</p>
+        <div class="edu-stat"><span class="num">Up to 20×</span><span class="lbl">over the limit during a dust storm</span></div>
+        <p class="edu-why"><b>Why it matters:</b> enough of it leaves you clearing your throat without knowing why.</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-card-name">Ozone · Ground-Level Smog</div>
+        <p class="edu-card-plain">Not the good kind high up. This is the haze that forms when summer sun cooks traffic exhaust.</p>
+        <div class="edu-stat"><span class="num">Up to 3×</span><span class="lbl">over the safe limit on a Code Red afternoon</span></div>
+        <p class="edu-why"><b>Why it matters:</b> it's what makes a deep breath outside feel like work.</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-card-name">Pollen &amp; Mold · The Living Stuff</div>
+        <p class="edu-card-plain">Tree, grass, and weed pollen plus mold spores that spike with the weather and the season.</p>
+        <div class="edu-stat"><span class="num">Up to 12×</span><span class="lbl">over the "high" threshold on a spring morning</span></div>
+        <p class="edu-why"><b>Why it matters:</b> your airways react to it every season, whether you notice or not.</p>
+      </div>
+    </div>
+    <p class="edu-source">Ranges show how far real-world readings can climb above U.S. <b>EPA Air Quality Index</b> safe thresholds during peak events like wildfire smoke, dust storms, and high-pollen mornings. Your free report shows the actual current numbers for your zip.</p>
+    <div class="edu-invisible">
+      <div class="edu-invisible-media"><video autoplay muted loop playsinline poster="https://bb-aq-v3-lander.pages.dev/assets/edu-particles-sunbeam.png"><source src="https://bb-aq-v3-lander.pages.dev/assets/particles-web.mp4" type="video/mp4"></video></div>
+      <div class="edu-invisible-text">The scariest part isn't even on the chart. The particles small enough to reach your bloodstream are the ones you <b>can't see, smell, or taste.</b> PM2.5 is roughly 30 times smaller than a grain of sand. Your nose can't filter it. Your lungs are the last line of defense.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REFRAME: lungs are the filter you can't replace -->
+<section class="reframe">
+  <div class="reframe-inner">
+    <span class="eyebrow">Here's the part nobody tells you</span>
+    <h2 class="display">You change the filter in your car. The one in your AC. You can't change the one in your chest.</h2>
+    <p>You swap the cabin filter in your car and the filter in your AC without thinking twice. <b>Your lungs are the only air filter you can't take out and replace</b>, and they've been running, nonstop, your entire life.</p>
+    <figure class="reframe-figure">
+      <img src="https://bb-aq-v3-lander.pages.dev/assets/edu-filter-compare.png" alt="A clean white home air filter beside an identical one clogged black with trapped dust and soot">
+      <figcaption>You'd replace the one on the right in a heartbeat. <b>Your lungs filter the same air every day, with no swap-out.</b></figcaption>
+    </figure>
+    <p>An air purifier only cleans one room, and you don't carry it to work, to the gym, or out on a run. You can't swap your lungs out either, but you can support them. That's the entire reason BetterLungs® exists.</p>
+    <div class="reframe-energy">The first thing most people notice isn't their breathing. It's their <b>energy</b>. When your lungs move air more easily, more oxygen reaches your blood, and the coffee, the focus, the workout all start working a little better.</div>
+    <div><a href="#product" class="btn btn-gold">Support your filter</a></div>
+  </div>
+</section>
+
+<!-- REAL RESULTS, BY CONCERN (Jolie pattern) -->
+<section class="section results" id="reviews">
+  <div class="wrap">
+    <div class="results-grid">
+      <div class="results-photo">
+        <img src="https://bb-aq-v3-lander.pages.dev/assets/hero-bottle-lifestyle.jpg" alt="BetterLungs Mullein + Chlorophyll daily tincture">
+      </div>
+      <div class="results-right">
+        <h2 class="display section-title">Real results, by concern</h2>
+        <p class="results-pick">Tap a concern to hear from a real customer who had it.</p>
+        <div class="rq-card" id="rq-card">
+          <div class="rq-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="results-quote" id="rq-quote">“I used to hit a wall by 2pm no matter how much coffee I drank. A few weeks on BetterLungs and the afternoon crash just isn't the thing it used to be.”</p>
+          <div class="rq-person">
+            <div class="rq-avatar" id="rq-avatar">MT</div>
+            <div class="rq-meta">
+              <div class="rq-name-row"><span class="nm" id="rq-name">Marcus T.</span><span class="rq-verified">✓ Verified Buyer</span></div>
+              <div class="loc" id="rq-loc">Denver, CO · about BetterLungs® Mullein + Chlorophyll</div>
+            </div>
+          </div>
+        </div>
+        <div class="concern-chips" id="concern-chips">
+          <button class="chip active" data-initials="MT" data-name="Marcus T." data-loc="Denver, CO" data-quote="I used to hit a wall by 2pm no matter how much coffee I drank. A few weeks on BetterLungs and the afternoon crash just isn't the thing it used to be.">Low Energy</button>
+          <button class="chip" data-initials="RH" data-name="Renee H." data-loc="Phoenix, AZ" data-quote="The first thing I noticed was less gunk to clear in the mornings. I didn't even realize how used to it I'd gotten.">Morning Mucus</button>
+          <button class="chip" data-initials="DK" data-name="Daniel K." data-loc="Los Angeles, CA" data-quote="I moved to a city with rough air quality and felt it right away. This is the first thing that's made my daily walk feel easier.">City Air</button>
+          <button class="chip" data-initials="PS" data-name="Priya S." data-loc="Atlanta, GA" data-quote="Every spring the air does a number on me. Adding the tincture to my routine has made this season feel a lot more manageable.">Seasonal</button>
+          <button class="chip" data-initials="TB" data-name="Tyler B." data-loc="Austin, TX" data-quote="I run four times a week and my breathing feels more open on the back half of my runs now.">After Workouts</button>
+          <button class="chip" data-initials="KM" data-name="Karen M." data-loc="Sacramento, CA" data-quote="Years around wildfire smoke left me feeling heavy. A couple months in and breathing just feels lighter.">Smoke Exposure</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT / BUY BOX (PDP swatch-plans port) -->
+<section class="product" id="product">
+  <div class="product-grid">
+    <div class="product-gallery">
+      <div class="product-main">
+        <img id="product-main-img" src="https://bb-aq-v3-lander.pages.dev/assets/product-hero.jpg" alt="BetterLungs Mullein + Chlorophyll 3 bottle pack">
+        <span class="product-main-badge" data-promo-badge>Save up to 20%</span>
+      </div>
+      <div class="product-thumbs">
+        <button class="product-thumb is-selected" data-src="https://bb-aq-v3-lander.pages.dev/assets/product-hero.jpg"><img src="https://bb-aq-v3-lander.pages.dev/assets/product-hero.jpg" alt="3 Bottle Pack"></button>
+        <button class="product-thumb" data-src="https://bb-aq-v3-lander.pages.dev/assets/product-breathe-clearer.jpg"><img src="https://bb-aq-v3-lander.pages.dev/assets/product-breathe-clearer.jpg" alt="Breathe Clearer"></button>
+        <button class="product-thumb" data-src="https://bb-aq-v3-lander.pages.dev/assets/product-clinical-study.jpg"><img src="https://bb-aq-v3-lander.pages.dev/assets/product-clinical-study.jpg" alt="Clinical Study Results"></button>
+        <button class="product-thumb" data-src="https://bb-aq-v3-lander.pages.dev/assets/product-suppfacts.jpg"><img src="https://bb-aq-v3-lander.pages.dev/assets/product-suppfacts.jpg" alt="Supplement Facts"></button>
+      </div>
+    </div>
+    <div class="product-info">
+      <div class="product-stars-row">
+        <span class="product-stars">★★★★★</span>
+        <span class="product-rating">4.7 stars · 2,400+ Reviews</span>
+      </div>
+      <h2 class="product-title">BetterLungs® Mullein + Chlorophyll</h2>
+
+      <form id="aqr-product-form" method="post" action="{{ routes.cart_add_url }}">
+        <input type="hidden" name="id" id="aqr-variant-id" value="50211235922219">
+        <input type="hidden" name="selling_plan" id="aqr-selling-plan" value="">
+
+        <div class="plan-wrapper" role="radiogroup" aria-label="Choose your plan">
+          <div class="plan-list">
+            <label class="plan-card active"
+                   data-variant-id="50211235922219"
+                   data-total="34.95" data-qty="1"
+                   role="radio" aria-checked="true" tabindex="0">
+              <div class="plan-left"><img src="https://bb-aq-v3-lander.pages.dev/assets/variant-1bottle.png" width="70" height="70" alt=""></div>
+              <div class="plan-center"><strong class="plan-name">1 Bottle (30 day supply)</strong></div>
+              <div class="plan-right">
+                <div class="plan-badge hidden"><span>SAVE %</span></div>
+                <div class="plan-price-stack">
+                  <div class="plan-price">$34.95</div>
+                  <div class="plan-each">each</div>
+                </div>
+              </div>
+            </label>
+
+            <label class="plan-card"
+                   data-variant-id="50211235954987"
+                   data-total="94.35" data-qty="3"
+                   role="radio" aria-checked="false" tabindex="0">
+              <div class="plan-left"><img src="https://bb-aq-v3-lander.pages.dev/assets/variant-3bottles.png" width="70" height="70" alt=""></div>
+              <div class="plan-center"><strong class="plan-name">3 Bottles (90 day supply)</strong></div>
+              <div class="plan-right">
+                <div class="plan-badge"><span>SAVE 10%</span></div>
+                <div class="plan-price-stack">
+                  <div class="plan-price">$31.45</div>
+                  <div class="plan-each">each</div>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <div class="subscription-wrapper">
+            <div class="subscription-group" data-variant-id="50211235922219" data-qty="1">
+              <label class="subscription-card" data-price="2795" role="radio" aria-checked="false" tabindex="0">
+                <input type="radio" hidden name="selling_plan_radio" value="118714663211">
+                <span class="subscription-best">Best Value</span>
+                <div class="content">
+                  <p class="subscrition-name">
+                    <span class="subscription-title">Subscribe &amp; Save</span><br>
+                    <span class="subscription-frequency">Deliver every month</span>
+                  </p>
+                  <div class="plan-right">
+                    <div class="plan-badge"><span>SAVE 20%</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$27.95</div>
+                      <div class="plan-each">each</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="subscription-note">
+                  <span><strong>FREE</strong> Shipping</span>
+                  <span>Change, Pause or Cancel Anytime</span>
+                </div>
+              </label>
+            </div>
+
+            <div class="subscription-group" data-variant-id="50211235954987" data-qty="3" hidden>
+              <label class="subscription-card" data-price="8385" role="radio" aria-checked="false" tabindex="0">
+                <input type="radio" hidden name="selling_plan_radio" value="117893955883">
+                <span class="subscription-best">Best Value</span>
+                <div class="content">
+                  <p class="subscrition-name">
+                    <span class="subscription-title">Subscribe &amp; Save</span><br>
+                    <span class="subscription-frequency">Delivery Every 3 Months</span>
+                  </p>
+                  <div class="plan-right">
+                    <div class="plan-badge"><span>SAVE 20%</span></div>
+                    <div class="plan-price-stack">
+                      <div class="plan-price">$27.95</div>
+                      <div class="plan-each">each</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="subscription-note">
+                  <span><strong>FREE</strong> Shipping</span>
+                  <span>Change, Pause or Cancel Anytime</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="bb-cta" class="bb-cta">
+          <span class="bb-cta-price">$34.95</span>
+          <span class="bb-cta-sep">|</span>
+          <span class="bb-cta-text">Add to Cart</span>
+          <span class="bb-cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9" cy="20" r="1.5"></circle>
+              <circle cx="18" cy="20" r="1.5"></circle>
+              <path d="M2 3h3l2.5 11.5a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L22 7H6"></path>
+            </svg>
+          </span>
+          <span class="bb-cta-count">(1 Item)</span>
+        </button>
+      </form>
+
+      <p class="bb-hsa"><strong>HSA/FSA eligible</strong><span class="bb-hsa-sep">·</span>Save an average of 30%</p>
+      <div class="pdp-trust-row">
+        <img src="https://bb-aq-v3-lander.pages.dev/assets/trust-made-in-usa.png" alt="Made in USA" class="pdp-trust-badge">
+        <img src="https://bb-aq-v3-lander.pages.dev/assets/trust-lab-tested.png" alt="3rd Party Lab Tested" class="pdp-trust-badge">
+        <img src="https://bb-aq-v3-lander.pages.dev/assets/trust-gmp-certified.png" alt="GMP Certified" class="pdp-trust-badge">
+      </div>
+      <div class="pdp-guarantee-chip">
+        <span class="pdp-guarantee-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12.5l3 3 5-6"></path></svg>
+        </span>
+        <span>365-Day Guarantee*</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO INGREDIENTS -->
+<section class="section ingredients" id="ingredients">
+  <div class="wrap">
+    <div class="ingr-head">
+      <span class="eyebrow gold">What's Inside</span>
+      <h2 class="display section-title">Just two powerful ingredients</h2>
+      <p class="lede">No fillers. Just the two clinically studied botanicals your lungs need, in an alcohol-free liquid.</p>
+    </div>
+    <div class="ingr-grid">
+      <div class="ingr-card">
+        <div class="ingr-img"><img src="https://bb-aq-v3-lander.pages.dev/assets/ingr-mullein-v2.jpg" alt="Fresh mullein plant with fuzzy leaves and yellow flowers"></div>
+        <div class="ingr-name">Mullein Leaf</div>
+        <div class="ingr-latin">Verbascum Thapsus (30:1 Extract)</div>
+        <div class="ingr-dose">2800 mg</div>
+        <p class="ingr-desc">A botanical used for hundreds of years as a respiratory aid. Mullein Leaf <b>thins and loosens mucus in the airways</b> so your body can clear it out and pull in more air. We ran our own clinical study to back up what tradition already showed.</p>
+      </div>
+      <div class="ingr-card">
+        <div class="ingr-img"><img src="https://bb-aq-v3-lander.pages.dev/assets/ingr-chlorophyll-v2.jpg" alt="A glass of deep-green chlorophyll liquid beside fresh green leaves"></div>
+        <div class="ingr-name">Chlorophyll</div>
+        <div class="ingr-latin">as Sodium Copper Chlorophyllin</div>
+        <div class="ingr-dose">100 mg</div>
+        <p class="ingr-desc">The pigment that makes plants green. <b>Chlorophyll binds to environmental toxins and helps your cells use oxygen better</b>, working with Mullein so your body can clear what your lungs pull in.*</p>
+      </div>
+    </div>
+    <div class="suppfacts">
+      <button type="button" class="btn btn-light" id="suppfacts-btn">View Full Supplement Facts</button>
+      <div class="other-ingr">Other ingredients: Purified Water, Vegetable Glycerine, Natural Flavors &nbsp;|&nbsp; *Refrigerate to preserve freshness.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FIRST 30 DAYS ROUTINE (clean timeline, no drop-caps) -->
+<section class="section routine">
+  <div class="wrap">
+    <div class="routine-head">
+      <span class="eyebrow gold">What to expect</span>
+      <h2 class="display section-title">What your first 30 days actually look like</h2>
+      <p class="lede">No protocol, no powders to mix. It folds into a habit you already have.</p>
+    </div>
+    <div class="routine-track">
+      <div class="routine-step">
+        <div class="routine-marker"><span class="routine-dot"></span></div>
+        <div class="routine-content">
+          <div class="routine-when">Day 1</div>
+          <div class="routine-text">A few drops under the tongue with your morning coffee. <b>Ten seconds, no water, no fuss.</b></div>
+        </div>
+      </div>
+      <div class="routine-step">
+        <div class="routine-marker"><span class="routine-dot"></span></div>
+        <div class="routine-content">
+          <div class="routine-when">Week 1</div>
+          <div class="routine-text">The habit sets in. A small dropper next to the coffee maker is hard to walk past.</div>
+        </div>
+      </div>
+      <div class="routine-step">
+        <div class="routine-marker"><span class="routine-dot"></span></div>
+        <div class="routine-content">
+          <div class="routine-when">Weeks 2&ndash;3</div>
+          <div class="routine-text">Taking it stops being a decision. It's just part of the routine you already have.</div>
+        </div>
+      </div>
+      <div class="routine-step">
+        <div class="routine-marker"><span class="routine-dot"></span></div>
+        <div class="routine-content">
+          <div class="routine-when">Day 30</div>
+          <div class="routine-text">One bottle down, taken consistently. <b>That consistency is the entire point.</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT STACKS UP (comparison, no drop-caps) -->
+<section class="section compare">
+  <div class="wrap">
+    <div class="compare-head">
+      <span class="eyebrow gold">Why it's different</span>
+      <h2 class="display section-title">How it stacks up against what you've tried</h2>
+      <p class="lede">Most lung products pick one angle. This is the only format that does all of it at once.</p>
+    </div>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="ct-hero">BetterLungs&reg;</th>
+            <th>Capsules</th>
+            <th>Teas</th>
+            <th>Mega-blends</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>2,800 mg mullein, transparently dosed</td><td class="ct-hero"><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td></tr>
+          <tr><td>Chlorophyll included</td><td class="ct-hero"><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td></tr>
+          <tr><td>Liquid &mdash; absorbs in seconds</td><td class="ct-hero"><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td></tr>
+          <tr><td>Alcohol-free, no fillers</td><td class="ct-hero"><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td></tr>
+          <tr><td>Clinically studied</td><td class="ct-hero"><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td></tr>
+          <tr><td>365-day money-back guarantee</td><td class="ct-hero"><span class="ct-y">&#10003;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td><td><span class="ct-n">&ndash;</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="compare-foot">A general comparison of lung-support formats. Individual products vary.</p>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee">
+  <div class="guarantee-grid">
+    <div class="guarantee-image">
+      <img src="https://bb-aq-v3-lander.pages.dev/assets/guarantee-365-v2.jpg" alt="BetterLungs Mullein + Chlorophyll bottle and box with fresh mullein flowers on a soft cream surface">
+    </div>
+    <div class="guarantee-text">
+      <span class="eyebrow">The Betterbrand Promise</span>
+      <h2 class="display">Your best breathing. Guaranteed.</h2>
+      <p>Pollution, allergens, and years of exposure add up. Your body can bounce back from a lot of it when you give it what it needs.</p>
+      <p>Try BetterLungs® Mullein + Chlorophyll for 365 days. If you don't get clearer airways, easier breathing, and more energy, we'll refund you. No hoops. No questions.</p>
+      <a href="#product" class="btn btn-gold">Shop BetterLungs®</a>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION / BLOG (Jolie pattern) -->
+<section class="section learn">
+  <div class="wrap">
+    <div class="learn-head">
+      <span class="eyebrow gold">Education</span>
+      <h2 class="display section-title">Because the air you breathe matters more than you think</h2>
+    </div>
+    <div class="learn-grid">
+      <a class="learn-card" href="https://www.trybetterbrand.com/blogs/learn/lung-supplements-for-high-altitude-breathing">
+        <div class="learn-card-img"><img src="https://bb-aq-v3-lander.pages.dev/assets/ingr-mullein-plant.png" alt=""></div>
+        <div class="learn-card-body">
+          <span class="learn-read">5 min read</span>
+          <span class="learn-title">Do lung supplements help with high-altitude breathing?</span>
+        </div>
+      </a>
+      <a class="learn-card" href="https://www.trybetterbrand.com/blogs/learn/chlorophyll-lung-detox-after-quitting">
+        <div class="learn-card-img"><img src="https://bb-aq-v3-lander.pages.dev/assets/ingr-chlorophyll.png" alt=""></div>
+        <div class="learn-card-body">
+          <span class="learn-read">4 min read</span>
+          <span class="learn-title">Can chlorophyll help your lungs detox after quitting smoking?</span>
+        </div>
+      </a>
+      <a class="learn-card" href="https://www.trybetterbrand.com/blogs/learn/mullein-product-highest-concentration">
+        <div class="learn-card-img"><img src="https://bb-aq-v3-lander.pages.dev/assets/philosophy-bottle.png" alt=""></div>
+        <div class="learn-card-body">
+          <span class="learn-read">4 min read</span>
+          <span class="learn-title">Which mullein product has the most active ingredients?</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Supplement Facts modal -->
+<div class="suppfacts-modal" id="suppfacts-modal" role="dialog" aria-modal="true" aria-labelledby="suppfacts-modal-title" aria-hidden="true">
+  <div class="suppfacts-modal-card">
+    <button type="button" class="suppfacts-modal-close" id="suppfacts-modal-close" aria-label="Close">×</button>
+    <h3 class="suppfacts-modal-title" id="suppfacts-modal-title">Supplement Facts</h3>
+    <img class="suppfacts-modal-img" src="https://bb-aq-v3-lander.pages.dev/assets/supplement-facts-panel.png" alt="Supplement Facts Panel. Serving Size 2 Full Droppers, Mullein Leaf Extract 2800mg, Chlorophyll 100mg">
+    <div class="suppfacts-modal-caption">Other ingredients: Purified Water, Vegetable Glycerine, Natural Flavors. *Refrigerate to preserve freshness.</div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="https://bb-aq-v3-lander.pages.dev/assets/logo-footer.png" alt="Betterbrand">
+        <p class="footer-tagline">Better Science, Back to Nature. Founded by Dr. Chris Jackson, PharmD &amp; former U.S. Army Combat Medic.</p>
+        <a class="footer-email" href="mailto:hello@betterbrandhealth.com">hello@betterbrandhealth.com</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <ul>
+          <li><a href="https://trybetterbrand.com/products/betterlungs%C2%AE-mullein-chlorophyll">Mullein + Chlorophyll</a></li>
+          <li><a href="https://trybetterbrand.com/products/betterlungs">BetterLungs® Capsules</a></li>
+          <li><a href="https://trybetterbrand.com/products/betterlungs-r-mullein-gummies">Mullein Gummies</a></li>
+          <li><a href="https://trybetterbrand.com/products/betterlungs-tea">Mullein Tea</a></li>
+          <li><a href="https://trybetterbrand.com/collections/all">All Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <ul>
+          <li><a href="https://trybetterbrand.com/pages/our-story">Our Story</a></li>
+          <li><a href="https://trybetterbrand.com/blogs/learn">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Support</div>
+        <ul>
+          <li><a href="https://trybetterbrand.com/pages/help-center">Help Center</a></li>
+          <li><a href="https://trybetterbrand.com/policies/refund-policy">Refund Policy</a></li>
+          <li><a href="https://trybetterbrand.com/policies/shipping-policy">Shipping Policy</a></li>
+          <li><a href="https://trybetterbrand.com/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="https://trybetterbrand.com/policies/terms-of-service">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Betterbrand Health. All rights reserved.</span>
+      <span>1-877-851-8979</span>
+    </div>
+    <p class="footer-disclaimer">*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary. Consult your physician before starting any new dietary supplement, especially if you are pregnant, nursing, taking medication, or have a medical condition.</p>
+  </div>
+</footer>
+
+<!-- Sticky mobile CTA (shows after the form scrolls out of view) -->
+<a href="#air-report" class="sticky-cta" id="sticky-cta">
+  <span class="sc-icon" aria-hidden="true">✦</span>
+  <span>Check My Air — <b>Free</b></span>
+</a>
+
+<script>
+  // Concern-chip testimonial switcher (Jolie "Real Results, By Concern")
+  (function () {
+    const chips = document.querySelectorAll('#concern-chips .chip');
+    const q = document.getElementById('rq-quote');
+    const nm = document.getElementById('rq-name');
+    const loc = document.getElementById('rq-loc');
+    const av = document.getElementById('rq-avatar');
+    const card = document.getElementById('rq-card');
+    if (!chips.length || !q) return;
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      q.textContent = '“' + chip.dataset.quote + '”';
+      nm.textContent = chip.dataset.name;
+      loc.textContent = chip.dataset.loc + ' · about BetterLungs® Mullein + Chlorophyll';
+      if (av) av.textContent = chip.dataset.initials;
+      if (card) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap'); }
+    }));
+  })();
+
+  // thumb swap (hide promo badge off the hero slide)
+  document.querySelectorAll('.product-thumb').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.product-thumb').forEach(b => b.classList.remove('is-selected'));
+      btn.classList.add('is-selected');
+      const src = btn.dataset.src;
+      if (src) document.getElementById('product-main-img').src = src;
+      const badge = document.querySelector('[data-promo-badge]');
+      if (badge) badge.style.display = /product-hero\.jpg$/.test(src || '') ? '' : 'none';
+    });
+  });
+
+  // PDP swatch-plans: form-based variant + selling plan selection.
+  (function () {
+    const productForm = document.getElementById('aqr-product-form');
+    if (!productForm) return;
+    const cta = productForm.querySelector('#bb-cta');
+    const variantInput = document.getElementById('aqr-variant-id');
+    const planInput = document.getElementById('aqr-selling-plan');
+    const planCards = productForm.querySelectorAll('.plan-card');
+    const subGroups = productForm.querySelectorAll('.subscription-group');
+    const allSubCards = productForm.querySelectorAll('.subscription-card');
+    if (!cta || !variantInput || !planInput || !planCards.length) return;
+    const priceEl = cta.querySelector('.bb-cta-price');
+    const countEl = cta.querySelector('.bb-cta-count');
+
+    function updateCTA(total, qty) {
+      if (priceEl && Number.isFinite(total)) priceEl.textContent = '$' + total.toFixed(2);
+      if (countEl) countEl.textContent = '(' + qty + ' Item' + (qty === 1 ? '' : 's') + ')';
+    }
+
+    planCards.forEach(card => card.addEventListener('click', () => {
+      variantInput.value = card.dataset.variantId || '';
+      planInput.value = '';
+
+      planCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+      card.classList.add('active');
+      card.setAttribute('aria-checked', 'true');
+
+      allSubCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+      subGroups.forEach(group => {
+        group.hidden = group.dataset.variantId !== card.dataset.variantId;
+      });
+
+      updateCTA(parseFloat(card.dataset.total || '0'), parseInt(card.dataset.qty || '1', 10));
+    }));
+
+    allSubCards.forEach(card => card.addEventListener('click', () => {
+      const radio = card.querySelector('input[type="radio"]');
+      const group = card.closest('.subscription-group');
+      if (radio) planInput.value = radio.value;
+      if (group && group.dataset.variantId) variantInput.value = group.dataset.variantId;
+
+      planCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+      allSubCards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-checked', 'false'); });
+      card.classList.add('active');
+      card.setAttribute('aria-checked', 'true');
+
+      const qty = group ? parseInt(group.dataset.qty || '1', 10) : 1;
+      const priceCents = parseInt(card.dataset.price || '0', 10);
+      updateCTA(priceCents / 100, qty);
+    }));
+
+    const initiallyActive = productForm.querySelector('.plan-card.active') || planCards[0];
+    if (initiallyActive) updateCTA(parseFloat(initiallyActive.dataset.total || '0'), parseInt(initiallyActive.dataset.qty || '1', 10));
+
+    productForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      fetch('/cart/add.js', { method: 'POST', body: new FormData(productForm) })
+        .then(r => r.json())
+        .then(() => { window.location.href = '/checkout'; })
+        .catch(() => { productForm.submit(); });
+    });
+  })();
+
+  // supplement facts modal
+  (function () {
+    const modal = document.getElementById('suppfacts-modal');
+    const trigger = document.getElementById('suppfacts-btn');
+    const closeBtn = document.getElementById('suppfacts-modal-close');
+    if (!modal || !trigger) return;
+    const open = () => { modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; };
+    const close = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; };
+    trigger.addEventListener('click', (e) => { e.preventDefault(); open(); });
+    closeBtn?.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  })();
+
+  // sticky mobile CTA: reveal once the air-report form has scrolled out of view
+  (function () {
+    const bar = document.getElementById('sticky-cta');
+    const form = document.getElementById('air-report');
+    if (!bar || !form || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        bar.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0);
+      });
+    }, { threshold: 0 });
+    io.observe(form);
+  })();
+
+  // count-up on the scary stats when they scroll into view
+  (function () {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nums = document.querySelectorAll('.edu-stat .num');
+    if (!nums.length || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target; io.unobserve(el);
+        const full = el.textContent;             // e.g. "Up to 50×"
+        const m = full.match(/(\d+)/);
+        if (!m || reduce) return;
+        const target = parseInt(m[1], 10);
+        const pre = full.slice(0, m.index);
+        const post = full.slice(m.index + m[1].length);
+        const dur = 1100, t0 = performance.now();
+        el.textContent = pre + '0' + post;
+        (function tick(now) {
+          const p = Math.min(1, (now - t0) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + Math.round(eased * target) + post;
+          if (p < 1) requestAnimationFrame(tick); else el.textContent = full;
+        })(t0);
+      });
+    }, { threshold: 0.6 });
+    nums.forEach(n => io.observe(n));
+  })();
+
+  // custom air-report form -> live AirNow numbers (cherry-picked worst rendered big + red)
+  (function () {
+    const form = document.getElementById('air-form');
+    const resultsEl = document.getElementById('air-results');
+    if (!form || !resultsEl) return;
+    const WORKER = 'https://betterbrand-air-quality.royal-dew-fe05.workers.dev';
+    const SERVE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/aq-report/submit';
+    const btn = form.querySelector('.air-submit');
+    const errEl = form.querySelector('.air-err');
+    const escapeHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    function countUp(el, target) {
+      const dur = 1100, t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min(1, (now - t0) / dur);
+        el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
+        if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+      })(t0);
+    }
+    function showErr(m) { if (errEl) { errEl.textContent = m; errEl.hidden = false; } }
+
+    // Lead capture (independent of the live display). Phone present -> serve-form aq-report
+    // (Klaviyo DH + Postscript + report email). Email-only -> worker direct (subscribe + report email).
+    function captureLead(d) {
+      const digits = (d.phone || '').replace(/\D/g, '');
+      if (digits.length >= 10) {
+        fetch(SERVE, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firstName: d.first_name, name: d.first_name, email: d.email, phone: d.phone, properties: { 'Zip Code': d.zip } }) }).catch(() => {});
+      } else {
+        fetch(WORKER, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: d.email, first_name: d.first_name, zip_code: d.zip }) }).catch(() => {});
+      }
+    }
+
+    function render(d, email) {
+      const worst = d.worst;
+      const rest = d.metrics.filter((m) => m.key !== worst.key);
+      const pollen = d.pollen
+        ? `<div class="ar-pollen"><b>${escapeHtml(d.pollen.name)} pollen</b> is running <b>${escapeHtml(d.pollen.level)}</b> in your area today.</div>` : '';
+      const loc = d.city ? `${escapeHtml(d.city)}${d.state ? ', ' + escapeHtml(d.state) : ''}` : ('ZIP ' + escapeHtml(d.zip));
+      resultsEl.innerHTML =
+        `<div class="ar-loc">Live air near <b>${loc}</b></div>
+         <div class="ar-worst">
+           <div class="ar-worst-num" id="ar-worst-num">0</div>
+           <div class="ar-worst-meta">
+             <div class="ar-worst-label">${escapeHtml(worst.label)} &middot; AQI</div>
+             <div class="ar-worst-cat">${escapeHtml(worst.category)}</div>
+             <div class="ar-worst-tag">Your highest reading right now</div>
+           </div>
+         </div>
+         ${rest.length ? `<div class="ar-rest">${rest.map((m) =>
+           `<div class="ar-chip"><div class="ar-chip-num" data-n="${m.aqi}">0</div><div class="ar-chip-label">${escapeHtml(m.label)}</div><div class="ar-chip-cat" style="color:${escapeHtml(m.color)}">${escapeHtml(m.category)}</div></div>`).join('')}</div>` : ''}
+         ${pollen}
+         <p class="ar-foot">Live readings from the U.S. EPA AirNow network${email ? `. Your full personalized report is on its way to <b>${escapeHtml(email)}</b>` : ''}.</p>
+         <a href="#learn" class="ar-cta">See what these numbers mean &darr;</a>`;
+      form.hidden = true; resultsEl.hidden = false;
+      countUp(document.getElementById('ar-worst-num'), worst.aqi);
+      resultsEl.querySelectorAll('.ar-chip-num').forEach((el) => countUp(el, parseInt(el.dataset.n, 10)));
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (errEl) errEl.hidden = true;
+      const fd = new FormData(form);
+      const d = {
+        first_name: (fd.get('first_name') || '').toString().trim(),
+        zip: (fd.get('zip') || '').toString().replace(/\D/g, '').slice(0, 5),
+        email: (fd.get('email') || '').toString().trim(),
+        phone: (fd.get('phone') || '').toString().trim(),
+      };
+      if (d.zip.length !== 5) { showErr('Please enter a valid 5-digit ZIP code.'); return; }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)) { showErr('Please enter a valid email address.'); return; }
+      btn.disabled = true; const orig = btn.innerHTML; btn.textContent = 'Pulling your live readings…';
+      captureLead(d);
+      try {
+        const res = await fetch(WORKER + '/aqi?zip=' + d.zip);
+        const data = await res.json();
+        if (data && data.ok && data.metrics && data.metrics.length) {
+          render(data, d.email);
+        } else {
+          resultsEl.innerHTML =
+            `<div class="ar-loc">You're in &check;</div>
+             <p class="ar-foot">We couldn't reach a live monitor near <b>ZIP ${escapeHtml(d.zip)}</b> this minute, but your full personalized report is on its way to <b>${escapeHtml(d.email)}</b>. Keep scrolling to see what the numbers mean.</p>
+             <a href="#learn" class="ar-cta">What these numbers mean &darr;</a>`;
+          form.hidden = true; resultsEl.hidden = false;
+        }
+      } catch (_e) {
+        btn.disabled = false; btn.innerHTML = orig;
+        showErr("Couldn't pull your readings just now — your report is still on its way. Try again or keep scrolling.");
+      }
+    });
+  })();
+</script>
+
+</div>
+</body>
+</html>
+
+{% schema %}
+{
+  "name": "Air Quality Report",
+  "tag": "section",
+  "class": "section-air-quality-report",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Air Quality Report"
+    }
+  ]
+}
+{% endschema %}
