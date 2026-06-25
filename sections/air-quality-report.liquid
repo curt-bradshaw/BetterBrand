@@ -34,7 +34,32 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   [hidden] { display: none !important; }
   html { scroll-behavior: smooth; overflow-x: hidden; }
-  body { font-family: 'MierA', -apple-system, system-ui, sans-serif; color: var(--ink); background: var(--bone); -webkit-font-smoothing: antialiased; overflow-x: hidden; max-width: 100vw; }
+  body,
+  .air-quality-report-page {
+    font-family: 'MierA', -apple-system, system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--bone);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  .air-quality-report-page,
+  .air-quality-report-page * {
+    font-family: 'MierA', -apple-system, system-ui, sans-serif !important;
+  }
+  .air-quality-report-page .display,
+  .air-quality-report-page .ar-worst-num,
+  .air-quality-report-page .ar-worst-label,
+  .air-quality-report-page .ar-chip-num,
+  .air-quality-report-page .edu-card-name,
+  .air-quality-report-page .edu-stat .num,
+  .air-quality-report-page .product-main-badge,
+  .air-quality-report-page .ingr-name,
+  .air-quality-report-page .routine-when,
+  .air-quality-report-page .compare-table thead th,
+  .air-quality-report-page .suppfacts-modal-title {
+    font-family: 'Sohne', -apple-system, system-ui, sans-serif !important;
+  }
   a { color: inherit; text-decoration: none; }
   img { max-width: 100%; display: block; }
   button { font-family: inherit; cursor: pointer; border: 0; background: 0; }
@@ -474,6 +499,7 @@
 </style>
 </head>
 <body>
+<div class="air-quality-report-page">
 
 <div class="topbar">
   <span><b>★ Free personalized air quality report</b> &nbsp;·&nbsp; No purchase necessary &nbsp;·&nbsp; 60-second check</span>
@@ -1221,6 +1247,7 @@
   })();
 </script>
 
+</div>
 </body>
 </html>
 
