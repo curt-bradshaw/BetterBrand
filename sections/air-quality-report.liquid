@@ -39,6 +39,36 @@
   img { max-width: 100%; display: block; }
   button { font-family: inherit; cursor: pointer; border: 0; background: 0; }
 
+  /* Hide theme chrome only on pages where this section is rendered.
+     This keeps the custom .nav and .footer inside this file visible. */
+  .ntg-wrapper > header,
+  body > header,
+  #shopify-section-header,
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper,
+  .shopify-section.section-header,
+  .shopify-section-header-sticky,
+  [class*="section-header"],
+  [id*="section-header"],
+  #shopify-section-footer,
+  [class*="site-footer"],
+  .shopify-section .ntg-footer,
+  .ntg-footer,
+  [id*="section-footer"] {
+    display: none !important;
+  }
+
+  .ntg-wrapper,
+  .ntg-main,
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
   /* display type — Söhne Dreiviertelfett (brand headers), sentence case */
   .display { font-family: 'Sohne', -apple-system, sans-serif; font-weight: 700; line-height: 1.03; letter-spacing: -0.8px; }
   .eyebrow { font-family: 'MierA', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--green-soft); }
