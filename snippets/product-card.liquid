@@ -60,9 +60,6 @@
               {%- endif -%}
             {%- endif -%}
           </picture>
-          {%- if section.settings.show_product_card_corner_badge and section.settings.product_card_corner_badge_text != blank -%}
-            <span class="product-card__image-corner-badge">{{ section.settings.product_card_corner_badge_text }}</span>
-          {%- endif -%}
         </div>
 
         <div class="product-card__product-info">
@@ -111,27 +108,19 @@
                   {%- if variant.compare_at_price > variant.price -%}
                     <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
                   {%- endif -%}
-                  {%- if section.settings.show_product_card_strikethrough_price -%}
-                    {%- assign discount_percent = section.settings.product_card_discount_percent | default: 0 -%}
-                    {%- assign price_multiplier = 100 | minus: discount_percent -%}
-                    {%- assign discounted_cents = variant.price | times: price_multiplier | divided_by: 100 -%}
-                    <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span>
-                    <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
-                  {%- else -%}
-                    <span class="product-card__item-price"><strong>{{- variant.price | money -}}</strong></span>
-                  {%- endif -%}
+                  <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
+                  {% comment %} {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
+                  <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span> {% endcomment %}
                 {%- endif -%}
-              </div>
-
-              {% if settings.enable_outofstock_label %}
-                {%- unless variant.available -%}
-                  <div class="product-card__item-sold-out-wrapper">
+    
+                {% if settings.enable_outofstock_label %}
+                  {%- unless variant.available -%}
                     <span class="product-card__item-sold-out">
                       {{- settings.unavailable_product_label | default: '(Out Of Stock)' -}}
                     </span>
-                  </div>
-                {%- endunless -%}
-              {% endif %}
+                  {%- endunless -%}
+                {% endif %}
+              </div>
             {% else %}
               {% assign local_show_add_to_cart = show_add_to_cart | default: true %}
               {% if local_show_add_to_cart %}
@@ -168,18 +157,10 @@
 
   <style scoped>
 
-    .product-card__item-price-original strong {
-      text-decoration: line-through;
-      font-size: 16px;
+
+    .product-card__item-price-discounted {
       padding-left: 10px; 
     }
-
-    @media screen and (max-width: 1019px) {
-      .product-card__item-price-original strong {
-        font-size: 12px !important;
-      }
-    }
-
     .product-card__grid-item {
       width: 31%;
       display: flex;
@@ -202,24 +183,6 @@
       overflow: hidden;
       width: 100%;
       transform: scale(1);
-    }
-
-    .product-card__image-corner-badge {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      z-index: 5;
-      background: #f2cb49;
-      color: #234134;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.2;
-      padding: 5px 10px;
-      border-radius: 20px;
-      border: 1px solid #234134;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      pointer-events: none;
     }
     .product-card__grid-item-link {
       width: 100%;
@@ -451,25 +414,13 @@
       margin: 0 4px 0 0;
     }
 
-    .product-card__item-sold-out-wrapper {
-      display: block;
-      width: 100%;
-      margin-top: 6px;
-    }
-
     .product-card__item-sold-out {
       display: block;
-      width: 100%;
       color: var(--color_out_of_stock_label, #a00);
       margin: 10px 0;
       padding: 5px 0;
       background-color: var(--stock_warning_background_color);
       margin-bottom: 12px;
-    }
-
-    .template-collection .product-card__item-sold-out,
-    .template-collection .product-card__item-sold-out-wrapper {
-      display: none !important;
     }
      {
       margin-top: 3px;

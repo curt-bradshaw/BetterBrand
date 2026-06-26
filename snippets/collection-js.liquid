@@ -56,10 +56,16 @@
           $('#collection-page-content').empty().html($collectionPageContent.html());
         }
       } else {
-        const $newItems = $collectionPageContent.find('.product-card__grid-item');
-        if ($newItems.length > 0) {
-          $('#collection-page-content').append($newItems);
+        if ($collectionPageContent.find('.product-card__grid-item').length > 0) {
+          $('#collection-page-content').append($collectionPageContent.html());
         }
+      }
+
+      // Keep total-pages in sync with the most recent server response so the
+      // auto-loader knows how many pages to fetch after filter/sort changes.
+      const newTotalPages = $collectionPageContent.attr('data-total-pages');
+      if (newTotalPages) {
+        $('#collection-page-content').attr('data-total-pages', newTotalPages);
       }
 
       const $initialQnt = $('.product-count__initial-quantity');
@@ -68,7 +74,7 @@
       const $totalItems = $('.product-count__all-collection-items').val();
 
       const productsLoaded = $collectionPageContent.find('.product-card__grid-item').length;
-      const productsPerPage = {% if template.suffix == 'bundle' %}{{ settings.products_amount | plus: 0 }}{% else %}50{% endif %};
+      const productsPerPage = {{ settings.products_amount }};
       const allProductsLoaded = productsPerPage * (list - 1) + productsLoaded;
 
       if(list > 1) {
@@ -90,6 +96,29 @@
       } else {
         $totalQnt.html($totalItems + ' item');
       };
+    }
+
+    /**
+     * Auto-load every remaining paginated page so the shop page shows all
+     * products on initial load (and after filter/sort changes). Replaces the
+     * old Load-More / infinite-scroll UI.
+     */
+    async function loadAllRemainingPages() {
+      const $content = $('#collection-page-content');
+      if ($content.length === 0) return;
+
+      const totalPages = parseInt($content.attr('data-total-pages') || '1', 10);
+      if (!totalPages || totalPages <= 1) return;
+
+      for (let page = 2; page <= totalPages; page++) {
+        Shopify.replaceState(Shopify.newState('list', page));
+        list = page;
+        await loadItems(true);
+      }
+
+      // Reset the URL back to page 1 so refreshes don't deep-link mid-list.
+      Shopify.replaceState(Shopify.newState('list', 1));
+      list = 1;
     }
 
     /**
@@ -125,67 +154,81 @@
 
         loadItems();
       });
-    {%- elsif collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
+    {%- elsif collection_style == 'loading-more' -%}
     /**
-     * Load all collection pages (no Load More button).
+     * Loading More
      */
-    async function loadAllRemainingPages() {
-      const totalPages = parseInt($('#collection-page-content').data('total-pages') || 1, 10);
+    $(document).on('click', '.collection-page__loading-more', function (e) {
+      e.preventDefault();
 
-      while (list < totalPages) {
-        list += 1;
-        Shopify.replaceState(Shopify.newState('list', list));
-        await loadItems(true);
+      const $btn = $(this);
+      const currentPage = list + 1;
+
+      Shopify.replaceState(Shopify.newState('list', currentPage));
+
+      $btn.css('opacity', 0);
+
+      loadItems(true);
+      setTimeout(function(){
+        $btn.closest('.collection-page__loading-more-wrapper').remove();
+      }, 400);
+    });
+
+    {%- elsif collection_style == 'infinite-loading' -%}
+      /**
+      * Infinite Loading More
+      */
+      let lock = false;
+
+      function debounce(callback, timeout = 300) {
+        let timer;
+        return (...args) => {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            callback.apply(this, args);
+          }, timeout);
+        };
       }
 
-      $('.collection-page__loading-more-wrapper, .spinner-widget').remove();
-    }
+      $(window).scroll(
+        debounce(async function () {
+          const contentOffsetTop = $('#collection-page-content').offset().top;
+          const contentHeight = $('#collection-page-content').height();
+          const limit = contentHeight + contentOffsetTop;
+          const $window = $(window);
 
-    async function reloadCollectionGrid() {
-      list = 1;
-      Shopify.replaceState(Shopify.newState('list', 1));
-      await loadItems(false);
-      await loadAllRemainingPages();
-    }
+          if ($window.scrollTop() >= limit - 700) {
+            const currentPage = list + 1;
 
-    loadAllRemainingPages();
+            Shopify.replaceState(Shopify.newState('list', currentPage));
+
+            await loadItems(true);
+          }
+        })
+      );
     {%- endif -%}
 
     {% unless template.suffix == 'bundle' %}
 
-    $('#filter-by-interest').change(function(){
-      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
-      reloadCollectionGrid();
-      {%- else -%}
+    async function reloadAndShowAll() {
       Shopify.replaceState(Shopify.newState('list', 1));
-      loadItems();
-      {%- endif -%}
+      list = 1;
+      await loadItems();
+      await loadAllRemainingPages();
+    }
+
+    $('#filter-by-interest').change(function(){
+      reloadAndShowAll();
     });
     $('#filter-sort-by').change(function(){
-      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
       Shopify.replaceState(Shopify.newState('sort_by', $(this).val()));
-      reloadCollectionGrid();
-      {%- else -%}
-      Shopify.replaceState(Shopify.newState('list', 1));
-      Shopify.replaceState(Shopify.newState('sort_by', $(this).val()));
-      loadItems();
-      {%- endif -%}
+      reloadAndShowAll();
     });
     $('.collection-facets__item-button').click(function(){
-      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
-      reloadCollectionGrid();
-      {%- else -%}
-      Shopify.replaceState(Shopify.newState('list', 1));
-      loadItems();
-      {%- endif -%}
+      reloadAndShowAll();
     });
     $('.collection-facets__item-option').change(function(){
-      {%- if collection_style == 'loading-more' or collection_style == 'infinite-loading' -%}
-      reloadCollectionGrid();
-      {%- else -%}
-      Shopify.replaceState(Shopify.newState('list', 1));
-      loadItems();
-      {%- endif -%}
+      reloadAndShowAll();
     });
 
     $('.collection-facets__overlay').click(function(){
@@ -194,6 +237,10 @@
     $('.collection-facets__icon').click(function(){
       $(document.body).stop().toggleClass('collection-facets--opened');
     });
+
+    // On initial load, page 1 is server-rendered. Fetch and append the rest
+    // so the shop page shows every product without a Load More click.
+    loadAllRemainingPages();
     {% endunless %}
   })(jQuery);
 </script>

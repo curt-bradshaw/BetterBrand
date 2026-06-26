@@ -1,7 +1,6 @@
 <!-- sections/collection-ajax -->
 
 {%- if collection.products.size > 0 -%}
-  {%- assign collection_style = settings.collection_style | default: 'paginator' -%}
   {%- assign items_per_row = settings.products_per_row -%}
   {%- assign grid_uniform_class_desktop = 'grid-uniform--s' | append: items_per_row -%}
   {%- assign grid_uniform_class_tablet = 'grid-uniform--st' | append: settings.products_per_rows_collection_tablet -%}
@@ -21,6 +20,10 @@
   {%- assign enable_soft_banner = section.settings.enable_soft_banner -%}
   {%- assign banner_position = section.settings.banner_position | default: 2 | plus: 0 -%}
 
+  {%- comment -%}
+    Show every product on the shop page: paginate at Shopify's max (50) and
+    let collection-js.liquid auto-fetch the remaining pages on load.
+  {%- endcomment -%}
   {%- assign items_per_page = 50 -%}
 
   {% paginate collection.products by items_per_page %}
@@ -117,6 +120,10 @@
           {%- endif -%}
         {% endcomment %}
 
+        {%- comment -%}
+          Load-More / Infinite / "All items loaded" UI removed — collection-js.liquid
+          auto-loads every remaining page on page load.
+        {%- endcomment -%}
       </div>
     </div>
   {% endpaginate %}

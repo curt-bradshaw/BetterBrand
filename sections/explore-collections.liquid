@@ -19,12 +19,7 @@
             width="800"
             height="800"
           >
-          <div class="ec-caption">
-            <p class="ec-title">{{ block.settings.title }}</p>
-            {%- if section.settings.show_special_sale_badge and section.settings.special_sale_badge_text != blank -%}
-              <span class="ec-special-sale-badge"><strong>{{ section.settings.special_sale_badge_text }}</strong></span>
-            {%- endif -%}
-          </div>
+          <p class="ec-title">{{ block.settings.title }}</p>
         </div>
       </a>
     {% endfor %}
@@ -53,32 +48,6 @@
     max-width: 450px;
     color: #252525;
     line-height: 1.2;
-  }
-
-  /* Yellow promo pill (aligned with PDP subscription-best accent) */
-  .ec-special-sale-badge {
-    background: #f2cb49;
-    color: #234134;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 0 12px;
-    border-radius: 20px;
-    min-height: 24px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.2;
-    min-width: 84px;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    box-sizing: border-box;
-    text-align: center;
-    border: 1px solid #234134;
-  }
-
-  .ec-special-sale-badge strong {
-    font-weight: 700;
-    text-align: center;
   }
 
   .ec-see-all {
@@ -134,26 +103,18 @@
     transform: scale(1.05);
   }
 
-  .ec-caption {
+  .ec-title {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1;
-    padding: 30px 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .ec-title {
     font-family: var(--bookmaniaFont);
     font-size: 30px;
     font-weight: 700;
     color: white;
+    padding: 30px 15px;
     margin: 0;
-    line-height: 1.2;
+    z-index: 1;
   }
 
   @media (max-width: 1019px) {
@@ -164,36 +125,21 @@
     .ec-header h2 {
       font-size: 28px;
     }
-
-    .ec-special-sale-badge {
-      font-size: 12px;
-      padding: 5px 10px;
-      min-height: unset;
-    }
     .ec-image-wrapper {
       height: auto;
     }
-    .ec-caption {
-      padding: 18px 10px;
-      gap: 8px;
-    }
-
     .ec-title {
       font-size: 18px;
+      padding: 18px 10px;
     }
   }
 
   @media (max-width: 767px) {
-    .ec-caption {
+    .ec-title {
       padding: 12px 10px;
-      gap: 6px;
     }
     .ec-header h2 {
       font-size: 24px;
-    }
-
-    .ec-special-sale-badge {
-      font-size: 12px;
     }
     .ec-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -233,22 +179,6 @@
       "id": "see_all_link",
       "label": "See All Link",
       "default": "/collections"
-    },
-    {
-      "type": "header",
-      "content": "Special Sale Badge"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_special_sale_badge",
-      "label": "Show special sale badge on each tile",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "special_sale_badge_text",
-      "label": "Badge text",
-      "default": "20% Off"
     }
   ],
   "blocks": [

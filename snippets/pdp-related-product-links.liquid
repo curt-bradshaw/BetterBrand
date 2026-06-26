@@ -18,7 +18,7 @@
 {% assign related_products = product.metafields.pdp.related_product_links.value %}
 
 {% if related_products != blank %}
-  <div class="pdp-related-product-links-root pdp-related-product-links-root--{{ placement }}" style="display: none !important;">
+  <div class="pdp-related-product-links-root pdp-related-product-links-root--{{ placement }}">
     <h2
       class="pdp-related-product-links__heading"
       id="pdp-related-links-heading-{{ section.id }}-{{ placement }}"
@@ -34,6 +34,28 @@
           {% if rp == blank %}
             {% continue %}
           {% endif %}
+
+          {%- comment -%}
+            Use a `flavor-selector-<name>` tag to override the caption with a
+            short flavor label (e.g. `flavor-selector-elderberry` → "Elderberry").
+            Falls back to the product title when no such tag exists.
+          {%- endcomment -%}
+          {%- assign flavor_caption = rp.title -%}
+          {%- assign has_new_badge = false -%}
+          {%- for rp_tag in rp.tags -%}
+            {%- assign rp_tag_handle = rp_tag | downcase -%}
+            {%- if rp_tag_handle == 'new-badge' -%}
+              {%- assign has_new_badge = true -%}
+            {%- endif -%}
+            {%- if rp_tag_handle contains 'flavor-selector-' -%}
+              {%- assign flavor_caption = rp_tag_handle
+                | remove: 'flavor-selector-'
+                | replace: '-', ' '
+                | capitalize
+              -%}
+            {%- endif -%}
+          {%- endfor -%}
+
           <li class="pdp-related-product-links__item">
             <a
               href="{{ rp.url }}"
@@ -58,7 +80,10 @@
                   <span class="pdp-related-product-links__placeholder" aria-hidden="true"></span>
                 {% endif %}
               </span>
-              <span class="pdp-related-product-links__caption">{{ rp.title | escape }}</span>
+              {% if has_new_badge %}
+                <span class="pdp-related-product-links__new-badge">NEW</span>
+              {% endif %}
+              <span class="pdp-related-product-links__caption">{{ flavor_caption | escape }}</span>
             </a>
           </li>
         {% endfor %}
@@ -72,7 +97,7 @@
     }
     @media (max-width: 1019px) {
       {% if suppress_title_on_mobile %}
-        .pdp-related-product-links-root--title {
+        .pdp-related-product-links-root--{{ placement }} {
           display: none !important;
         }
       {% endif %}
@@ -127,6 +152,7 @@
       flex-direction: column;
       align-items: center;
       gap: 8px;
+      position: relative;
       width: 92px;
       max-width: 100%;
       text-decoration: none;
@@ -197,6 +223,29 @@
     .pdp-related-product-links__link--current .pdp-related-product-links__caption {
       font-weight: 700;
     }
+    .pdp-related-product-links__new-badge {
+      position: absolute;
+      top: -6px;
+      right: 4px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      min-height: 18px;
+      padding: 3px 7px 2px;
+      border-radius: 999px;
+      background: #f2cb49;
+      color: #234134;
+      font-family: var(--bookmaniaFont, Georgia, serif);
+      font-size: 9px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(35, 65, 52, 0.18);
+      pointer-events: none;
+    }
     @media (max-width: 1019px) {
       .pdp-related-product-links__list {
         justify-content: center;
@@ -205,9 +254,21 @@
     @media (max-width: 767px) {
       .pdp-related-product-links__heading {
         font-size: 16px;
+        text-align: left;
+      }
+      .pdp-related-product-links__list {
+        justify-content: flex-start;
       }
       .pdp-related-product-links__link {
         width: 80px;
+      }
+      .pdp-related-product-links__new-badge {
+        top: -5px;
+        right: -2px;
+        min-width: 30px;
+        min-height: 16px;
+        padding: 3px 6px 2px;
+        font-size: 8px;
       }
       .pdp-related-product-links__thumb {
         width: 56px;
