@@ -6,37 +6,15 @@
     {%- for block in section.blocks -%}
       {%- if block.settings.image != blank -%}
         <div class="hero-carousel__slide" {{ block.shopify_attributes }}>
-          {%- if block.settings.image_mobile != blank -%}
-            <picture>
-              <source
-                media="(max-width: 767px)"
-                srcset="{{ block.settings.image_mobile | image_url: width: 800 }} 800w, {{ block.settings.image_mobile | image_url: width: 600 }} 600w, {{ block.settings.image_mobile | image_url: width: 375 }} 375w"
-                sizes="100vw"
-              >
-              <source
-                media="(min-width: 768px)"
-                srcset="{{ block.settings.image | image_url: width: 2000 }} 2000w, {{ block.settings.image | image_url: width: 1600 }} 1600w, {{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1000 }} 1000w"
-                sizes="100vw"
-              >
-              {{
-                block.settings.image
-                | image_url: width: 2000
-                | image_tag:
-                  loading: forloop.first | iif: 'eager', 'lazy',
-                  class: 'hero-carousel__image'
-              }}
-            </picture>
-          {%- else -%}
-            {{
-              block.settings.image
-              | image_url: width: 2000
-              | image_tag:
-                loading: forloop.first | iif: 'eager', 'lazy',
-                widths: '375, 600, 800, 1000, 1200, 1600, 2000',
-                sizes: '100vw',
-                class: 'hero-carousel__image'
-            }}
-          {%- endif -%}
+          {{
+            block.settings.image
+            | image_url: width: 2000
+            | image_tag:
+              loading: forloop.first | iif: 'eager', 'lazy',
+              widths: '375, 600, 800, 1000, 1200, 1600, 2000',
+              sizes: '100vw',
+              class: 'hero-carousel__image'
+          }}
         </div>
       {%- endif -%}
     {%- endfor -%}
@@ -71,6 +49,8 @@
 
 <style>
   #hero-carousel-{{ section.id }} {
+    --carousel-height-desktop: {{ section.settings.height_desktop }}px;
+    --carousel-height-mobile: {{ section.settings.height_mobile }}px;
     --arrow-bg: {{ section.settings.arrow_background }};
     --arrow-color: {{ section.settings.arrow_color }};
   }
@@ -79,28 +59,25 @@
     position: relative;
     width: 100%;
     overflow: hidden;
+    height: var(--carousel-height-desktop);
   }
 
   .hero-carousel__track {
     display: flex;
+    height: 100%;
     transition: transform 0.5s ease;
   }
 
   .hero-carousel__slide {
     flex: 0 0 100%;
     width: 100%;
-    line-height: 0;
-    font-size: 0;
-  }
-
-  .hero-carousel__slide picture {
-    display: block;
-    line-height: 0;
+    height: 100%;
   }
 
   .hero-carousel__image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
   }
 
@@ -168,6 +145,10 @@
   }
 
   @media (max-width: 767px) {
+    .hero-carousel {
+      height: var(--carousel-height-mobile);
+    }
+
     .hero-carousel__arrow {
       width: 36px;
       height: 36px;
@@ -273,6 +254,26 @@
   "class": "hero-carousel-section",
   "settings": [
     {
+      "type": "range",
+      "id": "height_desktop",
+      "label": "Height (desktop)",
+      "min": 300,
+      "max": 900,
+      "step": 10,
+      "default": 600,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Height (mobile)",
+      "min": 200,
+      "max": 700,
+      "step": 10,
+      "default": 400,
+      "unit": "px"
+    },
+    {
       "type": "color",
       "id": "arrow_background",
       "label": "Arrow background",
@@ -313,13 +314,7 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image (desktop)"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_mobile",
-          "label": "Image (mobile)",
-          "info": "Optional. If left blank, the desktop image is used on mobile."
+          "label": "Image"
         }
       ]
     }
