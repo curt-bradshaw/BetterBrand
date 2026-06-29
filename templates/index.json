@@ -9,39 +9,8 @@
  */
 {
   "sections": {
-    "hero_carousel_YBBNGx": {
-      "type": "hero-carousel",
-      "blocks": {
-        "slide_YfJgyd": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
-            "image_mobile": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp"
-          }
-        },
-        "slide_N43jdE": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/safe-to-take-glp1-supplements.png",
-            "image_mobile": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp"
-          }
-        }
-      },
-      "block_order": [
-        "slide_YfJgyd",
-        "slide_N43jdE"
-      ],
-      "name": "Hero Carousel",
-      "settings": {
-        "arrow_background": "#00000066",
-        "arrow_color": "#ffffff",
-        "autoplay": false,
-        "autoplay_speed": 5
-      }
-    },
     "banner_style3_xth4VR": {
       "type": "banner-style3",
-      "disabled": true,
       "name": "Allergy Relief",
       "settings": {
         "custom_class": "",
@@ -842,7 +811,6 @@
     }
   },
   "order": [
-    "hero_carousel_YBBNGx",
     "banner_style3_xth4VR",
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
