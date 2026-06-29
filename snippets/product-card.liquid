@@ -12,6 +12,7 @@
 <a href="{{- variant.url | within: collection -}}" class="product-card__grid-item">
   {% if prod and prod != empty %}
     <div class="product-card__grid-item-fullsize">
+      <span class="product-card__discount-badge">20% off</span>
       {%- for tagBadge in prod.tags -%}
         {%- assign handledTagBadge = tagBadge | handle -%}
         {%- assign handedTagTyped = settings.product_badge_tag | handle -%}
@@ -172,6 +173,27 @@
       width: 100%;
       height: 100%;
       background-color: #F0FFE9A3;
+    }
+
+    .product-card__discount-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border: 1px solid #234134;
+      border-radius: 999px;
+      background: #f2cb49;
+      color: #234134;
+      font-family: 'SuisseIntlMono', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .product-card__grid-item-image-wrapper {
