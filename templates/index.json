@@ -23,7 +23,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/safe-to-take-glp1-supplements.png",
-            "image_mobile": "shopify://shop_images/f7053f0a-df44-4260-95af-ad6927237f8a.webp"
+            "image_mobile": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp"
           }
         }
       },
@@ -33,7 +33,6 @@
       ],
       "name": "Hero Carousel",
       "settings": {
-        "height_desktop": 600,
         "arrow_background": "#00000066",
         "arrow_color": "#ffffff",
         "autoplay": false,
