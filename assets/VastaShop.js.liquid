@@ -931,7 +931,8 @@ function recharge(callback) {
     }
 
     function calculate_discount() {
-        price = parseInt($('#all-product-variants option:selected').attr('data-price'));
+        var originalPrice = parseInt($('#all-product-variants option:selected').attr('data-price'));
+        price = originalPrice;
         discount = parseInt(discount);
         quantity = parseInt(_quantity.val()) == 0 ? 1 : parseInt(_quantity.val());
 
@@ -939,12 +940,18 @@ function recharge(callback) {
             price = price * ((100 - discount) / 100);
         }
 
+        // July 4th sale: apply 20% automatic discount
+        price = Math.round(price * 0.8);
+
+        // Show original price as strikethrough compare price
+        $('.jq-new-compare-price, .product-price .compare-price').html(Shopify.formatMoney(originalPrice)).show();
+
         if (_recharger_price.is('.new-product-price-value')) {
             _recharger_price.html(Shopify.formatMoney(price).replace(/[^0-9,.]/gi, ''));
         } else {
             _recharger_price.html(Shopify.formatMoney(price));
         }
-        _tag_prices.html(Shopify.formatMoney(Math.round(price, 0) * quantity));
+        _tag_prices.html(Shopify.formatMoney(Math.round(price) * quantity));
 
         if (typeof callback === 'function') {
             callback(price, quantity);
