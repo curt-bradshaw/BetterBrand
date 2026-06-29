@@ -51,6 +51,68 @@
         "banner_mobile_height": 200
       }
     },
+    "hero_carousel_anX3D6": {
+      "type": "hero-carousel",
+      "blocks": {
+        "slide_B8h8pJ": {
+          "type": "slide",
+          "settings": {
+            "slide_image": "shopify://shop_images/best-supplements-to-help-with-glp1s.png",
+            "slide_mobile_image": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
+            "slide_heading": "",
+            "slide_subheading": "",
+            "slide_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_B8h8pJ"
+      ],
+      "name": "Hero Carousel",
+      "settings": {
+        "custom_class": "",
+        "enable_custom_margins_paddings": false,
+        "custom-margin-top": 0,
+        "custom-margin-bottom": 0,
+        "custom-padding-top": 0,
+        "custom-padding-bottom": 0,
+        "homepage_banner_style_3": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
+        "mobile_banner_style_3": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
+        "enable_custom_banner_height": false,
+        "banner_max_height": 500,
+        "banner_max_height_tablet": 430,
+        "banner_max_height_mobile": 210,
+        "vasta_banner_width": "full_width",
+        "enable_lazy_load": false,
+        "enable_carousel": true,
+        "carousel_autoplay": true,
+        "carousel_interval": 5,
+        "carousel_show_arrows": true,
+        "carousel_show_dots": true,
+        "enable_h1": false,
+        "homepage_banner_text": "",
+        "main_banner_sub_title": "",
+        "homepage_banner_link": "",
+        "vasta_headline_align": "center",
+        "vasta_headline_align_mobile": "center",
+        "font_weight": "normal",
+        "banner_text_color": "#000",
+        "desktop_text_size": 30,
+        "main_banner_sub_headline_size": 20,
+        "tablet_text_size": 30,
+        "main_banner_sub_headline_size_tablet": 20,
+        "mobile_text_size": 30,
+        "main_banner_sub_headline_size_mobile": 20,
+        "vasta_title_horizontal_position": 50,
+        "vasta_title_vertical_position": 30,
+        "vasta_title_horizontal_position_tablet": 23,
+        "vasta_title_vertical_position_tablet": 18,
+        "vasta_title_horizontal_position_mobile": 50,
+        "vasta_title_vertical_position_mobile": 30,
+        "banner_mobile_width": 100,
+        "banner_mobile_height": 200
+      }
+    },
     "new_banner_layout_8VCt8Q": {
       "type": "new-banner-layout",
       "disabled": true,
@@ -808,72 +870,11 @@
         "heading": "Frequently Asked Questions",
         "text": "<p>Any Questions? We got you!</p>"
       }
-    },
-    "hero_carousel_anX3D6": {
-      "type": "hero-carousel",
-      "blocks": {
-        "slide_B8h8pJ": {
-          "type": "slide",
-          "settings": {
-            "slide_image": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
-            "slide_mobile_image": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
-            "slide_heading": "Headline Example",
-            "slide_subheading": "Sub Headline Example",
-            "slide_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_B8h8pJ"
-      ],
-      "name": "Hero Carousel",
-      "settings": {
-        "custom_class": "",
-        "enable_custom_margins_paddings": false,
-        "custom-margin-top": 0,
-        "custom-margin-bottom": 0,
-        "custom-padding-top": 0,
-        "custom-padding-bottom": 0,
-        "homepage_banner_style_3": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
-        "mobile_banner_style_3": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
-        "enable_custom_banner_height": false,
-        "banner_max_height": 500,
-        "banner_max_height_tablet": 430,
-        "banner_max_height_mobile": 210,
-        "vasta_banner_width": "full_width",
-        "enable_lazy_load": false,
-        "enable_carousel": true,
-        "carousel_autoplay": true,
-        "carousel_interval": 5,
-        "carousel_show_arrows": true,
-        "carousel_show_dots": true,
-        "enable_h1": false,
-        "homepage_banner_text": "",
-        "main_banner_sub_title": "",
-        "homepage_banner_link": "",
-        "vasta_headline_align": "center",
-        "vasta_headline_align_mobile": "center",
-        "font_weight": "normal",
-        "banner_text_color": "#000",
-        "desktop_text_size": 30,
-        "main_banner_sub_headline_size": 20,
-        "tablet_text_size": 30,
-        "main_banner_sub_headline_size_tablet": 20,
-        "mobile_text_size": 30,
-        "main_banner_sub_headline_size_mobile": 20,
-        "vasta_title_horizontal_position": 50,
-        "vasta_title_vertical_position": 30,
-        "vasta_title_horizontal_position_tablet": 23,
-        "vasta_title_vertical_position_tablet": 18,
-        "vasta_title_horizontal_position_mobile": 50,
-        "vasta_title_vertical_position_mobile": 30,
-        "banner_mobile_width": 100,
-        "banner_mobile_height": 200
-      }
     }
   },
   "order": [
     "banner_style3_xth4VR",
+    "hero_carousel_anX3D6",
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
     "product_badges_nkhPKp",
@@ -891,7 +892,6 @@
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
     "you_may_also_8W89b9",
-    "faq_section_7NrfTG",
-    "hero_carousel_anX3D6"
+    "faq_section_7NrfTG"
   ]
 }
