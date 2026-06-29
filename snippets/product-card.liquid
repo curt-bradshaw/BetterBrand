@@ -105,12 +105,9 @@
             {% if template contains 'collection' %}
               <div class="product-card__item-price-wrapper">
                 {%- if show_price -%}
-                  {%- if variant.compare_at_price > variant.price -%}
-                    <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
-                  {%- endif -%}
-                  <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
-                  {% comment %} {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
-                  <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span> {% endcomment %}
+                  {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
+                  <span class="product-card__item-price product-card__item-price-discounted"><strong>{{ discounted_cents | money }}</strong></span>
+                  <span class="product-card__item-compare-at-price">{{- variant.price | money -}}</span>
                 {%- endif -%}
     
                 {% if settings.enable_outofstock_label %}
@@ -159,7 +156,7 @@
 
 
     .product-card__item-price-discounted {
-      padding-left: 10px; 
+      padding-right: 10px;
     }
     .product-card__grid-item {
       width: 31%;
@@ -395,11 +392,9 @@
       text-align: center;
     }
     .product-card__item-compare-at-price {
-      margin-right: 10px;
       color: var(--color-sale, #a00);
       text-decoration-line: line-through;
       font-size: var(--collectionProductComparePriceSize);
-      margin-left: 0;
       font-weight: 400;
     }
     .product-card__item-price-wrapper {
