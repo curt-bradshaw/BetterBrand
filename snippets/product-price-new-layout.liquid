@@ -1,4 +1,5 @@
 <!-- start product-price-new-layout.liquid (SNIPPET) -->
+<div style="background:red;color:white;padding:8px;font-size:14px;font-weight:bold;z-index:9999;position:relative;">DEBUG: snippet loaded — discounted price: {{ variant.price | times: 0.8 | round | money }}</div>
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign july4_discounted_price = variant.price | times: 0.8 | round -%}
 
