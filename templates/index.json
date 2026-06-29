@@ -832,8 +832,8 @@
       "name": "Hero Carousel",
       "settings": {
         "height_desktop": 600,
-        "height_mobile": 400,
-        "arrow_background": "rgba(0,0,0,0.4)",
+        "height_mobile": 240,
+        "arrow_background": "#000000",
         "arrow_color": "#ffffff",
         "autoplay": true,
         "autoplay_speed": 5
