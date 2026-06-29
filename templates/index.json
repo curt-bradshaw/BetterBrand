@@ -34,7 +34,7 @@
       "name": "Hero Carousel",
       "settings": {
         "height_desktop": 800,
-        "height_mobile": 400,
+        "height_mobile": 550,
         "arrow_background": "#00000066",
         "arrow_color": "#ffffff",
         "autoplay": false,
@@ -43,7 +43,6 @@
     },
     "banner_style3_xth4VR": {
       "type": "banner-style3",
-      "disabled": true,
       "name": "Allergy Relief",
       "settings": {
         "custom_class": "",
