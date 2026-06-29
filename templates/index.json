@@ -11,6 +11,7 @@
   "sections": {
     "banner_style3_xth4VR": {
       "type": "banner-style3",
+      "disabled": true,
       "name": "Allergy Relief",
       "settings": {
         "custom_class": "",
