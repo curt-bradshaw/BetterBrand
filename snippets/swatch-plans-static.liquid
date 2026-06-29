@@ -84,19 +84,8 @@
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
-              <div class="plan-badge {% if hide_plan_badge %}hidden{% elsif curr_idx <= 1 %}hidden{% endif %}">
-                {% case curr_idx %}
-                  {% when 2 %}
-                    {% assign discount = 10 %}
-                  {% when 3 %}
-                    {% assign discount = 15 %}
-                  {% else %}
-                    {% assign discount = v.compare_at_price
-                      | minus: v.price
-                      | times: 100
-                      | divided_by: v.compare_at_price
-                    %}
-                {% endcase %}
+              <div class="plan-badge {% if hide_plan_badge %}hidden{% endif %}">
+                {% assign discount = 20 %}
                 <span><strong>SAVE {{ discount }}%</strong></span>
               </div>
             </div>
