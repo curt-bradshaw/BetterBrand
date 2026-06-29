@@ -299,33 +299,26 @@ const VastaSwatch = (function(opt) {
           
           verifyComparePriceOfProduct(variantID, 1);
 
+          // July 4th sale: apply 20% automatic discount to displayed prices
+          const july4DiscountedPrice = Math.round(variant.price * 0.8);
+
           /**
            * Update the ancient layout for prices.
            */
-          $currentPrice.html(Shopify.formatMoney(variant.price));
-          
-          if (variant.compare_at_price > variant.price) {
-            $currentComparePrice.html(Shopify.formatMoney(variant.compare_at_price)).show();
-          } else {
-            $currentComparePrice.empty().hide();
-          }
+          $currentPrice.html(Shopify.formatMoney(july4DiscountedPrice));
+          $currentComparePrice.html(Shopify.formatMoney(variant.price)).show();
 
           /**
            * Update the new layout for prices.
            */
-          // $newCurrentPrice.html(Shopify.formatMoney(variant.price).replace(/[^0-9,.]/gi, ''));
-          
-          if (variant.compare_at_price > variant.price) {
-            $newCurrentComparePrice.html(Shopify.formatMoney(variant.compare_at_price)).show();
-          } else {
-            $newCurrentComparePrice.empty().hide();
-          }
-          
+          $newCurrentPrice.html(Shopify.formatMoney(july4DiscountedPrice).replace(/[^0-9,.]/gi, ''));
+          $newCurrentComparePrice.html(Shopify.formatMoney(variant.price)).show();
+
           const quantity = parseInt($quantity.val());
 
-          $addToCartPrice.html(Shopify.formatMoney(quantity * variant.price));
+          $addToCartPrice.html(Shopify.formatMoney(quantity * july4DiscountedPrice));
           $quantity.attr('data-max', variantInventory);
-          
+
           if (typeof inventoryControl === 'function') {
             inventoryControl(variantID);
           }
@@ -334,7 +327,7 @@ const VastaSwatch = (function(opt) {
             enableInputs(variantID);
           }
 
-          computeYouSave(variant.compare_at_price, variant.price);
+          computeYouSave(variant.price, july4DiscountedPrice);
           const quantityToDisplay = quantity * itemsCount;
           if (quantityToDisplay > 1) {
             $quantity.siblings('.btn-minus').attr('disabled', false);
@@ -408,9 +401,11 @@ const VastaSwatch = (function(opt) {
       });
 
       if (prepare_variants($('.swatch-variant-value:checked', $('.swatch-element', container))).length == product.options.length) {
-        $currentPrice.html(Shopify.formatMoney($(':selected', $choosedVariant).attr('data-price')));
-        $currentComparePrice.html(Shopify.formatMoney(variant.compare_at_price));
-        $addToCartPrice.html(Shopify.formatMoney(parseInt($quantity.val()) * variant.price));
+        // July 4th sale: apply 20% discount at init
+        const july4InitPrice = Math.round(variant.price * 0.8);
+        $currentPrice.html(Shopify.formatMoney(july4InitPrice));
+        $currentComparePrice.html(Shopify.formatMoney(variant.price)).show();
+        $addToCartPrice.html(Shopify.formatMoney(parseInt($quantity.val()) * july4InitPrice));
       }
 
       $('.modal-close', container).click(function() {
