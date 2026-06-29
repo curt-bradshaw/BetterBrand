@@ -9,6 +9,32 @@
  */
 {
   "sections": {
+    "hero_carousel_YBBNGx": {
+      "type": "hero-carousel",
+      "blocks": {
+        "slide_YfJgyd": {
+          "type": "slide",
+          "settings": {}
+        },
+        "slide_N43jdE": {
+          "type": "slide",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "slide_YfJgyd",
+        "slide_N43jdE"
+      ],
+      "name": "Hero Carousel",
+      "settings": {
+        "height_desktop": 600,
+        "height_mobile": 400,
+        "arrow_background": "rgba(0,0,0,0.4)",
+        "arrow_color": "#ffffff",
+        "autoplay": false,
+        "autoplay_speed": 5
+      }
+    },
     "banner_style3_xth4VR": {
       "type": "banner-style3",
       "name": "Allergy Relief",
@@ -811,6 +837,7 @@
     }
   },
   "order": [
+    "hero_carousel_YBBNGx",
     "banner_style3_xth4VR",
     "new_banner_layout_8VCt8Q",
     "best_sellers_section_gjDgWP",
