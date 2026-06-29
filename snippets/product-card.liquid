@@ -12,7 +12,7 @@
 <a href="{{- variant.url | within: collection -}}" class="product-card__grid-item">
   {% if prod and prod != empty %}
     <div class="product-card__grid-item-fullsize">
-      <span class="product-card__discount-badge">20% off</span>
+      <span class="product-card__discount-badge">🇺🇸 20% off</span>
       {%- for tagBadge in prod.tags -%}
         {%- assign handledTagBadge = tagBadge | handle -%}
         {%- assign handedTagTyped = settings.product_badge_tag | handle -%}
