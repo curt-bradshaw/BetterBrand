@@ -6,15 +6,37 @@
     {%- for block in section.blocks -%}
       {%- if block.settings.image != blank -%}
         <div class="hero-carousel__slide" {{ block.shopify_attributes }}>
-          {{
-            block.settings.image
-            | image_url: width: 2000
-            | image_tag:
-              loading: forloop.first | iif: 'eager', 'lazy',
-              widths: '375, 600, 800, 1000, 1200, 1600, 2000',
-              sizes: '100vw',
-              class: 'hero-carousel__image'
-          }}
+          {%- if block.settings.image_mobile != blank -%}
+            <picture>
+              <source
+                media="(max-width: 767px)"
+                srcset="{{ block.settings.image_mobile | image_url: width: 800 }} 800w, {{ block.settings.image_mobile | image_url: width: 600 }} 600w, {{ block.settings.image_mobile | image_url: width: 375 }} 375w"
+                sizes="100vw"
+              >
+              <source
+                media="(min-width: 768px)"
+                srcset="{{ block.settings.image | image_url: width: 2000 }} 2000w, {{ block.settings.image | image_url: width: 1600 }} 1600w, {{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1000 }} 1000w"
+                sizes="100vw"
+              >
+              {{
+                block.settings.image
+                | image_url: width: 2000
+                | image_tag:
+                  loading: forloop.first | iif: 'eager', 'lazy',
+                  class: 'hero-carousel__image'
+              }}
+            </picture>
+          {%- else -%}
+            {{
+              block.settings.image
+              | image_url: width: 2000
+              | image_tag:
+                loading: forloop.first | iif: 'eager', 'lazy',
+                widths: '375, 600, 800, 1000, 1200, 1600, 2000',
+                sizes: '100vw',
+                class: 'hero-carousel__image'
+            }}
+          {%- endif -%}
         </div>
       {%- endif -%}
     {%- endfor -%}
@@ -314,7 +336,13 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Image (desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (mobile)",
+          "info": "Optional. If left blank, the desktop image is used on mobile."
         }
       ]
     }
