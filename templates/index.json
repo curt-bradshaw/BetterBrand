@@ -80,7 +80,7 @@
         "homepage_banner_style_3": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
         "mobile_banner_style_3": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
         "enable_custom_banner_height": false,
-        "banner_max_height": 500,
+        "banner_max_height": 800,
         "banner_max_height_tablet": 430,
         "banner_max_height_mobile": 210,
         "vasta_banner_width": "full_width",
