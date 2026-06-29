@@ -13,11 +13,12 @@
     <div class="bs-products">
       {% for block in section.blocks %}
         <a href="{{ block.settings.product_url }}" class="bs-card">
+            <span class="bs-discount-badge">20% off</span>
             {% if block.settings.badge != blank %}
                 <span class="bs-badge">{{ block.settings.badge }}</span>
             {% endif %}
           <div class="bs-image-wrapper">
-            <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.image.alt | escape }}" />
+            <img src="{{ block.settings.image | image_url: width: 600 }}" width="600" height="600" alt="{{ block.settings.image.alt | escape }}" />
           </div>
   
           <div class="bs-rating">
@@ -125,12 +126,33 @@
     position: absolute;
     top: 0px;
     z-index: 1;
-    right: 0px;
+    left: 0px;
     background: #3F745D80;
     color: white;
     padding: 4px 10px;
     font-size: 18px;
-    border-radius: 0 6px 0 14px;
+    border-radius: 6px 0 14px 0;
+  }
+
+  .bs-discount-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border: 1px solid #234134;
+    border-radius: 999px;
+    background: #f2cb49;
+    color: #234134;
+    font-family: 'SuisseIntlMono', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
   
   .bs-rating {
@@ -188,6 +210,12 @@
     }
     .bs-badge {
       font-size: 12px;
+    }
+    .bs-discount-badge {
+      top: 8px;
+      right: 8px;
+      padding: 5px 8px;
+      font-size: 10px;
     }
     .bs-product-title {
       font-size: 14px;
