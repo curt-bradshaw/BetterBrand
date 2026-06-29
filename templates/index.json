@@ -14,7 +14,9 @@
       "blocks": {
         "slide_YfJgyd": {
           "type": "slide",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp"
+          }
         },
         "slide_N43jdE": {
           "type": "slide",
