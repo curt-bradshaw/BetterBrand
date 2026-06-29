@@ -168,7 +168,19 @@
 
   @media (max-width: 767px) {
     .hero-carousel {
-      height: var(--carousel-height-mobile);
+      height: auto;
+    }
+
+    .hero-carousel__track {
+      height: auto;
+    }
+
+    .hero-carousel__slide {
+      height: auto;
+    }
+
+    .hero-carousel__image {
+      height: auto;
     }
 
     .hero-carousel__arrow {
@@ -283,16 +295,6 @@
       "max": 900,
       "step": 10,
       "default": 600,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "height_mobile",
-      "label": "Height (mobile)",
-      "min": 200,
-      "max": 700,
-      "step": 10,
-      "default": 400,
       "unit": "px"
     },
     {
