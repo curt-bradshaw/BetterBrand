@@ -105,9 +105,10 @@
                   </h1>
                 </div>
               {%- when 'price' -%}
+                {%- assign sea_display_price = product.selected_or_first_available_variant.price | times: 80 | divided_by: 100 -%}
                 <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   <div class="ntg-price-holder">
-                    <div class="ntg-price">{{ product.selected_or_first_available_variant.price | money }}</div>
+                    <div class="ntg-price">{{ sea_display_price | money }}</div>
                     {% if product.selected_or_first_available_variant.compare_at_price != blank %}
                       <div class="ntg-old-price">
                         {{ product.selected_or_first_available_variant.compare_at_price | money }}

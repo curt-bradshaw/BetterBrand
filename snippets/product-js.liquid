@@ -268,7 +268,7 @@
 				}
 
 				$('.btn-add-tocart .btn-items').html(`(${quantity} ${quantity == 1 ? ' Item': ' Items'})`);
-				$('.btn-add-tocart .btn-money').html(Shopify.formatMoney(quantity * variant.price));
+				$('.btn-add-tocart .btn-money').html(Shopify.formatMoney(quantity * Math.round(variant.price * 0.8)));
 			} catch(err) {
 				console.error(err);
 			}

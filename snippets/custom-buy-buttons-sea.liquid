@@ -101,10 +101,11 @@
               {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
+                {%- assign seasonal_atc_display_price = product.selected_or_first_available_variant.price | times: 80 | divided_by: 100 -%}
                 Get the Seasonal Box | 
                 <span> 
                 <span class="patrol-sr-only" style="display: none;">Sale Price:</span>
-                  {{ product.selected_or_first_available_variant.price | money }}
+                  {{ seasonal_atc_display_price | money }}
                 </span>
                 <del><span class="patrol-sr-only" style="display: none;">Regular Price:</span>{{ product.selected_or_first_available_variant.compare_at_price | money }}</del>
               {%- endif -%}

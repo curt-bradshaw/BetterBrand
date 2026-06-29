@@ -1,4 +1,5 @@
 <!-- START atc-button (SNIPPET) -->
+{%- assign atc_display_price = variant.price | times: 80 | divided_by: 100 -%}
 
 <div
   class="product-form__buttons"
@@ -16,7 +17,7 @@
   >
     <div class="text-btn">
       {%- if settings.enable_price_atc -%}
-        <span class="btn-money"><strong>{{ variant.price | money }}</strong></span>
+        <span class="btn-money"><strong>{{ atc_display_price | money }}</strong></span>
         <span class="divisor"><strong>|</strong></span>
       {%- endif -%}
       <span class="btn-label"><strong>{{ settings.add_to_cart_label }}</strong></span>

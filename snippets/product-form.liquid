@@ -129,7 +129,8 @@
           <span class="line"></span>
         {%- endif -%}
         {%- if settings.enable_price_atc -%}
-          <span class="btn-money">{{ product.price | money }} | {{ settings.add_to_cart_label }} </span>
+          {%- assign sticky_atc_display_price = product.price | times: 80 | divided_by: 100 -%}
+          <span class="btn-money">{{ sticky_atc_display_price | money }} | {{ settings.add_to_cart_label }} </span>
           <span class="divisor">|</span>
         {%- endif -%}
         <span class="btn-label">{{ settings.add_to_cart_label }}</span>
