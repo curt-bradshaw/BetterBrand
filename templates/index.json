@@ -808,6 +808,36 @@
         "heading": "Frequently Asked Questions",
         "text": "<p>Any Questions? We got you!</p>"
       }
+    },
+    "hero_carousel_NP9hcA": {
+      "type": "hero-carousel",
+      "blocks": {
+        "slide_nA76Y3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/store-aisle-packed-with-supplements.png"
+          }
+        },
+        "slide_ccX74y": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/best-supplements-to-help-with-glp1s.png"
+          }
+        }
+      },
+      "block_order": [
+        "slide_nA76Y3",
+        "slide_ccX74y"
+      ],
+      "name": "Hero Carousel",
+      "settings": {
+        "height_desktop": 600,
+        "height_mobile": 400,
+        "arrow_background": "rgba(0,0,0,0.4)",
+        "arrow_color": "#ffffff",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
     }
   },
   "order": [
@@ -829,6 +859,7 @@
     "accordion_image_YhHMzy",
     "shop_by_necessity_7bd7Nh",
     "you_may_also_8W89b9",
-    "faq_section_7NrfTG"
+    "faq_section_7NrfTG",
+    "hero_carousel_NP9hcA"
   ]
 }
