@@ -1,5 +1,6 @@
 <!-- start product-price-new-layout.liquid (SNIPPET) -->
 {%- assign variant = product.selected_or_first_available_variant -%}
+{%- assign july4_discounted_price = variant.price | times: 0.8 | round -%}
 
 {%- if settings.product_enabled_app_reviews -%}
     <div class="products-reviews-stars ">
@@ -12,23 +13,15 @@
         <span class="new-current-price" id="product-price" data-product-price="{{ variant.price }}">
             <span class="new-current-price-wrapper">
                 <span class="product-symbol-price price">{{ cart.currency.symbol }}</span>
-                <span class="new-product-price-value jq-new-price price recharger-price">{{ variant.price | money_without_currency }}</span>
+                <span class="new-product-price-value jq-new-price price recharger-price">{{ july4_discounted_price | money_without_currency }}</span>
             </span>
         </span>
 
         <span class="new-price-discounts-wrapper">
-            <span class="new-layout-price" style="display: none;">
-                <span class="new-compare-price compare-price jq-new-compare-price">{{ variant.compare_at_price | money }}</span>
+            <span class="new-layout-price">
+                <span class="new-compare-price compare-price jq-new-compare-price">{{ variant.price | money }}</span>
             </span>
-
-            {% comment %} <span class="compare-price {% unless variant.compare_at_price > variant.price %}hide{%endunless%}">
-                {%- if variant.compare_at_price > variant.price -%}
-                    {{ cart.currency.symbol }}
-                    {{ variant.compare_at_price | money_without_currency }}
-                {%- endif -%}
-            </span> {% endcomment %}
-
-            {% comment %} {%- render 'you-save' with variant: variant, enable_you_save: settings.enable_you_save -%} {% endcomment %}
+            <span class="july4-discount-badge">20% OFF</span>
 
             {%- render 'price-per-unit' with variant: variant -%}
         </span>
@@ -40,26 +33,40 @@
 {%- else -%}
     <div class="product-price">
         <span class="new-price-discounts-wrapper">
-            <span class="new-layout-price" >
-                <span class="new-compare-price compare-price jq-new-compare-price">{{ variant.compare_at_price | money }}</span>
+            <span class="new-layout-price">
+                <span class="new-compare-price compare-price jq-new-compare-price">{{ variant.price | money }}</span>
             </span>
-        {% comment %} <span class="compare-price {% unless variant.compare_at_price > variant.price %}hide{%endunless%}">
-            {%- if variant.compare_at_price > variant.price -%}
-                {{ variant.compare_at_price | money_without_currency }}
-            {%- endif -%}
-        </span> {% endcomment %}
+            <span class="july4-discount-badge">20% OFF</span>
+        </span>
 
-        <span class="current-price price recharger-price" id="product-price" data-product-price="{{ variant.price }}">{{ variant.price | money }}</span>
+        <span class="current-price price recharger-price" id="product-price" data-product-price="{{ variant.price }}">{{ july4_discounted_price | money }}</span>
 
         {%- render 'price-per-unit' with variant: variant -%}
 
-        {% comment %} {%- render 'you-save' with variant: variant, enable_you_save: settings.enable_you_save -%} {% endcomment %}
-        
     </div>
     {%- if product.metafields.field.short_description != blank and section.settings.select_position_short_description == "after" -%}
         <div class="meta-short-description" {%- if section.settings.enable_short_description == false -%} style="display: none;"{%- endif -%} >  {{ product.metafields.field.short_description }} </div>
     {%- endif -%}
 {%- endif -%}
+
+<style>
+  .july4-discount-badge {
+    display: inline-block;
+    background: #e63946;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+  .new-product-price .new-compare-price,
+  .product-price .compare-price {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+</style>
 
 {% if block.settings.enable_special_offer_badge %}
     {%- render 'special-offer-badge' with block: block -%}
