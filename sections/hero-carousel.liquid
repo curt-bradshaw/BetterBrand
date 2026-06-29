@@ -436,14 +436,22 @@
     overflow: hidden;
   }
   #shopify-section-{{ section.id }} .hero-carousel__track {
+    display: grid;
     position: relative;
   }
   #shopify-section-{{ section.id }} .hero-carousel__slide {
-    display: none;
+    grid-area: 1 / 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 600ms ease, visibility 600ms ease;
+    visibility: hidden;
     width: 100%;
   }
   #shopify-section-{{ section.id }} .hero-carousel__slide.is-active {
-    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    z-index: 1;
   }
   #shopify-section-{{ section.id }} .hero-carousel__arrow {
     position: absolute;
