@@ -821,19 +821,10 @@
             "slide_subheading": "Sub Headline Example",
             "slide_link": ""
           }
-        },
-        "slide_kDqY8f": {
-          "type": "slide",
-          "settings": {
-            "slide_heading": "Headline Example",
-            "slide_subheading": "Sub Headline Example",
-            "slide_link": ""
-          }
         }
       },
       "block_order": [
-        "slide_B8h8pJ",
-        "slide_kDqY8f"
+        "slide_B8h8pJ"
       ],
       "name": "Hero Carousel",
       "settings": {
@@ -843,6 +834,8 @@
         "custom-margin-bottom": 0,
         "custom-padding-top": 0,
         "custom-padding-bottom": 0,
+        "homepage_banner_style_3": "shopify://shop_images/image_1_36d6ca70-4606-4b85-b31c-66775f3ac889.webp",
+        "mobile_banner_style_3": "shopify://shop_images/image-_1__1_2ee6404f-21a6-473c-b80b-061419f3ff5c.webp",
         "enable_custom_banner_height": false,
         "banner_max_height": 500,
         "banner_max_height_tablet": 430,
