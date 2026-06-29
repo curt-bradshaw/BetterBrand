@@ -76,14 +76,14 @@
                   {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
                   {% assign original_price_per_item_cents = v.price | divided_by: items_count %}
                   <span class="plan-price__row">
-                    <strong>{{ price_per_item_cents | money }}</strong>
                     <s>{{ original_price_per_item_cents | money }}</s>
+                    <strong>{{ price_per_item_cents | money }}</strong>
                   </span>
                   <span class="plan-price__each">each</span>
                 {% else %}  
                   <span class="plan-price__row">
-                    <strong>{{ sale_price | money }}</strong>
                     <s>{{ v.price | money }}</s>
+                    <strong>{{ sale_price | money }}</strong>
                   </span>
                 {% endif %}
               </div>
@@ -142,14 +142,14 @@
                 {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
                 {% assign original_price_per_item_cents = last_option_allocation_to_use.price | divided_by: items_count %}
                 <span class="plan-price__row">
-                  <strong>{{ price_per_item_cents | money }}</strong>
                   <s>{{ original_price_per_item_cents | money }}</s>
+                  <strong>{{ price_per_item_cents | money }}</strong>
                 </span>
                 <span class="plan-price__each">each</span>
                 {% else %}
                   <span class="plan-price__row">
-                    <strong>{{ last_option_sale_price | money }}</strong>
                     <s>{{ last_option_allocation_to_use.price | money }}</s>
+                    <strong>{{ last_option_sale_price | money }}</strong>
                   </span>
                 {% endif %}
               </div>
