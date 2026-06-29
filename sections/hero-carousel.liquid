@@ -71,8 +71,6 @@
 
 <style>
   #hero-carousel-{{ section.id }} {
-    --carousel-height-desktop: {{ section.settings.height_desktop }}px;
-    --carousel-height-mobile: {{ section.settings.height_mobile }}px;
     --arrow-bg: {{ section.settings.arrow_background }};
     --arrow-color: {{ section.settings.arrow_color }};
   }
@@ -81,25 +79,21 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    height: var(--carousel-height-desktop);
   }
 
   .hero-carousel__track {
     display: flex;
-    height: 100%;
     transition: transform 0.5s ease;
   }
 
   .hero-carousel__slide {
     flex: 0 0 100%;
     width: 100%;
-    height: 100%;
   }
 
   .hero-carousel__image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
   }
 
@@ -167,22 +161,6 @@
   }
 
   @media (max-width: 767px) {
-    .hero-carousel {
-      height: auto;
-    }
-
-    .hero-carousel__track {
-      height: auto;
-    }
-
-    .hero-carousel__slide {
-      height: auto;
-    }
-
-    .hero-carousel__image {
-      height: auto;
-    }
-
     .hero-carousel__arrow {
       width: 36px;
       height: 36px;
@@ -287,16 +265,6 @@
   "tag": "section",
   "class": "hero-carousel-section",
   "settings": [
-    {
-      "type": "range",
-      "id": "height_desktop",
-      "label": "Height (desktop)",
-      "min": 300,
-      "max": 900,
-      "step": 10,
-      "default": 600,
-      "unit": "px"
-    },
     {
       "type": "color",
       "id": "arrow_background",
