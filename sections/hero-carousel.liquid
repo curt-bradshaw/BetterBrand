@@ -128,10 +128,18 @@
             {%- endif -%}
 
             {%- if section.settings.carousel_show_dots -%}
-              <div class="hero-carousel__dots" role="tablist" aria-label="Hero carousel slides">
-                <button type="button" class="hero-carousel__dot is-active" aria-label="Go to slide 1" data-hero-carousel-dot></button>
+              <div class="hero-carousel__progress" role="tablist" aria-label="Hero carousel slides" style="--hero-carousel-interval: {{ section.settings.carousel_interval }}s;">
+                <button type="button" class="hero-carousel__progress-item is-active" aria-label="Go to slide 1" data-hero-carousel-progress>
+                  <span class="hero-carousel__progress-track" aria-hidden="true">
+                    <span class="hero-carousel__progress-fill"></span>
+                  </span>
+                </button>
                 {%- for block in section.blocks -%}
-                  <button type="button" class="hero-carousel__dot" aria-label="Go to slide {{ forloop.index | plus: 1 }}" data-hero-carousel-dot></button>
+                  <button type="button" class="hero-carousel__progress-item" aria-label="Go to slide {{ forloop.index | plus: 1 }}" data-hero-carousel-progress>
+                    <span class="hero-carousel__progress-track" aria-hidden="true">
+                      <span class="hero-carousel__progress-fill"></span>
+                    </span>
+                  </button>
                 {%- endfor -%}
               </div>
             {%- endif -%}
@@ -486,22 +494,49 @@
     font-size: 34px;
     line-height: 1;
   }
-  #shopify-section-{{ section.id }} .hero-carousel__dots {
+  #shopify-section-{{ section.id }} .hero-carousel__progress {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    width: min(220px, 42vw);
   }
-  #shopify-section-{{ section.id }} .hero-carousel__dot {
-    width: 10px;
-    height: 10px;
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.92);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.38);
+  #shopify-section-{{ section.id }} .hero-carousel__progress-item {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 0;
+    border: 0;
+    background: transparent;
     cursor: pointer;
   }
-  #shopify-section-{{ section.id }} .hero-carousel__dot.is-active {
+  #shopify-section-{{ section.id }} .hero-carousel__progress-track {
+    display: block;
+    width: 100%;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .hero-carousel__progress-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
     background: #fff;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  #shopify-section-{{ section.id }} .hero-carousel__progress-item.is-complete .hero-carousel__progress-fill {
+    transform: scaleX(1);
+  }
+  #shopify-section-{{ section.id }} .hero-carousel__progress-item.is-active .hero-carousel__progress-fill {
+    animation: hero-carousel-progress-fill-{{ section.id }} var(--hero-carousel-interval, 5s) linear forwards;
+  }
+  #shopify-section-{{ section.id }} .hero-carousel__progress-item.is-active.is-paused .hero-carousel__progress-fill {
+    animation-play-state: paused;
+  }
+  @keyframes hero-carousel-progress-fill-{{ section.id }} {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
   @media(max-width: 767px){
     #shopify-section-{{ section.id }} .hero-carousel__controls {
@@ -513,6 +548,13 @@
       height: 34px;
       font-size: 26px;
     }
+    #shopify-section-{{ section.id }} .hero-carousel__progress {
+      width: min(180px, 52vw);
+      gap: 5px;
+    }
+    #shopify-section-{{ section.id }} .hero-carousel__progress-track {
+      height: 2px;
+    }
   }
 </style>
 
@@ -522,52 +564,73 @@
     if (!carousel) return;
 
     const slides = Array.from(carousel.querySelectorAll('[data-hero-carousel-slide]'));
-    const dots = Array.from(carousel.querySelectorAll('[data-hero-carousel-dot]'));
+    const progressItems = Array.from(carousel.querySelectorAll('[data-hero-carousel-progress]'));
     const prev = carousel.querySelector('[data-hero-carousel-prev]');
     const next = carousel.querySelector('[data-hero-carousel-next]');
     const autoplay = carousel.dataset.autoplay === 'true';
-    const interval = parseInt(carousel.dataset.interval || '5000', 10);
+    const progressAnimationName = 'hero-carousel-progress-fill-{{ section.id }}';
     let activeIndex = 0;
-    let timer;
 
     if (slides.length < 2) return;
+
+    function restartActiveFill() {
+      const activeItem = progressItems[activeIndex];
+      const fill = activeItem?.querySelector('.hero-carousel__progress-fill');
+      if (!fill || !autoplay) return;
+      fill.style.animation = 'none';
+      void fill.offsetWidth;
+      fill.style.animation = '';
+    }
+
+    function updateProgress() {
+      progressItems.forEach((item, itemIndex) => {
+        item.classList.remove('is-active', 'is-complete', 'is-paused');
+        if (itemIndex < activeIndex) {
+          item.classList.add('is-complete');
+        } else if (itemIndex === activeIndex) {
+          item.classList.add('is-active');
+          if (!autoplay) item.classList.add('is-complete');
+        }
+      });
+      restartActiveFill();
+    }
 
     function goTo(index) {
       activeIndex = (index + slides.length) % slides.length;
       slides.forEach((slide, slideIndex) => {
         slide.classList.toggle('is-active', slideIndex === activeIndex);
       });
-      dots.forEach((dot, dotIndex) => {
-        dot.classList.toggle('is-active', dotIndex === activeIndex);
+      updateProgress();
+    }
+
+    function pauseAutoplay() {
+      progressItems.forEach((item) => {
+        if (item.classList.contains('is-active')) item.classList.add('is-paused');
       });
     }
 
-    function startAutoplay() {
-      if (!autoplay) return;
-      window.clearInterval(timer);
-      timer = window.setInterval(() => goTo(activeIndex + 1), interval);
+    function resumeAutoplay() {
+      progressItems.forEach((item) => item.classList.remove('is-paused'));
     }
 
-    prev?.addEventListener('click', () => {
-      goTo(activeIndex - 1);
-      startAutoplay();
+    prev?.addEventListener('click', () => goTo(activeIndex - 1));
+    next?.addEventListener('click', () => goTo(activeIndex + 1));
+
+    progressItems.forEach((item, itemIndex) => {
+      item.addEventListener('click', () => goTo(itemIndex));
     });
 
-    next?.addEventListener('click', () => {
+    carousel.addEventListener('animationend', (event) => {
+      if (!autoplay || event.animationName !== progressAnimationName) return;
+      if (!event.target.classList.contains('hero-carousel__progress-fill')) return;
+      const item = event.target.closest('[data-hero-carousel-progress]');
+      if (!item?.classList.contains('is-active')) return;
       goTo(activeIndex + 1);
-      startAutoplay();
     });
 
-    dots.forEach((dot, dotIndex) => {
-      dot.addEventListener('click', () => {
-        goTo(dotIndex);
-        startAutoplay();
-      });
-    });
-
-    carousel.addEventListener('mouseenter', () => window.clearInterval(timer));
-    carousel.addEventListener('mouseleave', startAutoplay);
-    startAutoplay();
+    carousel.addEventListener('mouseenter', pauseAutoplay);
+    carousel.addEventListener('mouseleave', resumeAutoplay);
+    goTo(0);
   })();
 </script>
 
@@ -744,7 +807,7 @@
     {
       "type": "checkbox",
       "id": "carousel_show_dots",
-      "label": "Show dots",
+      "label": "Show progress bars",
       "default": true
     },
     {
