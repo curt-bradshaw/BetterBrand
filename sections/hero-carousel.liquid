@@ -121,17 +121,24 @@
           {%- endfor -%}
         </div>
 
-        {%- if section.settings.carousel_show_arrows -%}
-          <button type="button" class="hero-carousel__arrow hero-carousel__arrow--prev" aria-label="Previous slide" data-hero-carousel-prev>&lsaquo;</button>
-          <button type="button" class="hero-carousel__arrow hero-carousel__arrow--next" aria-label="Next slide" data-hero-carousel-next>&rsaquo;</button>
-        {%- endif -%}
+        {%- if section.settings.carousel_show_arrows or section.settings.carousel_show_dots -%}
+          <div class="hero-carousel__controls">
+            {%- if section.settings.carousel_show_arrows -%}
+              <button type="button" class="hero-carousel__arrow hero-carousel__arrow--prev" aria-label="Previous slide" data-hero-carousel-prev>&lsaquo;</button>
+            {%- endif -%}
 
-        {%- if section.settings.carousel_show_dots -%}
-          <div class="hero-carousel__dots" role="tablist" aria-label="Hero carousel slides">
-            <button type="button" class="hero-carousel__dot is-active" aria-label="Go to slide 1" data-hero-carousel-dot></button>
-            {%- for block in section.blocks -%}
-              <button type="button" class="hero-carousel__dot" aria-label="Go to slide {{ forloop.index | plus: 1 }}" data-hero-carousel-dot></button>
-            {%- endfor -%}
+            {%- if section.settings.carousel_show_dots -%}
+              <div class="hero-carousel__dots" role="tablist" aria-label="Hero carousel slides">
+                <button type="button" class="hero-carousel__dot is-active" aria-label="Go to slide 1" data-hero-carousel-dot></button>
+                {%- for block in section.blocks -%}
+                  <button type="button" class="hero-carousel__dot" aria-label="Go to slide {{ forloop.index | plus: 1 }}" data-hero-carousel-dot></button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.carousel_show_arrows -%}
+              <button type="button" class="hero-carousel__arrow hero-carousel__arrow--next" aria-label="Next slide" data-hero-carousel-next>&rsaquo;</button>
+            {%- endif -%}
           </div>
         {%- endif -%}
       </hero-carousel>
@@ -453,14 +460,22 @@
     visibility: visible;
     z-index: 1;
   }
-  #shopify-section-{{ section.id }} .hero-carousel__arrow {
+  #shopify-section-{{ section.id }} .hero-carousel__controls {
     position: absolute;
-    top: 50%;
+    left: 50%;
+    bottom: 18px;
     z-index: 3;
-    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    transform: translateX(-50%);
+  }
+  #shopify-section-{{ section.id }} .hero-carousel__arrow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: 44px;
     height: 44px;
     border: 0;
@@ -471,20 +486,10 @@
     font-size: 34px;
     line-height: 1;
   }
-  #shopify-section-{{ section.id }} .hero-carousel__arrow--prev {
-    left: 18px;
-  }
-  #shopify-section-{{ section.id }} .hero-carousel__arrow--next {
-    right: 18px;
-  }
   #shopify-section-{{ section.id }} .hero-carousel__dots {
-    position: absolute;
-    left: 50%;
-    bottom: 18px;
-    z-index: 3;
     display: flex;
+    align-items: center;
     gap: 8px;
-    transform: translateX(-50%);
   }
   #shopify-section-{{ section.id }} .hero-carousel__dot {
     width: 10px;
@@ -499,16 +504,14 @@
     background: #fff;
   }
   @media(max-width: 767px){
+    #shopify-section-{{ section.id }} .hero-carousel__controls {
+      bottom: 12px;
+      gap: 10px;
+    }
     #shopify-section-{{ section.id }} .hero-carousel__arrow {
       width: 34px;
       height: 34px;
       font-size: 26px;
-    }
-    #shopify-section-{{ section.id }} .hero-carousel__arrow--prev {
-      left: 10px;
-    }
-    #shopify-section-{{ section.id }} .hero-carousel__arrow--next {
-      right: 10px;
     }
   }
 </style>
