@@ -138,13 +138,6 @@
   .hero-media { position: relative; aspect-ratio: 1/1; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(13,31,13,0.26); }
   .hero-media::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(13,31,13,0) 48%, rgba(13,31,13,0.55) 100%); }
 
-  /* floating product chip, now docked inside the hero media frame */
-  .float-card { position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 2; display: flex; align-items: center; gap: 13px; background: rgba(250,249,248,0.97); border-radius: 12px; padding: 11px 16px 11px 11px; box-shadow: 0 10px 28px rgba(0,0,0,0.24); }
-  .float-card img { width: 52px; height: 52px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-  .float-card .fc-name { font-weight: 700; font-size: 13px; color: var(--ink); line-height: 1.2; }
-  .float-card .fc-sub { font-size: 12px; color: var(--muted); }
-  .float-card .fc-price { font-weight: 700; font-size: 13px; color: var(--green); padding-top: 2px; }
-
   /* ---------- section base ---------- */
   .section { padding: 92px 24px; }
   .wrap { max-width: 1120px; margin: 0 auto; }
@@ -546,14 +539,6 @@
     </div>
     <div class="hero-media">
       <img class="hero-video" src="https://bb-aq-v3-lander.pages.dev/assets/aqi-form-bg.png" alt="A hazy, smog-covered city skyline">
-      <a href="#product" class="float-card">
-        <img src="https://bb-aq-v3-lander.pages.dev/assets/product-hero.jpg" alt="BetterLungs Mullein + Chlorophyll">
-        <div>
-          <div class="fc-name">BetterLungs® Mullein + Chlorophyll</div>
-          <div class="fc-sub">Daily lung support tincture</div>
-          <div class="fc-price">From $27.95</div>
-        </div>
-      </a>
     </div>
   </div>
 </header>
