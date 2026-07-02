@@ -1,0 +1,276 @@
+{% comment %} Redo HSA/FSA PDP eligibility widget — reusable snippet.
+
+USAGE: render this snippet from a product template/section and pass the product:
+  {% render 'hsa-pdp-block', product: product %}
+
+`{% render %}` runs in an isolated scope, so `product` must be passed in
+explicitly (unlike `{% include %}`). If no product is passed, the snippet
+resolves to not_eligible and renders nothing visible.
+ {%- endcomment -%}
+{%- assign first_variant = product.selected_or_first_available_variant -%}
+{%- assign hsa_metafield = first_variant.metafields.redohsa.hsa_eligibility -%}
+{%- if hsa_metafield == "eligible" or hsa_metafield == "eligible_with_lmn" or hsa_metafield == "not_eligible" -%}
+  {%- assign resolved_eligibility = hsa_metafield -%}
+{%- else -%}
+  {%- assign gale_eligibility = first_variant.metafields.gale_payments.gale_eligibility -%}
+  {%- assign gale_type = first_variant.metafields.gale_payments.gale_product_type -%}
+  {%- if gale_eligibility == "1" -%}
+    {%- if gale_type == "dual_purpose" -%}
+      {%- assign resolved_eligibility = "eligible_with_lmn" -%}
+    {%- else -%}
+      {%- assign resolved_eligibility = "eligible" -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign resolved_eligibility = "not_eligible" -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div id="redo-hsa-widget" class="redo-hsa-widget"
+  style="
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    color: #000;
+    background-color: transparent;
+    margin: 0px 0px 10px 0px;
+    line-height: 1.4;
+  ">
+
+  <div style="flex-shrink: 0; margin-top: 3px; margin-right: 6px;">
+    <img
+      src="https://assets.getredo.com/shop-success-check.svg"
+      alt="Check Icon"
+      width="auto" height="auto"
+      style="width: 19px; height: 19px;">
+  </div>
+
+  <div style="display: flex; flex-direction: column; flex: 1;">
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      column-gap: 3px;
+      row-gap: 4px;
+    ">
+      <div class="redo-hsa-dynamic-text" style="font-weight: 500; white-space: nowrap;">
+        {%- if resolved_eligibility == "eligible" -%}
+          HSA/FSA accepted.
+        {%- elsif resolved_eligibility == "eligible_with_lmn" -%}
+          HSA/FSA eligible for qualified customers.
+        {%- endif -%}
+      </div>
+
+      <a href="#" class="redo-hsa-learn-more"
+        style="
+          text-decoration: underline;
+          font-size: 16px;
+          color: #000;
+          font-weight: 500;
+          white-space: nowrap;
+        "
+      >
+        Learn more
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id="redo-hsa-modal" class="redo-hsa-modal"
+  style="display:none; position:fixed !important; inset:0 !important; width:100vw; height:100vh; background-color:rgba(0,0,0,0.5); z-index:2147483647 !important; justify-content:center; align-items:center; font-family:'Inter', Arial, sans-serif;">
+
+  <div style="position:relative; background:#fff; width:90%; max-width:440px; max-height:95vh; border-radius:12px; overflow-y:auto; box-shadow:0 10px 40px rgba(0,0,0,0.2); padding:24px;">
+
+    <div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:16px;">
+      <button class="redo-hsa-close-modal" style="background:none; border:none; cursor:pointer;">
+        <img src="https://assets.getredo.com/conversion/hsa/close.svg" width="20px" height="20px" alt="Close" style="width:20px; height:20px;">
+      </button>
+    </div>
+
+    <span style="font-size:25px; font-weight:550; color:#0F1112; line-height:1.3; margin:0;">
+      Maximize your savings.<br>Pay with FSA &amp; HSA.
+    </span>
+    <p style="margin:8px 0 20px; color:#000000; font-size:15px;font-weight:500;">Here's how to use your HSA/FSA funds.</p>
+
+    <div style="margin-bottom:28px;">
+      <span style="display:inline-block; background:#F8F5Ef; border-radius:20px; padding:3px 13px; font-size:12px; font-weight:500; color:#000000; margin-bottom:8px;border:1px solid #DFDCD7;">Step 1</span>
+      <h3 style="font-size:22px; font-weight:400; margin:4px 0 10px; font-family: 'Inter', Arial, sans-serif !important;">Checkout as guest</h3>
+      <div style="background:#F8F5Ef; border-radius:10px; padding:0px 25px; text-align:center;">
+        <img src="https://assets.getredo.com/conversion/hsa/checkout-as-guest.png" width="auto" height="auto" alt="Step 1 - Guest Checkout" style="width:100%; height:auto;">
+      </div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <span style="display:inline-block; background:#F8F5Ef; border-radius:20px; padding:3px 13px; font-size:12px; font-weight:500; color:#000000; margin-bottom:8px;border:1px solid #DFDCD7;">Step 2</span>
+      <h3 style="font-size:22px; font-weight:400; margin:4px 0 10px; font-family: 'Inter', Arial, sans-serif !important;">Select HSA/FSA at checkout</h3>
+      <div style="background:#F8F5Ef; border-radius:10px; padding:0px 25px; text-align:center;">
+        <img src="https://assets.getredo.com/conversion/hsa/hsa-fsa-payment-method.png" width="auto" height="auto" alt="Step 2 - Redo Checkout" style="width:100%; height:auto;">
+      </div>
+    </div>
+
+    {%- if resolved_eligibility == "eligible_with_lmn" -%}
+      <div style="margin-bottom:28px;">
+        <span style="display:inline-block; background:#F8F5Ef; border-radius:20px; padding:3px 13px; font-size:12px; font-weight:500; color:#000000; margin-bottom:8px; border:1px solid #DFDCD7;">Step 3</span>
+        <h3 style="font-size:22px; font-weight:400; margin:4px 0 10px; font-family:'Inter', Arial, sans-serif !important;">Complete a health assessment</h3>
+        <div style="background:#F8F5Ef; border-radius:10px; padding:22px 25px; text-align:center;">
+          <img src="https://assets.getredo.com/conversion/hsa/health-survey.png" width="auto" height="auto" alt="Step 3 - Health Assessment" style="width:100%; height:auto;">
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div style="margin-bottom:32px;">
+      <span style="display:inline-block; background:#F8F5Ef; border-radius:20px; padding:3px 13px; font-size:12px; font-weight:500; color:#000000; margin-bottom:8px; border:1px solid #DFDCD7;">
+        {%- if resolved_eligibility == "eligible_with_lmn" -%}
+          Step 4
+        {%- else -%}
+          Step 3
+        {%- endif -%}
+      </span>
+      <h3 style="font-size:22px; font-weight:400; margin:4px 0 10px; font-family:'Inter', Arial, sans-serif !important;">Pay with HSA/FSA or credit card</h3>
+      <div style="background:#F8F5Ef; border-radius:10px; padding:12px 25px; text-align:center;">
+        <img src="https://assets.getredo.com/conversion/hsa/portal-payment-ui.png" width="auto" height="auto" alt="Pay with HSA/FSA" style="width:100%; height:auto;">
+      </div>
+    </div>
+
+    <button class="redo-hsa-close-modal"
+      style="width:100%; background:#000; color:#fff; font-weight:700; font-size:16px; border:none; border-radius:8px; padding:14px 0; cursor:pointer;">
+      Close
+    </button>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const productVariants = [
+      {%- for variant in product.variants -%}
+        {
+          "id": {{ variant.id | json }},
+          "title": {{ variant.title | json }},
+          "metafields": {
+            "hsa_eligibility": {{ variant.metafields.redohsa.hsa_eligibility | json }},
+            "gale_eligibility": {{ variant.metafields.gale_payments.gale_eligibility | json }},
+            "gale_product_type": {{ variant.metafields.gale_payments.gale_product_type | json }}
+          }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ];
+
+    const initialVariantId = {{ product.selected_or_first_available_variant.id | json }};
+
+    function resolveEligibility(metafields) {
+      const primary = metafields?.hsa_eligibility || "";
+      if (primary === "eligible" || primary === "eligible_with_lmn" || primary === "not_eligible") {
+        return primary;
+      }
+
+      const galeEligibility = metafields?.gale_eligibility || "";
+      const galeType = metafields?.gale_product_type || "";
+      if (galeEligibility === "1") {
+        return galeType === "dual_purpose" ? "eligible_with_lmn" : "eligible";
+      }
+      return "not_eligible";
+    }
+
+    function updateRedoHsaWidget(variant) {
+      if (!variant) {
+        return;
+      }
+
+      const eligibility = resolveEligibility(variant.metafields);
+      const isEligible = eligibility === "eligible" || eligibility === "eligible_with_lmn";
+
+      const widget = document.getElementById("redo-hsa-widget");
+      if (widget) {
+        widget.style.display = isEligible ? "flex" : "none";
+      }
+
+      try {
+        let eligibleList = JSON.parse(localStorage.getItem("redoHsaEligibleVariants") || "[]");
+        eligibleList = eligibleList.filter(item => item.id !== variant.id);
+        if (isEligible) {
+          eligibleList.push({ id: variant.id, eligibility });
+        }
+        localStorage.setItem("redoHsaEligibleVariants", JSON.stringify(eligibleList));
+      } catch (err) {
+        console.error("Failed to update redoHsaEligibleVariants:", err);
+      }
+    }
+
+    function getSelectedVariantId() {
+      const input = document.querySelector("select[name='id'], input[name='id']");
+      if (input && input.value) {
+        return input.value;
+      }
+      return initialVariantId;
+    }
+
+    function applyToCurrentVariant() {
+      const id = getSelectedVariantId();
+      const variant = productVariants.find(v => v.id == id);
+      updateRedoHsaWidget(variant);
+    }
+
+    function initRedoHsaWidget() {
+      if (window.Shopify && window.Shopify.country !== "US") {
+        const widget = document.getElementById("redo-hsa-widget");
+        if (widget) {
+          widget.style.display = "none";
+        }
+        return;
+      }
+
+      applyToCurrentVariant();
+
+      const modalEl = document.getElementById("redo-hsa-modal");
+      if (modalEl && modalEl.parentNode !== document.body) {
+        document.body.appendChild(modalEl);
+      }
+    }
+    document.addEventListener("change", (event) => {
+      if (event.target.matches("select[name='id'], input[name='id']")) {
+        const newVariant = productVariants.find(v => v.id == event.target.value);
+        if (newVariant) {
+          updateRedoHsaWidget(newVariant);
+        }
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const learnMore = event.target.closest(".redo-hsa-learn-more");
+      if (learnMore) {
+        event.preventDefault();
+        const modal = document.getElementById("redo-hsa-modal");
+        if (modal) {
+          modal.style.display = "flex";
+        }
+        return;
+      }
+
+      const closeBtn = event.target.closest(".redo-hsa-close-modal");
+      if (closeBtn) {
+        const modal = document.getElementById("redo-hsa-modal");
+        if (modal) {
+          modal.style.display = "none";
+        }
+        return;
+      }
+
+      const modal = document.getElementById("redo-hsa-modal");
+      if (modal && event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    /* Re-run init whenever the theme re-renders our section (Section Rendering
+       API). Without this, a re-render restores the Liquid-default DOM and the
+       widget reverts to its pre-eligibility-check state. */
+    document.addEventListener("shopify:section:load", applyToCurrentVariant);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initRedoHsaWidget);
+    } else {
+      initRedoHsaWidget();
+    }
+  })();
+</script>
