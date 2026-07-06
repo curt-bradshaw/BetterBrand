@@ -120,6 +120,36 @@
       })(window, document, "clarity", "script", "mflzqn7y5g");
     </script>
 
+{% comment %} AQI Quiz Tracking {% endcomment %}
+<script>
+    (function () {
+    // Fires only on the AQI page. Self-hosted analytics for the custom form.
+    if (location.pathname.indexOf('lp-air-quality-report') === -1) return;
+    var API = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form';
+    var VERSION = 'live', SID = '', T0 = Date.now();
+    try { SID = sessionStorage.getItem('aq_sid') || (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)); sessionStorage.setItem('aq_sid', SID); } catch (e) {}
+    function post(url, body) { try { fetch(API + url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: true }).catch(function(){}); } catch (e) {} }
+    function track(type, extra) { var b = { type: type, page_version: VERSION, session_id: SID, path: location.pathname, elapsed_ms: Date.now() - T0 }; if (extra) for (var k in extra) b[k] = extra[k]; post('/aq-event', b); }
+
+    // 1) Page view — once per session (this is the rate denominator)
+    try { if (!sessionStorage.getItem('aq_viewed')) { sessionStorage.setItem('aq_viewed', '1'); post('/aq-view', { page_version: VERSION, session_id: SID, path: location.pathname }); } }
+    catch (e) { post('/aq-view', { page_version: VERSION, session_id: SID, path: location.pathname }); }
+
+    // 2) Funnel — attaches to the form (form_seen, started, field touches, submit)
+    function wire() {
+      var form = document.getElementById('air-form') || (document.querySelector('input[name="zip"]') && document.querySelector('input[name="zip"]').closest('form'));
+      if (!form) return false;
+      var seen = false, mark = function () { if (!seen) { seen = true; track('form_seen'); } };
+      if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (es) { for (var i=0;i<es.length;i++) if (es[i].isIntersecting) { mark(); io.disconnect(); break; } }, { threshold: 0.3 }); io.observe(form); } else { mark(); }
+      var started = false, touched = {};
+      form.addEventListener('focusin', function (e) { var f = e.target && e.target.name; if (!started) { started = true; track('form_start', { field: f || '' }); } if (f && !touched[f]) { touched[f] = 1; track('field_focus', { field: f }); } });
+      form.addEventListener('submit', function () { track('submit_attempt'); }, true);
+      return true;
+    }
+    if (!wire()) { var n = 0, iv = setInterval(function () { if (wire() || ++n > 20) clearInterval(iv); }, 500); }
+  })();
+  </script>
+
     {% comment %} {% include "omega_twitter_multi_pixel" %} {% endcomment %}
 
     {{ 'output.css' | asset_url | stylesheet_tag }}
