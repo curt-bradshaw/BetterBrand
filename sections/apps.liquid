@@ -1,4 +1,4 @@
-<div>
+<div{% if section.settings.section_id != blank %} id="{{ section.settings.section_id | strip | escape }}"{% endif %}>
   {% for block in section.blocks %}
     {% render block %}
   {% endfor %}
@@ -7,7 +7,14 @@
 {% schema %}
 {
   "name": "App wrapper",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID",
+      "info": "Optional HTML id for this section wrapper (e.g. trustpilot-reviews). Use letters, numbers, hyphens, and underscores only."
+    }
+  ],
   "blocks": [
     {
       "type": "@app"
