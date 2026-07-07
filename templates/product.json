@@ -704,7 +704,7 @@
             "theme": "light",
             "font_color_light": "#191919",
             "font_color_dark": "#ffffff",
-            "star_color": "#F2CB49"
+            "star_color": "#f2cb49"
           }
         }
       },
@@ -713,7 +713,7 @@
       ],
       "custom_css": [
         ".trustpilot-widget {padding: 0 60px 30px !important;}",
-        "@media screen and (max-width: 768px) {.trustpilot-widget {padding: 0 20px 30px !important;}}"
+        "@media screen and (max-width: 768px) {.trustpilot-widget {padding: 0 20px 30px !important; }}"
       ],
       "settings": {}
     }
