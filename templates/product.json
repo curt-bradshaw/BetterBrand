@@ -711,6 +711,9 @@
       "block_order": [
         "trustpilot_trustpilot_product_reviews_multisource_seo_widget_c3RYFR"
       ],
+      "custom_css": [
+        ".light {padding: 0 20px !important;}"
+      ],
       "settings": {}
     }
   },
