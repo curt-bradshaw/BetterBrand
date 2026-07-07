@@ -1,26 +1,20 @@
-<div{% if section.settings.section_id != blank %} id="{{ section.settings.section_id | strip | escape }}"{% endif %} class="app-wrapper">
+{%- capture app_blocks -%}
   {%- for block in section.blocks -%}
-    {% render block %}
+    {%- assign block_id = block.id | downcase -%}
+    {%- unless block_id contains 'trustpilot' and product != blank and product.tags contains 'trustpilot-hidden' -%}
+      {%- render block -%}
+    {%- endunless -%}
   {%- endfor -%}
-</div>
+{%- endcapture -%}
+
+{%- if app_blocks != blank -%}
+  <div>{{ app_blocks }}</div>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "App wrapper",
-  "tag": "section",
-  "class": "section app-wrapper-section",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Section settings"
-    },
-    {
-      "type": "text",
-      "id": "section_id",
-      "label": "Section ID",
-      "info": "Optional HTML id for this section wrapper (e.g. trustpilot-reviews)."
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "@app"

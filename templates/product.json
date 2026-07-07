@@ -685,7 +685,7 @@
       "settings": {}
     },
     "1783442846102c1d7d": {
-      "type": "app-wrapper",
+      "type": "apps",
       "blocks": {
         "trustpilot_trustpilot_product_reviews_multisource_seo_widget_c3RYFR": {
           "type": "shopify://apps/trustpilot/blocks/trustpilot_product_reviews_multisource_seo_widget/af628f2e-96c9-437f-bc0a-e8f7ff3fa8b4",
@@ -715,9 +715,7 @@
         ".trustpilot-widget {padding: 0 60px 30px !important;}",
         "@media screen and (max-width: 768px) {.trustpilot-widget {padding: 0 20px 30px !important; }}"
       ],
-      "settings": {
-        "section_id": ""
-      }
+      "settings": {}
     }
   },
   "order": [
