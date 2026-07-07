@@ -1,8 +1,15 @@
-<div>
-  {% for block in section.blocks %}
-    {% render block %}
-  {% endfor %}
-</div>
+{%- capture app_blocks -%}
+  {%- for block in section.blocks -%}
+    {%- assign block_id = block.id | downcase -%}
+    {%- unless block_id contains 'trustpilot' and product != blank and product.tags contains 'trustpilot-hidden' -%}
+      {%- render block -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if app_blocks != blank -%}
+  <div>{{ app_blocks }}</div>
+{%- endif -%}
 
 {% schema %}
 {

@@ -681,6 +681,40 @@
       "block_order": [
         "judge_me_reviews_review_widget_GfUV7m"
       ],
+      "disabled": true,
+      "settings": {}
+    },
+    "1783442846102c1d7d": {
+      "type": "apps",
+      "blocks": {
+        "trustpilot_trustpilot_product_reviews_multisource_seo_widget_c3RYFR": {
+          "type": "shopify://apps/trustpilot/blocks/trustpilot_product_reviews_multisource_seo_widget/af628f2e-96c9-437f-bc0a-e8f7ff3fa8b4",
+          "settings": {
+            "locale": "en-US",
+            "reviews_language": false,
+            "width": 100,
+            "height": 700,
+            "height_with_explainer": 720,
+            "vertical_space": 30,
+            "product_skus": "",
+            "product_name": "",
+            "review_explainer": false,
+            "hide_widget_when_no_reviews": true,
+            "font_family": "Poppins",
+            "theme": "light",
+            "font_color_light": "#191919",
+            "font_color_dark": "#ffffff",
+            "star_color": "#f2cb49"
+          }
+        }
+      },
+      "block_order": [
+        "trustpilot_trustpilot_product_reviews_multisource_seo_widget_c3RYFR"
+      ],
+      "custom_css": [
+        ".trustpilot-widget {padding: 0 60px 30px !important;}",
+        "@media screen and (max-width: 768px) {.trustpilot-widget {padding: 0 20px 30px !important; }}"
+      ],
       "settings": {}
     }
   },
@@ -697,6 +731,7 @@
     "recently_viewed_product_template_9PcgAE",
     "faq_section_7NrfTG",
     "1778525589b9b2b9eb",
-    "1781813054ad61734d"
+    "1781813054ad61734d",
+    "1783442846102c1d7d"
   ]
 }
