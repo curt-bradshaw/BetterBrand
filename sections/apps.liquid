@@ -1,8 +1,94 @@
-<div>
+{%- liquid
+  assign has_trustpilot = false
+  for block in section.blocks
+    if block.id contains 'trustpilot'
+      assign has_trustpilot = true
+      break
+    endif
+  endfor
+-%}
+
+<div class="apps-section{% if has_trustpilot %} apps-section--trustpilot{% endif %}">
   {% for block in section.blocks %}
     {% render block %}
   {% endfor %}
 </div>
+
+{%- if has_trustpilot -%}
+  <style>
+    .shopify-section:has(.apps-section--trustpilot.is-trustpilot-empty) {
+      display: none !important;
+    }
+  </style>
+  <script>
+    (function () {
+      var section = document.currentScript.closest('.shopify-section');
+      var container = section && section.querySelector('.apps-section--trustpilot');
+      if (!container) return;
+
+      function trustpilotWidgetIsReady(widget) {
+        if (!widget) return false;
+
+        var style = window.getComputedStyle(widget);
+        if (style.display === 'none') return true;
+
+        return !!widget.querySelector('iframe');
+      }
+
+      function trustpilotHasReviews(widget) {
+        if (!widget) return false;
+
+        var style = window.getComputedStyle(widget);
+        if (style.display === 'none' || style.visibility === 'hidden') return false;
+
+        var iframe = widget.querySelector('iframe');
+        return !!(iframe && iframe.offsetHeight > 0);
+      }
+
+      function setTrustpilotSectionEmpty(isEmpty) {
+        container.classList.toggle('is-trustpilot-empty', isEmpty);
+        if (section) section.classList.toggle('is-trustpilot-empty', isEmpty);
+      }
+
+      function updateTrustpilotSection(force) {
+        var widget = container.querySelector('.trustpilot-widget');
+        if (!widget) return;
+
+        if (!force && !trustpilotWidgetIsReady(widget)) return;
+
+        setTrustpilotSectionEmpty(!trustpilotHasReviews(widget));
+      }
+
+      function initTrustpilotSectionWatcher() {
+        var widget = container.querySelector('.trustpilot-widget');
+        if (!widget) return;
+
+        updateTrustpilotSection();
+
+        new MutationObserver(function () {
+          updateTrustpilotSection();
+        }).observe(widget, {
+          attributes: true,
+          childList: true,
+          subtree: true,
+          attributeFilter: ['style', 'class', 'hidden']
+        });
+
+        var attempts = 0;
+        var interval = setInterval(function () {
+          updateTrustpilotSection(attempts >= 20);
+          if (++attempts >= 30) clearInterval(interval);
+        }, 500);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTrustpilotSectionWatcher);
+      } else {
+        initTrustpilotSectionWatcher();
+      }
+    })();
+  </script>
+{%- endif -%}
 
 {% schema %}
 {
