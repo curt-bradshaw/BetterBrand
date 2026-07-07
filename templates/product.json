@@ -712,7 +712,7 @@
         "trustpilot_trustpilot_product_reviews_multisource_seo_widget_c3RYFR"
       ],
       "custom_css": [
-        ".trustpilot-widget {padding: 0 20px !important;}"
+        ".trustpilot-widget {padding: 0 60px 30px !important;}"
       ],
       "settings": {}
     }
