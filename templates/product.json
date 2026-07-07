@@ -692,7 +692,7 @@
           "settings": {
             "locale": "en-US",
             "reviews_language": true,
-            "width": 95,
+            "width": 90,
             "height": 700,
             "height_with_explainer": 720,
             "vertical_space": 10,
@@ -700,11 +700,11 @@
             "product_name": "",
             "review_explainer": false,
             "hide_widget_when_no_reviews": true,
-            "font_family": "Helvetica Neue",
+            "font_family": "Poppins",
             "theme": "light",
             "font_color_light": "#191919",
             "font_color_dark": "#ffffff",
-            "star_color": "#00b67b"
+            "star_color": "#F2CB49"
           }
         }
       },
