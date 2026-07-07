@@ -1,38 +1,8 @@
-{%- liquid
-  assign has_trustpilot = false
-  for block in section.blocks
-    assign block_id = block.id | downcase
-    if block_id contains 'trustpilot'
-      assign has_trustpilot = true
-      break
-    endif
-  endfor
--%}
-
-<div
-  id="apps-section-{{ section.id }}"
-  class="apps-section{% if has_trustpilot %} apps-section--trustpilot{% endif %}"
->
+<div>
   {% for block in section.blocks %}
     {% render block %}
   {% endfor %}
 </div>
-
-{%- if has_trustpilot -%}
-  <style>
-    #shopify-section-{{ section.id }}.is-trustpilot-empty,
-    #shopify-section-{{ section.id }}.is-trustpilot-empty .shopify-app-block,
-    #shopify-section-{{ section.id }}.is-trustpilot-empty .apps-section,
-    #shopify-section-{{ section.id }}.is-trustpilot-empty .trustpilot-widget {
-      display: none !important;
-      min-height: 0 !important;
-      height: 0 !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      overflow: hidden !important;
-    }
-  </style>
-{%- endif -%}
 
 {% schema %}
 {
