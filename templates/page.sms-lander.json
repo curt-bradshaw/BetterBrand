@@ -11,10 +11,17 @@
   "sections": {
     "main": {
       "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "sms_lander_EQwXff": {
+      "type": "sms-lander",
+      "name": "SMS VIP Lander v3",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "sms_lander_EQwXff"
   ]
 }
