@@ -3,8 +3,7 @@
   Betterbrand · SMS VIP Lander — v3 (rebrand 2026)
   ============================================================
   1:1 port of live page: https://bb-sms-lander-v3.pages.dev/sms-lander-v3
-  - Fonts (Sohne / Mier A / Tiempos) self-hosted: upload the 5 .woff2 in
-    ./fonts/ to the theme Assets so asset_url resolves.
+  - Fonts (Sohne / Mier A / Tiempos) self-hosted in theme assets/.
   - Form posts to the Supabase serve-form edge fn (dual-writes Klaviyo +
     Postscript). Cross-origin, no extra theme setup.
   - Splide + product/logo images load from CDN.
@@ -60,13 +59,14 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
+  .bb-sms-vip-v3 {
     color: var(--bb-text-dark);
     background: var(--bb-white);
     font-family: var(--bb-body);
     font-size: 16px;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   img { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
