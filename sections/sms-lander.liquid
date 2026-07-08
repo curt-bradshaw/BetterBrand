@@ -7,7 +7,6 @@
   - Form posts to the Supabase serve-form edge fn (dual-writes Klaviyo +
     Postscript). Cross-origin, no extra theme setup.
   - Splide + product/logo images load from CDN.
-  - Review avatars use asset_url (upload avatar PNGs when ready).
   - Render via templates/page.sms-lander-v3.json, or add as a section.
   ============================================================
 {%- endcomment -%}
@@ -881,18 +880,8 @@
     flex-grow: 1;
   }
   .rcard-attr {
-    display: flex; align-items: center; gap: 12px;
     padding-top: 14px;
     border-top: 1px solid var(--bb-border);
-  }
-  /* v3 (Curt round 8 — 2026-05-26): real testimonial avatars instead of
-     blank green circles. Photos rendered by Nano Banana Pro (people 45+). */
-  .rcard-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    flex: 0 0 36px;
-    object-fit: cover;
-    background: var(--bb-green-sage);
-    display: block;
   }
   .rcard-name {
     font-family: var(--bb-body);
@@ -1230,31 +1219,31 @@
             <div class="rcard-stars">★★★★★</div>
             <h3 class="rcard-quote">"I feel like a true VIP."</h3>
             <p class="rcard-body">First in line on every restock, plus exclusive codes I never see in email. This is how loyalty programs should work.</p>
-            <div class="rcard-attr"><img class="rcard-avatar" src="{{ 'sarah-m.png' | asset_url }}" alt="Sarah M." loading="lazy"><div><div class="rcard-name">Sarah M.</div><div class="rcard-meta">Verified VIP Member</div></div></div>
+            <div class="rcard-attr"><div class="rcard-name">Sarah M.</div><div class="rcard-meta">Verified VIP Member</div></div>
           </article></li>
           <li class="splide__slide"><article class="rcard">
             <div class="rcard-stars">★★★★★</div>
             <h3 class="rcard-quote">"Finally, a brand that respects my inbox."</h3>
             <p class="rcard-body">Two short texts a month, all relevant. Got 15% off in 30 seconds and a heads-up when my Mullein was back. Easy yes.</p>
-            <div class="rcard-attr"><img class="rcard-avatar" src="{{ 'marcus-t.png' | asset_url }}" alt="Marcus T." loading="lazy"><div><div class="rcard-name">Marcus T.</div><div class="rcard-meta">Verified VIP Member</div></div></div>
+            <div class="rcard-attr"><div class="rcard-name">Marcus T.</div><div class="rcard-meta">Verified VIP Member</div></div>
           </article></li>
           <li class="splide__slide"><article class="rcard">
             <div class="rcard-stars">★★★★★</div>
             <h3 class="rcard-quote">"Worth signing up just for the early access."</h3>
             <p class="rcard-body">I was the first to grab the new gummies. VIP text dropped 24 hours before everyone else got the email. Sold out by morning.</p>
-            <div class="rcard-attr"><img class="rcard-avatar" src="{{ 'jennifer-l.png' | asset_url }}" alt="Jennifer L." loading="lazy"><div><div class="rcard-name">Jennifer L.</div><div class="rcard-meta">Verified VIP Member</div></div></div>
+            <div class="rcard-attr"><div class="rcard-name">Jennifer L.</div><div class="rcard-meta">Verified VIP Member</div></div>
           </article></li>
           <li class="splide__slide"><article class="rcard">
             <div class="rcard-stars">★★★★★</div>
             <h3 class="rcard-quote">"Best $0 'investment' I've made."</h3>
             <p class="rcard-body">All upside. VIP membership paid for itself in one order. The restock pings keep me from stressing when I'm running low.</p>
-            <div class="rcard-attr"><img class="rcard-avatar" src="{{ 'alex-r.png' | asset_url }}" alt="Alex R." loading="lazy"><div><div class="rcard-name">Alex R.</div><div class="rcard-meta">Verified VIP Member</div></div></div>
+            <div class="rcard-attr"><div class="rcard-name">Alex R.</div><div class="rcard-meta">Verified VIP Member</div></div>
           </article></li>
           <li class="splide__slide"><article class="rcard">
             <div class="rcard-stars">★★★★★</div>
             <h3 class="rcard-quote">"Being first is the whole perk."</h3>
             <p class="rcard-body">The VIP text dropped a full day before the email blast. Grabbed the new gummies before they sold out. That head start alone is worth it.</p>
-            <div class="rcard-attr"><img class="rcard-avatar" src="{{ 'priya-s.png' | asset_url }}" alt="Priya S." loading="lazy"><div><div class="rcard-name">Priya S.</div><div class="rcard-meta">Verified VIP Member</div></div></div>
+            <div class="rcard-attr"><div class="rcard-name">Priya S.</div><div class="rcard-meta">Verified VIP Member</div></div>
           </article></li>
         </ul>
       </div>
