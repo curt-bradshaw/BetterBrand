@@ -70,6 +70,44 @@
   @font-face { font-family: 'MierA'; src: url('{{ "MierA-ExtraBold.woff2" | asset_url }}') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
   @font-face { font-family: 'Tiempos'; src: url('{{ "tiempos-text-regular.woff2" | asset_url }}') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 
+  /* Override theme global * { font-family } and heading fonts within this section */
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 *:not(.hero-phone):not(.hero-phone *) {
+    font-family: var(--bb-body) !important;
+  }
+
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .h1,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .h2,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .btitle,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .product-h,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .pcard-title,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .rcard-quote,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .hero-phone-avatar,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 details.faq-item > summary,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 details.faq-item > summary::after {
+    font-family: var(--bb-display) !important;
+    font-weight: 700 !important;
+  }
+
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .hero-phone,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .hero-phone * {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+
+  /* MierA only ships 400 / 700 / 800 — snap intermediate weights to nearest face */
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .vip-bullets li,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .hero-phone-name,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .hero-phone-read {
+    font-weight: 400 !important;
+  }
+
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .trust,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .phone .flag,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .hero-bubble strong,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 .hero-phone-daystamp strong {
+    font-weight: 700 !important;
+  }
+
   /* smooth in-page nav (Curt: keep visitors on the page, no off-site links) */
   html { scroll-behavior: smooth; }
   #signup, #reviews, #faq { scroll-margin-top: 76px; }
@@ -104,8 +142,10 @@
     --bb-radius-input: 8px;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  .bb-sms-vip-v3 {
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 *,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 *::before,
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 {
     color: var(--bb-text-dark);
     background: var(--bb-white);
     font-family: var(--bb-body);
@@ -114,10 +154,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  img { max-width: 100%; display: block; }
-  a { color: inherit; text-decoration: none; }
-  button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
-  input { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; width: 100%; }
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 img { max-width: 100%; display: block; }
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 a { color: inherit; text-decoration: none; }
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
+  #shopify-section-{{ section.id }}.bb-sms-vip-v3 input { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; width: 100%; }
 
   /* Faux header */
   .bb-header {
@@ -985,7 +1025,8 @@
     padding: 22px 26px;
     display: flex; align-items: center; justify-content: space-between;
     font-family: var(--bb-display);
-    font-weight: 400; font-size: 22px;
+    font-weight: 400;
+    font-size: 22px;
     color: var(--bb-green-dark);
     letter-spacing: 0.02em;
     text-transform: uppercase;
