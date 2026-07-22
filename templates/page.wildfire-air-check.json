@@ -1,0 +1,19 @@
+{
+  "layout": "theme.old-layout",
+  "sections": {
+    "main": {
+      "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "wildfire_air_check_lp": {
+      "type": "wildfire-air-check-lp",
+      "name": "Wildfire Air Check LP",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "wildfire_air_check_lp"
+  ]
+}
