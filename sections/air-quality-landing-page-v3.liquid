@@ -173,8 +173,11 @@
 .aq-report-v3 .bb-now{font-size:17px;font-weight:800;color:var(--ink)}
 .aq-report-v3 .bb-was{font-size:12px;color:var(--muted-2);text-decoration:line-through;margin-left:5px}
 .aq-report-v3 .bb-per{display:block;font-size:11px;color:var(--muted);margin-top:1px}
-.aq-report-v3 .bb-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:16px;padding:16px;border-radius:12px;margin-top:6px;box-shadow:0 14px 28px -14px rgba(217,173,44,.9);transition:filter .15s}
-.aq-report-v3 .bb-cta:hover{filter:brightness(.98)}
+.aq-report-v3 .bb-cta,
+.aq-report-v3 button.bb-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--gold);color:var(--gold-deep);font-family:var(--font);font-weight:800;font-size:16px;padding:16px;border:0;border-radius:12px;margin-top:6px;box-shadow:0 14px 28px -14px rgba(217,173,44,.9);transition:filter .15s;cursor:pointer;text-decoration:none;-webkit-appearance:none;appearance:none}
+.aq-report-v3 .bb-cta:hover,
+.aq-report-v3 button.bb-cta:hover{filter:brightness(.98)}
+.aq-report-v3 .bb-cta[disabled]{opacity:.7;cursor:default}
 .aq-report-v3 .bb-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-size:11.5px;font-weight:700;color:var(--green-soft)}
 .aq-report-v3 .bb-sticky{position:fixed;bottom:0;left:0;right:0;z-index:120;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:11px 18px;box-shadow:0 -8px 24px -16px rgba(0,0,0,.4);display:none;transform:translateY(110%);transition:transform .3s ease}
 .aq-report-v3 .bb-sticky.show{transform:none}
@@ -219,7 +222,8 @@
 .aq-report-v3 .bb-plan-name{font-size:14px}
 .aq-report-v3 .bb-plan-desc{font-size:11.5px;margin-top:2px}
 .aq-report-v3 .bb-now{font-size:16px}
-.aq-report-v3 .bb-cta{padding:15px;font-size:16px;margin-top:4px}
+.aq-report-v3 .bb-cta,
+.aq-report-v3 button.bb-cta{padding:15px;font-size:16px;margin-top:4px}
 .aq-report-v3 .bb-trust{margin-top:10px;font-size:11px;gap:5px 12px}
 .aq-report-v3 .rr-disc{padding:16px 22px 40px}
 .aq-report-v3 .bb-head{display:flex;align-items:center;gap:12px;margin-bottom:13px}
@@ -280,23 +284,26 @@
   const SERVE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/aq-report/submit';
   const LOGBASE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form';
   const VERSION = 'air-report';
+  /* Buy box — same mechanism as air-quality-landing-page-v2:
+     POST /cart/add.js with hidden id + selling_plan, then redirect to /checkout.
+     Variant + selling-plan IDs are for BetterLungs Mullein Gummies. */
   const VAR1=50211146957099, SUBPLAN=118714663211;
-  const URL_SUB='https://www.trybetterbrand.com/cart/'+VAR1+':1?selling_plan='+SUBPLAN;
-  const URL_ONCE='https://www.trybetterbrand.com/cart/'+VAR1+':1?discount=AIR20';
   const BUYBOX=
-    '<div class="bb">'+
+    '<form class="bb" id="aq-bb-form" method="post" action="/cart/add">'+
+      '<input type="hidden" name="id" id="aq-bb-variant" value="'+VAR1+'">'+
+      '<input type="hidden" name="selling_plan" id="aq-bb-selling-plan" value="'+SUBPLAN+'">'+
+      '<input type="hidden" name="quantity" value="1">'+
       '<div class="bb-head"><img class="bb-thumb" src="https://air-report.pages.dev/assets/img/gummies-1bag.jpg" alt="BetterLungs Mullein Gummies pouch" loading="lazy"><div class="bb-htx"><div class="bb-title">BetterLungs® Mullein Gummies</div><div class="bb-supply" id="bb-supply">30-day supply</div></div></div>'+
       '<div class="bb-packs">'+
         '<button type="button" class="pk selected" data-pack="1">1 Bag</button>'+
         '<button type="button" class="pk" data-pack="3">3 Bags<small>Save more</small></button>'+
         '<button type="button" class="pk" data-pack="6">6 Bags<small>Best price</small></button>'+
       '</div>'+
-      '<div class="bb-plan selected" id="bb-sub" data-plan="sub"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">Subscribe &amp; Save <span class="bb-best">Best value</span></div><div class="bb-plan-desc" id="bb-sub-desc">20% off · ships monthly · cancel anytime</div></div><div class="bb-plan-price" id="bb-sub-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span><span class="bb-per">/mo</span></div></div>'+
-      '<div class="bb-plan" id="bb-once" data-plan="once"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">One-time purchase</div><div class="bb-plan-desc">20% off with code AIR20</div></div><div class="bb-plan-price" id="bb-once-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span></div></div>'+
-      '<a class="bb-cta" id="bb-cta" href="#" target="_blank" rel="noopener">Subscribe · $27.96/mo &rarr;</a>'+
+      '<div class="bb-plan selected" id="bb-sub" data-plan="sub" role="button" tabindex="0"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">Subscribe &amp; Save <span class="bb-best">Best value</span></div><div class="bb-plan-desc" id="bb-sub-desc">20% off · ships monthly · cancel anytime</div></div><div class="bb-plan-price" id="bb-sub-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span><span class="bb-per">/mo</span></div></div>'+
+      '<div class="bb-plan" id="bb-once" data-plan="once" role="button" tabindex="0"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">One-time purchase</div><div class="bb-plan-desc">20% off with code AIR20</div></div><div class="bb-plan-price" id="bb-once-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span></div></div>'+
+      '<button type="submit" class="bb-cta" id="bb-cta">Subscribe · $27.96/mo &rarr;</button>'+
       '<div class="bb-trust"><span>✓ 365-day guarantee</span><span>✓ Free shipping</span><span>✓ Cancel anytime</span></div>'+
-    '</div>';
-  const STICKY='<div class="bb-sticky" id="bb-sticky"><div class="bb-sticky-in"><div class="lbl">BetterLungs® Gummies <span id="bb-sticky-sub">Subscribe &amp; Save · $27.96</span></div><a id="bb-sticky-cta" href="'+URL_SUB+'" target="_blank" rel="noopener">Add to cart</a></div></div>';
+    '</form>';
   const SID = (function(){try{let s=sessionStorage.getItem('aq_sid');if(!s){s=Date.now().toString(36)+Math.random().toString(36).slice(2,8);sessionStorage.setItem('aq_sid',s);}return s;}catch(_){return '';}})();
   // BB Pixel: persistent first-party visitor id (survives sessions) — our own tracking, no Northbeam/Meta.
   const VID = (function(){try{let v=localStorage.getItem('bb_vid');if(!v){v='v'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);localStorage.setItem('bb_vid',v);}return v;}catch(_){return '';}})();
@@ -322,10 +329,14 @@
   };
   function wireBuyBox(){
     var packEls=report.querySelectorAll('.pk'); if(!packEls.length){ var rc0=document.getElementById('rep-close'); if(rc0) rc0.addEventListener('click',closeReport); return; }
+    var bbForm=document.getElementById('aq-bb-form');
+    var variantInput=document.getElementById('aq-bb-variant');
+    var planInput=document.getElementById('aq-bb-selling-plan');
     var subCard=document.getElementById('bb-sub'), onceCard=document.getElementById('bb-once'),
         subPrice=document.getElementById('bb-sub-price'), subDesc=document.getElementById('bb-sub-desc'),
         oncePrice=document.getElementById('bb-once-price'), cta=document.getElementById('bb-cta'),
         supplyEl=document.getElementById('bb-supply');
+    if(!bbForm || !variantInput || !planInput || !cta){ var rc1=document.getElementById('rep-close'); if(rc1) rc1.addEventListener('click',closeReport); return; }
     var st={pack:'1', plan:'sub'};
     function render(){
       var p=PACKS[st.pack];
@@ -338,15 +349,39 @@
       oncePrice.innerHTML='<span class="bb-now">'+p.once+'</span><span class="bb-was">'+p.was+'</span>';
       subCard.classList.toggle('selected', st.plan==='sub' && !!p.sub);
       onceCard.classList.toggle('selected', st.plan==='once');
-      var url,label;
-      if(st.plan==='sub' && p.sub){ url='https://www.trybetterbrand.com/cart/'+p.v+':1?selling_plan='+p.sub.plan; label='Subscribe · '+p.sub.price+p.sub.per+' &rarr;'; }
-      else { url='https://www.trybetterbrand.com/cart/'+p.v+':1?discount=AIR20'; label='Add to cart · '+p.once+' &rarr;'; }
-      cta.setAttribute('href',withRef(url)); cta.innerHTML=label;
+      variantInput.value=String(p.v);
+      if(st.plan==='sub' && p.sub){
+        planInput.disabled=false;
+        planInput.value=String(p.sub.plan);
+        cta.innerHTML='Subscribe · '+p.sub.price+p.sub.per+' &rarr;';
+      } else {
+        planInput.value='';
+        planInput.disabled=true; /* omit selling_plan on OTP so Shopify treats as one-time */
+        cta.innerHTML='Add to cart · '+p.once+' &rarr;';
+      }
     }
     packEls.forEach(function(b){b.addEventListener('click',function(){st.pack=b.getAttribute('data-pack');render();});});
     subCard.addEventListener('click',function(){if(subCard.classList.contains('disabled'))return;st.plan='sub';render();});
     onceCard.addEventListener('click',function(){st.plan='once';render();});
-    cta.addEventListener('click',function(){aqTrack('cta_click',{plan:st.plan,pack:st.pack});});
+    bbForm.addEventListener('submit',function(e){
+      e.preventDefault();
+      aqTrack('cta_click',{plan:st.plan,pack:st.pack});
+      cta.disabled=true;
+      var fd=new FormData(bbForm);
+      if(planInput.disabled) fd.delete('selling_plan');
+      fetch('/cart/add.js',{method:'POST',body:fd})
+        .then(function(r){ if(!r.ok) throw new Error('cart add failed'); return r.json(); })
+        .then(function(){
+          if(st.plan==='once') window.location.href='/discount/AIR20?redirect=/checkout';
+          else window.location.href='/checkout';
+        })
+        .catch(function(){
+          cta.disabled=false;
+          /* Native fallback — re-enable selling_plan only when subscribed */
+          if(st.plan!=='sub') planInput.disabled=true;
+          bbForm.submit();
+        });
+    });
     render();
     var rc=document.getElementById('rep-close'); if(rc) rc.addEventListener('click',closeReport);
   }
