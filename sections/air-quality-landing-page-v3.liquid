@@ -43,6 +43,22 @@
     padding: 0 !important;
     display: block !important;
   }
+
+  /* Keep BetterBrand wordmark compact (theme img rules blow it up otherwise) */
+  #shopify-section-{{ section.id }} .entry-logo,
+  #shopify-section-{{ section.id }} .entry-logo-link img {
+    height: 18px !important;
+    width: auto !important;
+    max-height: 18px !important;
+    max-width: 140px !important;
+  }
+  #shopify-section-{{ section.id }} .rep-logo,
+  #shopify-section-{{ section.id }} .rep-logo-link img {
+    height: 16px !important;
+    width: auto !important;
+    max-height: 16px !important;
+    max-width: 120px !important;
+  }
 </style>
 
 {% raw %}
@@ -80,8 +96,23 @@
    .entry-brand{color:#fff;font-weight:800;font-size:16px}
    .entry-brand span{color:rgba(255,255,255,.7);font-weight:600;margin-left:7px}
    .entry-logo-link,.rep-logo-link{display:inline-flex;align-items:center;line-height:0}
-   .entry-logo{height:22px;width:auto;filter:brightness(0) invert(1)}
-   .rep-logo{height:19px;width:auto}
+   .entry-logo,
+   .entry-logo-link .entry-logo,
+   a.entry-logo-link img{
+     height:18px!important;
+     width:auto!important;
+     max-height:18px!important;
+     max-width:140px!important;
+     filter:brightness(0) invert(1)
+   }
+   .rep-logo,
+   .rep-logo-link .rep-logo,
+   a.rep-logo-link img{
+     height:16px!important;
+     width:auto!important;
+     max-height:16px!important;
+     max-width:120px!important
+   }
    .entry-mid{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px 0 60px}
    .entry-eyebrow{font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#ffca9f;margin-bottom:18px}
    .entry h1{color:#fff;font-size:clamp(38px,6vw,68px);max-width:16ch;margin-bottom:16px;text-shadow:0 2px 40px rgba(0,0,0,.5)}
