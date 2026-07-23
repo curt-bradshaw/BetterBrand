@@ -545,13 +545,15 @@ document.addEventListener('DOMContentLoaded', () => {
     {% if template contains 'advertorial' %}
       {% section 'advertorial-shipping-bar' %}
       {% render 'adv-header-logo' %}
+    {% elsif template.suffix == 'air-quality-lp-v3' %}
+      {%- comment -%} Air Report lander — no sitewide header {%- endcomment -%}
     {% else %}
     <header>
     <!-- SECTION START: header-group.json -->
       {% sections 'header-group' %}
     <!-- SECTION END: header-group.json -->
-    {% endif %}
     </header>
+    {% endif %}
 
     <div class="ntg-main">
       <a id="main" class="patrol-sr-only" aria-hidden="true"></a>
@@ -568,7 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </main>
     </div>
 
-    {% unless template contains 'advertorial' %}
+    {% unless template contains 'advertorial' or template.suffix == 'air-quality-lp-v3' %}
       {% sections 'footer-group' %}
     {% endunless %}
 
