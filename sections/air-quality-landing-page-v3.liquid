@@ -1,7 +1,71 @@
 {% comment %} BetterBrand — air-report lander. Assign this template to a Shopify Page.
    Renders inside the theme layout so the store's Meta pixel / Northbeam / Intelligems all fire.
    Our own pixel tags this page as 'air-report' (distinct from the 'live' control). {% endcomment %}
-   {% raw %}
+
+<style>
+  /* Hide sitewide header / footer / announcement chrome on this page only */
+  .essential_annoucement_bar_wrapper,
+  [class*="essential_annoucement_bar"],
+  [class*="essential_announcement_bar"],
+  announcement-bar,
+  .announcement-bar,
+  .announcement-bar-section,
+  #shopify-section-announcement-bar,
+  [id*="announcement"],
+  [class*="announcement-bar"],
+  .shopify-section.shipping-bar,
+  [class*="shipping-bar"],
+  [id*="shipping_bar"],
+  [id*="shipping-bar"],
+  header.header-content,
+  .header-content,
+  .site-header,
+  #shopify-section-header,
+  #shopify-section-menu-mobile,
+  #shopify-section-cart-drawer,
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper,
+  .shopify-section.section-header,
+  .shopify-section-header-sticky,
+  [class*="section-header"],
+  [id*="section-header"],
+  .ntg-wrapper > header,
+  body > header,
+  footer.footer-content,
+  .footer-content,
+  .site-footer,
+  #shopify-section-footer,
+  [class*="site-footer"],
+  .shopify-section .ntg-footer,
+  .ntg-footer,
+  [id*="section-footer"],
+  .patrol-skip-link {
+    display: none !important;
+  }
+
+  .ntg-wrapper,
+  .ntg-main,
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} {
+    float: none !important;
+    clear: both !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+</style>
+
+{% raw %}
    <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=NYkPJ4"></script>
    <style>
    @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-400.woff2') format('woff2');font-weight:400;font-display:swap}
@@ -448,5 +512,18 @@
    })();
    </script>
    
-   {% endraw %}
-   
+{% endraw %}
+
+{% schema %}
+{
+  "name": "AQ Landing Page V3",
+  "tag": "section",
+  "class": "section-air-quality-lp-v3",
+  "settings": [],
+  "presets": [
+    {
+      "name": "AQ Landing Page V3"
+    }
+  ]
+}
+{% endschema %}
