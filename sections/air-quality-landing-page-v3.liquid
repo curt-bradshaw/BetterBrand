@@ -5,6 +5,78 @@
   Our own analytics pixel tags this page 'air-report' (distinct from the 'live' control). Images + fonts load from our CDN.
 {% endcomment %}
 
+<style>
+  /* Hide sitewide header / footer / announcement chrome (must be plain <style>, not {% stylesheet %}, so it can target layout chrome outside this section) */
+  .essential_annoucement_bar_wrapper,
+  [class*="essential_annoucement_bar"],
+  [class*="essential_announcement_bar"],
+  announcement-bar,
+  .announcement-bar,
+  .announcement-bar-section,
+  #shopify-section-announcement-bar,
+  [id*="announcement"],
+  [class*="announcement-bar"],
+  .shopify-section.shipping-bar,
+  [class*="shipping-bar"],
+  [id*="shipping_bar"],
+  [id*="shipping-bar"],
+  body > .ntg-wrapper > header,
+  .ntg-wrapper > header,
+  header,
+  header.header-content,
+  .header-content,
+  .site-header,
+  #shopify-section-header,
+  #shopify-section-menu-mobile,
+  #shopify-section-cart-drawer,
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper,
+  .shopify-section.section-header,
+  .shopify-section-header-sticky,
+  [class*="section-header"],
+  [id*="section-header"],
+  [id*="__header"],
+  .shopify-section-group-header-group,
+  [class*="header-group"],
+  footer,
+  footer.footer-content,
+  .footer-content,
+  .site-footer,
+  #shopify-section-footer,
+  [class*="site-footer"],
+  .shopify-section .ntg-footer,
+  .ntg-footer,
+  [id*="section-footer"],
+  [id*="__footer"],
+  .shopify-section-group-footer-group,
+  [class*="footer-group"],
+  .patrol-skip-link,
+  .skip-to-content-link {
+    display: none !important;
+  }
+
+  .ntg-wrapper,
+  .ntg-main,
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} {
+    float: none !important;
+    clear: both !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+</style>
+
 <div class="bb-air-report-lander">
   <!-- ENTRY (full-screen) -->
   <section class="entry" id="entry">
