@@ -1,539 +1,452 @@
-{% comment %}
-  BetterBrand — air-report lander (Shopify section).
-  Add as sections/air-report-lander.liquid, then reference it from a page template (page.air-report.json) or add via the theme customizer.
-  Renders inside the theme layout so the store's Meta pixel / Northbeam / Intelligems all fire.
-  Our own analytics pixel tags this page 'air-report' (distinct from the 'live' control). Images + fonts load from our CDN.
-{% endcomment %}
-
-<style>
-  /* Hide sitewide header / footer / announcement chrome (must be plain <style>, not {% stylesheet %}, so it can target layout chrome outside this section) */
-  .essential_annoucement_bar_wrapper,
-  [class*="essential_annoucement_bar"],
-  [class*="essential_announcement_bar"],
-  announcement-bar,
-  .announcement-bar,
-  .announcement-bar-section,
-  #shopify-section-announcement-bar,
-  [id*="announcement"],
-  [class*="announcement-bar"],
-  .shopify-section.shipping-bar,
-  [class*="shipping-bar"],
-  [id*="shipping_bar"],
-  [id*="shipping-bar"],
-  body > .ntg-wrapper > header,
-  .ntg-wrapper > header,
-  header,
-  header.header-content,
-  .header-content,
-  .site-header,
-  #shopify-section-header,
-  #shopify-section-menu-mobile,
-  #shopify-section-cart-drawer,
-  [class*="site-header"],
-  sticky-header,
-  .header-wrapper,
-  .shopify-section.section-header,
-  .shopify-section-header-sticky,
-  [class*="section-header"],
-  [id*="section-header"],
-  [id*="__header"],
-  .shopify-section-group-header-group,
-  [class*="header-group"],
-  footer,
-  footer.footer-content,
-  .footer-content,
-  .site-footer,
-  #shopify-section-footer,
-  [class*="site-footer"],
-  .shopify-section .ntg-footer,
-  .ntg-footer,
-  [id*="section-footer"],
-  [id*="__footer"],
-  .shopify-section-group-footer-group,
-  [class*="footer-group"],
-  .patrol-skip-link,
-  .skip-to-content-link {
-    display: none !important;
-  }
-
-  .ntg-wrapper,
-  .ntg-main,
-  #MainContent,
-  main#MainContent,
-  .main-content,
-  [id="MainContent"] {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-  }
-
-  #shopify-section-{{ section.id }} {
-    float: none !important;
-    clear: both !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: block !important;
-  }
-</style>
-
-<div class="bb-air-report-lander">
-  <!-- ENTRY (full-screen) -->
-  <section class="entry" id="entry">
-    <div class="entry-bg"><img src="https://air-report.pages.dev/assets/img/hero-city.png" alt="A city skyline under heavy smoke haze" fetchpriority="high"></div>
-    <div class="entry-scrim"></div>
-    <div class="wrap entry-nav">
-      <a class="entry-logo-link" href="https://www.trybetterbrand.com/" aria-label="BetterBrand home"><img class="entry-logo" src="https://air-report.pages.dev/assets/img/betterbrand-logo-green.png" alt="BetterBrand"></a>
-      <div class="entry-brand" style="font-weight:600;font-size:12.5px;color:rgba(255,255,255,.7);letter-spacing:.06em;text-transform:uppercase">The Air Report</div>
-    </div>
-    <div class="wrap entry-mid">
-      <div class="entry-eyebrow">The Air Report &middot; Live U.S. EPA data</div>
-      <h1>What's really in the air you breathe?</h1>
-      <p class="entry-sub">Enter your ZIP for a free, full report on what you're breathing where you live, in 60 seconds.</p>
-      <form class="entry-form" id="air-form" novalidate>
-        <div class="row">
-          <input class="fin" type="text" name="first_name" placeholder="First name" autocomplete="given-name">
-          <input class="fin" type="text" name="zip" inputmode="numeric" placeholder="ZIP code" autocomplete="postal-code" required>
-        </div>
-        <input class="fin" type="email" name="email" placeholder="Email address" autocomplete="email" required>
-        <input class="fin" type="tel" name="phone" placeholder="Mobile (optional, for air alerts)" autocomplete="tel">
-        <button class="fbtn" type="submit">See my air report &rarr;</button>
-        <p class="ferr" hidden></p>
-      </form>
-      <div class="entry-trust">
-        <span><span class="x">&#10003;</span> Live EPA data</span>
-        <span><span class="x">&#10003;</span> 60 seconds</span>
-        <span><span class="x">&#10003;</span> No purchase necessary</span>
-      </div>
-      <p class="entry-consent">By checking your air you agree to receive your free report and occasional air-quality and product emails or texts from BetterBrand. Unsubscribe anytime.</p>
-    </div>
-  </section>
-  
-  <div class="report" id="report" hidden></div>
-  </div>
-  
-  {% stylesheet %}
-  @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-400.woff2') format('woff2');font-weight:400;font-display:swap}
-  @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-500.woff2') format('woff2');font-weight:500;font-display:swap}
-  @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-600.woff2') format('woff2');font-weight:600;font-display:swap}
-  @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-700.woff2') format('woff2');font-weight:700;font-display:swap}
-  @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-800.woff2') format('woff2');font-weight:800;font-display:swap}
-  :root{
-    --bg:#f4f6f7; --card:#fff; --ink:#161a1c; --muted:#5b646a; --muted-2:#8a9196; --line:rgba(22,26,28,.12);
-    --green:#1A3A1A; --green-soft:#2d5a2d; --gold:#F2CB49; --gold-2:#d9ad2c; --gold-deep:#234134;
-    --muted-2b:#6f767b;
-    --charcoal:#14181a; --charcoal-2:#0b0e0f; --danger:#ef4a2a;
-    --aqi-good:#57a639; --aqi-mod:#e6b800; --aqi-usg:#f57c00; --aqi-bad:#e53935; --aqi-vbad:#8e24aa; --aqi-haz:#7e0023;
-    --font:'Hanken',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  [hidden]{display:none!important}
-  html{-webkit-text-size-adjust:100%}
-  body{font-family:var(--font);color:var(--ink);background:var(--charcoal);line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased}
-  img{max-width:100%;display:block}
-  a{color:inherit;text-decoration:none}
-  button{font-family:inherit;cursor:pointer;border:0;background:0}
-  h1,h2,h3{line-height:1.04;letter-spacing:-.02em;font-weight:800}
-  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
-  
-  /* ============ ENTRY (full-screen) ============ */
-  .entry{position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
-  .entry-bg{position:absolute;inset:0;z-index:-2}
-  .entry-bg img{width:100%;height:100%;object-fit:cover;object-position:center 34%}
-  .entry-scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,14,15,.7),rgba(11,14,15,.55) 45%,rgba(11,14,15,.9))}
-  .entry-nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
-  .entry-brand{color:#fff;font-weight:800;font-size:16px}
-  .entry-brand span{color:rgba(255,255,255,.7);font-weight:600;margin-left:7px}
-  .entry-logo-link,.rep-logo-link{display:inline-flex;align-items:center;line-height:0}
-  .entry-logo{height:22px;width:auto;filter:brightness(0) invert(1)}
-  .rep-logo{height:19px;width:auto}
-  .entry-mid{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px 0 60px}
-  .entry-eyebrow{font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#ffca9f;margin-bottom:18px}
-  .entry h1{color:#fff;font-size:clamp(38px,6vw,68px);max-width:16ch;margin-bottom:16px;text-shadow:0 2px 40px rgba(0,0,0,.5)}
-  .entry-sub{color:rgba(255,255,255,.85);font-size:clamp(16px,1.6vw,19px);max-width:44ch;margin-bottom:30px}
-  .entry-form{width:100%;max-width:440px;display:flex;flex-direction:column;gap:11px}
-  .entry-form .row{display:flex;gap:11px}
-  .entry-form .row>*{flex:1;min-width:0}
-  .fin{width:100%;font-family:var(--font);font-size:16px;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);border-radius:12px;padding:16px 16px;transition:border-color .15s,background .15s}
-  .fin::placeholder{color:rgba(255,255,255,.6)}
-  .fin:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.16)}
-  .fbtn{margin-top:3px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:17px;padding:17px;border-radius:12px;transition:filter .15s,transform .05s}
-  .fbtn:hover{filter:brightness(.97)}.fbtn:active{transform:translateY(1px)}.fbtn[disabled]{opacity:.7}
-  .ferr{font-size:13px;color:#ff9a7a;font-weight:700;margin:0}
-  .entry-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-top:20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.8)}
-  .entry-trust .x{color:var(--gold)}
-  .entry-consent{font-size:10.5px;color:rgba(255,255,255,.6);max-width:440px;margin:12px auto 0;line-height:1.5}
-  .entry-consent a{color:#fff;text-decoration:underline}
-  
-  /* ============ REPORT (full-screen takeover) ============ */
-  .report{position:fixed;inset:0;z-index:100;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
-  .report.on{opacity:1;transform:none}
-  .rep-top{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;position:sticky;top:0;background:rgba(244,246,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:2}
-  .rep-brand{font-weight:800;font-size:15px;color:var(--green)}
-  .rep-brand span{color:var(--muted);font-weight:600;margin-left:6px}
-  .rep-close{font-size:13px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:2px}
-  /* compact 2-col body */
-  .rr-body{max-width:640px;margin:0 auto;padding:32px 22px 8px}
-  .rr-loc{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--green-soft);margin-bottom:12px}
-  .rr-hook{font-size:clamp(30px,4.2vw,48px);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin-bottom:20px}
-  .rr-hook .hl{color:var(--danger)}
-  .rr-rods{display:flex;gap:5px;margin-bottom:22px}
-  .rr-rods .rod{width:9px;height:28px;border-radius:2px;background:linear-gradient(180deg,#fff 0 58%,#e7c88c 58%,#caa863);position:relative;border:1px solid rgba(0,0,0,.12)}
-  .rr-rods .rod::before{content:"";position:absolute;top:-4px;left:0;right:0;height:5px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 6px rgba(224,82,30,.85)}
-  .rr-num{display:flex;align-items:center;gap:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;flex-wrap:wrap}
-  .rr-aqi{display:flex;flex-direction:column;line-height:1}
-  .rr-aqi .n{font-size:56px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .rr-aqi .c{display:flex;align-items:center;font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;margin-top:6px}
-  .rr-aqi .c .dot{width:10px;height:10px;border-radius:50%;margin-right:8px;flex:none}
-  .rr-chips{display:flex;gap:9px;flex-wrap:wrap}
-  .rr-chip{border:1px solid var(--line);border-radius:12px;padding:10px 13px;min-width:78px;background:#fff}
-  .rr-chip .l{font-size:10.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
-  .rr-chip .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
-  .rr-chip .cc{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
-  .rr-note{font-size:14px;color:var(--muted);margin-top:18px;line-height:1.6}
-  .rr-note b{color:var(--ink)}
-  /* buy panel (right col; below on mobile) */
-  .rr-side{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 24px 60px -38px rgba(0,0,0,.45);margin-top:16px}
-  .rr-do{margin-top:34px}
-  .rr-do-q{font-size:clamp(24px,3.6vw,33px);font-weight:800;color:var(--ink);letter-spacing:-.01em;margin-bottom:12px}
-  .rr-do-a{font-size:16px;color:var(--muted);line-height:1.6;max-width:60ch}
-  .rr-head{display:flex;align-items:center;gap:13px;margin-bottom:16px}
-  .rr-head img{width:62px;height:62px;border-radius:12px;object-fit:cover;background:#e7ece6;flex:none}
-  .rr-head .h{font-size:15px;font-weight:800;color:var(--ink);line-height:1.2}
-  .rr-head .s{font-size:12px;color:var(--muted);margin-top:3px}
-  .rr-mailed{font-size:11.5px;color:var(--muted);margin-top:14px;text-align:center}
-  .rr-mailed b{color:var(--ink)}
-  .rr-disc{padding:6px 22px 46px;text-align:center}
-  .rr-disc p{font-size:11.5px;color:var(--muted-2b);line-height:1.65;max-width:820px;margin:0 auto}
-  /* buy box */
-  .bb-plan{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
-  .bb-plan.selected{border-color:var(--green);background:#f3f7f2}
-  .bb-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative}
-  .bb-plan.selected .bb-radio{border-color:var(--green)}
-  .bb-plan.selected .bb-radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--green)}
-  .bb-plan-main{flex:1;min-width:0}
-  .bb-plan-name{font-size:15px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .bb-best{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--gold);color:var(--gold-deep);padding:3px 8px;border-radius:999px}
-  .bb-plan-desc{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
-  .bb-plan-price{text-align:right;flex:none}
-  .bb-now{font-size:17px;font-weight:800;color:var(--ink)}
-  .bb-was{font-size:12px;color:var(--muted-2);text-decoration:line-through;margin-left:5px}
-  .bb-per{display:block;font-size:11px;color:var(--muted);margin-top:1px}
-  .bb-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:16px;padding:16px;border-radius:12px;margin-top:6px;box-shadow:0 14px 28px -14px rgba(217,173,44,.9);transition:filter .15s}
-  .bb-cta:hover{filter:brightness(.98)}
-  .bb-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-size:11.5px;font-weight:700;color:var(--green-soft)}
-  /* sticky mobile add-to-cart bar */
-  .bb-sticky{position:fixed;bottom:0;left:0;right:0;z-index:120;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:11px 18px;box-shadow:0 -8px 24px -16px rgba(0,0,0,.4);display:none;transform:translateY(110%);transition:transform .3s ease}
-  .bb-sticky.show{transform:none}
-  .bb-sticky-in{display:flex;align-items:center;gap:12px}
-  .bb-sticky .lbl{flex:1;min-width:0;font-size:13px;font-weight:700;color:var(--ink);line-height:1.25}
-  .bb-sticky .lbl span{display:block;font-size:11px;color:var(--muted);font-weight:600}
-  .bb-sticky a{background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:15px;padding:14px 22px;border-radius:999px;white-space:nowrap}
-  
-  @media(max-width:820px){
-    .rr-body{padding:24px 22px 12px}
-    .entry-nav .entry-brand:last-child{display:none}
-  }
-  @media(prefers-reduced-motion:reduce){.report{transition:none}}
-  /* --- compact single-screen report --- */
-  .rr-body{max-width:600px;padding:18px 22px 12px}
-  .rr-loc{margin-bottom:7px;font-size:12px}
-  .rr-hook{font-size:clamp(25px,4.8vw,38px);line-height:1.08;margin-bottom:15px}
-  .rr-read{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:11px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .rd-main{display:flex;align-items:center;gap:11px}
-  .rd-main .n{font-size:44px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .rd-lab{display:flex;flex-direction:column;line-height:1.15}
-  .rd-lab .c{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px}
-  .rd-lab .c .dot{width:9px;height:9px;border-radius:50%;flex:none}
-  .rd-lab .sub{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:3px}
-  .rd-others{display:flex;gap:22px;margin-left:auto}
-  .rd-o{display:flex;flex-direction:column;line-height:1.05}
-  .rd-o .l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin-bottom:3px}
-  .rd-o .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
-  .rr-src{font-size:11px;color:var(--muted-2b);margin-top:8px;line-height:1.5}
-  .rr-src b{color:var(--muted)}
-  .rr-do{margin-top:13px}
-  .rr-do-q{font-size:clamp(20px,3.4vw,26px);margin-bottom:6px}
-  .rr-do-a{font-size:14px;line-height:1.5;max-width:none}
-  .rr-do-a b{color:var(--ink);font-weight:800}
-  .rr-side{padding:15px;border-radius:16px;margin-top:14px}
-  .rr-head{margin-bottom:12px}
-  .rr-head img{width:46px;height:46px}
-  .rr-head .h{font-size:14px}
-  .rr-head .s{font-size:11.5px}
-  .rr-mailed{margin-top:11px;font-size:11px}
-  .bb-plan{padding:11px 13px;margin-bottom:8px}
-  .bb-plan-name{font-size:14px}
-  .bb-plan-desc{font-size:11.5px;margin-top:2px}
-  .bb-now{font-size:16px}
-  .bb-cta{padding:15px;font-size:16px;margin-top:4px}
-  .bb-trust{margin-top:10px;font-size:11px;gap:5px 12px}
-  .rr-disc{padding:16px 22px 40px}
-  .bb-head{display:flex;align-items:center;gap:12px;margin-bottom:13px}
-  .bb-thumb{width:58px;height:58px;border-radius:12px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
-  .bb-htx{min-width:0}
-  .bb-title{font-size:14px;font-weight:800;color:var(--ink);line-height:1.25}
-  .bb-supply{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
-  .bb-packs{display:flex;gap:7px;margin-bottom:11px}
-  .pk{flex:1;border:2px solid var(--line);border-radius:11px;padding:9px 4px;font-family:var(--font);font-size:13px;font-weight:800;color:var(--muted);background:#fff;text-align:center;line-height:1.1;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
-  .pk small{display:block;font-size:9px;font-weight:800;color:var(--gold-2);margin-top:3px;letter-spacing:.02em;text-transform:uppercase}
-  .pk.selected{border-color:var(--green);color:var(--green);background:#f3f7f2}
-  .bb-plan.disabled{opacity:.45;cursor:default}
-  .bb-na{font-size:12px;font-weight:700;color:var(--muted-2b)}
-  @media(max-width:400px){ .rd-others{margin-left:0} }
-  
-  /* ===== Rich air-quality report (info-first; sell held to ~10%) ===== */
-  .rr-body{max-width:680px;padding:26px 22px 10px}
-  .aq-loc{font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--green-soft)}
-  .aq-loc span{color:var(--muted);font-weight:700}
-  .aq-observed{font-size:12px;color:var(--muted);margin-top:5px}
-  .aq-hero{margin:20px 0 4px}
-  .aq-big{display:flex;align-items:baseline;gap:10px}
-  .aq-big .n{font-size:64px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .aq-big .unit{font-size:15px;font-weight:800;color:var(--muted);letter-spacing:.05em}
-  .aq-cat{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-top:10px}
-  .aq-cat .dot{width:12px;height:12px;border-radius:50%;flex:none}
-  .aq-scale{position:relative;height:12px;border-radius:7px;margin:18px 0 7px;background:linear-gradient(90deg,#7cb342 0%,#f9d423 20%,#ff9800 40%,#e53935 60%,#8e24aa 80%,#7e0023 100%)}
-  .aq-marker{position:absolute;top:-5px;width:4px;height:22px;background:#0f1512;border-radius:3px;box-shadow:0 0 0 2px #fff;transform:translateX(-2px)}
-  .aq-scale-lbls{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
-  .aq-primary{font-size:13.5px;color:var(--muted);margin-top:13px}
-  .aq-primary b{color:var(--ink)}
-  .aq-cig{font-size:15px;line-height:1.55;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:18px}
-  .aq-cig b{color:var(--danger)}
-  .aq-cig .rr-rods{display:flex;align-items:flex-end;flex-wrap:wrap;gap:6px;margin:0 0 13px}
-  .aq-cig .rr-rods .rod{width:11px;height:36px;border-radius:2px;background:linear-gradient(180deg,#fff 0 60%,#e7c88c 60%,#caa863);position:relative;border:1px solid rgba(0,0,0,.14)}
-  .aq-cig .rr-rods .rod::before{content:"";position:absolute;top:-5px;left:0;right:0;height:6px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 7px rgba(224,82,30,.9)}
-  .aq-cig .rr-rods-more{align-self:center;font-size:15px;font-weight:800;color:var(--muted);margin-left:2px}
-  .aq-block{margin-top:32px}
-  .aq-h{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.01em;margin:0 0 14px}
-  .aq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .aq-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-  .aq-card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .aq-card .lab{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
-  .aq-card .badge{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;padding:3px 8px;border-radius:999px;background:#eef2ec;white-space:nowrap}
-  .aq-card .val{font-size:34px;font-weight:800;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:9px 0}
-  .aq-card .desc{font-size:12.5px;color:var(--muted);line-height:1.5;margin:0}
-  .aq-guide{font-size:16px;color:var(--ink);line-height:1.6;margin:0;max-width:62ch}
-  .aq-note{font-size:13px;color:var(--muted);line-height:1.55;margin:12px 0 0;padding-left:14px;border-left:3px solid var(--line);max-width:62ch}
-  .aq-tips{list-style:none;margin:0;padding:0}
-  .aq-tips li{position:relative;padding:0 0 0 26px;margin-bottom:13px;font-size:15px;color:var(--ink);line-height:1.5;max-width:62ch}
-  .aq-tips li:last-child{margin-bottom:0}
-  .aq-tips li::before{content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--green)}
-  .aq-tips li b{font-weight:800}
-  .aq-pollen{font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-top:16px}
-  /* the sell — one slim strip, ~10% of the page */
-  .aq-sell{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:36px}
-  .aq-sell img{width:52px;height:52px;border-radius:11px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
-  .aq-sell-tx{flex:1;min-width:0}
-  .aq-sell-tx .t{font-size:15px;font-weight:800;color:var(--ink);line-height:1.25}
-  .aq-sell-tx .s{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.45}
-  .aq-sell-cta{flex:none;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:14px;padding:12px 16px;border-radius:10px;white-space:nowrap}
-  .aq-sell-cta:hover{filter:brightness(.98)}
-  @media(max-width:560px){
-    .aq-grid{grid-template-columns:1fr}
-    .aq-card{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-    .aq-card .top{order:1;flex:1;min-width:120px}
-    .aq-card .val{order:2;margin:0}
-    .aq-card .desc{order:3;flex-basis:100%;margin-top:2px}
-    .aq-big .n{font-size:54px}
-    .aq-sell{flex-wrap:wrap}
-    .aq-sell-cta{width:100%;text-align:center}
-  }
-  {% endstylesheet %}
-  
-  {% javascript %}
-  (function () {
-    const form = document.getElementById('air-form');
-    const report = document.getElementById('report');
-    if (!form || !report) return;
-    const WORKER = 'https://betterbrand-air-quality.royal-dew-fe05.workers.dev';
-    const SERVE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/aq-report/submit';
-    const LOGBASE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form';
-    const VERSION = 'air-report';
-    const VAR1=50211146957099, SUBPLAN=118714663211;
-    const URL_SUB='https://www.trybetterbrand.com/cart/'+VAR1+':1?selling_plan='+SUBPLAN;
-    const URL_ONCE='https://www.trybetterbrand.com/cart/'+VAR1+':1?discount=AIR20';
-    const DISC='https://www.trybetterbrand.com/discount/AIR20?redirect=/products/betterlungs-r-mullein-gummies';
-    const BUYBOX=
-      '<div class="bb">'+
-        '<div class="bb-head"><img class="bb-thumb" src="https://air-report.pages.dev/assets/img/gummies-1bag.jpg" alt="BetterLungs Mullein Gummies pouch" loading="lazy"><div class="bb-htx"><div class="bb-title">BetterLungs® Mullein Gummies</div><div class="bb-supply" id="bb-supply">30-day supply</div></div></div>'+
-        '<div class="bb-packs">'+
-          '<button type="button" class="pk selected" data-pack="1">1 Bag</button>'+
-          '<button type="button" class="pk" data-pack="3">3 Bags<small>Save more</small></button>'+
-          '<button type="button" class="pk" data-pack="6">6 Bags<small>Best price</small></button>'+
-        '</div>'+
-        '<div class="bb-plan selected" id="bb-sub" data-plan="sub"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">Subscribe &amp; Save <span class="bb-best">Best value</span></div><div class="bb-plan-desc" id="bb-sub-desc">20% off · ships monthly · cancel anytime</div></div><div class="bb-plan-price" id="bb-sub-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span><span class="bb-per">/mo</span></div></div>'+
-        '<div class="bb-plan" id="bb-once" data-plan="once"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">One-time purchase</div><div class="bb-plan-desc">20% off with code AIR20</div></div><div class="bb-plan-price" id="bb-once-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span></div></div>'+
-        '<a class="bb-cta" id="bb-cta" href="#" target="_blank" rel="noopener">Subscribe · $27.96/mo &rarr;</a>'+
-        '<div class="bb-trust"><span>✓ 365-day guarantee</span><span>✓ Free shipping</span><span>✓ Cancel anytime</span></div>'+
-      '</div>';
-    const STICKY='<div class="bb-sticky" id="bb-sticky"><div class="bb-sticky-in"><div class="lbl">BetterLungs® Gummies <span id="bb-sticky-sub">Subscribe &amp; Save · $27.96</span></div><a id="bb-sticky-cta" href="'+URL_SUB+'" target="_blank" rel="noopener">Add to cart</a></div></div>';
-    const SID = (function(){try{let s=sessionStorage.getItem('aq_sid');if(!s){s=Date.now().toString(36)+Math.random().toString(36).slice(2,8);sessionStorage.setItem('aq_sid',s);}return s;}catch(_){return '';}})();
-    // BB Pixel: persistent first-party visitor id (survives sessions) — our own tracking, no Northbeam/Meta.
-    const VID = (function(){try{let v=localStorage.getItem('bb_vid');if(!v){v='v'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);localStorage.setItem('bb_vid',v);}return v;}catch(_){return '';}})();
-    function withRef(u){var sep=u.indexOf('?')>-1?'&':'?';return u+sep+'bb_vid='+encodeURIComponent(VID)+'&bb_src='+encodeURIComponent(VERSION);}
-    const T0 = Date.now();
-    function aqTrack(t,x){fetch(LOGBASE+'/aq-event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({type:t,page_version:VERSION,session_id:SID,vid:VID,path:location.pathname,elapsed_ms:Date.now()-T0},x||{})),keepalive:true}).catch(()=>{});}
-    (function(){try{if(sessionStorage.getItem('aq_viewed'))return;sessionStorage.setItem('aq_viewed','1');}catch(_){}fetch(LOGBASE+'/aq-view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_version:VERSION,session_id:SID,vid:VID,path:location.pathname})}).catch(()=>{});})();
-    form.addEventListener('focusin',(function(){let s=false;const t={};return function(e){var f=e.target&&e.target.name;if(!s){s=true;aqTrack('form_start',{field:f||''});}if(f&&!t[f]){t[f]=1;aqTrack('field_focus',{field:f});}};})());
-    form.addEventListener('submit',()=>{aqTrack('submit_attempt');},true);
-    const btn=form.querySelector('.fbtn'), errEl=form.querySelector('.ferr');
-    const esc=(s)=>String(s).replace(/[&<>"]/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-    function showErr(m){if(errEl){errEl.textContent=m;errEl.hidden=false;}aqTrack('error_shown',{message:m});}
-    function captureLead(d){const digits=(d.phone||'').replace(/\D/g,'');if(digits.length>=10){fetch(SERVE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:d.first_name,name:d.first_name,email:d.email,phone:d.phone,page_version:VERSION,properties:{'Zip Code':d.zip}})}).catch(()=>{});}else{fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:d.email,first_name:d.first_name,zip_code:d.zip,page_version:VERSION})}).catch(()=>{});}}
-    function pm25FromAqi(a){var bp=[[0,50,0,9],[51,100,9.1,35.4],[101,150,35.5,55.4],[151,200,55.5,125.4],[201,300,125.5,225.4],[301,500,225.5,325.4]];for(var i=0;i<bp.length;i++){var b=bp[i];if(a<=b[1])return (a-b[0])/(b[1]-b[0])*(b[3]-b[2])+b[2];}return 325;}
-    function countUp(el,target,dur){var t0=performance.now();(function tick(now){var p=Math.min(1,(now-t0)/(dur||1200));el.textContent=Math.round((1-Math.pow(1-p,3))*target);if(p<1)requestAnimationFrame(tick);else el.textContent=target;})(t0);}
-    function topbar(){return '<div class="rep-top"><a class="rep-logo-link" href="https://www.trybetterbrand.com/" aria-label="BetterBrand home"><img class="rep-logo" src="https://air-report.pages.dev/assets/img/betterbrand-logo-green.png" alt="BetterBrand"></a><button class="rep-close" id="rep-close">Start over</button></div>';}
-    function textColor(cat){cat=(cat||'').toLowerCase();if(cat.indexOf('good')>=0)return '#2f7d20';if(cat.indexOf('sensitive')>=0)return '#c25200';if(cat.indexOf('moderate')>=0)return '#8a6a00';if(cat.indexOf('very')>=0)return '#7b1fa2';if(cat.indexOf('hazard')>=0)return '#7e0023';if(cat.indexOf('unhealthy')>=0)return '#c62828';return '#2a2f33';}
-    function closeReport(){report.classList.remove('on');document.body.style.overflow='';setTimeout(function(){report.hidden=true;report.scrollTop=0;},450);}
-    var PACKS={
-      '1':{v:50211146957099, sub:{plan:118714663211,price:'$27.96',per:'/mo',cad:'ships monthly'}, once:'$27.96', was:'$34.95', supply:'30-day supply'},
-      '3':{v:50211146989867, sub:{plan:118714728747,price:'$69.90',per:'/3 mo',cad:'ships every 3 months'}, once:'$75.48', was:'$94.35', supply:'90-day supply · $25.16/bag'},
-      '6':{v:51683833741611, sub:null, once:'$142.56', was:'$178.20', supply:'180-day supply · $23.76/bag'}
-    };
-    function wireBuyBox(){
-      var packEls=report.querySelectorAll('.pk'); if(!packEls.length){ var rc0=document.getElementById('rep-close'); if(rc0) rc0.addEventListener('click',closeReport); return; }
-      var subCard=document.getElementById('bb-sub'), onceCard=document.getElementById('bb-once'),
-          subPrice=document.getElementById('bb-sub-price'), subDesc=document.getElementById('bb-sub-desc'),
-          oncePrice=document.getElementById('bb-once-price'), cta=document.getElementById('bb-cta'),
-          supplyEl=document.getElementById('bb-supply');
-      var st={pack:'1', plan:'sub'};
-      function render(){
-        var p=PACKS[st.pack];
-        if(!p.sub && st.plan==='sub') st.plan='once';
-        packEls.forEach(function(b){b.classList.toggle('selected', b.getAttribute('data-pack')===st.pack);});
-        supplyEl.textContent=p.supply;
-        subCard.classList.toggle('disabled', !p.sub);
-        if(p.sub){ subPrice.innerHTML='<span class="bb-now">'+p.sub.price+'</span><span class="bb-was">'+p.was+'</span><span class="bb-per">'+p.sub.per+'</span>'; subDesc.textContent='20% off · '+p.sub.cad+' · cancel anytime'; }
-        else { subPrice.innerHTML='<span class="bb-na">Not for this size</span>'; subDesc.textContent='Choose 1 or 3 bags to subscribe'; }
-        oncePrice.innerHTML='<span class="bb-now">'+p.once+'</span><span class="bb-was">'+p.was+'</span>';
-        subCard.classList.toggle('selected', st.plan==='sub' && !!p.sub);
-        onceCard.classList.toggle('selected', st.plan==='once');
-        var url,label;
-        if(st.plan==='sub' && p.sub){ url='https://www.trybetterbrand.com/cart/'+p.v+':1?selling_plan='+p.sub.plan; label='Subscribe · '+p.sub.price+p.sub.per+' &rarr;'; }
-        else { url='https://www.trybetterbrand.com/cart/'+p.v+':1?discount=AIR20'; label='Add to cart · '+p.once+' &rarr;'; }
-        cta.setAttribute('href',withRef(url)); cta.innerHTML=label;
-      }
-      packEls.forEach(function(b){b.addEventListener('click',function(){st.pack=b.getAttribute('data-pack');render();});});
-      subCard.addEventListener('click',function(){if(subCard.classList.contains('disabled'))return;st.plan='sub';render();});
-      onceCard.addEventListener('click',function(){st.plan='once';render();});
-      cta.addEventListener('click',function(){aqTrack('cta_click',{plan:st.plan,pack:st.pack});});
-      render();
-      var rc=document.getElementById('rep-close'); if(rc) rc.addEventListener('click',closeReport);
-    }
-  
-    function reveal(){report.hidden=false;document.body.style.overflow='hidden';requestAnimationFrame(function(){report.classList.add('on');});}
-  
-    var AQ_DESC={pm25:'Fine particles from smoke, exhaust and haze, small enough to reach deep into your lungs and bloodstream.',pm10:'Coarser particles like dust, pollen and mold that irritate the nose, throat and airways.',ozone:'Ground-level ozone from traffic and heat that inflames the lungs and can trigger coughing and tightness.',no2:'Nitrogen dioxide from traffic and combustion that irritates the airways and worsens asthma.',so2:'Sulfur dioxide from burning fuel that irritates the airways and eyes.',co:'Carbon monoxide from combustion that lowers how much oxygen your blood can carry.'};
-    function aqGuide(cat){cat=(cat||'').toLowerCase();
-      if(cat.indexOf('good')>=0)return 'Air quality is good right now. It is a fine day to be active outdoors.';
-      if(cat.indexOf('very')>=0)return 'The air is very unhealthy. This is a health alert. Everyone should avoid outdoor exertion and stay indoors with filtered air where possible.';
-      if(cat.indexOf('hazard')>=0)return 'The air is hazardous. These are emergency conditions. Stay indoors, keep windows sealed and run air filtration.';
-      if(cat.indexOf('sensitive')>=0)return 'The air is unhealthy for sensitive groups. People with lung or heart conditions, older adults and children should cut back on long or intense outdoor activity.';
-      if(cat.indexOf('moderate')>=0)return 'Air quality is acceptable. If you are unusually sensitive to air pollution, consider easing up on long or intense time outdoors.';
-      if(cat.indexOf('unhealthy')>=0)return 'The air is unhealthy. Everyone may start to feel effects. Sensitive groups should avoid prolonged outdoor exertion and keep windows closed.';
-      return 'Here is what today’s readings mean for you.';
-    }
-    var TIPS='<li>Check the number before you head out, and save long or intense activity for cleaner hours.</li>'+
-      '<li>On smoky or high days, <b>keep windows closed</b> and run a HEPA air purifier indoors.</li>'+
-      '<li>Wear a well-fitting <b>N95</b> outdoors when fine particles are elevated.</li>'+
-      '<li>Support your lungs daily so they can clear more of what you breathe.</li>';
-    function sellStrip(){return '<section class="aq-sell"><img src="https://air-report.pages.dev/assets/img/gummies-1bag.jpg" alt="BetterLungs Mullein Gummies" loading="lazy"><div class="aq-sell-tx"><div class="t">Support your lungs from the inside</div><div class="s">BetterLungs® mullein gummies, once a day. 20% off today with your report.</div></div><a class="aq-sell-cta" id="bb-cta" href="'+DISC+'" target="_blank" rel="noopener">Get 20% off &rarr;</a></section>';}
-    function wireReport(){var rc=document.getElementById('rep-close');if(rc)rc.addEventListener('click',closeReport);var cta=document.getElementById('bb-cta');if(cta){cta.setAttribute('href',withRef(cta.getAttribute('href')));cta.addEventListener('click',function(){aqTrack('cta_click',{place:'report_sell'});});}}
-    var DISCLAIMER='<section class="rr-disc"><p>The cigarette comparison is an estimate from live PM2.5 (Berkeley Earth: ~22 µg/m³ ≈ one cigarette), not a medical measurement. Air-quality readings are sourced from public monitoring networks for general information only and are not a medical or safety assessment. BetterLungs® is a dietary supplement; these statements have not been evaluated by the FDA and it is not intended to diagnose, treat, cure, or prevent any disease. Individual results vary.</p></section>';
-  
-    function buildReport(d,email){
-      var overall=(typeof d.overallAqi==='number')?d.overallAqi:(d.worst?d.worst.aqi:0);
-      var worst=d.worst||{}; var color=worst.color||'#e53935';
-      var loc=d.city?esc(d.city)+(d.state?', '+esc(d.state):''):('ZIP '+esc(d.zip));
-      var tc=textColor(worst.category);
-      var markerPct=Math.max(1,Math.min(99,(overall/500)*100));
-      var cig=(typeof d.cigarettes==='number')?d.cigarettes:null;
-      var cigTxt='';
-      if(cig!==null){var cr=Math.round(cig*10)/10;var cw=(cr===1)?'cigarette':'cigarettes';var whole=Math.min(20,Math.floor(cig));var frac=cig-Math.floor(cig);var rods='<div class="rr-rods" aria-hidden="true">';for(var ri=0;ri<whole;ri++)rods+='<span class="rod"></span>';if(whole<20&&(frac>0.08||whole===0)){var ph=Math.max(8,Math.round(36*(whole===0?Math.max(frac,0.12):frac)));rods+='<span class="rod part" style="height:'+ph+'px"></span>';}if(Math.floor(cig)>20)rods+='<span class="rr-rods-more">+</span>';rods+='</div>';cigTxt='<div class="aq-cig">'+rods+'<div class="aq-cig-tx">Breathing this air for a full day is roughly like smoking <b>'+cr+' '+cw+'</b>.'+((typeof d.pm25_ugm3==='number')?(' Today’s fine-particle level (PM2.5) is <b>'+(Math.round(d.pm25_ugm3*10)/10)+' µg/m³</b>.'):'')+'</div></div>';}
-      var cards=(d.metrics||[]).map(function(m){var b=textColor(m.category);return '<div class="aq-card"><div class="top"><span class="lab">'+esc(m.label)+'</span><span class="badge" style="color:'+b+'">'+esc(m.category)+'</span></div><div class="val" data-n="'+m.aqi+'" style="color:'+b+'">0</div><p class="desc">'+(AQ_DESC[m.key]||'')+'</p></div>';}).join('');
-      var pollen=d.pollen?'<div class="aq-pollen"><b>'+esc(d.pollen.name||'Pollen')+'</b> is running <b>'+esc(d.pollen.level||'')+'</b> in your area today.</div>':'';
-      report.innerHTML=
-        topbar()+
-        '<div class="rr-body">'+
-          '<div class="aq-loc">The air in '+loc+' &middot; <span>Live U.S. EPA data</span></div>'+
-          (d.observed?'<div class="aq-observed">Observed '+esc(d.observed)+'</div>':'')+
-          '<section class="aq-hero">'+
-            '<div class="aq-big"><span class="n" id="rr-big" style="color:'+tc+'">0</span><span class="unit">AQI</span></div>'+
-            '<div class="aq-cat" style="color:'+tc+'"><span class="dot" style="background:'+color+'"></span>'+esc(worst.category||'')+'</div>'+
-            '<div class="aq-scale"><span class="aq-marker" style="left:'+markerPct+'%"></span></div>'+
-            '<div class="aq-scale-lbls"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>300</span><span>500</span></div>'+
-            '<div class="aq-primary">Primary pollutant right now: <b>'+esc(worst.label||'')+'</b></div>'+
-          '</section>'+
-          cigTxt+
-          '<section class="aq-block"><h2 class="aq-h">The pollutants in your air</h2><div class="aq-grid">'+cards+'</div></section>'+
-          '<section class="aq-block"><h2 class="aq-h">What this means for you today</h2><p class="aq-guide">'+aqGuide(worst.category)+'</p><p class="aq-note">The Air Quality Index runs from 0 to 500. Under 50 is good, over 100 begins to affect sensitive groups, and over 150 can affect everyone.</p></section>'+
-          '<section class="aq-block"><h2 class="aq-h">How to protect yourself today</h2><ul class="aq-tips">'+TIPS+'</ul></section>'+
-          pollen+
-          sellStrip()+
-          (email?'<div class="rr-mailed">Full report also sent to <b>'+esc(email)+'</b></div>':'')+
-        '</div>'+
-        DISCLAIMER;
-      reveal();
-      countUp(document.getElementById('rr-big'),overall,1200);
-      report.querySelectorAll('.aq-card .val').forEach(function(el){countUp(el,parseInt(el.dataset.n,10),1000);});
-      wireReport();
-    }
-    function buildFallback(zip,email){
-      report.innerHTML=
-        topbar()+
-        '<div class="rr-body">'+
-          '<div class="aq-loc">Your air report &middot; ZIP '+esc(zip)+'</div>'+
-          '<section class="aq-hero"><h1 class="aq-h" style="font-size:26px;margin-bottom:10px">Your report is on its way</h1><p class="aq-guide">We couldn’t reach a live monitor near you this minute, but your full personalized report is on its way'+(email?' to <b>'+esc(email)+'</b>':'')+'. Here is how to protect your lungs in the meantime.</p></section>'+
-          '<section class="aq-block"><h2 class="aq-h">How to protect yourself today</h2><ul class="aq-tips">'+TIPS+'</ul></section>'+
-          sellStrip()+
-        '</div>'+
-        DISCLAIMER;
-      reveal(); wireReport();
-    }
-  
-    form.addEventListener('submit', async function(e){
-      e.preventDefault();
-      if(errEl) errEl.hidden=true;
-      var fd=new FormData(form);
-      var d={first_name:(fd.get('first_name')||'').toString().trim(),zip:(fd.get('zip')||'').toString().replace(/\D/g,'').slice(0,5),email:(fd.get('email')||'').toString().trim(),phone:(fd.get('phone')||'').toString().trim()};
-      if(d.zip.length!==5){showErr('Please enter a valid 5-digit ZIP code.');return;}
-      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){showErr('Please enter a valid email address.');return;}
-      btn.disabled=true; var orig=btn.innerHTML; btn.textContent='Pulling your live readings…';
-      captureLead(d);
-      fetch(LOGBASE+'/aq-log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_version:VERSION,session_id:SID,vid:VID,email:d.email,phone:d.phone,zip:d.zip,first_name:d.first_name}),keepalive:true}).catch(()=>{});
-      if(!/(^|\.)trybetterbrand\.com$/.test(location.hostname)){try{if(window.fbq)fbq('track','Lead');}catch(_){}try{if(window.Northbeam&&Northbeam.fireEmailCaptureEvent)Northbeam.fireEmailCaptureEvent(d.email);}catch(_){}}
-      try{
-        var res=await fetch(WORKER+'/aqi?zip='+d.zip);
-        var data=await res.json();
-        if(data&&data.ok&&data.metrics&&data.metrics.length){ buildReport(data,d.email); }
-        else { buildFallback(d.zip,d.email); }
-      }catch(_e){ btn.disabled=false; btn.innerHTML=orig; showErr('Couldn’t pull your readings just now. Try again in a moment.'); return; }
-      btn.disabled=false; btn.innerHTML=orig;
-    });
-  
-    // Direct preview: open /?zip=78201 (or /?preview) to jump straight to the report, no form, no lead capture
-    (function(){
-      var m=(location.search||'').match(/[?&]zip=(\d{5})/);
-      var zip = m ? m[1] : (/[?&]preview/.test(location.search) ? '10001' : null);
-      if(!zip) return;
-      fetch(WORKER+'/aqi?zip='+zip).then(function(r){return r.json();}).then(function(data){
-        if(data&&data.ok&&data.metrics&&data.metrics.length) buildReport(data,''); else buildFallback(zip,'');
-      }).catch(function(){ buildFallback(zip,''); });
-    })();
-  })();
-  {% endjavascript %}
-  
-  {% schema %}
-  {
-    "name": "Air Report",
-    "tag": "section",
-    "settings": [],
-    "presets": [
-      {
-        "name": "Air Report"
-      }
-    ]
-  }
-  {% endschema %}
-  
+{% comment %} BetterBrand — air-report lander. Assign this template to a Shopify Page.
+   Renders inside the theme layout so the store's Meta pixel / Northbeam / Intelligems all fire.
+   Our own pixel tags this page as 'air-report' (distinct from the 'live' control). {% endcomment %}
+   {% raw %}
+   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=NYkPJ4"></script>
+   <style>
+   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-400.woff2') format('woff2');font-weight:400;font-display:swap}
+   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-500.woff2') format('woff2');font-weight:500;font-display:swap}
+   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-600.woff2') format('woff2');font-weight:600;font-display:swap}
+   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-700.woff2') format('woff2');font-weight:700;font-display:swap}
+   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-800.woff2') format('woff2');font-weight:800;font-display:swap}
+   :root{
+     --bg:#f4f6f7; --card:#fff; --ink:#161a1c; --muted:#5b646a; --muted-2:#8a9196; --line:rgba(22,26,28,.12);
+     --green:#1A3A1A; --green-soft:#2d5a2d; --gold:#F2CB49; --gold-2:#d9ad2c; --gold-deep:#234134;
+     --muted-2b:#6f767b;
+     --charcoal:#14181a; --charcoal-2:#0b0e0f; --danger:#ef4a2a;
+     --aqi-good:#57a639; --aqi-mod:#e6b800; --aqi-usg:#f57c00; --aqi-bad:#e53935; --aqi-vbad:#8e24aa; --aqi-haz:#7e0023;
+     --font:'Hanken',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+   }
+   *{margin:0;padding:0;box-sizing:border-box}
+   [hidden]{display:none!important}
+   html{-webkit-text-size-adjust:100%}
+   body{font-family:var(--font);color:var(--ink);background:var(--charcoal);line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased}
+   img{max-width:100%;display:block}
+   a{color:inherit;text-decoration:none}
+   button{font-family:inherit;cursor:pointer;border:0;background:0}
+   h1,h2,h3{line-height:1.04;letter-spacing:-.02em;font-weight:800}
+   .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+   
+   /* ============ ENTRY (full-screen) ============ */
+   .entry{position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+   .entry-bg{position:absolute;inset:0;z-index:-2}
+   .entry-bg img{width:100%;height:100%;object-fit:cover;object-position:center 34%}
+   .entry-scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,14,15,.7),rgba(11,14,15,.55) 45%,rgba(11,14,15,.9))}
+   .entry-nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+   .entry-brand{color:#fff;font-weight:800;font-size:16px}
+   .entry-brand span{color:rgba(255,255,255,.7);font-weight:600;margin-left:7px}
+   .entry-logo-link,.rep-logo-link{display:inline-flex;align-items:center;line-height:0}
+   .entry-logo{height:22px;width:auto;filter:brightness(0) invert(1)}
+   .rep-logo{height:19px;width:auto}
+   .entry-mid{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px 0 60px}
+   .entry-eyebrow{font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#ffca9f;margin-bottom:18px}
+   .entry h1{color:#fff;font-size:clamp(38px,6vw,68px);max-width:16ch;margin-bottom:16px;text-shadow:0 2px 40px rgba(0,0,0,.5)}
+   .entry-sub{color:rgba(255,255,255,.85);font-size:clamp(16px,1.6vw,19px);max-width:44ch;margin-bottom:30px}
+   .entry-form{width:100%;max-width:440px;display:flex;flex-direction:column;gap:11px}
+   .entry-form .row{display:flex;gap:11px}
+   .entry-form .row>*{flex:1;min-width:0}
+   .fin{width:100%;font-family:var(--font);font-size:16px;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);border-radius:12px;padding:16px 16px;transition:border-color .15s,background .15s}
+   .fin::placeholder{color:rgba(255,255,255,.6)}
+   .fin:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.16)}
+   .fbtn{margin-top:3px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:17px;padding:17px;border-radius:12px;transition:filter .15s,transform .05s}
+   .fbtn:hover{filter:brightness(.97)}.fbtn:active{transform:translateY(1px)}.fbtn[disabled]{opacity:.7}
+   .ferr{font-size:13px;color:#ff9a7a;font-weight:700;margin:0}
+   .entry-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-top:20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.8)}
+   .entry-trust .x{color:var(--gold)}
+   .entry-consent{font-size:10.5px;color:rgba(255,255,255,.6);max-width:440px;margin:12px auto 0;line-height:1.5}
+   .entry-consent a{color:#fff;text-decoration:underline}
+   
+   /* ============ REPORT (full-screen takeover) ============ */
+   .report{position:fixed;inset:0;z-index:100;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+   .report.on{opacity:1;transform:none}
+   .rep-top{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;position:sticky;top:0;background:rgba(244,246,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:2}
+   .rep-brand{font-weight:800;font-size:15px;color:var(--green)}
+   .rep-brand span{color:var(--muted);font-weight:600;margin-left:6px}
+   .rep-close{font-size:13px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:2px}
+   /* compact 2-col body */
+   .rr-body{max-width:640px;margin:0 auto;padding:32px 22px 8px}
+   .rr-loc{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--green-soft);margin-bottom:12px}
+   .rr-hook{font-size:clamp(30px,4.2vw,48px);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin-bottom:20px}
+   .rr-hook .hl{color:var(--danger)}
+   .rr-rods{display:flex;gap:5px;margin-bottom:22px}
+   .rr-rods .rod{width:9px;height:28px;border-radius:2px;background:linear-gradient(180deg,#fff 0 58%,#e7c88c 58%,#caa863);position:relative;border:1px solid rgba(0,0,0,.12)}
+   .rr-rods .rod::before{content:"";position:absolute;top:-4px;left:0;right:0;height:5px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 6px rgba(224,82,30,.85)}
+   .rr-num{display:flex;align-items:center;gap:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;flex-wrap:wrap}
+   .rr-aqi{display:flex;flex-direction:column;line-height:1}
+   .rr-aqi .n{font-size:56px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+   .rr-aqi .c{display:flex;align-items:center;font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;margin-top:6px}
+   .rr-aqi .c .dot{width:10px;height:10px;border-radius:50%;margin-right:8px;flex:none}
+   .rr-chips{display:flex;gap:9px;flex-wrap:wrap}
+   .rr-chip{border:1px solid var(--line);border-radius:12px;padding:10px 13px;min-width:78px;background:#fff}
+   .rr-chip .l{font-size:10.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+   .rr-chip .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
+   .rr-chip .cc{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+   .rr-note{font-size:14px;color:var(--muted);margin-top:18px;line-height:1.6}
+   .rr-note b{color:var(--ink)}
+   /* buy panel (right col; below on mobile) */
+   .rr-side{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 24px 60px -38px rgba(0,0,0,.45);margin-top:16px}
+   .rr-do{margin-top:34px}
+   .rr-do-q{font-size:clamp(24px,3.6vw,33px);font-weight:800;color:var(--ink);letter-spacing:-.01em;margin-bottom:12px}
+   .rr-do-a{font-size:16px;color:var(--muted);line-height:1.6;max-width:60ch}
+   .rr-head{display:flex;align-items:center;gap:13px;margin-bottom:16px}
+   .rr-head img{width:62px;height:62px;border-radius:12px;object-fit:cover;background:#e7ece6;flex:none}
+   .rr-head .h{font-size:15px;font-weight:800;color:var(--ink);line-height:1.2}
+   .rr-head .s{font-size:12px;color:var(--muted);margin-top:3px}
+   .rr-mailed{font-size:11.5px;color:var(--muted);margin-top:14px;text-align:center}
+   .rr-mailed b{color:var(--ink)}
+   .rr-disc{padding:6px 22px 46px;text-align:center}
+   .rr-disc p{font-size:11.5px;color:var(--muted-2b);line-height:1.65;max-width:820px;margin:0 auto}
+   /* buy box */
+   .bb-plan{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
+   .bb-plan.selected{border-color:var(--green);background:#f3f7f2}
+   .bb-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative}
+   .bb-plan.selected .bb-radio{border-color:var(--green)}
+   .bb-plan.selected .bb-radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--green)}
+   .bb-plan-main{flex:1;min-width:0}
+   .bb-plan-name{font-size:15px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+   .bb-best{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--gold);color:var(--gold-deep);padding:3px 8px;border-radius:999px}
+   .bb-plan-desc{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+   .bb-plan-price{text-align:right;flex:none}
+   .bb-now{font-size:17px;font-weight:800;color:var(--ink)}
+   .bb-was{font-size:12px;color:var(--muted-2);text-decoration:line-through;margin-left:5px}
+   .bb-per{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+   .bb-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:16px;padding:16px;border-radius:12px;margin-top:6px;box-shadow:0 14px 28px -14px rgba(217,173,44,.9);transition:filter .15s}
+   .bb-cta:hover{filter:brightness(.98)}
+   .bb-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-size:11.5px;font-weight:700;color:var(--green-soft)}
+   /* sticky mobile add-to-cart bar */
+   .bb-sticky{position:fixed;bottom:0;left:0;right:0;z-index:120;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:11px 18px;box-shadow:0 -8px 24px -16px rgba(0,0,0,.4);display:none;transform:translateY(110%);transition:transform .3s ease}
+   .bb-sticky.show{transform:none}
+   .bb-sticky-in{display:flex;align-items:center;gap:12px}
+   .bb-sticky .lbl{flex:1;min-width:0;font-size:13px;font-weight:700;color:var(--ink);line-height:1.25}
+   .bb-sticky .lbl span{display:block;font-size:11px;color:var(--muted);font-weight:600}
+   .bb-sticky a{background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:15px;padding:14px 22px;border-radius:999px;white-space:nowrap}
+   
+   @media(max-width:820px){
+     .rr-body{padding:24px 22px 12px}
+     .entry-nav .entry-brand:last-child{display:none}
+   }
+   @media(prefers-reduced-motion:reduce){.report{transition:none}}
+   /* --- compact single-screen report --- */
+   .rr-body{max-width:600px;padding:18px 22px 12px}
+   .rr-loc{margin-bottom:7px;font-size:12px}
+   .rr-hook{font-size:clamp(25px,4.8vw,38px);line-height:1.08;margin-bottom:15px}
+   .rr-read{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:11px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+   .rd-main{display:flex;align-items:center;gap:11px}
+   .rd-main .n{font-size:44px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+   .rd-lab{display:flex;flex-direction:column;line-height:1.15}
+   .rd-lab .c{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px}
+   .rd-lab .c .dot{width:9px;height:9px;border-radius:50%;flex:none}
+   .rd-lab .sub{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:3px}
+   .rd-others{display:flex;gap:22px;margin-left:auto}
+   .rd-o{display:flex;flex-direction:column;line-height:1.05}
+   .rd-o .l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin-bottom:3px}
+   .rd-o .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+   .rr-src{font-size:11px;color:var(--muted-2b);margin-top:8px;line-height:1.5}
+   .rr-src b{color:var(--muted)}
+   .rr-do{margin-top:13px}
+   .rr-do-q{font-size:clamp(20px,3.4vw,26px);margin-bottom:6px}
+   .rr-do-a{font-size:14px;line-height:1.5;max-width:none}
+   .rr-do-a b{color:var(--ink);font-weight:800}
+   .rr-side{padding:15px;border-radius:16px;margin-top:14px}
+   .rr-head{margin-bottom:12px}
+   .rr-head img{width:46px;height:46px}
+   .rr-head .h{font-size:14px}
+   .rr-head .s{font-size:11.5px}
+   .rr-mailed{margin-top:11px;font-size:11px}
+   .bb-plan{padding:11px 13px;margin-bottom:8px}
+   .bb-plan-name{font-size:14px}
+   .bb-plan-desc{font-size:11.5px;margin-top:2px}
+   .bb-now{font-size:16px}
+   .bb-cta{padding:15px;font-size:16px;margin-top:4px}
+   .bb-trust{margin-top:10px;font-size:11px;gap:5px 12px}
+   .rr-disc{padding:16px 22px 40px}
+   .bb-head{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+   .bb-thumb{width:58px;height:58px;border-radius:12px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
+   .bb-htx{min-width:0}
+   .bb-title{font-size:14px;font-weight:800;color:var(--ink);line-height:1.25}
+   .bb-supply{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+   .bb-packs{display:flex;gap:7px;margin-bottom:11px}
+   .pk{flex:1;border:2px solid var(--line);border-radius:11px;padding:9px 4px;font-family:var(--font);font-size:13px;font-weight:800;color:var(--muted);background:#fff;text-align:center;line-height:1.1;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+   .pk small{display:block;font-size:9px;font-weight:800;color:var(--gold-2);margin-top:3px;letter-spacing:.02em;text-transform:uppercase}
+   .pk.selected{border-color:var(--green);color:var(--green);background:#f3f7f2}
+   .bb-plan.disabled{opacity:.45;cursor:default}
+   .bb-na{font-size:12px;font-weight:700;color:var(--muted-2b)}
+   @media(max-width:400px){ .rd-others{margin-left:0} }
+   
+   /* ===== Rich air-quality report (info-first; sell held to ~10%) ===== */
+   .rr-body{max-width:680px;padding:26px 22px 10px}
+   .aq-loc{font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--green-soft)}
+   .aq-loc span{color:var(--muted);font-weight:700}
+   .aq-observed{font-size:12px;color:var(--muted);margin-top:5px}
+   .aq-hero{margin:20px 0 4px}
+   .aq-big{display:flex;align-items:baseline;gap:10px}
+   .aq-big .n{font-size:64px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+   .aq-big .unit{font-size:15px;font-weight:800;color:var(--muted);letter-spacing:.05em}
+   .aq-cat{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-top:10px}
+   .aq-cat .dot{width:12px;height:12px;border-radius:50%;flex:none}
+   .aq-scale{position:relative;height:12px;border-radius:7px;margin:18px 0 7px;background:linear-gradient(90deg,#7cb342 0%,#f9d423 20%,#ff9800 40%,#e53935 60%,#8e24aa 80%,#7e0023 100%)}
+   .aq-marker{position:absolute;top:-5px;width:4px;height:22px;background:#0f1512;border-radius:3px;box-shadow:0 0 0 2px #fff;transform:translateX(-2px)}
+   .aq-scale-lbls{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+   .aq-primary{font-size:13.5px;color:var(--muted);margin-top:13px}
+   .aq-primary b{color:var(--ink)}
+   .aq-cig{font-size:15px;line-height:1.55;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:18px}
+   .aq-cig b{color:var(--danger)}
+   .aq-cig .rr-rods{display:flex;align-items:flex-end;flex-wrap:wrap;gap:6px;margin:0 0 13px}
+   .aq-cig .rr-rods .rod{width:11px;height:36px;border-radius:2px;background:linear-gradient(180deg,#fff 0 60%,#e7c88c 60%,#caa863);position:relative;border:1px solid rgba(0,0,0,.14)}
+   .aq-cig .rr-rods .rod::before{content:"";position:absolute;top:-5px;left:0;right:0;height:6px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 7px rgba(224,82,30,.9)}
+   .aq-cig .rr-rods-more{align-self:center;font-size:15px;font-weight:800;color:var(--muted);margin-left:2px}
+   .aq-block{margin-top:32px}
+   .aq-h{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.01em;margin:0 0 14px}
+   .aq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+   .aq-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+   .aq-card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+   .aq-card .lab{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+   .aq-card .badge{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;padding:3px 8px;border-radius:999px;background:#eef2ec;white-space:nowrap}
+   .aq-card .val{font-size:34px;font-weight:800;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:9px 0}
+   .aq-card .desc{font-size:12.5px;color:var(--muted);line-height:1.5;margin:0}
+   .aq-guide{font-size:16px;color:var(--ink);line-height:1.6;margin:0;max-width:62ch}
+   .aq-note{font-size:13px;color:var(--muted);line-height:1.55;margin:12px 0 0;padding-left:14px;border-left:3px solid var(--line);max-width:62ch}
+   .aq-tips{list-style:none;margin:0;padding:0}
+   .aq-tips li{position:relative;padding:0 0 0 26px;margin-bottom:13px;font-size:15px;color:var(--ink);line-height:1.5;max-width:62ch}
+   .aq-tips li:last-child{margin-bottom:0}
+   .aq-tips li::before{content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--green)}
+   .aq-tips li b{font-weight:800}
+   .aq-pollen{font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-top:16px}
+   /* the sell — one slim strip, ~10% of the page */
+   .aq-sell{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:36px}
+   .aq-sell img{width:52px;height:52px;border-radius:11px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
+   .aq-sell-tx{flex:1;min-width:0}
+   .aq-sell-tx .t{font-size:15px;font-weight:800;color:var(--ink);line-height:1.25}
+   .aq-sell-tx .s{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.45}
+   .aq-sell-cta{flex:none;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:14px;padding:12px 16px;border-radius:10px;white-space:nowrap}
+   .aq-sell-cta:hover{filter:brightness(.98)}
+   @media(max-width:560px){
+     .aq-grid{grid-template-columns:1fr}
+     .aq-card{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+     .aq-card .top{order:1;flex:1;min-width:120px}
+     .aq-card .val{order:2;margin:0}
+     .aq-card .desc{order:3;flex-basis:100%;margin-top:2px}
+     .aq-big .n{font-size:54px}
+     .aq-sell{flex-wrap:wrap}
+     .aq-sell-cta{width:100%;text-align:center}
+   }
+   </style>
+   
+   
+   <!-- ENTRY (full-screen) -->
+   <section class="entry" id="entry">
+     <div class="entry-bg"><img src="https://air-report.pages.dev/assets/img/hero-city.png" alt="A city skyline under heavy smoke haze" fetchpriority="high"></div>
+     <div class="entry-scrim"></div>
+     <div class="wrap entry-nav">
+       <a class="entry-logo-link" href="https://www.trybetterbrand.com/" aria-label="BetterBrand home"><img class="entry-logo" src="https://air-report.pages.dev/assets/img/betterbrand-logo-green.png" alt="BetterBrand"></a>
+       <div class="entry-brand" style="font-weight:600;font-size:12.5px;color:rgba(255,255,255,.7);letter-spacing:.06em;text-transform:uppercase">The Air Report</div>
+     </div>
+     <div class="wrap entry-mid">
+       <div class="entry-eyebrow">The Air Report &middot; Live U.S. EPA data</div>
+       <h1>What's really in the air you breathe?</h1>
+       <p class="entry-sub">Enter your ZIP for a free, full report on what you're breathing where you live, in 60 seconds.</p>
+       <form class="entry-form" id="air-form" novalidate>
+         <div class="row">
+           <input class="fin" type="text" name="first_name" placeholder="First name" autocomplete="given-name">
+           <input class="fin" type="text" name="zip" inputmode="numeric" placeholder="ZIP code" autocomplete="postal-code" required>
+         </div>
+         <input class="fin" type="email" name="email" placeholder="Email address" autocomplete="email" required>
+         <input class="fin" type="tel" name="phone" placeholder="Mobile (optional, for air alerts)" autocomplete="tel">
+         <button class="fbtn" type="submit">See my air report &rarr;</button>
+         <p class="ferr" hidden></p>
+       </form>
+       <div class="entry-trust">
+         <span><span class="x">&#10003;</span> Live EPA data</span>
+         <span><span class="x">&#10003;</span> 60 seconds</span>
+         <span><span class="x">&#10003;</span> No purchase necessary</span>
+       </div>
+       <p class="entry-consent">By checking your air you agree to receive your free report and occasional air-quality and product emails or texts from BetterBrand. Unsubscribe anytime.</p>
+     </div>
+   </section>
+   
+   <div class="report" id="report" hidden></div>
+   
+   <script>
+   (function () {
+     const form = document.getElementById('air-form');
+     const report = document.getElementById('report');
+     if (!form || !report) return;
+     const WORKER = 'https://betterbrand-air-quality.royal-dew-fe05.workers.dev';
+     const SERVE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/aq-report/submit';
+     const LOGBASE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form';
+     const VERSION = 'air-report';
+     const VAR1=50211146957099, SUBPLAN=118714663211;
+     const URL_SUB='https://www.trybetterbrand.com/cart/'+VAR1+':1?selling_plan='+SUBPLAN;
+     const URL_ONCE='https://www.trybetterbrand.com/cart/'+VAR1+':1?discount=AIR20';
+     const DISC='https://www.trybetterbrand.com/discount/AIR20?redirect=/products/betterlungs-r-mullein-gummies';
+     const BUYBOX=
+       '<div class="bb">'+
+         '<div class="bb-head"><img class="bb-thumb" src="https://air-report.pages.dev/assets/img/gummies-1bag.jpg" alt="BetterLungs Mullein Gummies pouch" loading="lazy"><div class="bb-htx"><div class="bb-title">BetterLungs® Mullein Gummies</div><div class="bb-supply" id="bb-supply">30-day supply</div></div></div>'+
+         '<div class="bb-packs">'+
+           '<button type="button" class="pk selected" data-pack="1">1 Bag</button>'+
+           '<button type="button" class="pk" data-pack="3">3 Bags<small>Save more</small></button>'+
+           '<button type="button" class="pk" data-pack="6">6 Bags<small>Best price</small></button>'+
+         '</div>'+
+         '<div class="bb-plan selected" id="bb-sub" data-plan="sub"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">Subscribe &amp; Save <span class="bb-best">Best value</span></div><div class="bb-plan-desc" id="bb-sub-desc">20% off · ships monthly · cancel anytime</div></div><div class="bb-plan-price" id="bb-sub-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span><span class="bb-per">/mo</span></div></div>'+
+         '<div class="bb-plan" id="bb-once" data-plan="once"><span class="bb-radio"></span><div class="bb-plan-main"><div class="bb-plan-name">One-time purchase</div><div class="bb-plan-desc">20% off with code AIR20</div></div><div class="bb-plan-price" id="bb-once-price"><span class="bb-now">$27.96</span><span class="bb-was">$34.95</span></div></div>'+
+         '<a class="bb-cta" id="bb-cta" href="#" target="_blank" rel="noopener">Subscribe · $27.96/mo &rarr;</a>'+
+         '<div class="bb-trust"><span>✓ 365-day guarantee</span><span>✓ Free shipping</span><span>✓ Cancel anytime</span></div>'+
+       '</div>';
+     const STICKY='<div class="bb-sticky" id="bb-sticky"><div class="bb-sticky-in"><div class="lbl">BetterLungs® Gummies <span id="bb-sticky-sub">Subscribe &amp; Save · $27.96</span></div><a id="bb-sticky-cta" href="'+URL_SUB+'" target="_blank" rel="noopener">Add to cart</a></div></div>';
+     const SID = (function(){try{let s=sessionStorage.getItem('aq_sid');if(!s){s=Date.now().toString(36)+Math.random().toString(36).slice(2,8);sessionStorage.setItem('aq_sid',s);}return s;}catch(_){return '';}})();
+     // BB Pixel: persistent first-party visitor id (survives sessions) — our own tracking, no Northbeam/Meta.
+     const VID = (function(){try{let v=localStorage.getItem('bb_vid');if(!v){v='v'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);localStorage.setItem('bb_vid',v);}return v;}catch(_){return '';}})();
+     function withRef(u){var sep=u.indexOf('?')>-1?'&':'?';return u+sep+'bb_vid='+encodeURIComponent(VID)+'&bb_src='+encodeURIComponent(VERSION);}
+     const T0 = Date.now();
+     function aqTrack(t,x){fetch(LOGBASE+'/aq-event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({type:t,page_version:VERSION,session_id:SID,vid:VID,path:location.pathname,elapsed_ms:Date.now()-T0},x||{})),keepalive:true}).catch(()=>{});}
+     (function(){try{if(sessionStorage.getItem('aq_viewed'))return;sessionStorage.setItem('aq_viewed','1');}catch(_){}fetch(LOGBASE+'/aq-view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_version:VERSION,session_id:SID,vid:VID,path:location.pathname})}).catch(()=>{});})();
+     form.addEventListener('focusin',(function(){let s=false;const t={};return function(e){var f=e.target&&e.target.name;if(!s){s=true;aqTrack('form_start',{field:f||''});}if(f&&!t[f]){t[f]=1;aqTrack('field_focus',{field:f});}};})());
+     form.addEventListener('submit',()=>{aqTrack('submit_attempt');},true);
+     const btn=form.querySelector('.fbtn'), errEl=form.querySelector('.ferr');
+     const esc=(s)=>String(s).replace(/[&<>"]/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+     function showErr(m){if(errEl){errEl.textContent=m;errEl.hidden=false;}aqTrack('error_shown',{message:m});}
+     function captureLead(d){const digits=(d.phone||'').replace(/\D/g,'');if(digits.length>=10){fetch(SERVE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:d.first_name,name:d.first_name,email:d.email,phone:d.phone,page_version:VERSION,properties:{'Zip Code':d.zip}})}).catch(()=>{});}else{fetch(WORKER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:d.email,first_name:d.first_name,zip_code:d.zip,page_version:VERSION})}).catch(()=>{});}}
+     function pm25FromAqi(a){var bp=[[0,50,0,9],[51,100,9.1,35.4],[101,150,35.5,55.4],[151,200,55.5,125.4],[201,300,125.5,225.4],[301,500,225.5,325.4]];for(var i=0;i<bp.length;i++){var b=bp[i];if(a<=b[1])return (a-b[0])/(b[1]-b[0])*(b[3]-b[2])+b[2];}return 325;}
+     function countUp(el,target,dur){var t0=performance.now();(function tick(now){var p=Math.min(1,(now-t0)/(dur||1200));el.textContent=Math.round((1-Math.pow(1-p,3))*target);if(p<1)requestAnimationFrame(tick);else el.textContent=target;})(t0);}
+     function topbar(){return '<div class="rep-top"><a class="rep-logo-link" href="https://www.trybetterbrand.com/" aria-label="BetterBrand home"><img class="rep-logo" src="https://air-report.pages.dev/assets/img/betterbrand-logo-green.png" alt="BetterBrand"></a><button class="rep-close" id="rep-close">Start over</button></div>';}
+     function textColor(cat){cat=(cat||'').toLowerCase();if(cat.indexOf('good')>=0)return '#2f7d20';if(cat.indexOf('sensitive')>=0)return '#c25200';if(cat.indexOf('moderate')>=0)return '#8a6a00';if(cat.indexOf('very')>=0)return '#7b1fa2';if(cat.indexOf('hazard')>=0)return '#7e0023';if(cat.indexOf('unhealthy')>=0)return '#c62828';return '#2a2f33';}
+     function closeReport(){report.classList.remove('on');document.body.style.overflow='';setTimeout(function(){report.hidden=true;report.scrollTop=0;},450);}
+     var PACKS={
+       '1':{v:50211146957099, sub:{plan:118714663211,price:'$27.96',per:'/mo',cad:'ships monthly'}, once:'$27.96', was:'$34.95', supply:'30-day supply'},
+       '3':{v:50211146989867, sub:{plan:118714728747,price:'$69.90',per:'/3 mo',cad:'ships every 3 months'}, once:'$75.48', was:'$94.35', supply:'90-day supply · $25.16/bag'},
+       '6':{v:51683833741611, sub:null, once:'$142.56', was:'$178.20', supply:'180-day supply · $23.76/bag'}
+     };
+     function wireBuyBox(){
+       var packEls=report.querySelectorAll('.pk'); if(!packEls.length){ var rc0=document.getElementById('rep-close'); if(rc0) rc0.addEventListener('click',closeReport); return; }
+       var subCard=document.getElementById('bb-sub'), onceCard=document.getElementById('bb-once'),
+           subPrice=document.getElementById('bb-sub-price'), subDesc=document.getElementById('bb-sub-desc'),
+           oncePrice=document.getElementById('bb-once-price'), cta=document.getElementById('bb-cta'),
+           supplyEl=document.getElementById('bb-supply');
+       var st={pack:'1', plan:'sub'};
+       function render(){
+         var p=PACKS[st.pack];
+         if(!p.sub && st.plan==='sub') st.plan='once';
+         packEls.forEach(function(b){b.classList.toggle('selected', b.getAttribute('data-pack')===st.pack);});
+         supplyEl.textContent=p.supply;
+         subCard.classList.toggle('disabled', !p.sub);
+         if(p.sub){ subPrice.innerHTML='<span class="bb-now">'+p.sub.price+'</span><span class="bb-was">'+p.was+'</span><span class="bb-per">'+p.sub.per+'</span>'; subDesc.textContent='20% off · '+p.sub.cad+' · cancel anytime'; }
+         else { subPrice.innerHTML='<span class="bb-na">Not for this size</span>'; subDesc.textContent='Choose 1 or 3 bags to subscribe'; }
+         oncePrice.innerHTML='<span class="bb-now">'+p.once+'</span><span class="bb-was">'+p.was+'</span>';
+         subCard.classList.toggle('selected', st.plan==='sub' && !!p.sub);
+         onceCard.classList.toggle('selected', st.plan==='once');
+         var url,label;
+         if(st.plan==='sub' && p.sub){ url='https://www.trybetterbrand.com/cart/'+p.v+':1?selling_plan='+p.sub.plan; label='Subscribe · '+p.sub.price+p.sub.per+' &rarr;'; }
+         else { url='https://www.trybetterbrand.com/cart/'+p.v+':1?discount=AIR20'; label='Add to cart · '+p.once+' &rarr;'; }
+         cta.setAttribute('href',withRef(url)); cta.innerHTML=label;
+       }
+       packEls.forEach(function(b){b.addEventListener('click',function(){st.pack=b.getAttribute('data-pack');render();});});
+       subCard.addEventListener('click',function(){if(subCard.classList.contains('disabled'))return;st.plan='sub';render();});
+       onceCard.addEventListener('click',function(){st.plan='once';render();});
+       cta.addEventListener('click',function(){aqTrack('cta_click',{plan:st.plan,pack:st.pack});});
+       render();
+       var rc=document.getElementById('rep-close'); if(rc) rc.addEventListener('click',closeReport);
+     }
+   
+     function reveal(){report.hidden=false;document.body.style.overflow='hidden';requestAnimationFrame(function(){report.classList.add('on');});}
+   
+     var AQ_DESC={pm25:'Fine particles from smoke, exhaust and haze, small enough to reach deep into your lungs and bloodstream.',pm10:'Coarser particles like dust, pollen and mold that irritate the nose, throat and airways.',ozone:'Ground-level ozone from traffic and heat that inflames the lungs and can trigger coughing and tightness.',no2:'Nitrogen dioxide from traffic and combustion that irritates the airways and worsens asthma.',so2:'Sulfur dioxide from burning fuel that irritates the airways and eyes.',co:'Carbon monoxide from combustion that lowers how much oxygen your blood can carry.'};
+     function aqGuide(cat){cat=(cat||'').toLowerCase();
+       if(cat.indexOf('good')>=0)return 'Air quality is good right now. It is a fine day to be active outdoors.';
+       if(cat.indexOf('very')>=0)return 'The air is very unhealthy. This is a health alert. Everyone should avoid outdoor exertion and stay indoors with filtered air where possible.';
+       if(cat.indexOf('hazard')>=0)return 'The air is hazardous. These are emergency conditions. Stay indoors, keep windows sealed and run air filtration.';
+       if(cat.indexOf('sensitive')>=0)return 'The air is unhealthy for sensitive groups. People with lung or heart conditions, older adults and children should cut back on long or intense outdoor activity.';
+       if(cat.indexOf('moderate')>=0)return 'Air quality is acceptable. If you are unusually sensitive to air pollution, consider easing up on long or intense time outdoors.';
+       if(cat.indexOf('unhealthy')>=0)return 'The air is unhealthy. Everyone may start to feel effects. Sensitive groups should avoid prolonged outdoor exertion and keep windows closed.';
+       return 'Here is what today’s readings mean for you.';
+     }
+     var TIPS='<li>Check the number before you head out, and save long or intense activity for cleaner hours.</li>'+
+       '<li>On smoky or high days, <b>keep windows closed</b> and run a HEPA air purifier indoors.</li>'+
+       '<li>Wear a well-fitting <b>N95</b> outdoors when fine particles are elevated.</li>'+
+       '<li>Support your lungs daily so they can clear more of what you breathe.</li>';
+     function sellStrip(){return '<section class="aq-sell"><img src="https://air-report.pages.dev/assets/img/gummies-1bag.jpg" alt="BetterLungs Mullein Gummies" loading="lazy"><div class="aq-sell-tx"><div class="t">Support your lungs from the inside</div><div class="s">BetterLungs® mullein gummies, once a day. 20% off today with your report.</div></div><a class="aq-sell-cta" id="bb-cta" href="'+DISC+'" target="_blank" rel="noopener">Get 20% off &rarr;</a></section>';}
+     function wireReport(){var rc=document.getElementById('rep-close');if(rc)rc.addEventListener('click',closeReport);var cta=document.getElementById('bb-cta');if(cta){cta.setAttribute('href',withRef(cta.getAttribute('href')));cta.addEventListener('click',function(){aqTrack('cta_click',{place:'report_sell'});});}}
+     var DISCLAIMER='<section class="rr-disc"><p>The cigarette comparison is an estimate from live PM2.5 (Berkeley Earth: ~22 µg/m³ ≈ one cigarette), not a medical measurement. Air-quality readings are sourced from public monitoring networks for general information only and are not a medical or safety assessment. BetterLungs® is a dietary supplement; these statements have not been evaluated by the FDA and it is not intended to diagnose, treat, cure, or prevent any disease. Individual results vary.</p></section>';
+   
+     function buildReport(d,email){
+       var overall=(typeof d.overallAqi==='number')?d.overallAqi:(d.worst?d.worst.aqi:0);
+       var worst=d.worst||{}; var color=worst.color||'#e53935';
+       var loc=d.city?esc(d.city)+(d.state?', '+esc(d.state):''):('ZIP '+esc(d.zip));
+       var tc=textColor(worst.category);
+       var markerPct=Math.max(1,Math.min(99,(overall/500)*100));
+       var cig=(typeof d.cigarettes==='number')?d.cigarettes:null;
+       var cigTxt='';
+       if(cig!==null){var cr=Math.round(cig*10)/10;var cw=(cr===1)?'cigarette':'cigarettes';var whole=Math.min(20,Math.floor(cig));var frac=cig-Math.floor(cig);var rods='<div class="rr-rods" aria-hidden="true">';for(var ri=0;ri<whole;ri++)rods+='<span class="rod"></span>';if(whole<20&&(frac>0.08||whole===0)){var ph=Math.max(8,Math.round(36*(whole===0?Math.max(frac,0.12):frac)));rods+='<span class="rod part" style="height:'+ph+'px"></span>';}if(Math.floor(cig)>20)rods+='<span class="rr-rods-more">+</span>';rods+='</div>';cigTxt='<div class="aq-cig">'+rods+'<div class="aq-cig-tx">Breathing this air for a full day is roughly like smoking <b>'+cr+' '+cw+'</b>.'+((typeof d.pm25_ugm3==='number')?(' Today’s fine-particle level (PM2.5) is <b>'+(Math.round(d.pm25_ugm3*10)/10)+' µg/m³</b>.'):'')+'</div></div>';}
+       var cards=(d.metrics||[]).map(function(m){var b=textColor(m.category);return '<div class="aq-card"><div class="top"><span class="lab">'+esc(m.label)+'</span><span class="badge" style="color:'+b+'">'+esc(m.category)+'</span></div><div class="val" data-n="'+m.aqi+'" style="color:'+b+'">0</div><p class="desc">'+(AQ_DESC[m.key]||'')+'</p></div>';}).join('');
+       var pollen=d.pollen?'<div class="aq-pollen"><b>'+esc(d.pollen.name||'Pollen')+'</b> is running <b>'+esc(d.pollen.level||'')+'</b> in your area today.</div>':'';
+       report.innerHTML=
+         topbar()+
+         '<div class="rr-body">'+
+           '<div class="aq-loc">The air in '+loc+' &middot; <span>Live U.S. EPA data</span></div>'+
+           (d.observed?'<div class="aq-observed">Observed '+esc(d.observed)+'</div>':'')+
+           '<section class="aq-hero">'+
+             '<div class="aq-big"><span class="n" id="rr-big" style="color:'+tc+'">0</span><span class="unit">AQI</span></div>'+
+             '<div class="aq-cat" style="color:'+tc+'"><span class="dot" style="background:'+color+'"></span>'+esc(worst.category||'')+'</div>'+
+             '<div class="aq-scale"><span class="aq-marker" style="left:'+markerPct+'%"></span></div>'+
+             '<div class="aq-scale-lbls"><span>0</span><span>50</span><span>100</span><span>150</span><span>200</span><span>300</span><span>500</span></div>'+
+             '<div class="aq-primary">Primary pollutant right now: <b>'+esc(worst.label||'')+'</b></div>'+
+           '</section>'+
+           cigTxt+
+           '<section class="aq-block"><h2 class="aq-h">The pollutants in your air</h2><div class="aq-grid">'+cards+'</div></section>'+
+           '<section class="aq-block"><h2 class="aq-h">What this means for you today</h2><p class="aq-guide">'+aqGuide(worst.category)+'</p><p class="aq-note">The Air Quality Index runs from 0 to 500. Under 50 is good, over 100 begins to affect sensitive groups, and over 150 can affect everyone.</p></section>'+
+           '<section class="aq-block"><h2 class="aq-h">How to protect yourself today</h2><ul class="aq-tips">'+TIPS+'</ul></section>'+
+           pollen+
+           sellStrip()+
+           (email?'<div class="rr-mailed">Full report also sent to <b>'+esc(email)+'</b></div>':'')+
+         '</div>'+
+         DISCLAIMER;
+       reveal();
+       countUp(document.getElementById('rr-big'),overall,1200);
+       report.querySelectorAll('.aq-card .val').forEach(function(el){countUp(el,parseInt(el.dataset.n,10),1000);});
+       wireReport();
+     }
+     function buildFallback(zip,email){
+       report.innerHTML=
+         topbar()+
+         '<div class="rr-body">'+
+           '<div class="aq-loc">Your air report &middot; ZIP '+esc(zip)+'</div>'+
+           '<section class="aq-hero"><h1 class="aq-h" style="font-size:26px;margin-bottom:10px">Your report is on its way</h1><p class="aq-guide">We couldn’t reach a live monitor near you this minute, but your full personalized report is on its way'+(email?' to <b>'+esc(email)+'</b>':'')+'. Here is how to protect your lungs in the meantime.</p></section>'+
+           '<section class="aq-block"><h2 class="aq-h">How to protect yourself today</h2><ul class="aq-tips">'+TIPS+'</ul></section>'+
+           sellStrip()+
+         '</div>'+
+         DISCLAIMER;
+       reveal(); wireReport();
+     }
+   
+     form.addEventListener('submit', async function(e){
+       e.preventDefault();
+       if(errEl) errEl.hidden=true;
+       var fd=new FormData(form);
+       var d={first_name:(fd.get('first_name')||'').toString().trim(),zip:(fd.get('zip')||'').toString().replace(/\D/g,'').slice(0,5),email:(fd.get('email')||'').toString().trim(),phone:(fd.get('phone')||'').toString().trim()};
+       if(d.zip.length!==5){showErr('Please enter a valid 5-digit ZIP code.');return;}
+       if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){showErr('Please enter a valid email address.');return;}
+       btn.disabled=true; var orig=btn.innerHTML; btn.textContent='Pulling your live readings…';
+       captureLead(d);
+       fetch(LOGBASE+'/aq-log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_version:VERSION,session_id:SID,vid:VID,email:d.email,phone:d.phone,zip:d.zip,first_name:d.first_name}),keepalive:true}).catch(()=>{});
+       try{
+         var res=await fetch(WORKER+'/aqi?zip='+d.zip);
+         var data=await res.json();
+         if(data&&data.ok&&data.metrics&&data.metrics.length){ buildReport(data,d.email); }
+         else { buildFallback(d.zip,d.email); }
+       }catch(_e){ btn.disabled=false; btn.innerHTML=orig; showErr('Couldn’t pull your readings just now. Try again in a moment.'); return; }
+       btn.disabled=false; btn.innerHTML=orig;
+     });
+   
+     // Direct preview: open /?zip=78201 (or /?preview) to jump straight to the report, no form, no lead capture
+     (function(){
+       var m=(location.search||'').match(/[?&]zip=(\d{5})/);
+       var zip = m ? m[1] : (/[?&]preview/.test(location.search) ? '10001' : null);
+       if(!zip) return;
+       fetch(WORKER+'/aqi?zip='+zip).then(function(r){return r.json();}).then(function(data){
+         if(data&&data.ok&&data.metrics&&data.metrics.length) buildReport(data,''); else buildFallback(zip,'');
+       }).catch(function(){ buildFallback(zip,''); });
+     })();
+   })();
+   </script>
+   
+   {% endraw %}
+   
