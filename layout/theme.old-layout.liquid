@@ -500,7 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
     <style class="loop-style"> {% render 'loop-widget.css' %} </style>
     
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} temp-{{template.name | handle}} temp-{{template.name | handle}}-{{ template.suffix }} ">
+  {% unless template.suffix == 'air-quality-lp-v3' %}
   <a class="patrol-skip-link" href="#main">Skip to content</a>
+  {% endunless %}
     <!-- AMP Upsells edits -->
     <script>
       document.addEventListener(

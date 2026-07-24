@@ -5,6 +5,14 @@
   Our own analytics pixel tags this page 'air-report' (distinct from the 'live' control). Images + fonts load from our CDN.
 {% endcomment %}
 
+<style>
+  /* Layout chrome — must be plain <style> (not {% stylesheet %}) so it can target elements outside this section */
+  .patrol-skip-link,
+  .skip-to-content-link {
+    display: none !important;
+  }
+</style>
+
 <div class="bb-air-report-lander">
   <!-- BetterBrand Meta Pixel (ours: 451332722114843). Initializes our pixel even though the theme runs its own; trackSingle scopes hits to OUR pixel only, so no double-counting on the store's pixel. -->
   <script>
