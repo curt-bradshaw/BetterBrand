@@ -274,16 +274,23 @@
     cart-drawer, #cart-drawer, .cart-drawer,
     .menu-mobile, #menu-mobile,
     .DrawerOverlay,
-    [id^="alia-root-"], [id^="alia-"], alia-widget,
-    #shopify-block-privy, .privy-popup, .needsclick[class*="klaviyo"],
-    #klaviyo-form-modal, .klaviyo-modal, .kl-private-reset-css-Xuajs1 {
+    [id^="alia-root-"], [id^="alia-"], alia-widget {
       display: none !important;
     }
-    body { overflow-y: auto !important; }
     html { scroll-behavior: auto !important; }
+    body { overflow-y: auto !important; }
     main#MainContent, main#MainContent.main-content { margin: 0 !important; padding: 0 !important; }
     main#MainContent > section[id$="-layout"] { margin: 0 !important; padding: 0 !important; }
   </style>
+  <script>
+  (function(){
+    var SEL='div[class*="kl-private-reset"], .klaviyo-form, [data-testid="POP_UP"], [data-testid="TEASER"], [id^="alia-root-"], [id^="alia-"]';
+    function unlock(){try{var de=document.documentElement,b=document.body;if(de)de.style.overflow='';if(b){b.style.overflow='';b.style.position='';}}catch(e){}}
+    function kill(){try{document.querySelectorAll(SEL).forEach(function(el){if(!el.closest('[id^="vstd-"]'))el.remove();});unlock();}catch(e){}}
+    function start(){kill();try{new MutationObserver(kill).observe(document.body,{childList:true});}catch(e){}var n=0,iv=setInterval(function(){kill();if(++n>40)clearInterval(iv);},300);}
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+  })();
+  </script>
   {% endif %}
 </head>
 
