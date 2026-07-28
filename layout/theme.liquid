@@ -279,10 +279,12 @@
     main#MainContent, main#MainContent.main-content { margin: 0 !important; padding: 0 !important; }
     main#MainContent > section[id$="-layout"] { margin: 0 !important; padding: 0 !important; }
     /* force the cloned embed's container chain to full width (theme grid caps content at --grid-max-width) */
+    html, body,
     main#MainContent, main#MainContent > section[id$="-layout"], main#MainContent .shopify-section, main#MainContent .shopify-section > [id^="vstd-"] {
-      max-width: none !important; width: 100% !important;
+      max-width: none !important; width: 100% !important; min-width: 0 !important;
       margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important;
     }
+    body { overflow-x: hidden !important; }
   </style>
   {% endif %}
 </head>
