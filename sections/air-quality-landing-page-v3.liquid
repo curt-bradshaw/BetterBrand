@@ -6,9 +6,23 @@
 {% endcomment %}
 
 <style>
-  /* Theme skip-link only — plain style block */
+  /* Theme chrome for this page only — plain style block so it can target layout elements outside this section */
   .patrol-skip-link,
-  .skip-to-content-link {
+  .skip-to-content-link,
+  .essential_annoucement_bar_wrapper,
+  [class*="essential_annoucement_bar"],
+  [class*="essential_announcement_bar"],
+  [class*="essential-announcement"],
+  [id*="essential_annoucement"],
+  [id*="essential_announcement"],
+  [class*="ess-countdown"],
+  [id*="ess-countdown"],
+  announcement-bar,
+  .announcement-bar,
+  .announcement-bar-section,
+  #shopify-section-announcement-bar,
+  [id*="announcement"],
+  [class*="announcement-bar"] {
     display: none !important;
   }
 </style>
