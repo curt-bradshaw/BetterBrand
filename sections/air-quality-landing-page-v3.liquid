@@ -5,26 +5,6 @@
   Our own analytics pixel tags this page 'air-report' (distinct from the 'live' control). Images + fonts load from our CDN.
 {% endcomment %}
 
-<style>
-  /* Page chrome — plain <style> so it can target layout elements outside this section */
-  .patrol-skip-link,
-  .skip-to-content-link,
-  .essential_annoucement_bar_wrapper,
-  [class*="essential_annoucement_bar"],
-  [class*="essential_announcement_bar"],
-  [class*="essential-announcement"],
-  [id*="essential_annoucement"],
-  [id*="essential_announcement"],
-  announcement-bar,
-  .announcement-bar,
-  .announcement-bar-section,
-  #shopify-section-announcement-bar,
-  [id*="announcement"],
-  [class*="announcement-bar"] {
-    display: none !important;
-  }
-</style>
-
 <div class="bb-air-report-lander">
   <!-- BetterBrand Meta Pixel (ours: 451332722114843). Initializes our pixel even though the theme runs its own; trackSingle scopes hits to OUR pixel only, so no double-counting on the store's pixel. -->
   <script>
@@ -65,9 +45,9 @@
   
   <div class="report" id="report" hidden></div>
   </div>
-
-<style>
-@font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-400.woff2') format('woff2');font-weight:400;font-display:swap}
+  
+  {% stylesheet %}
+  @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-400.woff2') format('woff2');font-weight:400;font-display:swap}
   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-500.woff2') format('woff2');font-weight:500;font-display:swap}
   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-600.woff2') format('woff2');font-weight:600;font-display:swap}
   @font-face{font-family:'Hanken';src:url('https://air-report.pages.dev/assets/fonts/hankengrotesk-700.woff2') format('woff2');font-weight:700;font-display:swap}
@@ -81,317 +61,267 @@
     --aqi-good:#57a639; --aqi-mod:#e6b800; --aqi-usg:#f57c00; --aqi-bad:#e53935; --aqi-vbad:#8e24aa; --aqi-haz:#7e0023;
     --font:'Hanken',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   }
-  /* Everything is scoped to .bb-air-report-lander so NOTHING leaks into the theme.
-     Bare element rules (*, body, img, h1..) in a Shopify section otherwise restyle the
-     whole theme — that broke the header logo, fonts and spacing. Scoped now. */
-  .bb-air-report-lander *{margin:0;padding:0;box-sizing:border-box}
-  .bb-air-report-lander [hidden]{display:none!important}
+  /* Scoped to .bb-air-report-lander so nothing leaks into the theme. :where() keeps the
+     scope at ZERO added specificity, so these element resets don't out-rank the
+     component's own class rules — a plain `.bb-air-report-lander button` (0,1,1) would beat
+     `.fbtn` (0,1,0) and wipe the gold button background. :where() preserves the original
+     element-vs-class ordering while still confining everything to the section. */
+  :where(.bb-air-report-lander) *{margin:0;padding:0;box-sizing:border-box}
+  :where(.bb-air-report-lander) [hidden]{display:none!important}
   .bb-air-report-lander{font-family:var(--font);color:var(--ink);background:var(--charcoal);line-height:1.55;font-size:17px;box-sizing:border-box;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
-  .bb-air-report-lander img{max-width:100%;display:block}
-  .bb-air-report-lander a{color:inherit;text-decoration:none}
-  .bb-air-report-lander button{font-family:inherit;cursor:pointer;border:0;background:0}
-  /* Headings use our font + weight, !important so the theme's global h1/h2 font can't hijack the hero headline (it was rendering in the theme's "Assistant"). */
-  .bb-air-report-lander h1,.bb-air-report-lander h2,.bb-air-report-lander h3{font-family:var(--font)!important;line-height:1.04;letter-spacing:-.02em;font-weight:800}
+  :where(.bb-air-report-lander) img{max-width:100%;display:block}
+  :where(.bb-air-report-lander) a{color:inherit;text-decoration:none}
+  :where(.bb-air-report-lander) button{font-family:inherit;cursor:pointer;border:0;background:0}
+  /* Headings: our font + weight; !important so the theme's global h1/h2 font can't hijack the hero headline (it was rendering in the theme's "Assistant"). */
+  :where(.bb-air-report-lander) h1,:where(.bb-air-report-lander) h2,:where(.bb-air-report-lander) h3{font-family:var(--font)!important;line-height:1.04;letter-spacing:-.02em;font-weight:800}
   .bb-air-report-lander .wrap{max-width:920px;margin:0 auto;padding:0 28px}
   
   /* ============ ENTRY (full-screen) ============ */
-  .bb-air-report-lander .entry{position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;isolation:isolate;padding-top:env(safe-area-inset-top,0px)}
-  .bb-air-report-lander .entry-bg{position:absolute;inset:0;z-index:-3;overflow:hidden}
-  .bb-air-report-lander .entry-bg img{width:100%;height:100%;object-fit:cover;object-position:center 42%;transform:scale(1.04);will-change:transform}
+  .entry{position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;isolation:isolate;padding-top:env(safe-area-inset-top,0px)}
+  .entry-bg{position:absolute;inset:0;z-index:-3;overflow:hidden}
+  .entry-bg img{width:100%;height:100%;object-fit:cover;object-position:center 42%;transform:scale(1.04);will-change:transform}
   /* dual overlay: darker at top (behind wordmark + headline) and at bottom (behind trust + consent) for white-text legibility on both ends; lighter middle so the city + form read */
-  .bb-air-report-lander .entry-scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,11,12,.78) 0%,rgba(8,11,12,.52) 26%,rgba(8,11,12,.2) 44%,rgba(8,11,12,0) 56%),linear-gradient(0deg,rgba(8,11,12,.97) 0%,rgba(8,11,12,.62) 18%,rgba(8,11,12,0) 40%),rgba(8,11,12,.26)}
+  .entry-scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,11,12,.78) 0%,rgba(8,11,12,.52) 26%,rgba(8,11,12,.2) 44%,rgba(8,11,12,0) 56%),linear-gradient(0deg,rgba(8,11,12,.97) 0%,rgba(8,11,12,.62) 18%,rgba(8,11,12,0) 40%),rgba(8,11,12,.26)}
   /* drifting smog clouds — soft, blurred, parallax; masked to fade before the form */
-  .bb-air-report-lander .entry-smog{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 36%,rgba(0,0,0,0) 64%);mask-image:linear-gradient(180deg,#000 0%,#000 36%,rgba(0,0,0,0) 64%)}
-  .bb-air-report-lander .entry-smog span{position:absolute;display:block;border-radius:50%;filter:blur(58px);mix-blend-mode:screen;will-change:transform}
-  .bb-air-report-lander .entry-smog .smog-a{width:92vw;height:52vh;left:-16vw;top:-20vh;background:radial-gradient(circle at 50% 50%,rgba(233,159,86,.16),rgba(233,159,86,0) 62%)}
-  .bb-air-report-lander .entry-smog .smog-b{width:82vw;height:50vh;right:-22vw;top:-16vh;background:radial-gradient(circle at 50% 50%,rgba(205,178,150,.12),rgba(205,178,150,0) 64%)}
+  .entry-smog{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 36%,rgba(0,0,0,0) 64%);mask-image:linear-gradient(180deg,#000 0%,#000 36%,rgba(0,0,0,0) 64%)}
+  .entry-smog span{position:absolute;display:block;border-radius:50%;filter:blur(58px);mix-blend-mode:screen;will-change:transform}
+  .entry-smog .smog-a{width:92vw;height:52vh;left:-16vw;top:-20vh;background:radial-gradient(circle at 50% 50%,rgba(233,159,86,.16),rgba(233,159,86,0) 62%)}
+  .entry-smog .smog-b{width:82vw;height:50vh;right:-22vw;top:-16vh;background:radial-gradient(circle at 50% 50%,rgba(205,178,150,.12),rgba(205,178,150,0) 64%)}
   @media (prefers-reduced-motion: no-preference){
-    .bb-air-report-lander .entry-bg img{animation:aq-zoom 70s ease-in-out infinite alternate}
-    .bb-air-report-lander .entry-smog .smog-a{animation:aq-smogA 58s ease-in-out infinite alternate}
-    .bb-air-report-lander .entry-smog .smog-b{animation:aq-smogB 82s ease-in-out infinite alternate}
+    .entry-bg img{animation:aq-zoom 70s ease-in-out infinite alternate}
+    .entry-smog .smog-a{animation:aq-smogA 58s ease-in-out infinite alternate}
+    .entry-smog .smog-b{animation:aq-smogB 82s ease-in-out infinite alternate}
   }
   @keyframes aq-zoom{from{transform:scale(1.04)}to{transform:scale(1.09)}}
   @keyframes aq-smogA{from{transform:translate3d(-3%,1%,0) scale(1)}to{transform:translate3d(9%,-5%,0) scale(1.18)}}
   @keyframes aq-smogB{from{transform:translate3d(4%,-2%,0) scale(1.12)}to{transform:translate3d(-7%,4%,0) scale(1)}}
   /* compact tier — short viewports (preview panes, landscape): shrink so the whole capture screen fits */
   @media (max-height:760px){
-    .bb-air-report-lander .entry-nav{padding:12px 0}
-    .bb-air-report-lander .entry-mid{padding:8px 28px 18px}
-    .bb-air-report-lander .entry h1{font-size:clamp(33px,7.8vw,44px);margin-bottom:9px}
-    .bb-air-report-lander .entry-sub{font-size:16.5px;margin-bottom:13px}
-    .bb-air-report-lander .entry-form{gap:8px}
-    .bb-air-report-lander .fin{padding:13px 14px}
-    .bb-air-report-lander .fbtn{padding:16px;font-size:18.5px}
-    .bb-air-report-lander .entry-trust{margin-top:11px;font-size:16px}
-    .bb-air-report-lander .entry-trust svg{width:23px;height:23px}
-    .bb-air-report-lander .entry-consent{margin-top:8px;font-size:11px}
+    .entry-nav{padding:12px 0}
+    .entry-mid{padding:8px 28px 18px}
+    .entry h1{font-size:clamp(33px,7.8vw,44px);margin-bottom:9px}
+    .entry-sub{font-size:16.5px;margin-bottom:13px}
+    .entry-form{gap:8px}
+    .fin{padding:13px 14px}
+    .fbtn{padding:16px;font-size:18.5px}
+    .entry-trust{margin-top:11px;font-size:16px}
+    .entry-trust svg{width:23px;height:23px}
+    .entry-consent{margin-top:8px;font-size:11px}
   }
-  .bb-air-report-lander .entry-nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:20px 0 0}
-  .bb-air-report-lander .entry-brand{color:#fff;font-weight:800;font-size:16px}
-  .bb-air-report-lander .entry-brand span{color:rgba(255,255,255,.7);font-weight:600;margin-left:7px}
-  .bb-air-report-lander .entry-logo-link,.bb-air-report-lander .rep-logo-link{display:inline-flex;align-items:center;line-height:0}
-  .bb-air-report-lander .entry-logo{height:22px;width:auto;filter:brightness(0) invert(1)}
-  .bb-air-report-lander .rep-logo{height:19px;width:auto}
-  .bb-air-report-lander .entry-mid{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;padding:2.4vh 28px 34px}
-  .bb-air-report-lander .entry-eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
-  .bb-air-report-lander .entry h1{color:#fff;font-size:clamp(43px,6.6vw,72px);max-width:15ch;margin-bottom:13px;text-shadow:0 2px 10px rgba(0,0,0,.55),0 4px 40px rgba(0,0,0,.7)}
-  .bb-air-report-lander .entry-sub{color:rgba(255,255,255,.96);font-weight:600;font-size:clamp(18px,1.9vw,22px);max-width:36ch;margin-bottom:20px;text-shadow:0 1px 3px rgba(0,0,0,.6),0 2px 22px rgba(0,0,0,.6)}
-  .bb-air-report-lander .entry-form{width:100%;max-width:440px;display:flex;flex-direction:column;gap:11px}
-  .bb-air-report-lander .entry-form .row{display:flex;gap:11px}
-  .bb-air-report-lander .entry-form .row>*{flex:1;min-width:0}
-  .bb-air-report-lander .fin{width:100%;font-family:var(--font);font-size:18.5px;font-weight:500;color:#161a1c;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.65);border-radius:12px;padding:17px 16px;box-shadow:0 2px 14px -4px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s}
-  .bb-air-report-lander .fin::placeholder{color:rgba(22,26,28,.52);font-weight:500}
-  .bb-air-report-lander .fin:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(242,203,73,.4)}
-  .bb-air-report-lander .fbtn{margin-top:5px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;padding:20px;border-radius:12px;transition:filter .15s,transform .05s}
-  .bb-air-report-lander .fbtn:hover{filter:brightness(.97)}.bb-air-report-lander .fbtn:active{transform:translateY(1px)}.bb-air-report-lander .fbtn[disabled]{opacity:.7}
-  .bb-air-report-lander .ferr{font-size:13px;color:#ff9a7a;font-weight:700;margin:0}
-  .bb-air-report-lander .entry-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;margin-top:20px;font-size:19px;font-weight:700;color:#fff}
-  .bb-air-report-lander .entry-trust span{display:inline-flex;align-items:center;gap:9px}
-  .bb-air-report-lander .entry-trust svg{width:28px;height:28px;flex:none;stroke:var(--gold);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-  .bb-air-report-lander .entry-consent{font-size:12px;color:rgba(255,255,255,.72);max-width:440px;margin:14px auto 0;line-height:1.55}
-  .bb-air-report-lander .entry-consent a{color:#fff;text-decoration:underline}
+  .entry-nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:20px 0 0}
+  .entry-brand{color:#fff;font-weight:800;font-size:16px}
+  .entry-brand span{color:rgba(255,255,255,.7);font-weight:600;margin-left:7px}
+  .entry-logo-link,.rep-logo-link{display:inline-flex;align-items:center;line-height:0}
+  .entry-logo{height:22px;width:auto;filter:brightness(0) invert(1)}
+  .rep-logo{height:19px;width:auto}
+  .entry-mid{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;padding:2.4vh 28px 34px}
+  .entry-eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .entry h1{color:#fff;font-size:clamp(43px,6.6vw,72px);max-width:15ch;margin-bottom:13px;text-shadow:0 2px 10px rgba(0,0,0,.55),0 4px 40px rgba(0,0,0,.7)}
+  .entry-sub{color:rgba(255,255,255,.96);font-weight:600;font-size:clamp(18px,1.9vw,22px);max-width:36ch;margin-bottom:20px;text-shadow:0 1px 3px rgba(0,0,0,.6),0 2px 22px rgba(0,0,0,.6)}
+  .entry-form{width:100%;max-width:440px;display:flex;flex-direction:column;gap:11px}
+  .entry-form .row{display:flex;gap:11px}
+  .entry-form .row>*{flex:1;min-width:0}
+  .fin{width:100%;font-family:var(--font);font-size:18.5px;font-weight:500;color:#161a1c;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.65);border-radius:12px;padding:17px 16px;box-shadow:0 2px 14px -4px rgba(0,0,0,.4);transition:border-color .15s,background .15s,box-shadow .15s}
+  .fin::placeholder{color:rgba(22,26,28,.52);font-weight:500}
+  .fin:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(242,203,73,.4)}
+  .fbtn{margin-top:5px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:21px;letter-spacing:.05em;text-transform:uppercase;padding:20px;border-radius:12px;transition:filter .15s,transform .05s}
+  .fbtn:hover{filter:brightness(.97)}.fbtn:active{transform:translateY(1px)}.fbtn[disabled]{opacity:.7}
+  .ferr{font-size:13px;color:#ff9a7a;font-weight:700;margin:0}
+  .entry-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;margin-top:20px;font-size:19px;font-weight:700;color:#fff}
+  .entry-trust span{display:inline-flex;align-items:center;gap:9px}
+  .entry-trust svg{width:28px;height:28px;flex:none;stroke:var(--gold);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .entry-consent{font-size:12px;color:rgba(255,255,255,.72);max-width:440px;margin:14px auto 0;line-height:1.55}
+  .entry-consent a{color:#fff;text-decoration:underline}
   
   /* ============ REPORT (full-screen takeover) ============ */
   .bb-air-report-lander .report{position:fixed;inset:0;z-index:100;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
   .bb-air-report-lander .report.on{opacity:1;transform:none}
-  .bb-air-report-lander .rep-top{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;position:sticky;top:0;background:rgba(244,246,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:2}
-  .bb-air-report-lander .rep-brand{font-weight:800;font-size:15px;color:var(--green)}
-  .bb-air-report-lander .rep-brand span{color:var(--muted);font-weight:600;margin-left:6px}
-  .bb-air-report-lander .rep-close{font-size:13px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:2px}
+  .rep-top{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;position:sticky;top:0;background:rgba(244,246,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:2}
+  .rep-brand{font-weight:800;font-size:15px;color:var(--green)}
+  .rep-brand span{color:var(--muted);font-weight:600;margin-left:6px}
+  .rep-close{font-size:13px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:2px}
   /* compact 2-col body */
-  .bb-air-report-lander .rr-body{max-width:640px;margin:0 auto;padding:32px 22px 8px}
-  .bb-air-report-lander .rr-loc{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--green-soft);margin-bottom:12px}
-  .bb-air-report-lander .rr-hook{font-size:clamp(30px,4.2vw,48px);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin-bottom:20px}
-  .bb-air-report-lander .rr-hook .hl{color:var(--danger)}
-  .bb-air-report-lander .rr-rods{display:flex;gap:5px;margin-bottom:22px}
-  .bb-air-report-lander .rr-rods .rod{width:9px;height:28px;border-radius:2px;background:linear-gradient(180deg,#fff 0 58%,#e7c88c 58%,#caa863);position:relative;border:1px solid rgba(0,0,0,.12)}
-  .bb-air-report-lander .rr-rods .rod::before{content:"";position:absolute;top:-4px;left:0;right:0;height:5px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 6px rgba(224,82,30,.85)}
-  .bb-air-report-lander .rr-num{display:flex;align-items:center;gap:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;flex-wrap:wrap}
-  .bb-air-report-lander .rr-aqi{display:flex;flex-direction:column;line-height:1}
-  .bb-air-report-lander .rr-aqi .n{font-size:56px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .bb-air-report-lander .rr-aqi .c{display:flex;align-items:center;font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;margin-top:6px}
-  .bb-air-report-lander .rr-aqi .c .dot{width:10px;height:10px;border-radius:50%;margin-right:8px;flex:none}
-  .bb-air-report-lander .rr-chips{display:flex;gap:9px;flex-wrap:wrap}
-  .bb-air-report-lander .rr-chip{border:1px solid var(--line);border-radius:12px;padding:10px 13px;min-width:78px;background:#fff}
-  .bb-air-report-lander .rr-chip .l{font-size:10.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
-  .bb-air-report-lander .rr-chip .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
-  .bb-air-report-lander .rr-chip .cc{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
-  .bb-air-report-lander .rr-note{font-size:14px;color:var(--muted);margin-top:18px;line-height:1.6}
-  .bb-air-report-lander .rr-note b{color:var(--ink)}
+  .rr-body{max-width:640px;margin:0 auto;padding:32px 22px 8px}
+  .rr-loc{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--green-soft);margin-bottom:12px}
+  .rr-hook{font-size:clamp(30px,4.2vw,48px);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin-bottom:20px}
+  .rr-hook .hl{color:var(--danger)}
+  .rr-rods{display:flex;gap:5px;margin-bottom:22px}
+  .rr-rods .rod{width:9px;height:28px;border-radius:2px;background:linear-gradient(180deg,#fff 0 58%,#e7c88c 58%,#caa863);position:relative;border:1px solid rgba(0,0,0,.12)}
+  .rr-rods .rod::before{content:"";position:absolute;top:-4px;left:0;right:0;height:5px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 6px rgba(224,82,30,.85)}
+  .rr-num{display:flex;align-items:center;gap:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;flex-wrap:wrap}
+  .rr-aqi{display:flex;flex-direction:column;line-height:1}
+  .rr-aqi .n{font-size:56px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .rr-aqi .c{display:flex;align-items:center;font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;margin-top:6px}
+  .rr-aqi .c .dot{width:10px;height:10px;border-radius:50%;margin-right:8px;flex:none}
+  .rr-chips{display:flex;gap:9px;flex-wrap:wrap}
+  .rr-chip{border:1px solid var(--line);border-radius:12px;padding:10px 13px;min-width:78px;background:#fff}
+  .rr-chip .l{font-size:10.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+  .rr-chip .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:2px}
+  .rr-chip .cc{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+  .rr-note{font-size:14px;color:var(--muted);margin-top:18px;line-height:1.6}
+  .rr-note b{color:var(--ink)}
   /* buy panel (right col; below on mobile) */
-  .bb-air-report-lander .rr-side{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 24px 60px -38px rgba(0,0,0,.45);margin-top:16px}
-  .bb-air-report-lander .rr-do{margin-top:34px}
-  .bb-air-report-lander .rr-do-q{font-size:clamp(24px,3.6vw,33px);font-weight:800;color:var(--ink);letter-spacing:-.01em;margin-bottom:12px}
-  .bb-air-report-lander .rr-do-a{font-size:16px;color:var(--muted);line-height:1.6;max-width:60ch}
-  .bb-air-report-lander .rr-head{display:flex;align-items:center;gap:13px;margin-bottom:16px}
-  .bb-air-report-lander .rr-head img{width:62px;height:62px;border-radius:12px;object-fit:cover;background:#e7ece6;flex:none}
-  .bb-air-report-lander .rr-head .h{font-size:15px;font-weight:800;color:var(--ink);line-height:1.2}
-  .bb-air-report-lander .rr-head .s{font-size:12px;color:var(--muted);margin-top:3px}
-  .bb-air-report-lander .rr-mailed{font-size:11.5px;color:var(--muted);margin-top:14px;text-align:center}
-  .bb-air-report-lander .rr-mailed b{color:var(--ink)}
-  .bb-air-report-lander .rr-disc{padding:6px 22px 46px;text-align:center}
-  .bb-air-report-lander .rr-disc p{font-size:11.5px;color:var(--muted-2b);line-height:1.65;max-width:820px;margin:0 auto}
+  .rr-side{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 24px 60px -38px rgba(0,0,0,.45);margin-top:16px}
+  .rr-do{margin-top:34px}
+  .rr-do-q{font-size:clamp(24px,3.6vw,33px);font-weight:800;color:var(--ink);letter-spacing:-.01em;margin-bottom:12px}
+  .rr-do-a{font-size:16px;color:var(--muted);line-height:1.6;max-width:60ch}
+  .rr-head{display:flex;align-items:center;gap:13px;margin-bottom:16px}
+  .rr-head img{width:62px;height:62px;border-radius:12px;object-fit:cover;background:#e7ece6;flex:none}
+  .rr-head .h{font-size:15px;font-weight:800;color:var(--ink);line-height:1.2}
+  .rr-head .s{font-size:12px;color:var(--muted);margin-top:3px}
+  .rr-mailed{font-size:11.5px;color:var(--muted);margin-top:14px;text-align:center}
+  .rr-mailed b{color:var(--ink)}
+  .rr-disc{padding:6px 22px 46px;text-align:center}
+  .rr-disc p{font-size:11.5px;color:var(--muted-2b);line-height:1.65;max-width:820px;margin:0 auto}
   /* buy box */
-  .bb-air-report-lander .bb-plan{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
-  .bb-air-report-lander .bb-plan.selected{border-color:var(--green);background:#f3f7f2}
-  .bb-air-report-lander .bb-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative}
-  .bb-air-report-lander .bb-plan.selected .bb-radio{border-color:var(--green)}
-  .bb-air-report-lander .bb-plan.selected .bb-radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--green)}
-  .bb-air-report-lander .bb-plan-main{flex:1;min-width:0}
-  .bb-air-report-lander .bb-plan-name{font-size:15px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .bb-air-report-lander .bb-best{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--gold);color:var(--gold-deep);padding:3px 8px;border-radius:999px}
-  .bb-air-report-lander .bb-plan-desc{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
-  .bb-air-report-lander .bb-plan-price{text-align:right;flex:none}
-  .bb-air-report-lander .bb-now{font-size:17px;font-weight:800;color:var(--ink)}
-  .bb-air-report-lander .bb-was{font-size:12px;color:var(--muted-2);text-decoration:line-through;margin-left:5px}
-  .bb-air-report-lander .bb-per{display:block;font-size:11px;color:var(--muted);margin-top:1px}
-  .bb-air-report-lander .bb-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:16px;padding:16px;border-radius:12px;margin-top:6px;box-shadow:0 14px 28px -14px rgba(217,173,44,.9);transition:filter .15s}
-  .bb-air-report-lander .bb-cta:hover{filter:brightness(.98)}
-  .bb-air-report-lander .bb-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-size:11.5px;font-weight:700;color:var(--green-soft)}
+  .bb-plan{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .15s,background .15s}
+  .bb-plan.selected{border-color:var(--green);background:#f3f7f2}
+  .bb-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative}
+  .bb-plan.selected .bb-radio{border-color:var(--green)}
+  .bb-plan.selected .bb-radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--green)}
+  .bb-plan-main{flex:1;min-width:0}
+  .bb-plan-name{font-size:15px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .bb-best{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--gold);color:var(--gold-deep);padding:3px 8px;border-radius:999px}
+  .bb-plan-desc{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+  .bb-plan-price{text-align:right;flex:none}
+  .bb-now{font-size:17px;font-weight:800;color:var(--ink)}
+  .bb-was{font-size:12px;color:var(--muted-2);text-decoration:line-through;margin-left:5px}
+  .bb-per{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+  .bb-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:16px;padding:16px;border-radius:12px;margin-top:6px;box-shadow:0 14px 28px -14px rgba(217,173,44,.9);transition:filter .15s}
+  .bb-cta:hover{filter:brightness(.98)}
+  .bb-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-size:11.5px;font-weight:700;color:var(--green-soft)}
   /* sticky mobile add-to-cart bar */
-  .bb-air-report-lander .bb-sticky{position:fixed;bottom:0;left:0;right:0;z-index:120;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:11px 18px;box-shadow:0 -8px 24px -16px rgba(0,0,0,.4);display:none;transform:translateY(110%);transition:transform .3s ease}
-  .bb-air-report-lander .bb-sticky.show{transform:none}
-  .bb-air-report-lander .bb-sticky-in{display:flex;align-items:center;gap:12px}
-  .bb-air-report-lander .bb-sticky .lbl{flex:1;min-width:0;font-size:13px;font-weight:700;color:var(--ink);line-height:1.25}
-  .bb-air-report-lander .bb-sticky .lbl span{display:block;font-size:11px;color:var(--muted);font-weight:600}
-  .bb-air-report-lander .bb-sticky a{background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:15px;padding:14px 22px;border-radius:999px;white-space:nowrap}
+  .bb-sticky{position:fixed;bottom:0;left:0;right:0;z-index:120;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:11px 18px;box-shadow:0 -8px 24px -16px rgba(0,0,0,.4);display:none;transform:translateY(110%);transition:transform .3s ease}
+  .bb-sticky.show{transform:none}
+  .bb-sticky-in{display:flex;align-items:center;gap:12px}
+  .bb-sticky .lbl{flex:1;min-width:0;font-size:13px;font-weight:700;color:var(--ink);line-height:1.25}
+  .bb-sticky .lbl span{display:block;font-size:11px;color:var(--muted);font-weight:600}
+  .bb-sticky a{background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:15px;padding:14px 22px;border-radius:999px;white-space:nowrap}
   
   @media(max-width:820px){
-    .bb-air-report-lander .rr-body{padding:24px 22px 12px}
-    .bb-air-report-lander .entry-nav .entry-brand:last-child{display:none}
+    .rr-body{padding:24px 22px 12px}
+    .entry-nav .entry-brand:last-child{display:none}
   }
-  @media(prefers-reduced-motion:reduce){.bb-air-report-lander .report{transition:none}}
+  @media(prefers-reduced-motion:reduce){.report{transition:none}}
   /* --- compact single-screen report --- */
-  .bb-air-report-lander .rr-body{max-width:600px;padding:18px 22px 12px}
-  .bb-air-report-lander .rr-loc{margin-bottom:7px;font-size:12px}
-  .bb-air-report-lander .rr-hook{font-size:clamp(25px,4.8vw,38px);line-height:1.08;margin-bottom:15px}
-  .bb-air-report-lander .rr-read{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:11px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .bb-air-report-lander .rd-main{display:flex;align-items:center;gap:11px}
-  .bb-air-report-lander .rd-main .n{font-size:44px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .bb-air-report-lander .rd-lab{display:flex;flex-direction:column;line-height:1.15}
-  .bb-air-report-lander .rd-lab .c{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px}
-  .bb-air-report-lander .rd-lab .c .dot{width:9px;height:9px;border-radius:50%;flex:none}
-  .bb-air-report-lander .rd-lab .sub{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:3px}
-  .bb-air-report-lander .rd-others{display:flex;gap:22px;margin-left:auto}
-  .bb-air-report-lander .rd-o{display:flex;flex-direction:column;line-height:1.05}
-  .bb-air-report-lander .rd-o .l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin-bottom:3px}
-  .bb-air-report-lander .rd-o .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
-  .bb-air-report-lander .rr-src{font-size:11px;color:var(--muted-2b);margin-top:8px;line-height:1.5}
-  .bb-air-report-lander .rr-src b{color:var(--muted)}
-  .bb-air-report-lander .rr-do{margin-top:13px}
-  .bb-air-report-lander .rr-do-q{font-size:clamp(20px,3.4vw,26px);margin-bottom:6px}
-  .bb-air-report-lander .rr-do-a{font-size:14px;line-height:1.5;max-width:none}
-  .bb-air-report-lander .rr-do-a b{color:var(--ink);font-weight:800}
-  .bb-air-report-lander .rr-side{padding:15px;border-radius:16px;margin-top:14px}
-  .bb-air-report-lander .rr-head{margin-bottom:12px}
-  .bb-air-report-lander .rr-head img{width:46px;height:46px}
-  .bb-air-report-lander .rr-head .h{font-size:14px}
-  .bb-air-report-lander .rr-head .s{font-size:11.5px}
-  .bb-air-report-lander .rr-mailed{margin-top:11px;font-size:11px}
-  .bb-air-report-lander .bb-plan{padding:11px 13px;margin-bottom:8px}
-  .bb-air-report-lander .bb-plan-name{font-size:14px}
-  .bb-air-report-lander .bb-plan-desc{font-size:11.5px;margin-top:2px}
-  .bb-air-report-lander .bb-now{font-size:16px}
-  .bb-air-report-lander .bb-cta{padding:15px;font-size:16px;margin-top:4px}
-  .bb-air-report-lander .bb-trust{margin-top:10px;font-size:11px;gap:5px 12px}
-  .bb-air-report-lander .rr-disc{padding:16px 22px 40px}
-  .bb-air-report-lander .bb-head{display:flex;align-items:center;gap:12px;margin-bottom:13px}
-  .bb-air-report-lander .bb-thumb{width:58px;height:58px;border-radius:12px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
-  .bb-air-report-lander .bb-htx{min-width:0}
-  .bb-air-report-lander .bb-title{font-size:14px;font-weight:800;color:var(--ink);line-height:1.25}
-  .bb-air-report-lander .bb-supply{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
-  .bb-air-report-lander .bb-packs{display:flex;gap:7px;margin-bottom:11px}
-  .bb-air-report-lander .pk{flex:1;border:2px solid var(--line);border-radius:11px;padding:9px 4px;font-family:var(--font);font-size:13px;font-weight:800;color:var(--muted);background:#fff;text-align:center;line-height:1.1;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
-  .bb-air-report-lander .pk small{display:block;font-size:9px;font-weight:800;color:var(--gold-2);margin-top:3px;letter-spacing:.02em;text-transform:uppercase}
-  .bb-air-report-lander .pk.selected{border-color:var(--green);color:var(--green);background:#f3f7f2}
-  .bb-air-report-lander .bb-plan.disabled{opacity:.45;cursor:default}
-  .bb-air-report-lander .bb-na{font-size:12px;font-weight:700;color:var(--muted-2b)}
-  @media(max-width:400px){ .bb-air-report-lander .rd-others{margin-left:0} }
+  .rr-body{max-width:600px;padding:18px 22px 12px}
+  .rr-loc{margin-bottom:7px;font-size:12px}
+  .rr-hook{font-size:clamp(25px,4.8vw,38px);line-height:1.08;margin-bottom:15px}
+  .rr-read{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:11px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .rd-main{display:flex;align-items:center;gap:11px}
+  .rd-main .n{font-size:44px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .rd-lab{display:flex;flex-direction:column;line-height:1.15}
+  .rd-lab .c{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px}
+  .rd-lab .c .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .rd-lab .sub{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:3px}
+  .rd-others{display:flex;gap:22px;margin-left:auto}
+  .rd-o{display:flex;flex-direction:column;line-height:1.05}
+  .rd-o .l{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin-bottom:3px}
+  .rd-o .v{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+  .rr-src{font-size:11px;color:var(--muted-2b);margin-top:8px;line-height:1.5}
+  .rr-src b{color:var(--muted)}
+  .rr-do{margin-top:13px}
+  .rr-do-q{font-size:clamp(20px,3.4vw,26px);margin-bottom:6px}
+  .rr-do-a{font-size:14px;line-height:1.5;max-width:none}
+  .rr-do-a b{color:var(--ink);font-weight:800}
+  .rr-side{padding:15px;border-radius:16px;margin-top:14px}
+  .rr-head{margin-bottom:12px}
+  .rr-head img{width:46px;height:46px}
+  .rr-head .h{font-size:14px}
+  .rr-head .s{font-size:11.5px}
+  .rr-mailed{margin-top:11px;font-size:11px}
+  .bb-plan{padding:11px 13px;margin-bottom:8px}
+  .bb-plan-name{font-size:14px}
+  .bb-plan-desc{font-size:11.5px;margin-top:2px}
+  .bb-now{font-size:16px}
+  .bb-cta{padding:15px;font-size:16px;margin-top:4px}
+  .bb-trust{margin-top:10px;font-size:11px;gap:5px 12px}
+  .rr-disc{padding:16px 22px 40px}
+  .bb-head{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+  .bb-thumb{width:58px;height:58px;border-radius:12px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
+  .bb-htx{min-width:0}
+  .bb-title{font-size:14px;font-weight:800;color:var(--ink);line-height:1.25}
+  .bb-supply{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px}
+  .bb-packs{display:flex;gap:7px;margin-bottom:11px}
+  .pk{flex:1;border:2px solid var(--line);border-radius:11px;padding:9px 4px;font-family:var(--font);font-size:13px;font-weight:800;color:var(--muted);background:#fff;text-align:center;line-height:1.1;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+  .pk small{display:block;font-size:9px;font-weight:800;color:var(--gold-2);margin-top:3px;letter-spacing:.02em;text-transform:uppercase}
+  .pk.selected{border-color:var(--green);color:var(--green);background:#f3f7f2}
+  .bb-plan.disabled{opacity:.45;cursor:default}
+  .bb-na{font-size:12px;font-weight:700;color:var(--muted-2b)}
+  @media(max-width:400px){ .rd-others{margin-left:0} }
   
   /* ===== Rich air-quality report (info-first; sell held to ~10%) ===== */
-  .bb-air-report-lander .rr-body{max-width:680px;padding:26px 22px 10px}
-  .bb-air-report-lander .aq-loc{font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--green-soft)}
-  .bb-air-report-lander .aq-loc span{color:var(--muted);font-weight:700}
-  .bb-air-report-lander .aq-observed{font-size:14px;color:var(--muted);margin-top:6px}
-  .bb-air-report-lander .aq-hero{margin:22px 0 4px}
-  .bb-air-report-lander .aq-big{display:flex;align-items:baseline;gap:12px}
-  .bb-air-report-lander .aq-big .n{font-size:80px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .bb-air-report-lander .aq-big .unit{font-size:18px;font-weight:800;color:var(--muted);letter-spacing:.05em}
-  .bb-air-report-lander .aq-cat{display:inline-flex;align-items:center;gap:10px;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-top:12px}
-  .bb-air-report-lander .aq-cat .dot{width:14px;height:14px;border-radius:50%;flex:none}
-  .bb-air-report-lander .aq-scale{position:relative;height:16px;border-radius:9px;margin:22px 0 9px;background:linear-gradient(90deg,#7cb342 0%,#f9d423 20%,#ff9800 40%,#e53935 60%,#8e24aa 80%,#7e0023 100%)}
-  .bb-air-report-lander .aq-marker{position:absolute;top:-6px;width:5px;height:28px;background:#0f1512;border-radius:3px;box-shadow:0 0 0 2px #fff;transform:translateX(-2px)}
-  .bb-air-report-lander .aq-scale-lbls{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
-  .bb-air-report-lander .aq-primary{font-size:16px;color:var(--muted);margin-top:15px}
-  .bb-air-report-lander .aq-primary b{color:var(--ink)}
-  .bb-air-report-lander .aq-cig{font-size:19px;line-height:1.5;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:20px}
-  .bb-air-report-lander .aq-cig b{color:var(--danger)}
-  .bb-air-report-lander .aq-cig .rr-rods{display:flex;align-items:flex-end;flex-wrap:wrap;gap:6px;margin:0 0 13px}
-  .bb-air-report-lander .aq-cig .rr-rods .rod{width:11px;height:36px;border-radius:2px;background:linear-gradient(180deg,#fff 0 60%,#e7c88c 60%,#caa863);position:relative;border:1px solid rgba(0,0,0,.14)}
-  .bb-air-report-lander .aq-cig .rr-rods .rod::before{content:"";position:absolute;top:-5px;left:0;right:0;height:6px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 7px rgba(224,82,30,.9)}
-  .bb-air-report-lander .aq-cig .rr-rods-more{align-self:center;font-size:15px;font-weight:800;color:var(--muted);margin-left:2px}
-  .bb-air-report-lander .aq-block{margin-top:32px}
-  .bb-air-report-lander .aq-h{font-size:27px;font-weight:800;color:var(--ink);letter-spacing:-.015em;margin:0 0 18px;line-height:1.1}
-  .bb-air-report-lander .aq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .bb-air-report-lander .aq-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
-  .bb-air-report-lander .aq-card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .bb-air-report-lander .aq-card .lab{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
-  .bb-air-report-lander .aq-card .badge{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;padding:4px 10px;border-radius:999px;background:#eef2ec;white-space:nowrap}
-  .bb-air-report-lander .aq-card .val{font-size:44px;font-weight:800;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:11px 0 0}
-  .bb-air-report-lander .aq-card-meter{height:8px;border-radius:5px;background:#e8ece6;overflow:hidden;margin:12px 0 11px}
-  .bb-air-report-lander .aq-card-meter span{display:block;height:100%;border-radius:5px}
-  .bb-air-report-lander .aq-card .desc{font-size:15px;color:var(--muted);line-height:1.5;margin:0}
+  .rr-body{max-width:680px;padding:26px 22px 10px}
+  .aq-loc{font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--green-soft)}
+  .aq-loc span{color:var(--muted);font-weight:700}
+  .aq-observed{font-size:14px;color:var(--muted);margin-top:6px}
+  .aq-hero{margin:22px 0 4px}
+  .aq-big{display:flex;align-items:baseline;gap:12px}
+  .aq-big .n{font-size:80px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .aq-big .unit{font-size:18px;font-weight:800;color:var(--muted);letter-spacing:.05em}
+  .aq-cat{display:inline-flex;align-items:center;gap:10px;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;margin-top:12px}
+  .aq-cat .dot{width:14px;height:14px;border-radius:50%;flex:none}
+  .aq-scale{position:relative;height:16px;border-radius:9px;margin:22px 0 9px;background:linear-gradient(90deg,#7cb342 0%,#f9d423 20%,#ff9800 40%,#e53935 60%,#8e24aa 80%,#7e0023 100%)}
+  .aq-marker{position:absolute;top:-6px;width:5px;height:28px;background:#0f1512;border-radius:3px;box-shadow:0 0 0 2px #fff;transform:translateX(-2px)}
+  .aq-scale-lbls{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+  .aq-primary{font-size:16px;color:var(--muted);margin-top:15px}
+  .aq-primary b{color:var(--ink)}
+  .aq-cig{font-size:19px;line-height:1.5;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:20px}
+  .aq-cig b{color:var(--danger)}
+  .aq-cig .rr-rods{display:flex;align-items:flex-end;flex-wrap:wrap;gap:6px;margin:0 0 13px}
+  .aq-cig .rr-rods .rod{width:11px;height:36px;border-radius:2px;background:linear-gradient(180deg,#fff 0 60%,#e7c88c 60%,#caa863);position:relative;border:1px solid rgba(0,0,0,.14)}
+  .aq-cig .rr-rods .rod::before{content:"";position:absolute;top:-5px;left:0;right:0;height:6px;border-radius:2px;background:radial-gradient(circle at 50% 40%,#ffb14a,#e0521e);box-shadow:0 0 7px rgba(224,82,30,.9)}
+  .aq-cig .rr-rods-more{align-self:center;font-size:15px;font-weight:800;color:var(--muted);margin-left:2px}
+  .aq-block{margin-top:32px}
+  .aq-h{font-size:27px;font-weight:800;color:var(--ink);letter-spacing:-.015em;margin:0 0 18px;line-height:1.1}
+  .aq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .aq-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .aq-card .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .aq-card .lab{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+  .aq-card .badge{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;padding:4px 10px;border-radius:999px;background:#eef2ec;white-space:nowrap}
+  .aq-card .val{font-size:44px;font-weight:800;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:11px 0 0}
+  .aq-card-meter{height:8px;border-radius:5px;background:#e8ece6;overflow:hidden;margin:12px 0 11px}
+  .aq-card-meter span{display:block;height:100%;border-radius:5px}
+  .aq-card .desc{font-size:15px;color:var(--muted);line-height:1.5;margin:0}
   /* What this means: color-coded status callout, not a wall of text */
-  .bb-air-report-lander .aq-means{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-left:6px solid var(--line);border-radius:16px;padding:20px 22px;background:var(--card)}
-  .bb-air-report-lander .aq-means-ic{flex:none;width:48px;height:48px;border-radius:12px;background:#eef2ec;display:flex;align-items:center;justify-content:center}
-  .bb-air-report-lander .aq-means-ic svg{width:28px;height:28px}
-  .bb-air-report-lander .aq-guide{font-size:21px;font-weight:500;color:var(--ink);line-height:1.5;margin:0;max-width:52ch}
-  .bb-air-report-lander .aq-note{font-size:15px;color:var(--muted);line-height:1.55;margin:16px 0 0;padding-left:16px;border-left:3px solid var(--line);max-width:62ch}
+  .aq-means{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-left:6px solid var(--line);border-radius:16px;padding:20px 22px;background:var(--card)}
+  .aq-means-ic{flex:none;width:48px;height:48px;border-radius:12px;background:#eef2ec;display:flex;align-items:center;justify-content:center}
+  .aq-means-ic svg{width:28px;height:28px}
+  .aq-guide{font-size:21px;font-weight:500;color:var(--ink);line-height:1.5;margin:0;max-width:52ch}
+  .aq-note{font-size:15px;color:var(--muted);line-height:1.55;margin:16px 0 0;padding-left:16px;border-left:3px solid var(--line);max-width:62ch}
   /* How to protect: icon-card grid, not a bullet list */
-  .bb-air-report-lander .aq-tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .bb-air-report-lander .aq-tip{display:flex;gap:15px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-  .bb-air-report-lander .aq-tip-ic{flex:none;width:52px;height:52px;border-radius:13px;background:#e7f0e7;color:var(--green);display:flex;align-items:center;justify-content:center}
-  .bb-air-report-lander .aq-tip-ic svg{width:28px;height:28px}
-  .bb-air-report-lander .aq-tip-tx b{display:block;font-size:18px;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:5px}
-  .bb-air-report-lander .aq-tip-tx span{font-size:15.5px;color:var(--muted);line-height:1.5}
-  .bb-air-report-lander .aq-pollen{font-size:16px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 17px;margin-top:18px}
+  .aq-tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .aq-tip{display:flex;gap:15px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .aq-tip-ic{flex:none;width:52px;height:52px;border-radius:13px;background:#e7f0e7;color:var(--green);display:flex;align-items:center;justify-content:center}
+  .aq-tip-ic svg{width:28px;height:28px}
+  .aq-tip-tx b{display:block;font-size:18px;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:5px}
+  .aq-tip-tx span{font-size:15.5px;color:var(--muted);line-height:1.5}
+  .aq-pollen{font-size:16px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 17px;margin-top:18px}
   /* the sell — one slim strip, ~10% of the page */
-  .bb-air-report-lander .aq-sell{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:40px}
-  .bb-air-report-lander .aq-sell img{width:64px;height:64px;border-radius:13px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
-  .bb-air-report-lander .aq-sell-tx{flex:1;min-width:0}
-  .bb-air-report-lander .aq-sell-tx .t{font-size:19px;font-weight:800;color:var(--ink);line-height:1.25}
-  .bb-air-report-lander .aq-sell-tx .s{font-size:15px;color:var(--muted);margin-top:5px;line-height:1.45}
-  .bb-air-report-lander .aq-sell-cta{flex:none;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:17px;padding:15px 20px;border-radius:12px;white-space:nowrap}
-  .bb-air-report-lander .aq-sell-cta:hover{filter:brightness(.98)}
+  .aq-sell{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:40px}
+  .aq-sell img{width:64px;height:64px;border-radius:13px;object-fit:cover;flex:none;border:1px solid var(--line);background:#eef2ec}
+  .aq-sell-tx{flex:1;min-width:0}
+  .aq-sell-tx .t{font-size:19px;font-weight:800;color:var(--ink);line-height:1.25}
+  .aq-sell-tx .s{font-size:15px;color:var(--muted);margin-top:5px;line-height:1.45}
+  .aq-sell-cta{flex:none;background:var(--gold);color:var(--gold-deep);font-weight:800;font-size:17px;padding:15px 20px;border-radius:12px;white-space:nowrap}
+  .aq-sell-cta:hover{filter:brightness(.98)}
   @media(max-width:560px){
-    .bb-air-report-lander .aq-grid{grid-template-columns:1fr}
-    .bb-air-report-lander .aq-card{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-    .bb-air-report-lander .aq-card .top{order:1;flex:1;min-width:120px}
-    .bb-air-report-lander .aq-card .val{order:2;margin:0}
-    .bb-air-report-lander .aq-card-meter{order:3;flex-basis:100%;margin:9px 0 3px}
-    .bb-air-report-lander .aq-card .desc{order:4;flex-basis:100%;margin-top:2px}
-    .bb-air-report-lander .aq-tips-grid{grid-template-columns:1fr}
-    .bb-air-report-lander .aq-h{font-size:24px}
-    .bb-air-report-lander .aq-guide{font-size:19px}
-    .bb-air-report-lander .aq-big .n{font-size:62px}
-    .bb-air-report-lander .aq-sell{flex-wrap:wrap}
-    .bb-air-report-lander .aq-sell-cta{width:100%;text-align:center}
+    .aq-grid{grid-template-columns:1fr}
+    .aq-card{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+    .aq-card .top{order:1;flex:1;min-width:120px}
+    .aq-card .val{order:2;margin:0}
+    .aq-card-meter{order:3;flex-basis:100%;margin:9px 0 3px}
+    .aq-card .desc{order:4;flex-basis:100%;margin-top:2px}
+    .aq-tips-grid{grid-template-columns:1fr}
+    .aq-h{font-size:24px}
+    .aq-guide{font-size:19px}
+    .aq-big .n{font-size:62px}
+    .aq-sell{flex-wrap:wrap}
+    .aq-sell-cta{width:100%;text-align:center}
   }
-
-/* Beat Super Theme / ntg overrides inside the lander */
-.bb-air-report-lander,
-.bb-air-report-lander *:not(svg):not(path):not(circle):not(rect):not(line):not(polyline) {
-  font-family: var(--font) !important;
-}
-.bb-air-report-lander .fbtn,
-.bb-air-report-lander button.fbtn,
-.bb-air-report-lander .pk,
-.bb-air-report-lander .bb-cta,
-.bb-air-report-lander a.bb-cta,
-.bb-air-report-lander .aq-sell-cta,
-.bb-air-report-lander a.aq-sell-cta {
-  float: none !important;
-  font-family: var(--font) !important;
-}
-.bb-air-report-lander .fbtn,
-.bb-air-report-lander button.fbtn {
-  width: 100% !important;
-  background: var(--gold) !important;
-  color: var(--gold-deep) !important;
-}
-.bb-air-report-lander .pk {
-  width: auto !important;
-  background: #fff !important;
-}
-.bb-air-report-lander .pk.selected {
-  background: #f3f7f2 !important;
-  color: var(--green) !important;
-}
-.bb-air-report-lander .fin {
-  font-family: var(--font) !important;
-  color: #161a1c !important;
-}
-.bb-air-report-lander .entry h1 {
-  color: #fff !important;
-  font-family: var(--font) !important;
-}
-.bb-air-report-lander .entry-logo {
-  height: 22px !important;
-  width: auto !important;
-  max-height: 22px !important;
-}
-#shopify-section-{{ section.id }} {
-  float: none !important;
-  clear: both !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: block !important;
-}
-</style>
-
-{% javascript %}
+  {% endstylesheet %}
+  
+  {% javascript %}
   (function () {
     const form = document.getElementById('air-form');
     const report = document.getElementById('report');
@@ -399,14 +329,16 @@
     const WORKER = 'https://betterbrand-air-quality.royal-dew-fe05.workers.dev';
     const SERVE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/aq-report/submit';
     const LOGBASE = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form';
-    const BASE = /(^|\.)trybetterbrand\.com$/.test(location.hostname) ? 'live' : 'air-report';
-    // A/B variant: ?variant=X in the URL wins (persisted), else a sticky 50/50 bucket per visitor.
+    const BASE = /(^|\.)trybetterbrand\.com$/.test(location.hostname) ? 'aqi-v3' : 'air-report';
+    // A/B variant: OPT-IN ONLY. ?variant=X in the URL wins and sticks (own key, so stale bb_ab
+    // values from the old auto-split can never resurrect it). No URL param = no suffix, no
+    // random bucketing: this page reports as ONE tag so the sample is not cut in half.
     const VARIANT = (function(){try{
       var q=(new URLSearchParams(location.search).get('variant')||'').trim().toUpperCase().slice(0,12);
-      if(q){localStorage.setItem('bb_ab',q);return q;}
-      var s=localStorage.getItem('bb_ab'); if(!s){s=(Math.random()<0.5?'A':'B');localStorage.setItem('bb_ab',s);} return s;
-    }catch(_){return 'A';}})();
-    const VERSION = BASE + '-' + VARIANT;              // e.g. live-A / live-B — flows through pixel + stats
+      if(q){localStorage.setItem('bb_ab_v3',q);return q;}
+      return localStorage.getItem('bb_ab_v3')||'';
+    }catch(_){return '';}})();
+    const VERSION = VARIANT ? BASE + '-' + VARIANT : BASE;   // 'aqi-v3' normally; 'aqi-v3-A' only with ?variant=A
     const PIXEL_ID = '451332722114843';                // BetterBrand Meta pixel (ours)
     function dayKey(){try{return new Date().toLocaleDateString('en-CA',{timeZone:'America/Chicago'});}catch(_){return new Date().toISOString().slice(0,10);}}
     const VAR1=50211146957099, SUBPLAN=118714663211;
@@ -433,7 +365,25 @@
     function withRef(u){var sep=u.indexOf('?')>-1?'&':'?';return u+sep+'bb_vid='+encodeURIComponent(VID)+'&bb_src='+encodeURIComponent(VERSION);}
     const T0 = Date.now();
     function aqTrack(t,x){fetch(LOGBASE+'/aq-event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({type:t,page_version:VERSION,variant:VARIANT,day:dayKey(),ts:new Date().toISOString(),session_id:SID,vid:VID,path:location.pathname,elapsed_ms:Date.now()-T0},x||{})),keepalive:true}).catch(()=>{});}
-    (function(){try{if(sessionStorage.getItem('aq_viewed'))return;sessionStorage.setItem('aq_viewed','1');}catch(_){}fetch(LOGBASE+'/aq-view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_version:VERSION,variant:VARIANT,day:dayKey(),ts:new Date().toISOString(),session_id:SID,vid:VID,path:location.pathname})}).catch(()=>{});})();
+    // Everything only the browser knows: real traffic source + ad click ids + device.
+    // Read ONCE, synchronously, then it rides the existing /aq-view POST below — no extra
+    // request, no listeners, no render work. Server drops it into a jsonb column, so any
+    // future slice (source, campaign, device, landing URL) needs no page edit ever again.
+    const META = (function(){try{
+      var p=new URLSearchParams(location.search), m={},
+          k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid','ttclid'];
+      for(var i=0;i<k.length;i++){var v=p.get(k[i]); if(v) m[k[i]]=String(v).slice(0,120);}
+      m.ref=(document.referrer||'').slice(0,300);   // the REAL referrer — the Referer header is
+      m.url=location.href.slice(0,500);             // stripped to our own origin cross-domain
+      m.sw=screen.width; m.sh=screen.height; m.vw=window.innerWidth; m.vh=window.innerHeight;
+      m.lang=navigator.language||'';
+      try{m.tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(_){}
+      return m;
+    }catch(_){return {};}})();
+    (function(){var K='aq_viewed_'+VERSION;try{if(sessionStorage.getItem(K))return;sessionStorage.setItem(K,'1');}catch(_){}fetch(LOGBASE+'/aq-view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_version:VERSION,variant:VARIANT,day:dayKey(),ts:new Date().toISOString(),session_id:SID,vid:VID,path:location.pathname,meta:META}),keepalive:true}).catch(()=>{});})();
+    // Funnel step 1 (the one that was missing): form actually reached the viewport.
+    // One-shot IntersectionObserver, disconnects on first hit. No scroll handler.
+    (function(){try{if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++){if(es[i].isIntersecting){io.disconnect();aqTrack('form_seen');return;}}},{threshold:0.25});io.observe(form);}catch(_){}})();
     form.addEventListener('focusin',(function(){let s=false;const t={};return function(e){var f=e.target&&e.target.name;if(!s){s=true;aqTrack('form_start',{field:f||''});}if(f&&!t[f]){t[f]=1;aqTrack('field_focus',{field:f});}};})());
     form.addEventListener('submit',()=>{aqTrack('submit_attempt');},true);
     const btn=form.querySelector('.fbtn'), errEl=form.querySelector('.ferr');
@@ -476,7 +426,7 @@
       packEls.forEach(function(b){b.addEventListener('click',function(){st.pack=b.getAttribute('data-pack');render();});});
       subCard.addEventListener('click',function(){if(subCard.classList.contains('disabled'))return;st.plan='sub';render();});
       onceCard.addEventListener('click',function(){st.plan='once';render();});
-      cta.addEventListener('click',function(){aqTrack('cta_click',{plan:st.plan,pack:st.pack});});
+      cta.addEventListener('click',function(){aqTrack('store_click',{plan:st.plan,pack:st.pack});});
       render();
       var rc=document.getElementById('rep-close'); if(rc) rc.addEventListener('click',closeReport);
     }
@@ -503,7 +453,7 @@
       tip(IC_MASK,'Wear an N95','A well-fitting N95 helps when fine particles are high outside.')+
       tip(IC_LEAF,'Support your lungs','Help them clear more of what you breathe, every single day.');
     function sellStrip(){return '<section class="aq-sell"><img src="https://air-report.pages.dev/assets/img/gummies-1bag.jpg" alt="BetterLungs Mullein Gummies" loading="lazy"><div class="aq-sell-tx"><div class="t">Support your lungs from the inside</div><div class="s">BetterLungs® mullein gummies, once a day. 20% off today with your report.</div></div><a class="aq-sell-cta" id="bb-cta" href="'+DISC+'" target="_blank" rel="noopener">Get 20% off &rarr;</a></section>';}
-    function wireReport(){var rc=document.getElementById('rep-close');if(rc)rc.addEventListener('click',closeReport);var cta=document.getElementById('bb-cta');if(cta){cta.setAttribute('href',withRef(cta.getAttribute('href')));cta.addEventListener('click',function(){aqTrack('cta_click',{place:'report_sell'});});}}
+    function wireReport(){var rc=document.getElementById('rep-close');if(rc)rc.addEventListener('click',closeReport);var cta=document.getElementById('bb-cta');if(cta){cta.setAttribute('href',withRef(cta.getAttribute('href')));cta.addEventListener('click',function(){aqTrack('store_click',{place:'report_sell'});});}}
     var DISCLAIMER='<section class="rr-disc"><p>The cigarette comparison is an estimate from live PM2.5 (Berkeley Earth: ~22 µg/m³ ≈ one cigarette), not a medical measurement. Air-quality readings are sourced from public monitoring networks for general information only and are not a medical or safety assessment. BetterLungs® is a dietary supplement; these statements have not been evaluated by the FDA and it is not intended to diagnose, treat, cure, or prevent any disease. Individual results vary.</p></section>';
   
     function buildReport(d,email){
