@@ -88,7 +88,6 @@
   .shopify-section.bb-sms-vip-v3 .btitle,
   .shopify-section.bb-sms-vip-v3 .product-h,
   .shopify-section.bb-sms-vip-v3 .pcard-title,
-  .shopify-section.bb-sms-vip-v3 .rcard-quote,
   .shopify-section.bb-sms-vip-v3 .hero-phone-avatar,
   .shopify-section.bb-sms-vip-v3 details.faq-item > summary,
   .shopify-section.bb-sms-vip-v3 details.faq-item > summary::after {
@@ -103,8 +102,8 @@
 
   /* smooth in-page nav (Curt: keep visitors on the page, no off-site links) */
   html { scroll-behavior: smooth; }
-  #signup, #reviews, #faq { scroll-margin-top: 76px; }
-  @media (min-width: 768px) { #signup, #reviews, #faq { scroll-margin-top: 88px; } }
+  #signup, #faq { scroll-margin-top: 76px; }
+  @media (min-width: 768px) { #signup, #faq { scroll-margin-top: 88px; } }
 
   :root {
     --bb-green-dark: #1a3a1a;
@@ -131,7 +130,6 @@
     --bb-pad-mobile: 20px;
     --bb-radius-pill: 50px;
     --bb-radius-card: 16px;
-    --bb-radius-testimonial: 12px;
     --bb-radius-input: 8px;
   }
 
@@ -727,19 +725,17 @@
   /* v3 (Curt mobile fix 2026-05-26): force slide + card to fit the parent
      track width (~287px on 375 viewport). The earlier `calc(100vw - 32px)`
      (= 343px) was wider than the track's 287, so the card overflowed by
-     ~56px, shifting content right and clipping the "15% OFF" tag + review
-     text. `flex: 0 0 100%` makes each slide exactly one track-width wide,
+     ~56px, shifting content right and clipping the "15% OFF" tag.
+     `flex: 0 0 100%` makes each slide exactly one track-width wide,
      which is what Splide v4 expects with perPage:1. */
   @media (max-width: 768px) {
-    .product-track .splide__slide,
-    .reviews-track .splide__slide {
+    .product-track .splide__slide {
       flex: 0 0 100% !important;
       width: 100% !important;
       max-width: 100% !important;
       min-width: 0 !important;
     }
-    .product-track .pcard,
-    .reviews-track .rcard {
+    .product-track .pcard {
       width: 100% !important;
       max-width: 100% !important;
     }
@@ -869,112 +865,11 @@
     border-top: 1px solid rgba(232, 200, 74, 0.18);
   }
 
-  /* Reviews carousel */
-  .reviews { padding: 24px var(--bb-pad-mobile); background: var(--bb-green-light); }
-  @media (min-width: 1024px) { .reviews { padding: 32px var(--bb-pad-desktop); } }
-  /* v3 (Curt round 5 — 2026-05-26): tighter reviews-inner padding to kill
-     remaining dead space at top + bottom of the white panel. */
-  .reviews-inner {
-    background: var(--bb-white);
-    border: 1px solid var(--bb-border);
-    border-radius: var(--bb-radius-card);
-    padding: 18px 16px 16px;
-    overflow: hidden;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  @media (min-width: 1024px) { .reviews-inner { padding: 20px 48px 16px; } }
-  .reviews-inner .section-heading { margin-bottom: 12px; }
-  @media (min-width: 1024px) { .reviews-inner .section-heading { margin-bottom: 12px; } }
-
-  .reviews-track { position: relative; margin: 0; }
-  /* v3 (round 2 — 2026-05-26): tightened track bottom padding + pagination
-     top padding so the dots sit closer to the cards instead of floating in
-     dead space. */
-  .reviews-track .splide__track { padding: 0 0 12px !important; overflow: hidden; }
-  .reviews-track .splide__pagination {
-    position: static;
-    padding: 8px 0 0;
-    gap: 8px;
-    display: flex;
-    justify-content: center;
-  }
-  .reviews-track .splide__pagination__page { width: 8px; height: 8px; background: var(--bb-green-mid); opacity: 0.3; margin: 0 4px; }
-  .reviews-track .splide__pagination__page.is-active { opacity: 1; transform: scale(1.3); background: var(--bb-green-dark); }
-  .reviews-track .splide__arrow {
-    background: var(--bb-green-sage);
-    border: 1px solid var(--bb-green-mid);
-    width: 40px; height: 40px;
-    opacity: 1;
-    border-radius: 50%;
-  }
-  /* v3 (Curt round 2 — 2026-05-26): arrows pushed completely OUTSIDE the
-     white reviews container at desktop. -72px puts them in the green-light
-     band outside the panel, sitting in the safe zone between the panel edge
-     and the section's outer padding. They're clearly nav-only, no overlap. */
-  .reviews-track .splide__arrow--prev { left: 4px; }
-  .reviews-track .splide__arrow--next { right: 4px; }
-  @media (min-width: 1024px) {
-    .reviews-track .splide__arrow--prev { left: -72px; }
-    .reviews-track .splide__arrow--next { right: -72px; }
-  }
-  /* Make sure the reviews-inner container doesn't clip the arrows */
-  .reviews-inner { overflow: visible !important; }
-  /* v3 (mobile fix 2026-05-26): hide both carousels' nav arrows on mobile to
+  /* v3 (mobile fix 2026-05-26): hide product carousel nav arrows on mobile to
      stop them from overlapping card content. Pagination dots + swipe gestures
      still work. */
   @media (max-width: 768px) {
-    .reviews-track .splide__arrows,
     .product-track .splide__arrows { display: none; }
-  }
-  .reviews-track .splide__arrow svg { fill: var(--bb-green-dark); width: 14px; height: 14px; }
-
-  .rcard {
-    background: var(--bb-white);
-    border: 1px solid var(--bb-border);
-    border-radius: var(--bb-radius-testimonial);
-    padding: 24px 24px 20px;
-    display: flex; flex-direction: column;
-    gap: 12px; height: 100%;
-  }
-  .rcard-stars { color: var(--bb-yellow); font-size: 16px; letter-spacing: 0.15em; }
-  .rcard-quote {
-    font-family: var(--bb-display);
-    font-weight: 700;
-    color: var(--bb-green-dark);
-    font-size: 21px;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-  /* v3 (Tate+Curt 2026-05-26): flex-grow moved from quote to body so the
-     title stays tight against its body text. The body absorbs the slack
-     to push attribution to the bottom for equal-height cards. */
-  .rcard-body {
-    font-family: var(--bb-body);
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--bb-text-dark);
-    flex-grow: 1;
-  }
-  .rcard-attr {
-    padding-top: 14px;
-    border-top: 1px solid var(--bb-border);
-  }
-  .rcard-name {
-    font-family: var(--bb-body);
-    font-weight: 700; font-size: 13px;
-    letter-spacing: 0.06em;
-    color: var(--bb-text-dark);
-    line-height: 1.3;
-    text-transform: uppercase;
-  }
-  .rcard-meta {
-    font-family: var(--bb-body);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--bb-text-light);
-    text-transform: uppercase;
   }
 
   /* Recap CTA */
@@ -1108,7 +1003,6 @@
     </a>
     <nav class="bb-nav">
       <a href="#signup">Sign Up</a>
-      <a href="#reviews">Testimonials</a>
       <a href="#faq">FAQs</a>
     </nav>
     <div class="bb-header-right">
@@ -1289,52 +1183,6 @@
   </div>
 </section>
 
-<!-- REVIEWS CAROUSEL -->
-<section class="reviews" id="reviews">
-  <div class="reviews-inner reveal">
-    <div class="section-heading">
-      <div class="eyebrow">Real VIP Members</div>
-      <h2 class="h2">VIP perks, real results.</h2>
-    </div>
-    <div class="reviews-track splide" id="reviews-carousel" aria-label="VIP Member reviews">
-      <div class="splide__track">
-        <ul class="splide__list">
-          <li class="splide__slide"><article class="rcard">
-            <div class="rcard-stars">★★★★★</div>
-            <h3 class="rcard-quote">"I feel like a true VIP."</h3>
-            <p class="rcard-body">First in line on every restock, plus exclusive codes I never see in email. This is how loyalty programs should work.</p>
-            <div class="rcard-attr"><div class="rcard-name">Sarah M.</div><div class="rcard-meta">Verified VIP Member</div></div>
-          </article></li>
-          <li class="splide__slide"><article class="rcard">
-            <div class="rcard-stars">★★★★★</div>
-            <h3 class="rcard-quote">"Finally, a brand that respects my inbox."</h3>
-            <p class="rcard-body">Two short texts a month, all relevant. Got 15% off in 30 seconds and a heads-up when my Mullein was back. Easy yes.</p>
-            <div class="rcard-attr"><div class="rcard-name">Marcus T.</div><div class="rcard-meta">Verified VIP Member</div></div>
-          </article></li>
-          <li class="splide__slide"><article class="rcard">
-            <div class="rcard-stars">★★★★★</div>
-            <h3 class="rcard-quote">"Worth signing up just for the early access."</h3>
-            <p class="rcard-body">I was the first to grab the new gummies. VIP text dropped 24 hours before everyone else got the email. Sold out by morning.</p>
-            <div class="rcard-attr"><div class="rcard-name">Jennifer L.</div><div class="rcard-meta">Verified VIP Member</div></div>
-          </article></li>
-          <li class="splide__slide"><article class="rcard">
-            <div class="rcard-stars">★★★★★</div>
-            <h3 class="rcard-quote">"Best $0 'investment' I've made."</h3>
-            <p class="rcard-body">All upside. VIP membership paid for itself in one order. The restock pings keep me from stressing when I'm running low.</p>
-            <div class="rcard-attr"><div class="rcard-name">Alex R.</div><div class="rcard-meta">Verified VIP Member</div></div>
-          </article></li>
-          <li class="splide__slide"><article class="rcard">
-            <div class="rcard-stars">★★★★★</div>
-            <h3 class="rcard-quote">"Being first is the whole perk."</h3>
-            <p class="rcard-body">The VIP text dropped a full day before the email blast. Grabbed the new gummies before they sold out. That head start alone is worth it.</p>
-            <div class="rcard-attr"><div class="rcard-name">Priya S.</div><div class="rcard-meta">Verified VIP Member</div></div>
-          </article></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- RECAP CTA -->
 <section class="recap">
   <h2 class="h2 reveal">Activate VIP. Save <span class="h1-mark">15%</span>.</h2>
@@ -1487,11 +1335,6 @@
       type: 'loop', perPage: 4, perMove: 1, gap: '16px',
       pagination: true, arrows: true, autoplay: true, interval: 4500, pauseOnHover: true,
       breakpoints: { 1200: { perPage: 3 }, 768: { perPage: 2, gap: '12px' }, 560: { perPage: 1, gap: '0' } }
-    }).mount();
-    new Splide('#reviews-carousel', {
-      type: 'loop', perPage: 3, perMove: 1, gap: '20px',
-      pagination: true, arrows: true, autoplay: true, interval: 6000, pauseOnHover: true,
-      breakpoints: { 1024: { perPage: 2 }, 640: { perPage: 1, gap: '0' } }
     }).mount();
   });
 </script>
