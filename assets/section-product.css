@@ -1136,6 +1136,11 @@ i.spr-icon.spr-icon-star-empty,
   gap: 5px;
 }
 
+.product-page .product-slider-widget .product-slider-thumbnails,
+.product-slider-thumbnails {
+  display: none !important;
+}
+
 .external-video-wrapper {
   position: absolute;
   top: 0;
