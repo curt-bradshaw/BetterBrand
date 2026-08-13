@@ -1136,6 +1136,19 @@ i.spr-icon.spr-icon-star-empty,
   gap: 5px;
 }
 
+@media (max-width: 767px) {
+  .product-page .product-slider-widget .product-slider-thumbnails,
+  .product-page .product-slider-widget .product-slider.product-slider-thumbnails,
+  .product-slider-thumbnails {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
 .external-video-wrapper {
   position: absolute;
   top: 0;

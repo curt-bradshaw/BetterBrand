@@ -3716,6 +3716,17 @@
     }
 
     @media (max-width: 767px) {
+      /* Hide PDP image slider thumbnails on mobile only */
+      .product-page .product-slider-widget .product-slider-thumbnails,
+      .product-page .product-slider-widget .product-slider.product-slider-thumbnails {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+      }
+
       .btn-add-tocart .btn-items {
         top: 0;
       }
