@@ -123,6 +123,38 @@
     {% comment %} {% include "omega_twitter_multi_pixel" %} {% endcomment %}
 
     {{ 'output.css' | asset_url | stylesheet_tag }}
+    <style>
+      /* output.css resets ol/ul to list-style:none — restore markers for policy + RTE content */
+      .shopify-policy__container {
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 40px 20px;
+        box-sizing: border-box;
+      }
+      .shopify-policy__body .rte ul,
+      .rte ul {
+        list-style: disc;
+        list-style-position: outside;
+        padding-left: 1.5rem;
+        margin: 0 0 1rem;
+      }
+      .shopify-policy__body .rte ol,
+      .rte ol {
+        list-style: decimal;
+        list-style-position: outside;
+        padding-left: 1.5rem;
+        margin: 0 0 1rem;
+      }
+      .shopify-policy__body .rte li,
+      .rte li {
+        list-style: inherit;
+        margin-bottom: 0.5rem;
+      }
+      .shopify-policy__body .rte p {
+        margin: 0 0 1rem;
+      }
+    </style>
     {%- render 'lazyload-head' -%}
 
     <link rel="preconnect dns-prefetch" href="https://cdn.shopify.com">
