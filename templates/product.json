@@ -12,31 +12,10 @@
     "main": {
       "type": "product-template",
       "blocks": {
-        "judge_me_reviews_preview_badge_RUabMQ": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        },
         "reviews_yCCePc": {
           "type": "reviews",
           "settings": {
             "reviews_text_colors": "#234134"
-          }
-        },
-        "title_xraidK": {
-          "type": "title",
-          "settings": {
-            "product_title_color": "#234134"
-          }
-        },
-        "description_FXRx6t": {
-          "type": "description",
-          "settings": {
-            "font_size_short_description": 14,
-            "font_size_short_description_tablet": 14,
-            "font_size_short_description_mobile": 12,
-            "font_weight_short_description": "normal",
-            "font_style_short_description": "normal",
-            "description_color": "#252525"
           }
         },
         "price_mYynEy": {
@@ -54,6 +33,27 @@
         "product_images_gJEr4A": {
           "type": "product_images",
           "settings": {}
+        },
+        "judge_me_reviews_preview_badge_RUabMQ": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "title_xraidK": {
+          "type": "title",
+          "settings": {
+            "product_title_color": "#234134"
+          }
+        },
+        "description_FXRx6t": {
+          "type": "description",
+          "settings": {
+            "font_size_short_description": 14,
+            "font_size_short_description_tablet": 14,
+            "font_size_short_description_mobile": 12,
+            "font_weight_short_description": "normal",
+            "font_style_short_description": "normal",
+            "description_color": "#252525"
+          }
         },
         "product_info_WfBXk4": {
           "type": "product_info",
@@ -159,12 +159,12 @@
         }
       },
       "block_order": [
-        "judge_me_reviews_preview_badge_RUabMQ",
         "reviews_yCCePc",
-        "title_xraidK",
-        "description_FXRx6t",
         "price_mYynEy",
         "product_images_gJEr4A",
+        "judge_me_reviews_preview_badge_RUabMQ",
+        "title_xraidK",
+        "description_FXRx6t",
         "product_info_WfBXk4",
         "product_info_KPHCBP",
         "product_info_6FDNmg",
