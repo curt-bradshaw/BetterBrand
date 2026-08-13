@@ -34,6 +34,21 @@
           "type": "product_images",
           "settings": {}
         },
+        "trustpilot_trustpilot_mini_widget_AfQVrz": {
+          "type": "shopify://apps/trustpilot/blocks/trustpilot_mini_widget/af628f2e-96c9-437f-bc0a-e8f7ff3fa8b4",
+          "settings": {
+            "locale": "en-US",
+            "review_explainer": false,
+            "width": 100,
+            "vertical_space": 10,
+            "height": 120,
+            "height_with_explainer": 140,
+            "font_family": "Helvetica Neue",
+            "theme": "light",
+            "font_color_light": "#191919",
+            "font_color_dark": "#ffffff"
+          }
+        },
         "judge_me_reviews_preview_badge_RUabMQ": {
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
@@ -162,6 +177,7 @@
         "reviews_yCCePc",
         "price_mYynEy",
         "product_images_gJEr4A",
+        "trustpilot_trustpilot_mini_widget_AfQVrz",
         "judge_me_reviews_preview_badge_RUabMQ",
         "title_xraidK",
         "description_FXRx6t",
