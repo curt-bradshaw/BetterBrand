@@ -333,8 +333,8 @@
         }
 
         .bundle-sticky-box__checkout-btn {
+          display: none;
           background:#F2CB49;
-          display: flex;
           width: 100%;
           align-items: center;
           justify-content: center;
@@ -350,6 +350,10 @@
           text-transform: uppercase;
           color: #234134;
           border: 1px solid #000000;
+        }
+
+        .bundle-sticky-box__checkout-btn--visible {
+          display: flex;
         }
 
         .bundle-sticky-box__checkout-btn:hover {
@@ -1818,6 +1822,7 @@
 
       const isEmpty = products.length === 0;
       button.disabled = isEmpty;
+      button.classList.toggle('bundle-sticky-box__checkout-btn--visible', !isEmpty);
 
       if (isEmpty) {
         text.innerHTML = 'Build Your Bundle';
