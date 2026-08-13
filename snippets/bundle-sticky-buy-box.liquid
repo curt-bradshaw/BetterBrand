@@ -1893,6 +1893,24 @@
           btn.style.backgroundColor = '#28a745';
         }
       });
+
+      document.querySelectorAll('.product-offers__qty').forEach((qtyEl) => {
+        const productId = String(qtyEl.dataset.productId);
+        const productInCart = cartProducts.find((p) => String(p.id) === productId);
+        const quantity = productInCart ? parseInt(productInCart.quantity, 10) || 1 : 0;
+        const maxStock = parseInt(qtyEl.dataset.stock, 10);
+        const stockLimit = Number.isFinite(maxStock) && maxStock > 0
+          ? maxStock
+          : (parseInt(productInCart?.stock, 10) || 999);
+
+        const valueEl = qtyEl.querySelector('.product-offers__qty-value');
+        const decreaseBtn = qtyEl.querySelector('.product-offers__qty-decrease');
+        const increaseBtn = qtyEl.querySelector('.product-offers__qty-increase');
+
+        if (valueEl) valueEl.textContent = String(quantity);
+        if (decreaseBtn) decreaseBtn.disabled = quantity <= 0;
+        if (increaseBtn) increaseBtn.disabled = quantity >= stockLimit;
+      });
     },
   };
 
@@ -1955,12 +1973,44 @@
     },
 
     removeProduct(productId) {
-      this.products = this.products.filter((p) => p.id !== productId);
+      const productIdStr = String(productId);
+      this.products = this.products.filter((p) => String(p.id) !== productIdStr);
       Storage.saveCart(this.products);
 
       const element = DOM.getProductElement(productId);
       if (element) element.remove();
 
+      this.updateUI();
+    },
+
+    adjustQuantityFromCard(productData, delta) {
+      const productId = String(productData.id);
+      const maxStock = parseInt(productData.stock, 10);
+      const stockLimit = Number.isFinite(maxStock) && maxStock > 0 ? maxStock : 999;
+      const existingProduct = this.products.find((p) => String(p.id) === productId);
+
+      if (!existingProduct) {
+        if (delta > 0) {
+          this.addProduct({
+            ...productData,
+            id: productId,
+            quantity: 1,
+            stock: stockLimit,
+          });
+        }
+        return;
+      }
+
+      const nextQuantity = (parseInt(existingProduct.quantity, 10) || 1) + delta;
+
+      if (nextQuantity <= 0) {
+        this.removeProduct(productId);
+        return;
+      }
+
+      existingProduct.quantity = Math.min(nextQuantity, stockLimit);
+      existingProduct.stock = stockLimit;
+      Storage.saveCart(this.products);
       this.updateUI();
     },
 
@@ -2237,12 +2287,15 @@
   // ============================================
   window.addToBundle = (product) => {
     const cart = Storage.getCart();
-    const productInCart = cart.find((p) => p.id === product.id);
+    const productInCart = cart.find((p) => String(p.id) === String(product.id));
     if (productInCart) {
       BundleCart.updateQuantity(product.id, product.stock, 1);
     } else {
       BundleCart.addProduct(product);
     }
+  };
+  window.adjustBundleQuantity = (product, delta) => {
+    BundleCart.adjustQuantityFromCard(product, delta);
   };
   window.handleATC = () => BundleCart.addToCart();
 
