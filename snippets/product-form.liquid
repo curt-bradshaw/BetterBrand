@@ -115,30 +115,33 @@
 
     {%- if settings.enable_add_to_cart_sticky and product.available -%}
       <button type="submit" class="cart-icon btn btn-add-tocart AddToCartFixed no-show" id="AddToCart3">
-        {%- if variant.compare_at_price > price and section.settings.enable_new_layout -%}
-          <div class="compare-btn">
-            {%- assign temp = price | times: 100.0 -%}
-            {%- assign temp = temp | divided_by: variant.compare_at_price -%}
-            <span class="compare-add-price {% unless variant.compare_at_price > variant.price %}hide{% endunless %}">
-              {%- if variant.compare_at_price > variant.price -%}
-                {{ variant.compare_at_price | money }}
-              {%- endif -%}
-            </span>
-            <span class="compare_percent"> ({{ 100 | minus: temp | round }}% OFF)</span>
-          </div>
-          <span class="line"></span>
-        {%- endif -%}
-        {%- if settings.enable_price_atc -%}
-          <span class="btn-money">{{ product.price | money }} | {{ settings.add_to_cart_label }} </span>
-          <span class="divisor">|</span>
-        {%- endif -%}
-        <span class="btn-label">{{ settings.add_to_cart_label }}</span>
-        <span class="btn-svg">{%- render 'icon-cart-fill' -%}</span>
-        <span class="btn-items">&#40; 1 Item &#41;</span>
-
-        {%- if settings.atc_progress_bar -%}
-          <span class="btn-progress"></span>
-        {%- endif -%}
+        {% comment %}
+          Previous sticky ATC button content (compare price, price, icon, item count):
+          {%- if variant.compare_at_price > price and section.settings.enable_new_layout -%}
+            <div class="compare-btn">
+              {%- assign temp = price | times: 100.0 -%}
+              {%- assign temp = temp | divided_by: variant.compare_at_price -%}
+              <span class="compare-add-price {% unless variant.compare_at_price > variant.price %}hide{% endunless %}">
+                {%- if variant.compare_at_price > variant.price -%}
+                  {{ variant.compare_at_price | money }}
+                {%- endif -%}
+              </span>
+              <span class="compare_percent"> ({{ 100 | minus: temp | round }}% OFF)</span>
+            </div>
+            <span class="line"></span>
+          {%- endif -%}
+          {%- if settings.enable_price_atc -%}
+            <span class="btn-money">{{ product.price | money }} | {{ settings.add_to_cart_label }} </span>
+            <span class="divisor">|</span>
+          {%- endif -%}
+          <span class="btn-label">{{ settings.add_to_cart_label }}</span>
+          <span class="btn-svg">{%- render 'icon-cart-fill' -%}</span>
+          <span class="btn-items">&#40; 1 Item &#41;</span>
+          {%- if settings.atc_progress_bar -%}
+            <span class="btn-progress"></span>
+          {%- endif -%}
+        {% endcomment %}
+        <span class="btn-label">Add To Cart</span>
       </button>
     {%- endif -%}
     <div id="add-to-cart-error" class="add-to-cart-errors add-to-cart--error hide"></div>

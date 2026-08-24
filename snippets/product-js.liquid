@@ -267,8 +267,11 @@
 					throw new Error('No selected variant');
 				}
 
+				{% comment %}
+				Previous ATC button dynamic price/item count updates:
 				$('.btn-add-tocart .btn-items').html(`(${quantity} ${quantity == 1 ? ' Item': ' Items'})`);
 				$('.btn-add-tocart .btn-money').html(Shopify.formatMoney(quantity * variant.price));
+				{% endcomment %}
 			} catch(err) {
 				console.error(err);
 			}

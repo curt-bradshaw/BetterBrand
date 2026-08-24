@@ -944,7 +944,8 @@ function recharge(callback) {
         } else {
             _recharger_price.html(Shopify.formatMoney(price));
         }
-        _tag_prices.html(Shopify.formatMoney(Math.round(price, 0) * quantity));
+        // Previous ATC button price update:
+        // _tag_prices.html(Shopify.formatMoney(Math.round(price, 0) * quantity));
 
         if (typeof callback === 'function') {
             callback(price, quantity);

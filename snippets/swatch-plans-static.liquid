@@ -293,10 +293,12 @@
       const priceWithoutCurrency = formatMoneyWithoutCurrency(priceInCents);
 
       // Update .btn-money in ATC button
+      {% comment %}
       const btnMoney = document.querySelector('.btn-add-tocart .btn-money');
       if (btnMoney) {
         btnMoney.textContent = formattedPrice;
       }
+      {% endcomment %}
 
       // Update .current-price (standard layout)
       const currentPrice = document.querySelector('.current-price.price');

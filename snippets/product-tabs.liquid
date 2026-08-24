@@ -89,18 +89,22 @@
 {%- if settings.button_add_to_cart -%}
   <div class="AddToCart2-div">
     <button class="btn btn-add-tocart" {% if product.selected_or_first_available_variant.available %}{% else %}style="display: none;"{% endif %}id="AddToCart2">
-      {%- if settings.enable_price_atc -%}
-        <span class="btn-money money">{{ product.price | money }}</span>
-        <span class="divisor">-</span>
-      {%- endif -%}
-      <span class="btn-label">{{ settings.add_to_cart_label }}</span>
-      <span class="btn-svg">
-        {%- render 'icon-cart' -%}
-      </span>
-      <span class="btn-items">1 {{ 'products.product.item' | t }}</span>
-      {%- if settings.atc_progress_bar -%}
-        <span class="btn-progress"></span>
-      {%- endif -%}
+      {% comment %}
+        Previous tabs ATC button content (price, icon, item count):
+        {%- if settings.enable_price_atc -%}
+          <span class="btn-money money">{{ product.price | money }}</span>
+          <span class="divisor">-</span>
+        {%- endif -%}
+        <span class="btn-label">{{ settings.add_to_cart_label }}</span>
+        <span class="btn-svg">
+          {%- render 'icon-cart' -%}
+        </span>
+        <span class="btn-items">1 {{ 'products.product.item' | t }}</span>
+        {%- if settings.atc_progress_bar -%}
+          <span class="btn-progress"></span>
+        {%- endif -%}
+      {% endcomment %}
+      <span class="btn-label">Add To Cart</span>
     </button>
     <div
       id="button-out-of-stock-2"

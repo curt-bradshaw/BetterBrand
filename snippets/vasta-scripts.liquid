@@ -209,20 +209,26 @@
         onInit: function(priorityProduct) {
           if (typeof window.selectedVariant !== 'undefined') {
             const quantity = parseInt($('#ProductQuantity').val());
+            {% comment %}
             $('.btn-money').html(Shopify.formatMoney((quantity * selectedVariant.price) + priorityProduct.price));
+            {% endcomment %}
           }
         },
 
         onAddItem: function(priorityProduct) {
           if (typeof window.selectedVariant !== 'undefined') {
             const quantity = parseInt($('#ProductQuantity').val());
+            {% comment %}
             $('.btn-money').html(Shopify.formatMoney((quantity * selectedVariant.price) + priorityProduct.price));
+            {% endcomment %}
           }
         },
         onRemove: function() {
           const quantity = parseInt($('#ProductQuantity').val());
 
+          {% comment %}
           $('.btn-money').html(Shopify.formatMoney(quantity * selectedVariant.price));
+          {% endcomment %}
         },
       {%- endunless -%}
       onFinally: function(cart) {
