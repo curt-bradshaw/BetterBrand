@@ -88,11 +88,6 @@
               </div>
             </div>
           </div>
-          
-          <div class="subscription-note">
-            <span class="subscription-benefit subscription-benefit--highlight"><strong>FREE</strong> Shipping</span>
-            <span class="subscription-benefit">Change, Pause or Cancel Anytime</span>
-          </div>
         </label>
       </div>
     </div>
@@ -584,36 +579,6 @@
       box-shadow: 0 4px 18px rgba(35, 65, 52, 0.14);
     }
 
-    .subscription-card::before {
-      content: '';
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 22px;
-      height: 22px;
-      border: 2px solid rgba(35, 65, 52, 0.35);
-      border-radius: 50%;
-      transition: all 0.2s ease;
-    }
-
-    .subscription-card.active::before {
-      border-color: #234134;
-      background: #234134;
-      box-shadow: inset 0 0 0 3px #f2cb49;
-    }
-
-    .subscription-card.active::after {
-      content: '✓';
-      position: absolute;
-      top: 16px;
-      right: 19px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #f2cb49;
-      line-height: 1;
-      pointer-events: none;
-    }
-
     .subscription-card:hover {
       border-color: #234134;
       box-shadow: 0 6px 22px rgba(35, 65, 52, 0.2);
@@ -745,42 +710,6 @@
       }
     }
 
-    .subscription-note {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 16px;
-      font-weight: 400;
-      margin-bottom: 0;
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px dashed rgba(35, 65, 52, 0.3);
-      color: #234134;
-    }
-
-    .subscription-benefit {
-      display: inline-flex;
-      align-items: center;
-      background: #234134;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 20px;
-      line-height: 1.2;
-    }
-
-    .subscription-benefit--highlight {
-      background: #f2cb49;
-      color: #234134;
-      border: 1px solid #234134;
-    }
-
-    .subscription-note span {
-      line-height: 1.2;
-    }
-
     @media screen and (max-width: 1019px) {
       .plan-wrapper,
       .subscription-wrapper {
@@ -844,19 +773,6 @@
         padding: 20px 12px 16px;
       }
 
-      .subscription-card::before {
-        top: 10px;
-        right: 10px;
-        width: 18px;
-        height: 18px;
-      }
-
-      .subscription-card.active::after {
-        top: 11px;
-        right: 14px;
-        font-size: 11px;
-      }
-
       .subscription-card .plan-price {
         font-size: 18px;
       }
@@ -866,11 +782,6 @@
         margin-bottom: 14px;
       }
 
-      .subscription-benefit {
-        font-size: 11px;
-        padding: 4px 10px;
-      }
-
       .plan-title--otp {
         font-size: 13px;
         margin-bottom: 10px;
@@ -878,11 +789,6 @@
 
       .subscrition-name {
         line-height: 1;
-      }
-
-      .subscription-note {
-        font-size: 14px;
-        gap: 2px;
       }
     }
 
