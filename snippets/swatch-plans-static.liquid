@@ -31,12 +31,17 @@
   {% endif %}
 {% endif %}
 
+{% assign subscription_available = false %}
+{% if last_option_variant and last_option_allocation_to_use and last_option_subtitle %}
+  {% assign subscription_available = true %}
+{% endif %}
+
 {% if product.variants.size > 1 %}
-  {% if last_option_variant and last_option_allocation_to_use and last_option_subtitle %}
+  {% if subscription_available %}
     <div class="subscription-wrapper" id="subscription-options">
       <div class="subscription-group" data-variant-id="{{ last_option_variant.id }}">
         <label
-          class="subscription-card"
+          class="subscription-card active"
           data-price="{{ last_option_allocation_to_use.price }}"
           data-selling-plan-id="{{ last_option_allocation_to_use.selling_plan.id }}"
           data-variant-id="{{ last_option_variant.id }}"
@@ -102,7 +107,7 @@
         {% endif %}
         {% if v.available %}
           <label
-            class="plan-card {% if v.id == current_variant.id %}active{% endif %}"
+            class="plan-card {% unless subscription_available %}{% if v.id == current_variant.id %}active{% endif %}{% endunless %}"
             data-variant-id="{{ v.id }}"
             data-price="{{ v.price }}"
           >
@@ -183,8 +188,13 @@
     <!-- SELECT REAL SHOPIFY -->
   </div>
 
-  {% if last_option_variant and last_option_allocation_to_use and last_option_subtitle %}
-    <input type="hidden" name="selling_plan" id="product-selling-plan">
+  {% if subscription_available %}
+    <input
+      type="hidden"
+      name="selling_plan"
+      id="product-selling-plan"
+      value="{{ last_option_allocation_to_use.selling_plan.id }}"
+    >
   {% endif %}
 {% endif %}
 
@@ -198,7 +208,9 @@
     {% if v.available %}
       <option
         value="{{ v.id }}"
-        {% if v.id == current_variant.id %}
+        {% if subscription_available and v.id == last_option_variant.id %}
+          selected
+        {% elsif subscription_available == false and v.id == current_variant.id %}
           selected
         {% endif %}
         data-available="{{ v.available }}"
@@ -239,6 +251,29 @@
 
     // Run initial check
     checkAndShowQuantity();
+
+    function selectSubscriptionDefault() {
+      const subscriptionCard = document.querySelector('.subscription-card');
+      if (!subscriptionCard || !sellingPlanInput) return;
+
+      const variantId = subscriptionCard.dataset.variantId;
+      const variantPrice = subscriptionCard.dataset.price;
+      const sellingPlanId = subscriptionCard.dataset.sellingPlanId;
+
+      variantSelect.value = variantId;
+      sellingPlanInput.value = sellingPlanId;
+
+      variantCards.forEach((c) => c.classList.remove('active'));
+      subscriptionCard.classList.add('active');
+
+      if (variantPrice) {
+        updatePriceDisplay(variantPrice);
+      }
+
+      variantSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      sellingPlanInput.dispatchEvent(new Event('change', { bubbles: true }));
+      productForm.dispatchEvent(new Event('change', { bubbles: true }));
+    }
 
     /* ===============================
        HELPER FUNCTIONS
@@ -338,6 +373,8 @@
         productForm.dispatchEvent(new Event('change', { bubbles: true }));
       });
     });
+
+    selectSubscriptionDefault();
   });
 </script>
 
