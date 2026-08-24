@@ -323,8 +323,7 @@ const VastaSwatch = (function(opt) {
           
           const quantity = parseInt($quantity.val());
 
-          // Previous ATC button price update:
-          // $addToCartPrice.html(Shopify.formatMoney(quantity * variant.price));
+          $addToCartPrice.html(Shopify.formatMoney(quantity * variant.price));
           $quantity.attr('data-max', variantInventory);
           
           if (typeof inventoryControl === 'function') {
@@ -339,12 +338,10 @@ const VastaSwatch = (function(opt) {
           const quantityToDisplay = quantity * itemsCount;
           if (quantityToDisplay > 1) {
             $quantity.siblings('.btn-minus').attr('disabled', false);
-            // Previous ATC button item count update:
-            // $($addToCartItems).html(`(${quantityToDisplay} Items)`);
+            $($addToCartItems).html(`(${quantityToDisplay} Items)`);
           } else {
             $quantity.siblings('.btn-minus').attr('disabled', true);
-            // Previous ATC button item count update:
-            // $($addToCartItems).html(`(${quantityToDisplay} Item)`);
+            $($addToCartItems).html(`(${quantityToDisplay} Item)`);
           }
 
 
@@ -413,8 +410,7 @@ const VastaSwatch = (function(opt) {
       if (prepare_variants($('.swatch-variant-value:checked', $('.swatch-element', container))).length == product.options.length) {
         $currentPrice.html(Shopify.formatMoney($(':selected', $choosedVariant).attr('data-price')));
         $currentComparePrice.html(Shopify.formatMoney(variant.compare_at_price));
-        // Previous ATC button price update:
-        // $addToCartPrice.html(Shopify.formatMoney(parseInt($quantity.val()) * variant.price));
+        $addToCartPrice.html(Shopify.formatMoney(parseInt($quantity.val()) * variant.price));
       }
 
       $('.modal-close', container).click(function() {
