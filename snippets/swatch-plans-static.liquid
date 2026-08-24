@@ -17,6 +17,20 @@
   {% endfor %}
 {% endif %}
 
+{% assign is_b2g1f_plan = false %}
+{% if last_option_allocation_to_use %}
+  {% assign subscription_plan_group = product.selling_plan_groups
+    | where: 'id', last_option_allocation_to_use.selling_plan_group_id
+    | first
+  %}
+  {% if subscription_plan_group %}
+    {% assign sp_group_name_lower = subscription_plan_group.name | downcase %}
+    {% if sp_group_name_lower contains 'buy 2 get 1' or sp_group_name_lower contains 'b2g1f' %}
+      {% assign is_b2g1f_plan = true %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
 {% if product.variants.size > 1 %}
   <div class="plan-wrapper" id="product-plan-selector">
     <!-- VARIANTS -->
@@ -121,7 +135,9 @@
           data-variant-id="{{ last_option_variant.id }}"
         >
           <input type="radio" hidden value="{{ last_option_variant.id }}">
-          <span class="subscription-best"><strong>Best Value</strong></span>
+          <span class="subscription-best{% if is_b2g1f_plan %} subscription-best--promo{% endif %}">
+            <strong>{% if is_b2g1f_plan %}Exclusive Labor Day Offer{% else %}Best Value{% endif %}</strong>
+          </span>
           <div class="content">
             <p class="subscrition-name">
               <span class="subscription-title">
@@ -133,8 +149,8 @@
               </span>
             </p>
             <div class="plan-right">
-              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>SAVE 20%</strong></span>
+              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}{% if is_b2g1f_plan %} plan-badge--b2g1f{% endif %}">
+                <span><strong>{% if is_b2g1f_plan %}Buy 2, Get 1 Free{% else %}SAVE 20%{% endif %}</strong></span>
               </div>
               <div class="plan-price">
                 {% assign show_each = false %}
@@ -446,6 +462,19 @@
       justify-content: center;
       line-height: 1;
       min-width: 84px;
+    }
+
+    .plan-badge--b2g1f {
+      min-width: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: 12px;
+    }
+
+    .subscription-best--promo {
+      font-size: 12px;
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     /* VARIANT CARDS */

@@ -73,6 +73,13 @@
                 | where: 'id', allocation.selling_plan_group_id
                 | first
               %}
+              {% assign is_b2g1f_plan = false %}
+              {% if plan_group %}
+                {% assign sp_group_name_lower = plan_group.name | downcase %}
+                {% if sp_group_name_lower contains 'buy 2 get 1' or sp_group_name_lower contains 'b2g1f' %}
+                  {% assign is_b2g1f_plan = true %}
+                {% endif %}
+              {% endif %}
 
               {% comment %} Only show selling plans WITHOUT discount {% endcomment %}
               {% unless allocation.compare_at_price > allocation.price %}
@@ -82,7 +89,9 @@
                 >
                   <input type="radio" hidden value="{{ plan.id }}">
                   {% if first_plan %}
-                    <span class="subscription-best">Best Value</span>
+                    <span class="subscription-best{% if is_b2g1f_plan %} subscription-best--promo{% endif %}">
+                      {% if is_b2g1f_plan %}Exclusive Labor Day Offer{% else %}Best Value{% endif %}
+                    </span>
                     {% assign first_plan = false %}
                   {% endif %}
                   <div class="content">
