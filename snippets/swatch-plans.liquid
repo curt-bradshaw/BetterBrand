@@ -1,59 +1,6 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 
 {% if product.variants.size > 1 %}
-  <div class="plan-wrapper" id="product-plan-selector">
-    <h3 class="plan-title">Choose Your Plan</h3>
-    <!-- VARIANTS -->
-    <div class="plan-list">
-      {% for v in product.variants %}
-        {% if v.available %}
-          <label
-            class="plan-card {% if v.id == current_variant.id %}active{% endif %}"
-            data-variant-id="{{ v.id }}"
-            data-price="{{ v.price }}"
-          >
-            <input type="radio" hidden>
-
-            <div class="plan-left">
-              {% if v.image %}
-                <img src="{{ v.image | image_url: width: 120 }}" alt="{{ v.title }}">
-              {% elsif product.featured_image %}
-                <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ v.title }}">
-              {% else %}
-                <div class="image-placeholder"></div>
-              {% endif %}
-            </div>
-
-            <div class="plan-center">
-              <strong class="plan-name">
-                {{ v.title | split: '(' | first }}
-              </strong>
-            </div>
-
-            <div class="plan-right">
-              <div class="plan-badge {% unless forloop.index > 1 and v.compare_at_price > v.price %}hidden{% endunless %}">
-                {% if forloop.index > 1 and v.compare_at_price > v.price %}
-                  {% assign discount = v.compare_at_price
-                    | minus: v.price
-                    | times: 100
-                    | divided_by: v.compare_at_price
-                  %}
-                  <span>SAVE {{ discount }}%</span>
-                {% endif %}
-              </div>
-              <div class="plan-price">
-                ${{ v.price | divided_by: 100 }}
-                <span>each</span>
-              </div>
-            </div>
-          </label>
-        {% endif %}
-      {% endfor %}
-    </div>
-
-    <!-- SELECT REAL SHOPIFY -->
-  </div>
-
   <!-- SUBSCRIPTIONS -->
   {% if product.selling_plan_groups.size > 0 %}
     <div class="subscription-wrapper" id="subscription-options">
@@ -125,6 +72,59 @@
       {% endfor %}
     </div>
   {% endif %}
+
+  <div class="plan-wrapper" id="product-plan-selector">
+    <h3 class="plan-title">Choose Your Plan</h3>
+    <!-- VARIANTS -->
+    <div class="plan-list">
+      {% for v in product.variants %}
+        {% if v.available %}
+          <label
+            class="plan-card {% if v.id == current_variant.id %}active{% endif %}"
+            data-variant-id="{{ v.id }}"
+            data-price="{{ v.price }}"
+          >
+            <input type="radio" hidden>
+
+            <div class="plan-left">
+              {% if v.image %}
+                <img src="{{ v.image | image_url: width: 120 }}" alt="{{ v.title }}">
+              {% elsif product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ v.title }}">
+              {% else %}
+                <div class="image-placeholder"></div>
+              {% endif %}
+            </div>
+
+            <div class="plan-center">
+              <strong class="plan-name">
+                {{ v.title | split: '(' | first }}
+              </strong>
+            </div>
+
+            <div class="plan-right">
+              <div class="plan-badge {% unless forloop.index > 1 and v.compare_at_price > v.price %}hidden{% endunless %}">
+                {% if forloop.index > 1 and v.compare_at_price > v.price %}
+                  {% assign discount = v.compare_at_price
+                    | minus: v.price
+                    | times: 100
+                    | divided_by: v.compare_at_price
+                  %}
+                  <span>SAVE {{ discount }}%</span>
+                {% endif %}
+              </div>
+              <div class="plan-price">
+                ${{ v.price | divided_by: 100 }}
+                <span>each</span>
+              </div>
+            </div>
+          </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- SELECT REAL SHOPIFY -->
+  </div>
 
   <input type="hidden" name="selling_plan" id="selected-selling-plan">
 {% endif %}
@@ -303,11 +303,13 @@
 
 <style>
     .subscription-wrapper {
-      margin-bottom: 60px;
+      margin-bottom: 23px;
+      margin-top: 10px;
     }
 
     .plan-wrapper {
       width: 100%;
+      margin-bottom: 0;
     }
 
     .plan-wrapper *,
