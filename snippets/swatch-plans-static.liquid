@@ -394,7 +394,7 @@
       text-align: center;
       margin: 0 0 18px;
       padding: 6px 14px;
-      background: linear-gradient(90deg, transparent, rgba(242, 203, 73, 0.35), transparent);
+      background: linear-gradient(90deg, transparent, rgba(35, 65, 52, 0.12), transparent);
       border-radius: 4px;
     }
 
@@ -575,7 +575,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: linear-gradient(145deg, #f4faf1 0%, #fef8e3 45%, #f7fbf4 100%);
+      background: linear-gradient(145deg, #f4faf1 0%, #dcefd4 45%, #e8f3e4 100%);
       box-shadow: 0 4px 18px rgba(35, 65, 52, 0.14);
     }
 
@@ -587,9 +587,9 @@
 
     .subscription-card.active {
       border-color: #234134;
-      background: linear-gradient(145deg, #edf7e8 0%, #fef3c7 45%, #f0f8ec 100%);
+      background: linear-gradient(145deg, #e0f0d8 0%, #c2deb4 45%, #e8f3e4 100%);
       box-shadow:
-        0 0 0 2px #f2cb49,
+        0 0 0 2px #5a9a72,
         0 6px 24px rgba(35, 65, 52, 0.22);
       animation: subscription-glow 3s ease-in-out infinite;
     }
@@ -597,12 +597,12 @@
     @keyframes subscription-glow {
       0%, 100% {
         box-shadow:
-          0 0 0 2px #f2cb49,
+          0 0 0 2px #5a9a72,
           0 6px 24px rgba(35, 65, 52, 0.18);
       }
       50% {
         box-shadow:
-          0 0 0 3px #f2cb49,
+          0 0 0 3px #6db88a,
           0 8px 28px rgba(35, 65, 52, 0.28);
       }
     }
@@ -610,11 +610,11 @@
     @keyframes subscription-badge-pulse {
       0%, 100% {
         transform: translateX(-50%) scale(1);
-        box-shadow: 0 2px 10px rgba(242, 203, 73, 0.45);
+        box-shadow: 0 2px 10px rgba(35, 65, 52, 0.25);
       }
       50% {
         transform: translateX(-50%) scale(1.04);
-        box-shadow: 0 4px 14px rgba(242, 203, 73, 0.65);
+        box-shadow: 0 4px 14px rgba(35, 65, 52, 0.4);
       }
     }
 
@@ -633,8 +633,8 @@
 
     .subscription-best {
       font-family: var(--copyBodyFont);
-      background: linear-gradient(135deg, #f2cb49 0%, #f5d86a 50%, #f2cb49 100%);
-      color: #234134;
+      background: linear-gradient(135deg, #234134 0%, #3d7a5c 50%, #234134 100%);
+      color: #ffffff;
       font-size: 14px;
       font-weight: 700;
       padding: 6px 16px;
@@ -643,7 +643,7 @@
       top: -15px;
       left: 50%;
       transform: translateX(-50%);
-      border: 2px solid #234134;
+      border: 2px solid #1a3328;
       white-space: nowrap;
       z-index: 1;
       line-height: 1.2;
