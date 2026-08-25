@@ -109,12 +109,17 @@
             {% if template contains 'collection' %}
               <div class="product-card__item-price-wrapper">
                 {%- if show_price -%}
-                  {%- if variant.compare_at_price > variant.price -%}
-                    <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
-                  {%- endif -%}
-                  <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
-                  {% comment %} {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
-                  <span class="product-card__item-price product-card__item-price-discounted">{{ discounted_cents | money }}</span> {% endcomment %}
+                  {% comment %}
+                    Labor Day sale: strike through MSRP (current price) and show 20% off beside it.
+                    Previous:
+                    {%- if variant.compare_at_price > variant.price -%}
+                      <span class="product-card__item-compare-at-price">{{- variant.compare_at_price | money -}}</span>
+                    {%- endif -%}
+                    <span class="product-card__item-price product-card__item-price-original"><strong>{{- variant.price | money -}}</strong></span>
+                  {% endcomment %}
+                  {% assign discounted_cents = variant.price | times: 80 | divided_by: 100 %}
+                  <span class="product-card__item-compare-at-price product-card__item-price-original">{{- variant.price | money -}}</span>
+                  <span class="product-card__item-price product-card__item-price-discounted"><strong>{{- discounted_cents | money -}}</strong></span>
                 {%- endif -%}
     
                 {% if settings.enable_outofstock_label %}
@@ -163,7 +168,34 @@
 
 
     .product-card__item-price-discounted {
-      padding-left: 10px; 
+      padding-left: 0;
+    }
+
+    .product-card__item-price-wrapper {
+      text-align: left;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .product-card__item-compare-at-price,
+    .product-card__item-price-original {
+      margin-right: 0;
+      color: #777;
+      text-decoration: line-through;
+      font-size: var(--collectionProductComparePriceSize, 16px);
+      margin-left: 0;
+      font-weight: 400;
+    }
+
+    .product-card__item-price {
+      color: var(--color-price, #234134);
+    }
+
+    .product-card__item-price .money {
+      font-size: var(--h3Size);
+      margin: 0;
     }
     .product-card__grid-item {
       width: 31%;
@@ -417,25 +449,6 @@
     .product-card__item-sold-out {
       font-weight: bold;
       text-align: center;
-    }
-    .product-card__item-compare-at-price {
-      margin-right: 10px;
-      color: var(--color-sale, #a00);
-      text-decoration-line: line-through;
-      font-size: var(--collectionProductComparePriceSize);
-      margin-left: 0;
-      font-weight: 400;
-    }
-    .product-card__item-price-wrapper {
-      text-align: left;
-    }
-    .product-card__item-price {
-      color: var(--color-price, rgb(25, 156, 25));
-    }
-
-    .product-card__item-price .money {
-      font-size: var(--h3Size);
-      margin: 0 4px 0 0;
     }
 
     .product-card__item-sold-out {
