@@ -169,13 +169,12 @@
     }
 
     .collection-page__filter-wrapper {
-      width: 18%;
-      margin-left: 2px;
+      display: none;
     }
     
     .collection-page__content {
-      width: 77%;
-      margin-right: 6px;
+      width: 100%;
+      margin-right: 0;
     }
 
     .collection-filter__item-label {
@@ -270,6 +269,7 @@
       flex: 1 1 calc(25% - 2%); 
       min-width: calc(25% - 2%);
       max-width: calc(25% - 2%);
+      width: auto;
       transition: all 0.3s ease;
     }
 
@@ -329,8 +329,9 @@
       }
       
       .collection-page__grid-products .product-card__grid-item {
-        flex: 1 1 calc(25% - 1.8%);
-        min-width: calc(33% - 2%);
+        flex: 1 1 calc(25% - 2%);
+        min-width: calc(25% - 2%);
+        max-width: calc(25% - 2%);
       }
     }
 
@@ -1073,7 +1074,9 @@
 
       <div class="collection-filter__wrapper">
         {%- render 'collection-filter' -%}
+        {% comment %} Filter column removed — hide mobile filter icon
         {%- render 'collection-filter-icon' -%}
+        {% endcomment %}
       </div>
     </div>
   {%- endif -%}
@@ -1081,11 +1084,15 @@
   <div class="collection-facets__overlay"></div>
 
   <div class="collection-page__wrapper wrapper">
-    {% if settings.filter_collection == 'sidebar' %}
-      <div class="collection-page__filter-wrapper">
-        {%- render 'collection-facets' -%}
-      </div>
-    {% endif %}
+    {% comment %}
+      Filter column removed for shop pages.
+      Previous:
+      {% if settings.filter_collection == 'sidebar' %}
+        <div class="collection-page__filter-wrapper">
+          {%- render 'collection-facets' -%}
+        </div>
+      {% endif %}
+    {% endcomment %}
 
     <div class="collection-page__content">
       {% render 'collection-items',
