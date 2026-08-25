@@ -1030,6 +1030,23 @@
 
 {{- collection_template_css | strip_newlines | replace: '    ', ' ' | replace: '   ', ' ' | replace: '  ', ' ' -}}
 
+{% unless template.suffix == 'bundle' %}
+  <script>
+    (function () {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        if (!params.has('sort_by')) {
+          params.set('sort_by', 'best-selling');
+          var query = params.toString();
+          window.location.replace(
+            window.location.pathname + (query ? '?' + query : '') + window.location.hash
+          );
+        }
+      } catch (e) {}
+    })();
+  </script>
+{% endunless %}
+
 {%- assign items_per_row = settings.products_per_row -%}
 {%- assign grid_uniform_class_desktop = 'grid-uniform--s' | append: items_per_row -%}
 {%- assign grid_uniform_class_tablet = 'grid-uniform--st' | append: settings.products_per_rows_collection_tablet -%}

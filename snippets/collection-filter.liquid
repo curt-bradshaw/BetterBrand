@@ -82,12 +82,11 @@
           <span class="collection-filter__item-label filter">{{ 'collections.label.sort_by' | t }}</span>
 
           <select aria-label="SortBy" id="filter-sort-by" class="collection-filter__dropdown sort-by filter-select">
-            {%- assign sort_by_collection = collection.sort_by | default: collection.default_sort_by -%}
-            {% comment %} {%- assign sort_by_collection = collection.sort_by | default: 'best-selling' -%} {% endcomment %}
+            {%- assign sort_by_collection = collection.sort_by | default: 'best-selling' -%}
 
             <option
               value="manual"
-              {% if 'manual' == sort_by_collection or sort_by_collection == '' %}
+              {% if 'manual' == sort_by_collection %}
                 selected
               {% endif %}
             >
@@ -96,7 +95,7 @@
             {% unless template.suffix == 'bundle' %}
               <option
                 value="best-selling"
-                {% if 'best-selling' == sort_by_collection %}
+                {% if 'best-selling' == sort_by_collection or sort_by_collection == '' %}
                   selected
                 {% endif %}
               >
