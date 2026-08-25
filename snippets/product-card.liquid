@@ -23,6 +23,10 @@
         {%- endif -%}
       {%- endfor -%}
 
+      {% if template contains 'collection' %}
+        <span class="product-card__labor-day-badge">Labor Day Sale - 20% Off</span>
+      {% endif %}
+
       <div title="{{- prod.title -}}" class="product-card__grid-item-link">
         <div class="product-card__grid-item-image-wrapper">
           <picture class="grid__item_image">
@@ -175,6 +179,26 @@
       width: 100%;
       height: 100%;
       background-color: #F0FFE9A3;
+      position: relative;
+    }
+
+    .product-card__labor-day-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 9;
+      background: #234134;
+      color: #ffffff;
+      font-family: var(--copyBodyFont, sans-serif);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 6px;
+      pointer-events: none;
+      max-width: calc(100% - 20px);
     }
 
     .product-card__grid-item-image-wrapper {
@@ -496,6 +520,13 @@
     }
 
     @media (max-width: 767px) {
+      .product-card__labor-day-badge {
+        font-size: 9px;
+        padding: 5px 8px;
+        top: 8px;
+        left: 8px;
+      }
+
       .product-card__item-title,
       .product-card__item-price .money {
         font-size: var(--h3SizeTablet);
