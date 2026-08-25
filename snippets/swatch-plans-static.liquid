@@ -53,8 +53,8 @@
           </span>
           <div class="content">
             <p class="subscrition-name">
-              <span class="subscription-title subscription-title--highlight">
-                <strong>Buy 2, Get 1 Free</strong>
+              <span class="subscription-title">
+                <strong>Subscribe & Save</strong>
               </span>
               <br>
               <span class="subscription-frequency">
@@ -63,7 +63,7 @@
             </p>
             <div class="plan-right">
               <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>Subscribe &amp; Save</strong></span>
+                <span><strong>BEST VALUE</strong></span>
               </div>
               <div class="plan-price">
                 {% assign show_each = false %}
@@ -651,13 +651,17 @@
     }
 
     .subscription-card .plan-badge {
-      background: #234134;
-      font-size: 12px;
-      min-width: 0;
-      height: auto;
-      padding: 7px 10px 5px;
+      background: linear-gradient(135deg, #234134 0%, #2d5a44 100%);
+      font-size: 13px;
+      min-width: 90px;
+      height: 26px;
       box-shadow: 0 2px 6px rgba(35, 65, 52, 0.3);
-      white-space: nowrap;
+    }
+
+    .subscription-card .plan-badge--b2g1f {
+      background: linear-gradient(135deg, #234134 0%, #1a3328 100%);
+      font-size: 11px;
+      letter-spacing: 0.02em;
     }
 
     .subscription-card .plan-price {
@@ -692,18 +696,7 @@
     }
 
     .subscription-card .subscription-title {
-      font-size: 22px;
-      line-height: 1.25;
-    }
-
-    .subscription-title--highlight {
-      display: inline;
-      background: #f2cb49;
-      color: #234134;
-      padding: 2px 6px;
-      border-radius: 4px;
-      box-decoration-break: clone;
-      -webkit-box-decoration-break: clone;
+      font-size: 20px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -774,14 +767,6 @@
       .subscription-title,
       .subscription-frequency {
         font-size: 14px;
-      }
-
-      .subscription-card .subscription-title {
-        font-size: 16px;
-      }
-
-      .subscription-title--highlight {
-        padding: 1px 5px;
       }
       .plan-name {
         position: relative;
