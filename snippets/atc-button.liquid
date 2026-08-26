@@ -17,10 +17,11 @@
   >
     <div class="text-btn">
       {%- if settings.enable_price_atc -%}
+        {%- assign atc_base_price = variant.price | default: product.selected_or_first_available_variant.price -%}
         {%- if product.variants.size == 1 -%}
-          {%- assign atc_display_price = variant.price | times: 80 | divided_by: 100 -%}
+          {%- assign atc_display_price = atc_base_price | times: 80 | divided_by: 100 -%}
         {%- else -%}
-          {%- assign atc_display_price = variant.price -%}
+          {%- assign atc_display_price = atc_base_price -%}
         {%- endif -%}
         <span class="btn-money"><strong>{{ atc_display_price | money }}</strong></span>
         <span class="divisor"><strong>|</strong></span>

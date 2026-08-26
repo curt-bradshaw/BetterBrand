@@ -111,10 +111,15 @@
       {% comment %} End Priority Processing {% endcomment %}
     {% endif %}
 
-    {% render 'atc-button' with product: product, variant: variant %}
+    {% render 'atc-button', product: product, variant: variant %}
 
     {%- if settings.enable_add_to_cart_sticky and product.available -%}
-      <button type="submit" class="cart-icon btn btn-add-tocart AddToCartFixed no-show" id="AddToCart3">
+      <button
+        type="submit"
+        class="cart-icon btn btn-add-tocart AddToCartFixed no-show"
+        id="AddToCart3"
+        data-price-multiplier="{% if product.variants.size == 1 %}0.8{% else %}1{% endif %}"
+      >
         {%- if variant.compare_at_price > price and section.settings.enable_new_layout -%}
           <div class="compare-btn">
             {%- assign temp = price | times: 100.0 -%}

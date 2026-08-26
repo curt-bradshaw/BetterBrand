@@ -243,18 +243,19 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const variantCards = document.querySelectorAll('.plan-card,.subscription-card');
-    const variantSelect = document.querySelector('select[name="id"]');
-    const subscriptionGroups = document.querySelectorAll('.subscription-group');
-    const sellingPlanInput = document.querySelector('input[name="selling_plan"]');
-    const productForm = variantSelect?.closest('form');
+    const variantSelect = document.querySelector('#AddToCartForm select[name="id"], #AddToCartForm #all-product-variants');
+    const productForm = variantSelect?.closest('form') || document.querySelector('#AddToCartForm');
 
     if (!variantSelect || !productForm) return;
 
+    const variantCards = productForm.querySelectorAll('.plan-card,.subscription-card');
+    const subscriptionGroups = productForm.querySelectorAll('.subscription-group');
+    const sellingPlanInput = productForm.querySelector('input[name="selling_plan"]');
+
     // Initial check: show quantity only for 1-pack or 1 bottle variants
     function checkAndShowQuantity() {
-      const productQuantity = document.querySelector('.product-quantity');
-      if (variantCards.length > 1) {
+      const productQuantity = productForm.querySelector('.product-quantity');
+      if (productQuantity && variantCards.length > 1) {
         productQuantity.style.display = 'none';
       }
     }
@@ -263,7 +264,7 @@
     checkAndShowQuantity();
 
     function selectSubscriptionDefault() {
-      const subscriptionCard = document.querySelector('.subscription-card');
+      const subscriptionCard = productForm.querySelector('.subscription-card');
       if (!subscriptionCard || !sellingPlanInput) return;
 
       const variantId = subscriptionCard.dataset.variantId;
@@ -302,8 +303,8 @@
       const formattedPrice = formatMoney(priceInCents);
       const priceWithoutCurrency = formatMoneyWithoutCurrency(priceInCents);
 
-      // Update .btn-money in ATC button
-      const btnMoney = document.querySelector('.btn-add-tocart .btn-money');
+      // Update .btn-money in ATC button (scoped to this product form)
+      const btnMoney = productForm.querySelector('.btn-add-tocart .btn-money');
       if (btnMoney) {
         btnMoney.textContent = formattedPrice;
       }
@@ -369,7 +370,7 @@
         const variantTitle = selectedVariantOption ? selectedVariantOption.textContent : '';
         // const is1Pack = is1PackOr1Bottle(variantTitle);
         
-        const productQuantity = document.querySelector('.product-quantity');
+        const productQuantity = productForm.querySelector('.product-quantity');
         if (productQuantity) {
           productQuantity.style.display = 'none';
         }
