@@ -80,11 +80,20 @@
                 {% if show_each and items_count > 0 %}
                   {% assign msrp_each_cents = sub_msrp_cents | divided_by: items_count %}
                   {% assign sale_each_cents = sub_sale_cents | divided_by: items_count %}
-                  <span class="plan-price-msrp">{{ msrp_each_cents | money }}</span>
-                  <span class="plan-price-sale">{{ sale_each_cents | money }} <span>each</span></span>
+                  {% assign msrp_dollars = msrp_each_cents | divided_by: 100 %}
+                  {% assign msrp_cents_rem = msrp_each_cents | modulo: 100 %}
+                  {% assign sale_dollars = sale_each_cents | divided_by: 100 %}
+                  {% assign sale_cents_rem = sale_each_cents | modulo: 100 %}
+                  <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                  ${{ sale_dollars }}.{% if sale_cents_rem < 10 %}0{% endif %}{{ sale_cents_rem }}
+                  <span>each</span>
                 {% else %}
-                  <span class="plan-price-msrp">{{ sub_msrp_cents | money }}</span>
-                  <span class="plan-price-sale">{{ sub_sale_cents | money }}</span>
+                  {% assign msrp_dollars = sub_msrp_cents | divided_by: 100 %}
+                  {% assign msrp_cents_rem = sub_msrp_cents | modulo: 100 %}
+                  {% assign sale_dollars = sub_sale_cents | divided_by: 100 %}
+                  {% assign sale_cents_rem = sub_sale_cents | modulo: 100 %}
+                  <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                  ${{ sale_dollars }}.{% if sale_cents_rem < 10 %}0{% endif %}{{ sale_cents_rem }}
                 {% endif %}
               </div>
             </div>
@@ -154,11 +163,20 @@
                 {% if show_each and items_count > 0 %}
                   {% assign msrp_each_cents = otp_msrp_cents | divided_by: items_count %}
                   {% assign sale_each_cents = otp_sale_cents | divided_by: items_count %}
-                  <span class="plan-price-msrp">{{ msrp_each_cents | money }}</span>
-                  <span class="plan-price-sale">{{ sale_each_cents | money }} <span>each</span></span>
+                  {% assign msrp_dollars = msrp_each_cents | divided_by: 100 %}
+                  {% assign msrp_cents_rem = msrp_each_cents | modulo: 100 %}
+                  {% assign sale_dollars = sale_each_cents | divided_by: 100 %}
+                  {% assign sale_cents_rem = sale_each_cents | modulo: 100 %}
+                  <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                  ${{ sale_dollars }}.{% if sale_cents_rem < 10 %}0{% endif %}{{ sale_cents_rem }}
+                  <span>each</span>
                 {% else %}
-                  <span class="plan-price-msrp">{{ otp_msrp_cents | money }}</span>
-                  <span class="plan-price-sale">{{ otp_sale_cents | money }}</span>
+                  {% assign msrp_dollars = otp_msrp_cents | divided_by: 100 %}
+                  {% assign msrp_cents_rem = otp_msrp_cents | modulo: 100 %}
+                  {% assign sale_dollars = otp_sale_cents | divided_by: 100 %}
+                  {% assign sale_cents_rem = otp_sale_cents | modulo: 100 %}
+                  <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                  ${{ sale_dollars }}.{% if sale_cents_rem < 10 %}0{% endif %}{{ sale_cents_rem }}
                 {% endif %}
               </div>
               {% comment %}
@@ -517,32 +535,28 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-end;
       line-height: 1.2;
       color: #234134;
-      gap: 2px;
+      font-family: var(--bookmaniaFont);
+      text-align: end;
     }
 
     .plan-price-msrp {
-      font-size: 14px;
+      font-family: var(--bookmaniaFont);
+      font-size: 16px;
       font-weight: 400;
-      color: #777;
-      text-decoration: line-through;
-      line-height: 1.2;
-    }
-
-    .plan-price-sale {
-      font-size: 20px;
-      font-weight: 700;
       color: #234134;
+      text-decoration: line-through;
+      text-align: end;
       line-height: 1.2;
+      opacity: 0.7;
     }
 
-    .plan-price span,
-    .plan-price-sale span {
+    .plan-price > span:not(.plan-price-msrp) {
       font-size: 16px;
       font-weight: 400;
       text-align: end;
+      font-family: var(--bookmaniaFont);
     }
     .plan-badge {
       background: #234134;
@@ -685,13 +699,15 @@
       letter-spacing: 0.02em;
     }
 
-    .subscription-card .plan-price-sale {
+    .subscription-card .plan-price {
       font-size: 24px;
       color: #234134;
+      font-family: var(--bookmaniaFont);
     }
 
     .subscription-card .plan-price-msrp {
       font-size: 16px;
+      font-family: var(--bookmaniaFont);
     }
 
     .subscription-off {
@@ -807,12 +823,7 @@
         font-size: 12px;
       }
 
-      .plan-price-sale {
-        font-size: 14px;
-      }
-
-      .plan-price span,
-      .plan-price-sale span {
+      .plan-price > span:not(.plan-price-msrp) {
         font-size: 12px;
       }
       .subscription-title,
@@ -828,7 +839,7 @@
         padding: 20px 12px 16px;
       }
 
-      .subscription-card .plan-price-sale {
+      .subscription-card .plan-price {
         font-size: 18px;
       }
 
