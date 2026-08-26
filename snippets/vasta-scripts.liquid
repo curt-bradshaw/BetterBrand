@@ -209,20 +209,34 @@
         onInit: function(priorityProduct) {
           if (typeof window.selectedVariant !== 'undefined') {
             const quantity = parseInt($('#ProductQuantity').val());
-            $('.btn-money').html(Shopify.formatMoney((quantity * selectedVariant.price) + priorityProduct.price));
+            {% if product.variants.size == 1 %}
+            const basePrice = Math.round(selectedVariant.price * 0.8);
+            {% else %}
+            const basePrice = selectedVariant.price;
+            {% endif %}
+            $('.btn-money').html(Shopify.formatMoney((quantity * basePrice) + priorityProduct.price));
           }
         },
 
         onAddItem: function(priorityProduct) {
           if (typeof window.selectedVariant !== 'undefined') {
             const quantity = parseInt($('#ProductQuantity').val());
-            $('.btn-money').html(Shopify.formatMoney((quantity * selectedVariant.price) + priorityProduct.price));
+            {% if product.variants.size == 1 %}
+            const basePrice = Math.round(selectedVariant.price * 0.8);
+            {% else %}
+            const basePrice = selectedVariant.price;
+            {% endif %}
+            $('.btn-money').html(Shopify.formatMoney((quantity * basePrice) + priorityProduct.price));
           }
         },
         onRemove: function() {
           const quantity = parseInt($('#ProductQuantity').val());
 
+          {% if product.variants.size == 1 %}
+          $('.btn-money').html(Shopify.formatMoney(quantity * Math.round(selectedVariant.price * 0.8)));
+          {% else %}
           $('.btn-money').html(Shopify.formatMoney(quantity * selectedVariant.price));
+          {% endif %}
         },
       {%- endunless -%}
       onFinally: function(cart) {

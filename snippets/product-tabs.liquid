@@ -90,7 +90,12 @@
   <div class="AddToCart2-div">
     <button class="btn btn-add-tocart" {% if product.selected_or_first_available_variant.available %}{% else %}style="display: none;"{% endif %}id="AddToCart2">
       {%- if settings.enable_price_atc -%}
-        <span class="btn-money money">{{ product.price | money }}</span>
+        {%- if product.variants.size == 1 -%}
+          {%- assign tabs_atc_price = product.price | times: 80 | divided_by: 100 -%}
+        {%- else -%}
+          {%- assign tabs_atc_price = product.price -%}
+        {%- endif -%}
+        <span class="btn-money money">{{ tabs_atc_price | money }}</span>
         <span class="divisor">-</span>
       {%- endif -%}
       <span class="btn-label">{{ settings.add_to_cart_label }}</span>

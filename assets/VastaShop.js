@@ -944,7 +944,7 @@ function recharge(callback) {
         } else {
             _recharger_price.html(Shopify.formatMoney(price));
         }
-        _tag_prices.html(Shopify.formatMoney(Math.round(price, 0) * quantity));
+        _tag_prices.html(Shopify.formatMoney(Math.round(price * (parseFloat($('.btn-add-tocart').first().attr('data-price-multiplier')) || 1), 0) * quantity));
 
         if (typeof callback === 'function') {
             callback(price, quantity);

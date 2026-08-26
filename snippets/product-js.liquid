@@ -268,7 +268,11 @@
 				}
 
 				$('.btn-add-tocart .btn-items').html(`(${quantity} ${quantity == 1 ? ' Item': ' Items'})`);
+				{% if product.variants.size == 1 %}
+				$('.btn-add-tocart .btn-money').html(Shopify.formatMoney(quantity * Math.round(variant.price * 0.8)));
+				{% else %}
 				$('.btn-add-tocart .btn-money').html(Shopify.formatMoney(quantity * variant.price));
+				{% endif %}
 			} catch(err) {
 				console.error(err);
 			}
