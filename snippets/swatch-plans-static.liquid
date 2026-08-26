@@ -48,9 +48,11 @@
           data-variant-id="{{ last_option_variant.id }}"
         >
           <input type="radio" hidden value="{{ last_option_variant.id }}">
-          <span class="subscription-best{% if is_b2g1f_plan %} subscription-best--promo{% endif %}">
-            <strong>{% if is_b2g1f_plan %}Exclusive Labor Day Offer{% else %}Best Value{% endif %}</strong>
-          </span>
+          {% if is_b2g1f_plan %}
+            <span class="subscription-best subscription-best--promo">
+              <strong>Exclusive Labor Day Offer</strong>
+            </span>
+          {% endif %}
           <div class="content">
             <p class="subscrition-name">
               <span class="subscription-title">
