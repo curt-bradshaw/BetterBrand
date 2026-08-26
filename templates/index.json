@@ -161,7 +161,7 @@
         "product_item_dCPNkb": {
           "type": "product_item",
           "settings": {
-            "product": "betterlungs",
+            "product": "betterlungs-old",
             "image": "shopify://shop_images/440a2d16-6bdf-40a7-8406-c3d3ae60ea8e.webp",
             "product_url": "shopify://products/betterlungs-old",
             "badge": "",
