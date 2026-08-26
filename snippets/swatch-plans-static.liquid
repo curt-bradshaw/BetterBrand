@@ -54,11 +54,11 @@
           <div class="content">
             <p class="subscrition-name">
               <span class="subscription-title">
-                <strong>{{ last_option_subtitle }}</strong>
+                <strong>{{ last_option_subtitle | replace: '&Save', '& Save' | replace: '&amp;Save', '& Save' }}</strong>
               </span>
               <br>
               <span class="subscription-frequency">
-                <strong>Subscribe &amp; Save</strong>
+                <strong>Subscribe & Save</strong>
               </span>
             </p>
             <div class="plan-right">
