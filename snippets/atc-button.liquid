@@ -1,5 +1,14 @@
 <!-- START atc-button (SNIPPET) -->
 
+<p
+  class="atc-checkout-discount-note"
+  {% unless product.selected_or_first_available_variant.available %}
+    style="display: none"
+  {% endunless %}
+>
+  Discount applied at checkout
+</p>
+
 <div
   class="product-form__buttons"
   {% unless product.selected_or_first_available_variant.available %}
@@ -47,6 +56,14 @@
 <script src="https://static.truemed.com/widgets/product-page-widget.min.js" defer></script>
 
 <style>
+  .atc-checkout-discount-note {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.3;
+    color: rgba(35, 65, 52, 0.75);
+    margin: 0 0 10px;
+  }
+
   .truemed-entry-box {
     justify-content: center;
     margin-bottom: 15px;
