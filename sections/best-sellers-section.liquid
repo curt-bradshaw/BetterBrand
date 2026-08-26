@@ -12,10 +12,11 @@
   
     <div class="bs-products">
       {% for block in section.blocks %}
-        <a href="{{ block.settings.product_url }}" class="bs-card">
-            {% if block.settings.badge != blank %}
-                <span class="bs-badge">{{ block.settings.badge }}</span>
-            {% endif %}
+        <a href="{{ block.settings.product_url }}" class="bs-card" {{ block.shopify_attributes }}>
+          <span class="bs-labor-day-badge">Labor Day Sale - 20% Off</span>
+          {% if block.settings.badge != blank %}
+            <span class="bs-badge">{{ block.settings.badge }}</span>
+          {% endif %}
           <div class="bs-image-wrapper">
             <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.image.alt | escape }}" />
           </div>
@@ -105,6 +106,25 @@
   }
 
   .bs-card:hover { transform: translateY(-4px); }
+
+  .bs-labor-day-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: #f2cb49;
+    color: #234134;
+    font-family: var(--copyBodyFont, sans-serif);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    max-width: calc(100% - 20px);
+  }
   
   .bs-image-wrapper {
     position: relative;
@@ -188,6 +208,12 @@
     }
     .bs-badge {
       font-size: 12px;
+    }
+    .bs-labor-day-badge {
+      font-size: 9px;
+      padding: 5px 8px;
+      top: 8px;
+      left: 8px;
     }
     .bs-product-title {
       font-size: 14px;
