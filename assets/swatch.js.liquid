@@ -322,8 +322,9 @@ const VastaSwatch = (function(opt) {
           }
           
           const quantity = parseInt($quantity.val());
+          const priceMultiplier = parseFloat($('.btn-add-tocart').first().attr('data-price-multiplier')) || 1;
 
-          $addToCartPrice.html(Shopify.formatMoney(quantity * variant.price));
+          $addToCartPrice.html(Shopify.formatMoney(Math.round(quantity * variant.price * priceMultiplier)));
           $quantity.attr('data-max', variantInventory);
           
           if (typeof inventoryControl === 'function') {
@@ -408,9 +409,10 @@ const VastaSwatch = (function(opt) {
       });
 
       if (prepare_variants($('.swatch-variant-value:checked', $('.swatch-element', container))).length == product.options.length) {
+        const priceMultiplier = parseFloat($('.btn-add-tocart').first().attr('data-price-multiplier')) || 1;
         $currentPrice.html(Shopify.formatMoney($(':selected', $choosedVariant).attr('data-price')));
         $currentComparePrice.html(Shopify.formatMoney(variant.compare_at_price));
-        $addToCartPrice.html(Shopify.formatMoney(parseInt($quantity.val()) * variant.price));
+        $addToCartPrice.html(Shopify.formatMoney(Math.round(parseInt($quantity.val()) * variant.price * priceMultiplier)));
       }
 
       $('.modal-close', container).click(function() {
