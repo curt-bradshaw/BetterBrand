@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "smoker_lp": {
+      "type": "smoker-lp",
+      "name": "Smoker Labor Day Lander",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "smoker_lp"
+  ]
+}

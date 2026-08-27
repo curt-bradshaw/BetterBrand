@@ -11,7 +11,7 @@
   wrapper rather than :root. Do not "tidy" either of those: they are what stops
   this section restyling the theme header, logo and fonts.
 
-  Images and fonts load from https://bb-cough-gummies.pages.dev, so nothing needs uploading to assets.
+  Images load from theme assets and the Shopify Files CDN (pages.dev host was returning HTML, not media).
 
   Our own Meta and Northbeam snippets were REMOVED for the theme build. The
   store already runs both plus Intelligems, so keeping ours would double count.
@@ -28,7 +28,7 @@
     <h1>You Are Not Ready To Quit Smoking. Nobody Makes A Lung Product For You.</h1>
 
     <figure id="hero">
-      <img src="https://bb-cough-gummies.pages.dev/assets/hero-smoker.jpg" alt="A man in his early sixties sitting on his back step at dawn with a coffee mug, an ashtray on the step beside him" width="1000" height="1333" loading="eager" fetchpriority="high">
+      <img src="{{ 'bl-hero-man.webp' | asset_url }}" alt="A man in his early sixties sitting on his back step at dawn with a coffee mug, an ashtray on the step beside him" width="1000" height="1333" loading="eager" fetchpriority="high">
     </figure>
 
     <p class="byline">Reviewed by Chris Jackson, PharmD, formulator at Betterbrand &nbsp;|&nbsp; Updated August 2026</p>
@@ -40,7 +40,7 @@
     <h2>Two Lung-Shaped Gummies A Day. That Is The Whole Ask.</h2>
 
     <figure>
-      <img src="https://bb-cough-gummies.pages.dev/assets/gummy-macro.jpg" alt="Two lung-shaped amber mullein gummies on a wooden cutting board in morning light" width="1200" height="896" loading="eager" fetchpriority="high">
+      <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Mullein_Gummies_Listings-10.jpg" alt="Two lung-shaped amber mullein gummies on a wooden cutting board in morning light" width="1200" height="896" loading="eager" fetchpriority="high">
     </figure>
 
     <p>Lung shaped, deep amber, pear flavored. Two chews with your coffee and you are done for the day.</p>
@@ -48,7 +48,7 @@
     <p>Each serving carries <b>2,000mg of mullein equivalent</b>, drawn from 40mg of a <b>50:1 concentrated extract</b>. Concentrating the leaf is the only reason a full dose fits into two chews instead of a mug you have to brew.</p>
 
     <figure>
-      <img src="https://bb-cough-gummies.pages.dev/assets/bag-counter.jpg" alt="A bag of BetterLungs Mullein Gummies on a clean kitchen counter beside a mug, car keys and reading glasses" width="1200" height="896" loading="lazy">
+      <img src="{{ 'bl-mullein-table-flatlay.webp' | asset_url }}" alt="A bag of BetterLungs Mullein Gummies on a clean kitchen counter beside a mug, car keys and reading glasses" width="1200" height="896" loading="lazy">
     </figure>
 
     <p>Sixty to a bag, so one bag is one month. No quit date, no counselor, no app, no contract.</p>
@@ -60,9 +60,9 @@
             <div class="product-half rte w3_bg">
 
               <div class="bb-gal" id="bbGal">
-                <img src="https://bb-cough-gummies.pages.dev/assets/pdp-1bag.jpg" data-slide="0" alt="BetterLungs Mullein Gummies, one bag" width="900" height="900" loading="lazy">
-                <img src="https://bb-cough-gummies.pages.dev/assets/pdp-3bag.jpg" data-slide="1" class="off" alt="BetterLungs Mullein Gummies, three bags" width="900" height="900" loading="lazy">
-                <img src="https://bb-cough-gummies.pages.dev/assets/gummy-macro.jpg" data-slide="2" class="off" alt="Two lung-shaped amber mullein gummies on a wooden board" width="1200" height="896" loading="lazy">
+                <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp1bagsage.png" data-slide="0" alt="BetterLungs Mullein Gummies, one bag" width="900" height="900" loading="lazy">
+                <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp2threebagssage.png" data-slide="1" class="off" alt="BetterLungs Mullein Gummies, three bags" width="900" height="900" loading="lazy">
+                <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Mullein_Gummies_Listings-10.jpg" data-slide="2" class="off" alt="Two lung-shaped amber mullein gummies on a wooden board" width="1200" height="896" loading="lazy">
                 <button class="g-nav g-prev" id="bbGalPrev" type="button" aria-label="Previous image">&#8249;</button>
                 <button class="g-nav g-next" id="bbGalNext" type="button" aria-label="Next image">&#8250;</button>
                 <div class="g-dots" id="bbGalDots"><i class="on"></i><i></i><i></i></div>
@@ -89,7 +89,7 @@
  <label class="plan-card active" data-variant-id="50211146957099" data-price="3495">
  <input type="radio" hidden="">
   <div class="plan-left w3_bg">
- <img src="/cdn/shop/files/gummiespdp1bagsage.png?v=1783981080&amp;width=120" alt="1 Bag (30 Day Supply)">
+ <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp1bagsage.png?v=1783981080&amp;width=120" alt="1 Bag (30 Day Supply)">
   </div>
  <div class="plan-center w3_bg">
   <span class="plan-name">
@@ -110,7 +110,7 @@
  <label class="plan-card " data-variant-id="50211146989867" data-price="9435">
  <input type="radio" hidden="">
   <div class="plan-left w3_bg">
- <img src="/cdn/shop/files/gummiespdp2threebagssage.png?v=1783981080&amp;width=120" alt="3 Bags (90 Day Supply)">
+ <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp2threebagssage.png?v=1783981080&amp;width=120" alt="3 Bags (90 Day Supply)">
   </div>
  <div class="plan-center w3_bg">
   <span class="plan-name">
@@ -552,18 +552,18 @@
  <span class="invetoryError" style="display: none;">This variant can't be added anymore</span>
  <div class="product-badges w3_bg">
  <div class="product-badge-icon w3_bg">
- <img src="/cdn/shop/files/Frame_1618873766_medium.png?v=1766008191" alt="Round badge with American flag icon and text MADE IN USA indicating product origin." width="" height="">
+ <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Frame_1618873766_medium.png?v=1766008191" alt="Round badge with American flag icon and text MADE IN USA indicating product origin." width="" height="">
  </div>
  <div class="product-badge-icon w3_bg">
- <img src="/cdn/shop/files/Frame_1618873767_medium.png?v=1766009382" alt="Circular green seal reading LAB TESTED;outer ring: 3RD PARTY TESTED FOR QUALITY AND CONSISTENCY" width="" height="">
+ <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Frame_1618873767_medium.png?v=1766009382" alt="Circular green seal reading LAB TESTED;outer ring: 3RD PARTY TESTED FOR QUALITY AND CONSISTENCY" width="" height="">
  </div>
  <div class="product-badge-icon w3_bg">
- <img src="/cdn/shop/files/Frame_1618873768_1_medium.png?v=1766009366" alt="Green circular seal reading 'GMP CERTIFIED', indicating Good Manufacturing Practice certification." width="" height="">
+ <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Frame_1618873768_1_medium.png?v=1766009366" alt="Green circular seal reading 'GMP CERTIFIED', indicating Good Manufacturing Practice certification." width="" height="">
  </div>
  </div>
  <div class="product-buy-infos">
  <div class="product-buy-infos-item">
- <img src="/cdn/shop/files/Vector_849bfd1a-9827-4a78-967e-f9775f2c5892.png?v=1766007623&amp;width=31" alt="Guarantee badge icon" width="" height="">
+ <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Vector_849bfd1a-9827-4a78-967e-f9775f2c5892.png?v=1766007623&amp;width=31" alt="Guarantee badge icon" width="" height="">
  <span>365-Day Guarantee*</span>
  </div>
  </div>
@@ -619,7 +619,7 @@
     <h2>&ldquo;Is The Pharmacist A Real Person?&rdquo;</h2>
 
     <figure>
-      <img src="https://bb-cough-gummies.pages.dev/assets/dr-chris-gummies.jpg" alt="Chris Jackson, PharmD, on the Betterbrand fulfilment floor holding a bag of BetterLungs Mullein Gummies" width="1000" height="1000" loading="lazy">
+      <img src="{{ 'bl-dr-chris-branded.webp' | asset_url }}" alt="Chris Jackson, PharmD, on the Betterbrand fulfilment floor holding a bag of BetterLungs Mullein Gummies" width="1000" height="1000" loading="lazy">
     </figure>
 
     <p>Chris Jackson is a working pharmacist and he formulated this. His name and face are on the bag.</p>
@@ -635,12 +635,7 @@
       <span class="attrib">Customer review on the Betterbrand product page</span>
     </div>
 
-    <div class="vid">
-      <video controls preload="metadata" playsinline poster="https://bb-cough-gummies.pages.dev/assets/deb-poster.jpg">
-        <source src="https://bb-cough-gummies.pages.dev/assets/deb-testimonial.mp4" type="video/mp4">
-      </video>
-      <p class="cap">Deb, a Betterbrand VIP customer, unprompted and unscripted, on the products she reorders.</p>
-    </div>
+    <p class="finep" style="text-align:left;margin:0 0 26px">Customer reviews below are from Trustpilot and the Betterbrand product page.</p>
 
     <p class="aggline">Betterbrand on Trustpilot: 4.1 out of 5</p>
     <p class="aggsub">From 151 reviews of Betterbrand Health, across the full range.</p>
@@ -662,7 +657,7 @@
     <h2>&ldquo;So What Does It Actually Do?&rdquo;</h2>
 
     <figure>
-      <img src="https://bb-cough-gummies.pages.dev/assets/mullein.jpg" alt="A mature common mullein plant with broad velvety silver-green leaves and a tall yellow flower spike" width="1000" height="1333" loading="lazy">
+      <img src="{{ 'bl-mullein-in-wild.webp' | asset_url }}" alt="A mature common mullein plant with broad velvety silver-green leaves and a tall yellow flower spike" width="1000" height="1333" loading="lazy">
     </figure>
 
     <p>Mullein leaf, <i>Verbascum thapsus</i>. The soft grey-green roadside plant, used for exactly this for a very long time.</p>
@@ -674,7 +669,7 @@
     <h2>&ldquo;What If It Does Nothing For Me?&rdquo;</h2>
 
     <figure>
-      <img src="https://bb-cough-gummies.pages.dev/assets/gummy-held.jpg" alt="A single lung-shaped amber gummy held up to the light between finger and thumb" width="1000" height="1000" loading="lazy">
+      <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Mullein_Gummies_Listings-12.jpg" alt="A single lung-shaped amber gummy held up to the light between finger and thumb" width="1000" height="1000" loading="lazy">
     </figure>
 
     <p>Send the bag back. The guarantee is <b>365 days</b>, against a category standard of 30, minus shipping, if you can find the return portal.</p>
@@ -687,7 +682,7 @@
     <h2>One Month, Or Another Year Of The Same Morning</h2>
 
     <figure>
-      <img src="https://bb-cough-gummies.pages.dev/assets/porch.jpg" alt="A couple in their sixties sitting on their back porch steps in early September light" width="1000" height="684" loading="lazy">
+      <img src="{{ 'bl-hero-man.webp' | asset_url }}" alt="A couple in their sixties sitting on their back porch steps in early September light" width="1000" height="684" loading="lazy">
     </figure>
 
     <p>You can keep going out after breakfast and clearing your throat at the sink, and nothing about today has to change.</p>
@@ -705,7 +700,7 @@
   </div>
 
   <a class="sticky" id="sticky" data-pdp data-pos="sticky" href="/products/betterlungs-r-mullein-gummies" rel="noopener" aria-hidden="true" tabindex="-1">
-    <img class="s-thumb" src="https://bb-cough-gummies.pages.dev/assets/bag-counter.jpg" alt="" width="50" height="50" loading="lazy">
+    <img class="s-thumb" src="{{ 'bl-mullein-table-flatlay.webp' | asset_url }}" alt="" width="50" height="50" loading="lazy">
     <span class="s-left">
       <span class="s-save">Labor Day &middot; 20% off</span>
       <span class="s-price"><s>$34.95</s>$27.96 &#47;mo</span>
@@ -872,7 +867,8 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
 </style>
 </div>
 
-{% stylesheet %}
+
+<style>
 /* ==========================================================
      naturvahealth.com/pages/mucus layout DNA, kept.
      Changed ONLY: palette to legacy Betterbrand green/gold,
@@ -947,7 +943,7 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
 
   .bb-smoker-labor-day .adline{max-width:var(--maxw);margin:0 auto;padding:14px 18px 0;
     font-family:'Public Sans',sans-serif;font-size:11.5px;font-weight:700;
-    letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+    letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
 
   .bb-smoker-labor-day .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
 
@@ -1191,7 +1187,8 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
    already defines .plan-card / .plan-badge / .subscription-card /
    .btn-add-tocart, so the box inherits the real styling and the real
    bookmania + SuisseIntlMono webfonts for free. */
-{% endstylesheet %}
+</style>
+
 
 {% schema %}
 {
