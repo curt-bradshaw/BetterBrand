@@ -11,10 +11,17 @@
   "sections": {
     "main": {
       "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "smoker_lp_VXeU9A": {
+      "type": "smoker-lp",
+      "name": "Smoker Labor Day Lander",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "smoker_lp_VXeU9A"
   ]
 }
