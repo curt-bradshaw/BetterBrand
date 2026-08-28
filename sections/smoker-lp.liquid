@@ -588,7 +588,7 @@ body.bb-smoker-lp-page {
    1.0px above / 29.6px below, so 14.3px too high, against live's 15.3/15.3.
    Every horizontal measurement I took was correct, which is why nine rounds of
    checking gaps and ratios never found it. */
-#bbHost a#bbRealAtc{text-decoration:none;cursor:pointer;
+#bbHost button#bbRealAtc{text-decoration:none;cursor:pointer;border:none;font:inherit;
   display:flex;align-items:center;justify-content:center}
   /* the gallery rides above the form inside the same 375px context */
   #bbHost .bb-gal{position:relative;overflow:hidden;background:#dfe9cf;aspect-ratio:1/1;margin:0 0 14px}
@@ -1236,7 +1236,10 @@ body.bb-smoker-lp-page {
               <p class="bbr-title">BetterLungs&reg; Mullein Gummies</p>
               <p class="bbr-dek">Pear-flavored chewables packed with 2,000mg of mullein leaf extract. Formulated to help thin mucus and support easier breathing.</p>
 
-              <div id="bbReal" class="form-add-to-cart jq-cart-add-product">
+              <form id="bbReal" class="form-add-to-cart" method="post" action="/cart/add" data-bb-bis-skip>
+<input type="hidden" name="id" id="bbRealVariantId" value="50211146957099">
+<input type="hidden" name="selling_plan" id="bbRealSellingPlan" value="">
+<input type="hidden" name="quantity" value="1">
 
  <!-- Begin ReCharge code -->
  <!-- End ReCharge code -->
@@ -1244,7 +1247,7 @@ body.bb-smoker-lp-page {
  <div class="plan-wrapper w3_bg" id="product-plan-selector">
  <!-- VARIANTS -->
  <div class="plan-list w3_bg">
- <label class="plan-card active" data-variant-id="50211146957099" data-price="3495">
+ <label class="plan-card active" data-variant-id="50211146957099" data-price="3495" data-qty="1">
  <input type="radio" hidden="">
   <div class="plan-left w3_bg">
  <img src="https://www.trybetterbrand.com/cdn/shop/files/gummiespdp1bagsage.png?v=1783981080&amp;width=120" alt="1 Bag (30 Day Supply)">
@@ -1265,7 +1268,7 @@ body.bb-smoker-lp-page {
   </div>
  </div>
  </label>
- <label class="plan-card " data-variant-id="50211146989867" data-price="9435">
+ <label class="plan-card " data-variant-id="50211146989867" data-price="9435" data-qty="3">
  <input type="radio" hidden="">
   <div class="plan-left w3_bg">
  <img src="https://www.trybetterbrand.com/cdn/shop/files/gummiespdp2threebagssage.png?v=1783981080&amp;width=120" alt="3 Bags (90 Day Supply)">
@@ -1290,9 +1293,9 @@ body.bb-smoker-lp-page {
  <!-- SELECT REAL SHOPIFY -->
  </div>
  <div class="subscription-wrapper w3_bg" id="subscription-options">
- <div class="subscription-group w3_bg" data-variant-id="50211146989867">
+ <div class="subscription-group w3_bg" data-variant-id="50211146989867" data-qty="3">
  <label class="subscription-card" data-price="8387" data-selling-plan-id="117893955883" data-variant-id="50211146989867">
- <input type="radio" hidden="" value="50211146989867">
+ <input type="radio" hidden="" value="117893955883">
  <span class="subscription-best"><strong>Best Value</strong></span>
  <div class="content w3_bg">
  <p class="subscrition-name">
@@ -1618,7 +1621,7 @@ body.bb-smoker-lp-page {
  </div>
  <!-- START atc-button (SNIPPET) -->
 <div class="product-form__buttons w3_bg">
- <a id="bbRealAtc" class="cart-icon btn btn-add-tocart" data-pdp data-pos="buybox" rel="noopener" href="https://www.trybetterbrand.com/cart/add?id=50211146957099&amp;quantity=1&amp;return_to=/checkout">
+ <button type="submit" id="bbRealAtc" class="cart-icon btn btn-add-tocart" data-pos="buybox">
  <div class="text-btn w3_bg"><span class="btn-money"><strong>$34.95</strong></span>
  <span class="divisor"><strong>|</strong></span><span class="btn-label"><strong>Add To Cart</strong></span>
  <span class="btn-svg"><svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1626,7 +1629,7 @@ body.bb-smoker-lp-page {
  </svg>
  </span>
  <span class="btn-items">(1 Item)</span><span class="btn-progress"></span></div>
- </a>
+ </button>
 </div><div id="truemed-instructions-1787853136012" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp" class="truemed-instructions"><div>
     <style>
       @import url(https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap);.truemed-entry-box {
@@ -1758,7 +1761,7 @@ body.bb-smoker-lp-page {
 </style>
 <!--end shipping-calculate.liquid (SNIPPET)--></div>
 
-              </div>
+              </form>
 
             </div>
           </div>
@@ -1951,10 +1954,9 @@ body.bb-smoker-lp-page {
   })();
 
   /* Buy box: option select drives the price, the qty label and the cart URL.
-     Cart wiring uses the PDP's own variant + selling_plan IDs via the
-     /cart/add?id=..&selling_plan=..&return_to=/checkout form. The bare
-     /cart/{variant}:{qty}?selling_plan= permalink silently DROPS the plan and
-     charges full price, so it is deliberately not used here.
+     Cart wiring posts to /cart/add.js with hidden id + selling_plan inputs,
+     then redirects to /checkout — same pattern as air-quality-landing-page-v2.
+     URL permalinks with selling_plan silently drop the plan on Shopify.
      Shipping cutoff below is a real daily cutoff, not a per-visitor timer.
      TODO confirm the true cutoff hour with fulfilment; set SHIP_CUTOFF_CT. */
   (function(){
@@ -2039,16 +2041,19 @@ body.bb-smoker-lp-page {
     });
   })();
   </script><script>
-/* Real PDP buy box behaviour. Variant and selling-plan IDs are read off the
-   real elements' own data attributes, so the cart wiring is exactly the PDP's. */
+/* Real PDP buy box — form POST with id + selling_plan, same as air-quality v2. */
 (function(){
-  var box = document.getElementById('bbReal');
-  if(!box) return;
-  var cards = [].slice.call(box.querySelectorAll('.plan-card, .subscription-card'));
-  var atc   = document.getElementById('bbRealAtc');
-  var money = box.querySelector('.btn-money strong') || box.querySelector('.btn-money');
-  var items = box.querySelector('.btn-items strong') || box.querySelector('.btn-items');
-  if(!cards.length || !atc) return;
+  var form = document.getElementById('bbReal');
+  if(!form || form.tagName !== 'FORM') return;
+
+  var variantInput = document.getElementById('bbRealVariantId');
+  var planInput = document.getElementById('bbRealSellingPlan');
+  var atc = document.getElementById('bbRealAtc');
+  var planCards = [].slice.call(form.querySelectorAll('.plan-card'));
+  var subCards = [].slice.call(form.querySelectorAll('.subscription-card'));
+  var money = form.querySelector('.btn-money strong') || form.querySelector('.btn-money');
+  var items = form.querySelector('.btn-items');
+  if(!variantInput || !planInput || !atc || !planCards.length) return;
 
   var gal = document.getElementById('bbGal');
   var slides = gal ? [].slice.call(gal.querySelectorAll('img[data-slide]')) : [];
@@ -2065,23 +2070,66 @@ body.bb-smoker-lp-page {
     document.getElementById('bbGalNext').addEventListener('click', function(e){ e.preventDefault(); show(cur+1); });
   }
 
-  function select(card){
-    cards.forEach(function(c){ c.classList.toggle('active', c === card); });
-    var cents = parseInt(card.getAttribute('data-price'), 10) || 0;
-    var vid = card.getAttribute('data-variant-id');
-    var plan = card.getAttribute('data-selling-plan-id');
+  function updateCTA(cents, qty){
     if(money) money.textContent = '$' + (cents/100).toFixed(2);
-    var mm = (card.innerText || '').match(/(\d+)\s*Bags?/i);
-    var n = mm ? parseInt(mm[1], 10) : 1;
-    if(items) items.textContent = '(' + n + ' Item' + (n > 1 ? 's' : '') + ')';
-    var url = 'https://www.trybetterbrand.com/cart/add?id=' + vid + '&quantity=1'
-            + (plan ? '&selling_plan=' + plan : '') + '&return_to=/checkout';
-    atc.setAttribute('href', url);
-    if(window.__bbDecorate) window.__bbDecorate(atc);
-    show(n > 1 ? 1 : 0);
+    if(items) items.textContent = '(' + qty + ' Item' + (qty > 1 ? 's' : '') + ')';
   }
-  cards.forEach(function(c){ c.addEventListener('click', function(){ select(c); }); });
-  select(box.querySelector('.plan-card.active') || cards[0]);
+
+  function selectPlan(card){
+    planCards.forEach(function(c){ c.classList.remove('active'); });
+    subCards.forEach(function(c){ c.classList.remove('active'); });
+    card.classList.add('active');
+
+    variantInput.value = card.getAttribute('data-variant-id') || '';
+    planInput.value = '';
+    planInput.disabled = true;
+
+    updateCTA(parseInt(card.getAttribute('data-price'), 10) || 0,
+              parseInt(card.getAttribute('data-qty'), 10) || 1);
+    show(parseInt(card.getAttribute('data-qty'), 10) > 1 ? 1 : 0);
+  }
+
+  function selectSubscription(card){
+    planCards.forEach(function(c){ c.classList.remove('active'); });
+    subCards.forEach(function(c){ c.classList.remove('active'); });
+    card.classList.add('active');
+
+    variantInput.value = card.getAttribute('data-variant-id') || '';
+    planInput.disabled = false;
+    planInput.value = card.getAttribute('data-selling-plan-id') || '';
+
+    var group = card.closest('.subscription-group');
+    var qty = group ? parseInt(group.getAttribute('data-qty'), 10) : 3;
+    updateCTA(parseInt(card.getAttribute('data-price'), 10) || 0, qty);
+    show(1);
+  }
+
+  planCards.forEach(function(c){
+    c.addEventListener('click', function(e){ e.preventDefault(); selectPlan(c); });
+  });
+  subCards.forEach(function(c){
+    c.addEventListener('click', function(e){ e.preventDefault(); selectSubscription(c); });
+  });
+
+  var init = form.querySelector('.plan-card.active') || planCards[0];
+  if(init) selectPlan(init);
+  else planInput.disabled = true;
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    if(!planInput.value) planInput.disabled = true;
+    fetch('/cart/add.js', { method: 'POST', body: new FormData(form) })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(data.status && data.status >= 400) throw new Error(data.description || 'Cart error');
+        window.location.href = '/checkout';
+      })
+      .catch(function(){
+        planInput.disabled = false;
+        form.submit();
+      });
+  });
 })();
 </script>
 </div>
