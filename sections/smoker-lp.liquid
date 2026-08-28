@@ -1,34 +1,1197 @@
 {% comment %}
-  BetterBrand — smoker-labor-day-lander. Shopify SECTION.
-
-  Add as sections/smoker-labor-day-lander.liquid, then reference it from a page template
-  so it renders inside the theme layout. That is what lets Intelligems, the
-  store's Meta pixel and Northbeam all see the page.
-
-  CSS IS SCOPED. Everything is namespaced under .bb-smoker-labor-day. Bare element resets
-  are emitted as :where(.bb-smoker-labor-day) el so they contribute ZERO specificity and
-  cannot outrank this section's own classes, and the design tokens live on the
-  wrapper rather than :root. Do not "tidy" either of those: they are what stops
-  this section restyling the theme header, logo and fonts.
-
-  Images load from theme assets and the Shopify Files CDN (pages.dev host was returning HTML, not media).
-
-  Our own Meta and Northbeam snippets were REMOVED for the theme build. The
-  store already runs both plus Intelligems, so keeping ours would double count.
+  BetterBrand — Smoker Labor Day lander.
+  Port of https://bb-cough-gummies.pages.dev/
+  Creative media is hosted in theme assets (Pages uses content-hashed filenames;
+  unhashed /assets/*.jpg paths serve HTML, which broke images in the theme editor).
 {% endcomment %}
 
+<script>document.body.classList.add('bb-smoker-lp-page');</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Abel&family=Open+Sans:wght@400;600;700&family=Oswald:wght@400;500&family=Poppins:wght@400;500;600&family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
 
+<style>
+
+/* Hide theme chrome so this page matches the standalone lander */
+body.bb-smoker-lp-page .shopify-section:not(.bb-smoker-lp-section),
+body.bb-smoker-lp-page .header-section,
+body.bb-smoker-lp-page .footer-section,
+body.bb-smoker-lp-page #shopify-section-header,
+body.bb-smoker-lp-page #shopify-section-footer,
+body.bb-smoker-lp-page .announcement-bar,
+body.bb-smoker-lp-page .header-wrapper,
+body.bb-smoker-lp-page footer.footer,
+body.bb-smoker-lp-page .site-header,
+body.bb-smoker-lp-page .site-footer,
+body.bb-smoker-lp-page #shopify-section-announcement-bar {
+  display: none !important;
+}
+body.bb-smoker-lp-page {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #fff !important;
+}
+#shopify-section-{{ section.id }} {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+  /* ==========================================================
+     naturvahealth.com/pages/mucus layout DNA, kept.
+     Changed ONLY: palette to legacy Betterbrand green/gold,
+     type scale raised for 45+ readers, claims made compliant.
+     Source fonts kept exactly: Open Sans / Public Sans /
+     Poppins / Abel / Oswald.
+     Source structural traits deliberately preserved:
+       - long left-aligned H1, no dek
+       - tiny byline line under the hero image
+       - tinted pull-quote block in Abel
+       - staccato one-idea paragraphs, no callout boxes
+       - plain H3 + text sections, images with no captions
+       - full-width solid green CTA, squared, fine print beneath
+       - guarantee and testimonials as plain H3 sections
+       - centred Oswald product block last
+     ========================================================== */
+  .bb-smoker-labor-day{
+    --canvas:#ffffff;
+    --tint:#f7f5f0;
+    --quote:rgba(168,208,252,.3);
+    --ink:#121212;
+    --body:#2f2f2c;
+    --muted:#5c5c57;
+    --green:#1B3A2D;
+    --green-hi:#142C22;
+    --gold:#D4A829;
+    --hair:#e0ddd6;
+    --maxw:680px;
+  }
+  .bb-smoker-labor-day *{box-sizing:border-box}
+  .bb-smoker-labor-day{-webkit-text-size-adjust:100%}
+  .bb-smoker-labor-day{
+    margin:0;background:var(--canvas);color:var(--body);
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:19px;font-weight:400;line-height:1.95;
+    -webkit-font-smoothing:antialiased;
+  }
+  .bb-smoker-labor-day img{max-width:100%;height:auto;display:block}
+
+  /* source: solid bar, small Poppins label, left aligned */
+  /* ---------- header ----------
+     One band, not two. Brand left, offer as a compact gold pill right, so the
+     bar stays balanced at any viewport instead of becoming a field of gold on
+     desktop. The advertisement disclosure moves inside the article column where
+     it reads as editorial chrome rather than a second stacked band. */
+  .bb-smoker-labor-day .masthead{background:var(--green);position:sticky;top:0;z-index:30;
+    box-shadow:0 1px 0 rgba(0,0,0,.18)}
+  .bb-smoker-labor-day .masthead .mw{max-width:var(--maxw);margin:0 auto;padding:11px 18px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .bb-smoker-labor-day .masthead .brand{margin:0;color:#fff;font-family:'Public Sans',sans-serif;
+    font-size:18px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
+  .bb-smoker-labor-day .masthead .offer-pill{display:flex;align-items:center;gap:7px;background:var(--gold);
+    color:#20241f;border-radius:999px;padding:6px 13px;white-space:nowrap;
+    font-family:'Public Sans',sans-serif;text-decoration:none}
+  .bb-smoker-labor-day .masthead .offer-pill .p-pct{font-weight:800;font-size:16px;letter-spacing:-.01em}
+  .bb-smoker-labor-day .masthead .offer-pill .p-txt{font-weight:600;font-size:13px;letter-spacing:.01em}
+
+  /* small screens: the brand wordmark plus the offer pill overflowed 390px and
+     put a horizontal scrollbar on the page. Shrink both and let the pill lose its
+     secondary label rather than push the layout wider than the viewport. */
+  @media (max-width:430px){
+    .bb-smoker-labor-day .masthead .mw{padding:10px 14px;gap:8px}
+    .bb-smoker-labor-day .masthead .brand{font-size:15px;letter-spacing:.05em}
+    .bb-smoker-labor-day .masthead .offer-pill{padding:5px 10px;gap:5px}
+    .bb-smoker-labor-day .masthead .offer-pill .p-pct{font-size:14px}
+    .bb-smoker-labor-day .masthead .offer-pill .p-txt{font-size:11.5px}
+  }
+  @media (max-width:360px){
+    .bb-smoker-labor-day .masthead .offer-pill .p-txt{display:none}
+  }
+  .bb-smoker-labor-day, .bb-smoker-labor-day{overflow-x:hidden;max-width:100%}
+
+  .bb-smoker-labor-day .adline{max-width:var(--maxw);margin:0 auto;padding:14px 18px 0;
+    font-family:'Public Sans',sans-serif;font-size:11.5px;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+
+  .bb-smoker-labor-day .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+
+  /* source: H1 straight in, no eyebrow above it, no dek under it */
+  .bb-smoker-labor-day h1{font-family:'Open Sans',sans-serif;font-weight:700;font-size:34px;line-height:1.24;
+    color:var(--ink);text-align:left;margin:24px 0 18px;letter-spacing:-.01em}
+
+  /* source: byline is a single small line directly under the hero image */
+  .bb-smoker-labor-day .byline{font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;color:var(--muted);
+    margin:14px 0 22px;line-height:1.75}
+
+  .bb-smoker-labor-day figure{margin:0 0 20px}
+
+  /* source: pale tinted block, Abel, sat right under the byline */
+  .bb-smoker-labor-day .pullquote{background:var(--quote);padding:18px 20px;margin:0 0 24px;
+    font-family:'Abel',sans-serif;font-size:21px;line-height:1.72;color:rgba(18,18,18,.9)}
+  .bb-smoker-labor-day .pullquote .attrib{display:block;margin-top:10px;font-family:'Poppins',sans-serif;
+    font-size:15px;color:var(--muted)}
+
+  .bb-smoker-labor-day p{margin:0 0 26px}
+
+  /* source: Public Sans 700, black, left, generous space above */
+  .bb-smoker-labor-day h2{font-family:'Public Sans',sans-serif;font-weight:700;font-size:29px;line-height:1.24;
+    color:var(--ink);text-align:left;margin:36px 0 16px;letter-spacing:-.01em}
+
+  .bb-smoker-labor-day b, .bb-smoker-labor-day strong{font-weight:600;color:var(--ink)}
+
+  /* source: full width, solid fill, white label, squared, Public Sans */
+  .bb-smoker-labor-day a.cta{display:block;background:var(--green);color:#fff;text-decoration:none;text-align:center;
+    font-family:'Public Sans',sans-serif;font-weight:700;font-size:22px;line-height:1.3;
+    padding:19px 20px;border-radius:4px;margin:26px 0 12px;letter-spacing:.01em}
+  .bb-smoker-labor-day a.cta:hover{background:var(--green-hi)}
+  .bb-smoker-labor-day a.cta .c-sub{display:block;font-family:'Poppins',sans-serif;font-weight:500;font-size:15px;
+    line-height:1.3;margin-top:6px;color:rgba(255,255,255,.88);letter-spacing:0}
+  .bb-smoker-labor-day .ctanote{font-family:'Public Sans',sans-serif;font-size:18px;font-weight:700;color:var(--ink);
+    text-align:center;margin:0 0 8px}
+  .bb-smoker-labor-day .finep{font-family:'Open Sans',sans-serif;font-size:15px;color:var(--muted);
+    text-align:center;margin:0 0 30px;line-height:1.8}
+
+  /* source: testimonials are plain entries under a plain H3 */
+  .bb-smoker-labor-day .rev{padding:16px 0;border-top:1px solid var(--hair)}
+  .bb-smoker-labor-day .rev:first-of-type{border-top:0}
+  .bb-smoker-labor-day .rev .stars{color:var(--gold);font-size:17px;letter-spacing:2px;margin:0 0 5px}
+  .bb-smoker-labor-day .rev .who{font-family:'Public Sans',sans-serif;font-weight:700;font-size:16px;color:var(--ink);margin:0 0 6px}
+  .bb-smoker-labor-day .rev p{margin:0;font-size:18px;line-height:1.9}
+  .bb-smoker-labor-day .aggline{font-family:'Public Sans',sans-serif;font-weight:700;font-size:19px;color:var(--ink);margin:0 0 6px}
+  .bb-smoker-labor-day .aggsub{font-size:16px;color:var(--muted);margin:0 0 16px;line-height:1.75}
+
+  .bb-smoker-labor-day .vid{margin:0 0 22px}
+  .bb-smoker-labor-day .vid video{width:100%;height:auto;aspect-ratio:540/820;background:#000;display:block;border-radius:4px}
+  .bb-smoker-labor-day .vid .cap{font-size:16px;color:var(--muted);margin:12px 0 0;line-height:1.8}
+
+  /* source: centred product block at the end, Oswald headline */
+  .bb-smoker-labor-day .product{background:var(--tint);padding:24px 20px;margin:30px 0 0;text-align:center;border-radius:4px}
+  .bb-smoker-labor-day .product img{margin:0 auto 16px;max-width:250px}
+  .bb-smoker-labor-day .product h3{font-family:'Oswald',sans-serif;font-weight:400;font-size:30px;line-height:1.22;
+    margin:0 0 12px;color:var(--ink);letter-spacing:.01em}
+  .bb-smoker-labor-day .product p{font-size:18px;margin:0 0 6px}
+  .bb-smoker-labor-day .product p:last-child{margin:0}
+
+  /* top sale strip */
+  /* offer block: real price ladder. Restored after being cut with the old sale bar. */
+  .bb-smoker-labor-day .offer{border:2px solid var(--green);border-radius:6px;overflow:hidden;margin:28px 0 0}
+  .bb-smoker-labor-day .offer .o-head{background:var(--green);color:#fff;text-align:center;padding:13px 16px;
+    font-family:'Public Sans',sans-serif;font-weight:800;font-size:16px;letter-spacing:.03em}
+  .bb-smoker-labor-day .offer .o-body{padding:6px 18px 18px;background:#fff}
+  .bb-smoker-labor-day .offer .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--hair);font-size:17px;line-height:1.5}
+  .bb-smoker-labor-day .offer .row:last-of-type{border-bottom:0}
+  .bb-smoker-labor-day .offer .row .lbl{font-weight:600;color:var(--ink)}
+  .bb-smoker-labor-day .offer .row .val{font-family:'Public Sans',sans-serif;font-weight:800;white-space:nowrap;color:var(--ink)}
+  .bb-smoker-labor-day .offer .row.best{background:#f2f7ee;margin:0 -18px;padding:14px 18px}
+  .bb-smoker-labor-day .offer .row.best .val{color:var(--green)}
+  .bb-smoker-labor-day .offer .tag{display:inline-block;background:var(--green);color:#fff;font-size:10.5px;
+    font-weight:800;letter-spacing:.07em;padding:3px 7px;border-radius:3px;margin-left:8px;
+    vertical-align:1px;font-family:'Public Sans',sans-serif;white-space:nowrap}
+  .bb-smoker-labor-day .offer .o-foot{font-size:15px;color:var(--muted);padding:14px 0 0;line-height:1.8;margin:0}
+
+  /* ============================================================
+     BUY BOX - mirrored from the live PDP (Figma node 97:806).
+     Real tokens off the capture: green #234134, gold #F2CB49,
+     cream #f6edda, mid-green #3f745d. Copy, option labels, badges
+     and displayed prices are exactly as the PDP shows them.
+     Cart wiring uses the PDP's own variant + selling_plan IDs, so
+     checkout behaves identically to the PDP.
+     ============================================================ */
+  .bb-smoker-labor-day .bb-pdp{--pg:#234134;--pgold:#F2CB49;--pcream:#f6edda;--pmid:#3f745d;
+    background:#fff;border:1px solid #e3e0d8;border-radius:10px;
+    padding:20px 18px 22px;margin:30px 0 0}
+  .bb-smoker-labor-day .bb-pdp .bb-gal{position:relative;margin:-20px -18px 16px;border-radius:10px 10px 0 0;
+    overflow:hidden;background:#dfe9cf;aspect-ratio:1/1}
+  .bb-smoker-labor-day .bb-pdp .bb-gal img{width:100%;height:100%;object-fit:cover;display:block}
+  .bb-smoker-labor-day .bb-pdp .bb-gal img.off{display:none}
+  .bb-smoker-labor-day .bb-pdp .bb-gal .g-nav{position:absolute;top:50%;transform:translateY(-50%);
+    width:38px;height:38px;border-radius:50%;background:rgba(35,65,52,.62);color:#fff;
+    border:0;cursor:pointer;font-size:19px;line-height:1;display:flex;align-items:center;
+    justify-content:center;padding:0}
+  .bb-smoker-labor-day .bb-pdp .bb-gal .g-nav:hover{background:rgba(35,65,52,.82)}
+  .bb-smoker-labor-day .bb-pdp .bb-gal .g-prev{left:10px}
+  .bb-smoker-labor-day .bb-pdp .bb-gal .g-next{right:10px}
+  .bb-smoker-labor-day .bb-pdp .bb-gal .g-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;
+    justify-content:center;gap:6px}
+  .bb-smoker-labor-day .bb-pdp .bb-gal .g-dots i{width:7px;height:7px;border-radius:50%;background:rgba(35,65,52,.3)}
+  .bb-smoker-labor-day .bb-pdp .bb-gal .g-dots i.on{background:#234134}
+  @media (max-width:400px){ .bb-smoker-labor-day .bb-pdp .bb-gal{margin:-18px -14px 14px} }
+
+  .bb-smoker-labor-day .bb-pdp .bb-stars{color:var(--pgold);font-size:16px;letter-spacing:2px;margin:0}
+  .bb-smoker-labor-day .bb-pdp .bb-rev{font-family:'Public Sans',sans-serif;font-size:11px;color:#4B4A49;margin:3px 0 10px}
+  .bb-smoker-labor-day .bb-pdp h3{font-family:'Public Sans',sans-serif;font-weight:800;font-size:26px;line-height:1.12;
+    color:var(--pg);margin:0 0 10px;letter-spacing:-.01em}
+  .bb-smoker-labor-day .bb-pdp .bb-dek{font-size:15px;line-height:1.6;color:#3c3c3c;margin:0 0 18px}
+
+  .bb-smoker-labor-day .bb-opt{display:block;position:relative;border:1px solid #d8d5cc;border-radius:9px;
+    padding:13px 14px;margin:0 0 11px;cursor:pointer;background:#fff;
+    display:flex;align-items:center;gap:12px}
+  .bb-smoker-labor-day .bb-opt.sel{border:2px solid var(--pg);box-shadow:0 2px 7px rgba(35,65,52,.16);padding:12px 13px}
+  .bb-smoker-labor-day .bb-opt input{position:absolute;opacity:0;pointer-events:none}
+  .bb-smoker-labor-day .bb-opt img{width:44px;height:44px;object-fit:contain;border-radius:6px;background:#eaf0e2;flex:0 0 44px}
+  .bb-smoker-labor-day .bb-opt .o-name{flex:1;min-width:0;font-family:'Public Sans',sans-serif;font-weight:700;
+    font-size:15px;line-height:1.3;color:var(--pg)}
+  .bb-smoker-labor-day .bb-opt .o-name small{display:block;font-weight:600;font-size:12.5px;color:var(--pmid);margin-top:2px}
+  .bb-smoker-labor-day .bb-opt .o-save{flex:0 0 auto;background:var(--pg);color:#fff;border-radius:999px;
+    font-family:'Public Sans',sans-serif;font-weight:800;font-size:11px;letter-spacing:.03em;
+    padding:5px 9px;white-space:nowrap}
+  .bb-smoker-labor-day .bb-opt .o-price{flex:0 0 auto;font-family:'Public Sans',sans-serif;font-weight:800;
+    font-size:16px;color:var(--pg);text-align:right;line-height:1.15;white-space:nowrap}
+  .bb-smoker-labor-day .bb-opt .o-price small{display:block;font-weight:600;font-size:10.5px;color:#969696}
+  .bb-smoker-labor-day .bb-opt .o-best{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+    background:var(--pgold);color:#252525;border-radius:999px;
+    font-family:'Public Sans',sans-serif;font-weight:800;font-size:11px;letter-spacing:.02em;
+    padding:4px 12px;white-space:nowrap}
+  .bb-smoker-labor-day .bb-opt.sub{flex-wrap:wrap;padding-top:18px}
+  .bb-smoker-labor-day .bb-opt.sub .o-terms{flex:1 1 100%;font-size:13px;line-height:1.55;color:#3c3c3c;margin-top:8px}
+  .bb-smoker-labor-day .bb-opt.sub .o-terms b{color:var(--pg)}
+
+  .bb-smoker-labor-day .bb-atc{display:flex;align-items:center;justify-content:center;gap:0;
+    background:var(--pgold);color:#252525;text-decoration:none;border-radius:999px;
+    padding:16px 18px;margin:16px 0 12px;
+    font-family:'Public Sans',sans-serif;font-weight:800;letter-spacing:.02em}
+  .bb-smoker-labor-day .bb-atc:hover{background:#e6bf42}
+  .bb-smoker-labor-day .bb-atc .a-price{font-size:19px;padding-right:14px;border-right:1.5px solid rgba(37,37,37,.35)}
+  .bb-smoker-labor-day .bb-atc .a-label{font-size:17px;padding-left:14px;text-transform:uppercase}
+  .bb-smoker-labor-day .bb-atc .a-qty{font-size:14px;font-weight:600;padding-left:8px;color:#3c3c3c}
+
+  .bb-smoker-labor-day .bb-hsa{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;
+    font-family:'Public Sans',sans-serif;font-size:12px;font-weight:700;color:#252525;margin:0 0 4px}
+  .bb-smoker-labor-day .bb-hsa span{font-weight:600;color:#4B4A49}
+  .bb-smoker-labor-day .bb-learn{text-align:center;font-size:12px;margin:0 0 18px}
+  .bb-smoker-labor-day .bb-learn a{color:#4B4A49;text-decoration:underline}
+
+  .bb-smoker-labor-day .bb-seals{display:flex;justify-content:center;gap:14px;margin:0 0 16px}
+  .bb-smoker-labor-day .bb-seals img{width:88px;height:auto;display:block}
+
+  .bb-smoker-labor-day .bb-guar{display:flex;align-items:center;justify-content:center;gap:7px;
+    font-family:'Public Sans',sans-serif;font-weight:700;font-size:15px;color:var(--pg);margin:0 0 16px}
+  .bb-smoker-labor-day .bb-guar img{width:17px;height:auto}
+
+  .bb-smoker-labor-day .bb-ship{background:var(--pcream);border-radius:6px;text-align:center;padding:11px 14px;margin:0}
+  .bb-smoker-labor-day .bb-ship .s-l{font-size:12.5px;color:#3c3c3c;display:block}
+  .bb-smoker-labor-day .bb-ship .s-t{font-family:'Public Sans',sans-serif;font-weight:800;font-size:15px;
+    color:var(--pg);display:block;margin-top:2px;font-variant-numeric:tabular-nums}
+
+  @media (max-width:400px){
+    .bb-smoker-labor-day .bb-pdp{padding:18px 14px 20px}
+    .bb-smoker-labor-day .bb-pdp h3{font-size:23px}
+    .bb-smoker-labor-day .bb-opt{gap:9px;padding:12px 11px}
+    .bb-smoker-labor-day .bb-opt .o-name{font-size:14px}
+    .bb-smoker-labor-day .bb-atc .a-price{font-size:17px}
+    .bb-smoker-labor-day .bb-atc .a-label{font-size:15px}
+    .bb-smoker-labor-day .bb-seals img{width:76px}
+  }
+
+  .bb-smoker-labor-day .ps{background:var(--tint);padding:22px 20px;border-radius:4px;margin:30px 0 0;font-size:18px;line-height:1.9}
+
+  /* sticky buy bar. Reads as a Shopify add-to-cart bar: product thumb, a real
+     strikethrough price anchor ($34.95 to $27.96), then the button. Urgency comes
+     from the saving being concrete, NOT from a countdown, because the 20% is the
+     evergreen Subscribe & Save and does not expire. KB rule 29: scarcity must be
+     real or it destroys trust. Drop in a countdown only when a real promo exists. */
+  .bb-smoker-labor-day .sticky{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:#14291F;border-top:3px solid var(--gold);
+    color:#fff;text-decoration:none;
+    display:flex;align-items:center;gap:12px;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    box-shadow:0 -6px 22px rgba(0,0,0,.34);
+    transform:translateY(105%);opacity:0;pointer-events:none;
+    transition:transform .22s ease,opacity .22s ease;
+  }
+  .bb-smoker-labor-day .sticky.on{transform:translateY(0);opacity:1;pointer-events:auto}
+  /* Never sit on top of the real buy box. If the box the visitor is meant to use
+     is on screen, the bar gets out of the way. */
+  .bb-smoker-labor-day .sticky.on.hidden-for-box{transform:translateY(105%);opacity:0;pointer-events:none}
+  .bb-smoker-labor-day .sticky .s-thumb{flex:0 0 auto;width:50px;height:50px;border-radius:6px;
+    object-fit:cover;background:#0d1c15;display:block}
+  .bb-smoker-labor-day .sticky .s-left{flex:1;min-width:0}
+  .bb-smoker-labor-day .sticky .s-save{display:inline-block;background:var(--gold);color:#20241f;
+    font-family:'Public Sans',sans-serif;font-weight:800;font-size:12px;
+    letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:3px;
+    margin-bottom:3px}
+  .bb-smoker-labor-day .sticky .s-price{display:block;font-family:'Public Sans',sans-serif;font-weight:800;
+    font-size:19px;line-height:1.1;letter-spacing:-.01em;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  .bb-smoker-labor-day .sticky .s-price s{font-weight:600;font-size:15px;color:rgba(255,255,255,.55);
+    margin-right:6px;text-decoration-thickness:1.5px}
+  .bb-smoker-labor-day .sticky .s-sub{display:block;font-family:'Poppins',sans-serif;font-size:12.5px;
+    line-height:1.2;margin-top:1px;color:rgba(255,255,255,.72);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  .bb-smoker-labor-day .sticky .s-btn{flex:0 0 auto;background:var(--gold);color:#20241f;border-radius:6px;
+    font-family:'Public Sans',sans-serif;font-weight:800;font-size:16px;letter-spacing:.03em;
+    padding:14px 16px;white-space:nowrap;text-transform:uppercase;
+    box-shadow:0 2px 0 #a8801c, 0 3px 10px rgba(0,0,0,.3);
+    animation:sbeat 2.4s ease-in-out infinite}
+  .bb-smoker-labor-day .sticky:hover .s-btn{background:#e6bc3c}
+  .bb-smoker-labor-day .sticky:active .s-btn{transform:translateY(2px);box-shadow:0 0 0 #a8801c}
+  @keyframes sbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @media (prefers-reduced-motion:reduce){ .bb-smoker-labor-day .sticky .s-btn{animation:none} }
+  @media (max-width:520px){
+    .bb-smoker-labor-day .sticky{gap:9px;padding-left:11px;padding-right:11px}
+    .bb-smoker-labor-day .sticky .s-thumb{width:44px;height:44px}
+    .bb-smoker-labor-day .sticky .s-price{font-size:17.5px}
+    .bb-smoker-labor-day .sticky .s-sub{display:none}
+    .bb-smoker-labor-day .sticky .s-btn{font-size:15px;padding:13px 13px}
+  }
+  .bb-smoker-labor-day{padding-bottom:0}
+  .bb-smoker-labor-day.has-sticky{padding-bottom:92px}
+
+  .bb-smoker-labor-day footer{background:var(--tint);margin-top:34px;padding:26px 0 44px}
+  .bb-smoker-labor-day footer .fw{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+  .bb-smoker-labor-day footer p{font-family:'Open Sans',sans-serif;font-size:14px;line-height:1.85;color:var(--muted);margin:0 0 14px}
+  .bb-smoker-labor-day footer .hard{font-weight:700;color:var(--body);text-transform:uppercase;font-size:13px;letter-spacing:.02em}
+  .bb-smoker-labor-day footer a{color:var(--muted)}
+
+  @media (min-width:700px){
+    .bb-smoker-labor-day{font-size:20px;line-height:1.95}
+    .bb-smoker-labor-day h1{font-size:42px}
+    .bb-smoker-labor-day h2{font-size:33px}
+    .bb-smoker-labor-day .pullquote{font-size:23px}
+  }
+
+  /* ==== REAL PDP BUY BOX ====================================================
+     Markup and CSS lifted from the live product page. Scoped under #bbHost, and
+     the PDP's own ancestor chain (.product-page > .wrapper.product-mobile-wrapper
+     > .products-info > .product-half) is reproduced INSIDE the host, because 48 of
+     the real rules are descendant selectors anchored on those ancestors and will
+     not resolve without them. Host is 375px wide to match the PDP's container.
+     ========================================================================= */
+  @font-face{font-family:SuisseIntlMono;font-weight:400;font-display:swap;
+    src:url("https://www.trybetterbrand.com/cdn/shop/files/suisse-intl-mono-webfont.woff2") format("woff2")}
+  @font-face{font-family:SuisseIntlMono;font-weight:500;font-display:swap;
+    src:url("https://www.trybetterbrand.com/cdn/shop/files/suisse-intl-medium-webfont.woff2") format("woff2")}
+  @font-face{font-family:SuisseIntlMono;font-weight:700;font-display:swap;
+    src:url("https://www.trybetterbrand.com/cdn/shop/files/suisseintlmono-bold-webfont.woff2") format("woff2")}
+
+  /* Custom properties the lifted rules depend on, resolved off the live PDP.
+     Without these, rules like background:var(--AddToCartBackground) fall back
+     to nothing and the gold button renders transparent. */
+  #bbHost{
+    --AddToCartBackground:#F2CB49;
+    --AddToCartBorderRadius:10px;
+    --AddToCartFontSize:16px;
+    --AddToCartFontWeight:bold;
+    --AddToCartTextColor:#fff;
+    --AddToCartTextTransform:uppercase;
+    --CouponTextColor:#3f745d;
+    --ProductComparePriceFontSize:20px;
+    --ProductPriceFontSize:30px;
+    --ProductPriceFontSizeMobile:26px;
+    --ProductTitleFontSizeMobile:26px;
+    --active-tab-color:#313131;
+    --active-tab-text-color:#ffffff;
+    --bookmaniaFont:'bookmania', serif;
+    --breadcrumbLinkColor:#969696;
+    --breadcrumbtextcolor:#252525;
+    --color-link:#555555;
+    --color-price:#234134;
+    --color-sale:#969696;
+    --colorTitleSearchSuggestion:#234134;
+    --color_out_of_stock_label:#767676;
+    --copyBodyFont:'SuisseIntlMono', sans-serif;
+    --copy_body:16px;
+    --copy_body_mobile:14px;
+    --h1Color:#000;
+    --h1SizeMobile:28px;
+    --h2Color:#000;
+    --h2SizeMobile:20px;
+    --h3Color:#000;
+    --h3SizeMobile:16px;
+    --h4Color:#000;
+    --h4SizeMobile:13px;
+    --h5Color:#000;
+    --h5SizeMobile:14px;
+    --h6Color:#000;
+    --h6SizeMobile:14px;
+    --headerFont:'SuisseIntlMono', sans-serif;
+    --iconCheckmarkChecked:#fff;
+    --inactive-tab-color:#e2e2e2;
+    --out_of_stock_background_color:#3f745d;
+    --out_of_stock_text_color:#fff;
+    --product-info-alignment:center;
+    --productTitleTransform:capitalize;
+    --product_info_mobile_direction:center;
+    --progressATCBackgroundColor:#f00;
+    --shipping-bar-height:50px;
+    --shipping-bar-price-text-color:#ffffff;
+    --size-chart-color:#969696;
+    --spacing:.25rem;
+    --stock_warning_background_color:#EDEDED;
+    --tooltip-size:70px;
+    --truemed-link-color:#3c3c3c;
+    --truemed-link-hover-color:#179895;
+    --truemed-text-color:#000000bf;
+    --tw-border-style:solid;
+    --tw-outline-style:solid;
+    --wrapperWidth:1220px;
+    --yousave-color:#000000;
+  }
+
+  /* The real SuisseIntlMono, straight off Betterbrand's own Shopify CDN. Both
+     weights answer with access-control-allow-origin:*, verified, so this is a
+     cross-origin fetch of BB's own asset rather than a copy hosted here. This is
+     the fix that matters: every proportion hack in this file existed only
+     because the button was rendering in a wider fallback face. bookmania is an
+     Adobe Typekit kit and is domain-licensed, so the card serif still falls back
+     off-domain; on Shopify both load natively. */
+  @font-face{font-family:SuisseIntlMono;font-style:normal;font-weight:400;font-display:swap;
+    src:url("https://www.trybetterbrand.com/cdn/shop/files/suisse-intl-mono-webfont.woff2?v=590474723420591623") format("woff2")}
+  @font-face{font-family:SuisseIntlMono;font-style:normal;font-weight:700;font-display:swap;
+    src:url("https://www.trybetterbrand.com/cdn/shop/files/suisseintlmono-bold-webfont.woff2?v=13901557664829825750") format("woff2")}
+
+  #bbHost{margin:30px auto 0;
+    font-family:SuisseIntlMono,ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#252525;text-align:left}
+  #bbHost *{box-sizing:border-box}
+  #bbHost img{max-width:100%}
+  #bbHost .bbr-stars{color:#F2CB49;font-size:15px;letter-spacing:1px;margin:0}
+  #bbHost .bbr-rev{font-size:11px;color:#4B4A49;margin:2px 0 8px}
+  #bbHost .bbr-title{font-family:bookmania,"Bookman Old Style","URW Bookman L",Georgia,serif;
+    font-weight:700;font-size:26px;line-height:1.14;color:#234134;margin:0 0 10px}
+  #bbHost .bbr-dek{font-size:13px;line-height:1.62;color:#3c3c3c;margin:0 0 16px}
+  /* On the live PDP nearly everything inside the buy box computes to bookmania,
+     not the mono body face. Measured: .plan-list/.plan-card/.plan-name/.plan-price/
+     .plan-badge/.subscription-title/.subscription-frequency/.subscription-note/
+     .btn-money/.btn-label all = bookmania. Only the form, #AddToCart and
+     .subscription-best are SuisseIntlMono. Reproducing that split is what makes it
+     read like the live box rather than a mono mock-up. */
+  #bbHost .plan-list, #bbHost .plan-card, #bbHost .plan-name, #bbHost .plan-price, #bbHost .plan-price span, #bbHost .plan-badge, #bbHost .plan-badge span, #bbHost .subscription-card, #bbHost .subscription-title, #bbHost .subscription-frequency, #bbHost .subscrition-name, #bbHost .subscription-note, #bbHost .subscription-note span, #bbHost .btn-money, #bbHost .btn-money strong, #bbHost .btn-label, #bbHost .btn-label strong, #bbHost .btn-items, #bbHost .bbr-title{
+    font-family:bookmania,"Bookman Old Style","URW Bookman L","Palatino Linotype",Palatino,Georgia,serif;
+  }
+  #bbHost .form-add-to-cart, #bbHost #bbRealAtc, #bbHost .subscription-best{
+    font-family:SuisseIntlMono,ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  /* measured targets from the live box */
+  #bbHost .plan-name{font-size:14px;font-weight:700;line-height:16.8px;color:#234134}
+  #bbHost .plan-price{font-size:14px;font-weight:700;line-height:16.8px;color:#234134}
+  #bbHost .plan-price span{font-size:12px;font-weight:400;line-height:14.4px}
+  #bbHost .btn-money, #bbHost .btn-label{font-size:16px;font-weight:700;line-height:16px;color:#234134}
+  #bbHost .subscription-title, #bbHost .subscription-frequency{font-size:14px;font-weight:700;line-height:14px;color:#234134}
+  #bbHost .subscription-note{font-size:14px;font-weight:400;line-height:22.4px;color:#234134}
+
+  /* Final diff against the live box, measured not guessed:
+       - the article body's 19px was inheriting into the form; live form is 14px/22.4px
+       - cards/ATC came out 339px because the wrapper padding was 18px, live is 20px,
+         giving 375 - 40 = 335
+       - badge and Best Value pill were each 1-2px out on padding/line-height */
+  .bb-smoker-labor-day #bbReal{font-size:14px;line-height:22.4px}
+  /* The live buy box sits in a 375px container with 20px padding, giving 335px of
+     content. The article column's own padding was squeezing it, so the host goes
+     full-bleed to the viewport and re-centres an exact 375px column inside. */
+  /* No 100vw full-bleed. 100vw counts the scrollbar, which pushed the whole box
+     ~7px left of the page centre on desktop. Plain auto margins centre exactly.
+     Column width tracks the live PDP: 335px of content on mobile (375 - 2x20),
+     and 563px on desktop, which is what the live buy-box column measures at
+     1440px, where the ATC is 563x84 rather than a 335px mobile pill. */
+  #bbHost{width:auto;max-width:100%;margin:30px auto 0;transform:none}
+  /* On mobile the box escapes the article column's 18px side padding, because
+     the live PDP's wrapper is full width and only carries its own 20px. That
+     36px was the whole problem: my button came out 323px against live's 359px
+     at a 414px viewport, so the same run filled 85% of it against live's 79%,
+     and a cramped run reads as off centre. -18px is the article's exact padding,
+     not a 100vw trick, so it cannot pick up the scrollbar offset again. */
+  /* max-width:100% would cap the growth and turn these negative margins into a
+     pure 18px leftward shift, which is exactly the off-centre bug again. The
+     width has to be widened by the same 36px it is being pulled out by. */
+  #bbHost{margin-left:-18px;margin-right:-18px;
+    width:calc(100% + 36px);max-width:calc(100% + 36px)}
+  #bbHost > section{width:100%;max-width:none;margin:0 auto}
+  /* The 420px cap that used to live here was the bug. It switched the escape
+     off at 420, so from 420 to 619 the box went back inside the article's 18px
+     padding and the button lost 36px. iPhone 14 Pro Max is 430, right in that
+     band: the button came out 339px where live is 375px, ratio 0.81 against
+     live's 0.74. Testing at 414 and 500 missed it because 414 is below the
+     breakpoint and 500 is far enough above that the width recovers.
+     Checked against live instead of capped: live is 460px wide at a 500px
+     viewport and still on 16px type, ratio 0.576. Uncapped, mine is 445px and
+     0.573. They track. Live is sparse through the tablet band too, so the cap
+     was correcting toward something live never did. */
+  @media (min-width:620px){
+    #bbHost{margin-left:auto;margin-right:auto;width:auto;max-width:100%}
+    #bbHost > section{max-width:603px}
+  }
+  #bbHost .product-mobile-wrapper{padding:0 20px 20px;max-width:none}
+  #bbHost .plan-badge{height:24px;line-height:12px}
+  #bbHost .subscription-best{padding:3px 10px;font-size:12px;line-height:16px;
+    display:inline-block;height:24px;box-sizing:border-box}
+
+  /* ATC internal layout, measured off the live button (335px wide):
+     .text-btn is flex/center/gap 4px at 285px, children landing at x offsets
+     25 / 86 / 100 / 224 / 254. Pinning that so the group sits where it does live. */
+  #bbHost #bbRealAtc{justify-content:center;gap:0}
+  /* No fixed width and no extra margins. The old rule pinned .text-btn to the
+     285px it measures with the real SuisseIntlMono, then added 11px+11px of
+     margins inside it, so the content needed 307px in a 285px box and wrapped
+     onto a second line. Live is auto width, gap 4px, .btn-svg margin 0 .45em.
+     nowrap is belt-and-braces: off-domain the brand fonts do not load and the
+     fallback is wider, and the label must still hold one line. */
+  #bbHost #bbRealAtc .text-btn{display:flex;justify-content:center;align-items:center;
+    flex-wrap:nowrap;gap:4px;width:auto;max-width:100%;margin:0 auto;white-space:nowrap}
+  /* Back to the live PDP's own run, all five parts, in the flow, centred:
+     price, divisor, label, cart icon, item count. The live button reads as
+     centred, so the content was never the problem. What was wrong here is
+     PROPORTION. Off-domain neither brand webfont loads, the fallback is wider,
+     and the run filled 85% of the button against live's 79%, leaving 24px of
+     breathing room where live has 37px. A cramped run reads as off centre even
+     when its gaps are equal, which is why every attempt at rebalancing the
+     inside failed. Fix the proportion instead, and keep live's markup intact.
+     Sizes below are set to hit live's ink-to-button ratio. */
+  #bbHost #bbRealAtc .text-btn{position:static;padding:0}
+  #bbHost #bbRealAtc .btn-money{position:static;transform:none;margin:0;white-space:nowrap}
+  #bbHost #bbRealAtc .divisor{display:block;position:static;transform:none;margin:0 5px}
+  #bbHost #bbRealAtc .btn-svg{position:static;transform:none;display:flex;
+    align-items:center;margin:0 .45em}
+  #bbHost #bbRealAtc .btn-items{display:block;position:static;transform:none;margin:0}
+  #bbHost #bbRealAtc .btn-label{margin:0}
+  /* Label size follows the column width, the way the live PDP does it. Live is
+     16px in the 335px mobile button (.text-btn 285x18) and 22px in the 563px
+     desktop button (.text-btn 401x25). The lifted media queries get this wrong
+     here because they were written against the PDP's own breakpoints, not this
+     column, so they leave 22-24px in a 335px button through the tablet band.
+     Two ids outrank them, so source order does not matter. */
+  /* Live's own sizes restored: 16px mobile, 23px desktop. The button label has
+     to outrank the plan names (14px) — shrinking it to hit a ratio target put
+     the smallest type in the box on the one element that has to dominate. With
+     the box now at live's width the ratio comes right at live's size anyway. */
+  #bbHost #bbRealAtc .text-btn, #bbHost #bbRealAtc .btn-money, #bbHost #bbRealAtc .btn-money strong, #bbHost #bbRealAtc .divisor, #bbHost #bbRealAtc .divisor strong, #bbHost #bbRealAtc .btn-label, #bbHost #bbRealAtc .btn-label strong, #bbHost #bbRealAtc .btn-items{font-size:16px;line-height:1}
+  /* Below 356px the 16px run does not fit: at 320 the button is 265 and the run
+     needs 275, so it overflows by 5px each side. Found by sweeping every 2px
+     from 320 to 640 rather than sampling a few widths, which is how the 430px
+     case slipped through in the first place. Live overflows here too, but that
+     is not a reason to ship it. */
+  @media (max-width:355px){
+    #bbHost #bbRealAtc .text-btn, #bbHost #bbRealAtc .btn-money, #bbHost #bbRealAtc .btn-money strong, #bbHost #bbRealAtc .divisor, #bbHost #bbRealAtc .divisor strong, #bbHost #bbRealAtc .btn-label, #bbHost #bbRealAtc .btn-label strong, #bbHost #bbRealAtc .btn-items{font-size:14px;line-height:1}
+    #bbHost .plan-card .plan-name, #bbHost .plan-card .plan-price{font-size:13px}
+  }
+  /* Text size inside the pill, taken straight off the live PDP:
+       live @414px  -> every child 16px, button 359 wide
+       live @1440px -> every child 22px, button 563 wide
+     My column is 359 wide on mobile and 563 from 620px up, the same two widths,
+     so the two sizes transfer directly. Mobile 16px comes from the lifted CSS
+     already; the 563px column needs the 22px step because live reaches 563 at a
+     viewport where its own media queries have already moved on. */
+  @media (min-width:620px){
+    #bbHost #bbRealAtc .text-btn, #bbHost #bbRealAtc .btn-money, #bbHost #bbRealAtc .btn-money strong, #bbHost #bbRealAtc .divisor, #bbHost #bbRealAtc .divisor strong, #bbHost #bbRealAtc .btn-label, #bbHost #bbRealAtc .btn-label strong, #bbHost #bbRealAtc .btn-items{font-size:22px;line-height:1}
+  }
+
+  /* SAVE pills in gold rather than the live green, per David 2026-08-27.
+     Deliberate deviation: the live gummies PDP renders these #234134 on white text. */
+/* display:flex, NOT block. This one line was the whole "not centered" bug.
+   The live ATC is a <button> that the theme styles display:flex with
+   align-items:center, which is what vertically centres the label. Converting it
+   to an <a> for the cart link, I wrote display:block here, which silently
+   disabled align-items and dropped the text to the top of the pill: measured
+   1.0px above / 29.6px below, so 14.3px too high, against live's 15.3/15.3.
+   Every horizontal measurement I took was correct, which is why nine rounds of
+   checking gaps and ratios never found it. */
+#bbHost a#bbRealAtc{text-decoration:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center}
+  /* the gallery rides above the form inside the same 375px context */
+  #bbHost .bb-gal{position:relative;overflow:hidden;background:#dfe9cf;aspect-ratio:1/1;margin:0 0 14px}
+  #bbHost .bb-gal img{width:100%;height:100%;object-fit:cover;display:block}
+  #bbHost .bb-gal img.off{display:none}
+  #bbHost .bb-gal .g-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;
+    border-radius:50%;background:rgba(35,65,52,.62);color:#fff;border:0;cursor:pointer;
+    font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+  #bbHost .bb-gal .g-prev{left:9px}
+  #bbHost .bb-gal .g-next{right:9px}
+  #bbHost .bb-gal .g-dots{position:absolute;bottom:9px;left:0;right:0;display:flex;justify-content:center;gap:5px}
+  #bbHost .bb-gal .g-dots i{width:6px;height:6px;border-radius:50%;background:rgba(35,65,52,.32)}
+  #bbHost .bb-gal .g-dots i.on{background:#234134}
+
+#bbHost div:not(.w3_bg), #bbHost section:not(.w3_bg), #bbHost iframelazy:not(.w3_bg){ background-image: none !important; }
+#bbHost .input- checkbox, #bbHost input, #bbHost input.text, #bbHost input[type="button"], #bbHost input[type="submit"], #bbHost input[type="text"], #bbHost textarea{ appearance: none; border-radius: 0px; }
+#bbHost img{ display: block; height: auto; }
+#bbHost iframe, #bbHost img, #bbHost svg{ max-width: 100%; }
+#bbHost .drawer__title, #bbHost .item-title, #bbHost .page-title, #bbHost .product-title, #bbHost .section-title, #bbHost .title, #bbHost b, #bbHost h1, #bbHost h2, #bbHost h3, #bbHost h4, #bbHost h5, #bbHost h6, #bbHost h1 span, #bbHost h2 span, #bbHost h3 span, #bbHost h4 span, #bbHost h5 span, #bbHost h6 span, #bbHost h1 a, #bbHost h2 a, #bbHost h3 a, #bbHost h4 a, #bbHost h5 a, #bbHost h6 a, #bbHost strong{ font-weight: 700; width: 100%; }
+#bbHost button{ appearance: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; cursor: pointer; }
+#bbHost button[disabled] svg{ fill: rgb(187, 187, 187) !important; }
+#bbHost .btn{ width: 100%; font-weight: 400; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; float: left; }
+#bbHost .hide{ display: none; }
+#bbHost .rte p, #bbHost .rte ul, #bbHost .rte ol{ margin-bottom: 16px; }
+@media (max-width: 1019px){#bbHost span, #bbHost b, #bbHost strong, #bbHost em, #bbHost i, #bbHost u, #bbHost a, #bbHost option{ font-family: inherit; font-size: inherit; }}
+@media (max-width: 767px){#bbHost .btn-add-tocart{ height: 43px; line-height: 43px; }}
+@media (max-width: 767px){#bbHost .btn-add-tocart span{ font: inherit; }}
+@media print{#bbHost p, #bbHost h2, #bbHost h3{ orphans: 3; widows: 3; }}
+#bbHost button.btn.btn-plus{ font-size: 23px; line-height: 0; }
+#bbHost .btn-add-tocart{ background: var(--AddToCartBackground); color: var(--AddToCartTextColor); position: relative; }
+#bbHost .btn-add-tocart, #bbHost .btn-choose-variant{ text-transform: var(--AddToCartTextTransform); height: 50px; line-height: 50px; font-size: var(--AddToCartFontSize); text-align: center; }
+#bbHost .btn-add-tocart{ background: var(--AddToCartBackground); color: var(--AddToCartTextColor); position: relative; display: flex; justify-content: center; align-items: center; }
+#bbHost .drawer__title, #bbHost .grid-product-title, #bbHost .item-title, #bbHost .item-title a, #bbHost .page-title, #bbHost .product-title, #bbHost .section-title, #bbHost .title, #bbHost h1, #bbHost h2, #bbHost h3, #bbHost h4, #bbHost h5, #bbHost h6, #bbHost span, #bbHost a, #bbHost p, #bbHost br, #bbHost b, #bbHost i, #bbHost strong{ -webkit-font-smoothing: antialiased; text-size-adjust: 100%; text-rendering: optimizelegibility; }
+#bbHost .btn{ width: 100%; font-weight: normal; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; float: left; }
+#bbHost .product-page .product-form-buttons-wrapper .product-quantity{ align-items: start; }
+#bbHost .product-quantity-wrapper .btn-minus{ border-radius: 4px 0px 0px 4px; }
+#bbHost .product-quantity-wrapper .btn-plus{ border-radius: 0px 4px 4px 0px; }
+#bbHost .btn-add-tocart, #bbHost .btn-choose-variant{ text-transform: var(--AddToCartTextTransform); height: 58px; line-height: 50px; font-size: var(--AddToCartFontSize); text-align: center; }
+#bbHost .btn-add-tocart .btn-items{ font-weight: 400; }
+#bbHost .btn-add-tocart .btn-money, #bbHost .btn-choose-variant .btn-money, #bbHost .btn-add-tocart .btn-label, #bbHost .btn-choose-variant .btn-label, #bbHost .btn-choose-variant .btn-items{ font-weight: var(--AddToCartFontWeight); }
+#bbHost .btn-svg{ display: flex; align-items: center; justify-content: center; align-self: center; width: 25px; height: 25px; margin: 0px 15px; line-height: 0; }
+#bbHost .btn-add-tocart .text-btn .btn-svg{ display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 1.15em; height: 1.15em; margin: 0px 0.45em; }
+#bbHost .btn-add-tocart > .btn-svg{ display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 1.15em; height: 1.15em; margin: 0px 0.45em; }
+#bbHost .btn-add-tocart .text-btn .btn-svg svg, #bbHost .btn-add-tocart > .btn-svg svg{ display: block; margin: 0px; position: static; top: auto; width: 100%; height: 100%; max-width: 26px; max-height: 25px; }
+#bbHost .product-form__buttons{ display: flex; width: 100%; border-radius: 9px; overflow: hidden; padding-bottom: 15px; }
+#bbHost .product-form__buttons > *{ height: 100%; }
+#bbHost .product-form__buttons > .btn-add-tocart{ width: 100%; }
+#bbHost .btn-add-tocart{ background: var(--AddToCartBackground); color: rgb(35, 65, 52); position: relative; display: flex; justify-content: center; align-items: center; gap: 20px; border-radius: 53px; border: 1px solid rgb(35, 65, 52); padding: 24px 0px; height: 84px; }
+#bbHost .btn-add-tocart .text-btn{ letter-spacing: 0px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 4px; color: rgb(35, 65, 52); font-weight: 700; font-family: var(--bookmaniaFont); font-size: 22px; line-height: 1; }
+#bbHost .btn-add-tocart .text-btn > *{ position: static; top: auto; line-height: 1; }
+#bbHost .btn-money, #bbHost .btn-label, #bbHost .btn-items{ font-family: var(--bookmaniaFont); }
+#bbHost .btn-add-tocart .divisor{ margin: 0px 5px; opacity: 0.5; }
+#bbHost .btn-add-tocart .btn-progress{ display: block; position: absolute; left: 0px; bottom: -3px; height: 3px; width: 0px; background: var(--progressATCBackgroundColor); transition: 0.2s; }
+#bbHost .btn-add-tocart .btn-svg svg path{ fill: rgb(35, 65, 52); }
+#bbHost .add-to-cart-errors{ clear: both; text-align: center; color: red; float: left; width: 100%; }
+#bbHost .btn-choose-variant{ background: var(--out_of_stock_background_color); color: var(--out_of_stock_text_color); margin: 20px 0px; }
+#bbHost .product-page form{ min-width: 100%; margin-bottom: 25px; margin-top: 15px; }
+#bbHost .product-page form span.invetoryError{ width: 100%; color: rgb(255, 0, 0); display: none; margin: 0px 0px 15px; transition: 300ms; text-align: center; }
+#bbHost .product-page .product-variant-wrapper{ width: 100%; margin-bottom: 66px; }
+#bbHost .product-page .product-variant-wrapper .product-variant{ border: 1px solid rgb(221, 221, 221); width: auto; padding: 8px 10px; appearance: none; max-width: 100%; text-transform: capitalize; background-image: url("//www.trybetterbrand.com/cdn/shop/t/298/assets/down_30x.png?v=117118517596853744451777413900"); background-position: 94% center; background-size: 10px 7px; background-repeat: no-repeat; }
+#bbHost .product-page .product-quantity{ display: flex; justify-content: flex-start; width: 100%; align-items: center; float: left; flex-direction: column; margin-bottom: 20px; gap: 10px; }
+#bbHost .product-page .product-quantity .product-form-label{ font-weight: normal; }
+#bbHost .product-page .product-quantity .product-form-label{ max-width: 104px; text-align: left; font-size: 20px; font-weight: 400; line-height: 1.2; color: rgb(35, 65, 52); }
+#bbHost .product-page .product-quantity-wrapper{ display: flex; height: 52px; float: left; position: static; margin: 0px; width: 134px; border: 1px solid rgb(35, 65, 52); border-radius: 20px; padding: 10px 14px; }
+#bbHost .product-quantity-content{ display: flex; }
+#bbHost .product-page .product-quantity-wrapper .btn-minus, #bbHost .product-page .product-quantity-wrapper .quantity, #bbHost .product-page .product-quantity-wrapper .btn-plus{ height: 100%; margin: 0px; padding: 0px; background: transparent; }
+#bbHost .product-page .product-quantity-wrapper .btn-minus, #bbHost .product-page .product-quantity-wrapper .btn-plus{ flex: 0 0 32%; color: rgb(0, 0, 0); font-weight: bold; display: flex; justify-content: center; align-items: center; }
+#bbHost .product-page .product-quantity-wrapper .btn-minus svg, #bbHost .product-page .product-quantity-wrapper .btn-plus svg{ width: 13px; height: 13px; }
+#bbHost .product-page .product-quantity-wrapper .btn-minus svg{ fill: rgb(22, 22, 22); }
+#bbHost .product-page .product-quantity-wrapper .btn-plus svg{ fill: rgb(22, 22, 22); }
+#bbHost .product-page .product-quantity-wrapper .btn-minus[disabled], #bbHost .product-page .product-quantity-wrapper .btn-plus[disabled]{ background: none; cursor: not-allowed; }
+#bbHost .product-page .product-quantity-wrapper .btn-minus[disabled] svg, #bbHost .product-page .product-quantity-wrapper .btn-plus[disabled] svg{ fill: rgb(144, 144, 144); }
+#bbHost .product-page .product-quantity-wrapper .quantity{ padding-left: 1px; border-left-width: medium; border-left-style: none; border-left-color: currentcolor; border-right-width: medium; border-right-style: none; border-right-color: currentcolor; text-align: center; border-radius: 0px; width: 40%; }
+#bbHost .product-page .product-quantity-wrapper input[type="number"]{ appearance: textfield; color: rgb(23, 23, 26); font-size: 20px; }
+#bbHost .product-page .stock-wrn{ position: relative; color: rgb(255, 255, 255); display: none; font-size: 12px; background-color: var(--stock_warning_background_color); text-align: center; border-radius: 5px; padding: 8px 15px; bottom: 6px; left: 10px; }
+#bbHost .product-page .stock-wrn span{ display: block; line-height: 1.3; }
+#bbHost .product-page .btn-choose-variant{ margin-top: 15px; margin-bottom: 10px; justify-content: center; align-items: center; border-radius: 9px; }
+#bbHost .product-page .btn-add-tocart:not(.hide){ justify-content: center; align-items: center; }
+#bbHost .btn-add-tocart .btn-items{ text-transform: none; letter-spacing: -0.4px; }
+#bbHost .no-show{ display: none !important; }
+#bbHost .AddToCartFixed{ display: none; left: 0px; position: fixed; bottom: 0px; z-index: 1; animation: 2s ease 0s 1 normal none running AddToCartFixed; opacity: 0.95; border-radius: 0px; }
+#bbHost .product-page .btn-add-tocart .btn-items{ font-family: var(--bookmaniaFont); }
+@media screen and (max-width: 1024px){#bbHost .btn-add-tocart .text-btn{ font-size: 22px; }}
+@media (max-width: 1019px){#bbHost .btn-add-tocart .text-btn{ font-size: 24px; }}
+@media (max-width: 1019px){#bbHost .product-form-label{ font-size: 18px; }}
+@media (max-width: 1019px){#bbHost .product-page .quantity{ font-size: 16px; }}
+@media (max-width: 1019px){#bbHost .product-page .btn-add-tocart, #bbHost .product-page .btn-choose-variant{ font-size: 18px; }}
+@media (max-width: 1019px){#bbHost .cart-icon{ padding: 0px; }}
+@media (max-width: 1019px){#bbHost .product-page .product-form-buttons-wrapper .product-quantity{ margin: 5px 0px 15px; }}
+@media (max-width: 1019px){#bbHost .product-page .product-quantity-wrapper .quantity{ width: 35%; }}
+@media (max-width: 1019px){#bbHost .product-page .btn-add-tocart{ letter-spacing: 0px; width: 100%; }}
+@media (max-width: 1019px){#bbHost .product-page .btn-add-tocart, #bbHost .product-page .btn-choose-variant{ font-size: calc(var(--AddToCartFontSize) - 0.2rem); }}
+@media (max-width: 1019px){#bbHost .btn-add-tocart{ gap: 25px; }}
+@media (max-width: 1019px){#bbHost .btn-add-tocart .text-btn{ font-size: 23px; letter-spacing: 0.7px; }}
+@media (max-width: 1019px){#bbHost .btn-add-tocart .divisor{ margin: 0px 5px; }}
+@media (max-width: 1019px){#bbHost .btn-svg svg{ height: calc(var(--AddToCartFontSize) + 6px); padding: 0px; margin-bottom: 8px; }}
+@media (max-width: 1019px){#bbHost .btn-add-tocart .text-btn .btn-svg svg, #bbHost .btn-add-tocart > .btn-svg svg{ position: static; top: auto; width: 100%; height: 100%; margin: 0px; padding: 0px; }}
+@media (max-width: 1019px){#bbHost .btn-add-tocart .btn-items{ letter-spacing: 0.4px; }}
+@media (max-width: 767px){#bbHost .btn-add-tocart .btn-items{ top: 0px; }}
+@media (max-width: 767px){#bbHost .product-page .product-quantity-wrapper{ height: 35px; border-radius: 14px; width: 100px; }}
+@media (max-width: 767px){#bbHost .product-page .product-quantity-wrapper input[type="number"]{ font-size: 14px; }}
+@media (max-width: 767px){#bbHost .product-page .product-quantity .product-form-label{ font-size: 18px; }}
+@media (max-width: 767px){#bbHost .product-form__buttons{ padding-bottom: 0px; }}
+@media (max-width: 767px){#bbHost .btn-svg{ margin: 0px; }}
+@media (max-width: 767px){#bbHost .product-page .product-quantity-wrapper .quantity{ width: 50%; }}
+@media (max-width: 767px){#bbHost .product-page .product-quantity-wrapper .btn-minus, #bbHost .product-page .product-quantity-wrapper .btn-plus{ flex: 0 0 25%; }}
+@media (max-width: 767px){#bbHost .product-page .product-quantity-wrapper .btn-minus svg, #bbHost .product-page .product-quantity-wrapper .btn-plus svg{ width: 9px; height: 9px; }}
+@media (max-width: 767px){#bbHost .product-page form{ margin-top: 0px; margin-bottom: 15px; }}
+@media (max-width: 767px){#bbHost .product-page .product-quantity{ margin: 0px 0px 6px; }}
+@media (max-width: 767px){#bbHost .product-page .btn-add-tocart:not(.AddToCartFixed){ margin-bottom: 0px; padding-left: 0px; height: 49px; gap: 11px; }}
+@media (max-width: 767px){#bbHost .product-page .btn-add-tocart .text-btn{ padding-bottom: 0px; letter-spacing: 0px; font-size: 16px; line-height: 1; align-items: center; }}
+@media (max-width: 767px){#bbHost .product-page .btn-add-tocart .divisor{ margin: 0px 5px; }}
+@media (max-width: 767px){#bbHost .product-page .btn-add-tocart .btn-svg{ padding-bottom: 0px; }}
+@media (max-width: 767px){#bbHost .product-page .btn-add-tocart .btn-svg svg{ width: 100%; height: 100%; max-width: 24px; max-height: 24px; margin: 0px; }}
+@media (max-width: 767px){#bbHost .product-page .btn-add-tocart .btn-items{ letter-spacing: 0px; }}
+@media (max-width: 767px){#bbHost .product-page .product-form-buttons-wrapper .product-quantity{ margin: 20px 0px; }}
+@media (max-width: 479px){#bbHost .product-page .product-variant-wrapper{ margin-bottom: 20px; }}
+@media (max-width: 479px){#bbHost .product-page .btn-add-tocart, #bbHost .product-page .btn-choose-variant{ font-size: 0.9rem; }}
+@media (max-width: 479px){#bbHost .product-page .btn-svg svg{ width: 18px; height: 18px; }}
+@media (max-width: 479px){#bbHost .product-page .btn-add-tocart .text-btn .btn-svg svg, #bbHost .product-page .btn-add-tocart > .btn-svg svg{ width: 100%; height: 100%; max-width: 22px; max-height: 22px; }}
+#bbHost .subscription-wrapper{ margin-bottom: 30px; }
+#bbHost .plan-wrapper{ width: 100%; }
+#bbHost .plan-wrapper *, #bbHost .subscription-wrapper *{ font-family: var(--bookmaniaFont); }
+#bbHost .plan-list{ display: flex; flex-direction: column; gap: 10px; margin-bottom: 23px; }
+#bbHost .plan-badge.hidden{ display: none; }
+#bbHost .content{ display: flex; justify-content: space-between; }
+#bbHost .plan-card{ display: flex; align-items: center; gap: 12px; padding: 10px 20px; border: 1px solid rgb(35, 65, 52); border-radius: 14px; cursor: pointer; transition: 0.2s; height: 92px; position: relative; }
+#bbHost .plan-card.active{ box-shadow: rgba(35, 65, 52, 0.46) 0px 0px 4.9px 3px inset; }
+#bbHost .plan-left{ width: 75px; height: 75px; display: flex; align-items: center; }
+#bbHost .plan-left img{ width: 100%; height: auto; }
+#bbHost .plan-center{ flex: 1 1 0%; display: flex; flex-direction: column; }
+#bbHost .plan-name{ font-size: 18px; font-weight: 700; line-height: 1.2; margin-bottom: 0px; color: rgb(35, 65, 52); }
+#bbHost .plan-right{ display: flex; flex-direction: row-reverse; align-items: center; gap: 23px; }
+#bbHost .subscription-wrapper .plan-right{ flex-direction: row; }
+#bbHost .plan-price{ font-size: 20px; font-weight: 700; height: 42px; display: flex; flex-direction: column; justify-content: center; line-height: 1.2; color: rgb(35, 65, 52); }
+#bbHost .plan-price span{ font-size: 16px; font-weight: 400; text-align: end; }
+#bbHost .plan-badge{ background: rgb(35, 65, 52); color: rgb(255, 255, 255); font-size: 14px; font-weight: 700; padding: 7px 8px 2px; border-radius: 20px; height: 24px; display: flex; align-items: center; justify-content: center; line-height: 1; min-width: 84px; }
+#bbHost .subscription-group{ display: flex; flex-direction: column; gap: 12px; }
+#bbHost .subscription-card{ margin-top: 10px; border: 1px solid rgb(35, 65, 52); border-radius: 10px; padding: 20px; cursor: pointer; position: relative; transition: 0.2s; display: flex; flex-direction: column; justify-content: center; }
+#bbHost .subscription-best{ font-family: var(--copyBodyFont); background: rgb(242, 203, 73); color: rgb(35, 65, 52); font-size: 14px; font-weight: 700; padding: 4px 8px; border-radius: 35px; position: absolute; top: -13px; left: 50%; transform: translateX(-50%); border: 1px solid rgb(35, 65, 52); white-space: nowrap; z-index: 1; line-height: 1.2; }
+#bbHost .subscrition-name{ font-size: 18px; font-weight: 700; margin-bottom: 0px; line-height: 1.2; color: rgb(35, 65, 52); }
+#bbHost .subscription-frequency{ color: rgb(35, 65, 52); }
+#bbHost .subscription-note{ display: flex; flex-direction: column; gap: 5px; font-size: 16px; font-weight: 400; margin-bottom: 0px; color: rgb(35, 65, 52); }
+#bbHost .subscription-note span{ line-height: 1.2; }
+@media screen and (max-width: 1019px){#bbHost .plan-wrapper, #bbHost .subscription-wrapper{ max-width: 100%; }}
+@media screen and (max-width: 1019px){#bbHost .plan-name{ font-size: 14px; }}
+@media screen and (max-width: 767px){#bbHost .subscription-wrapper{ margin-bottom: 20px; }}
+@media screen and (max-width: 767px){#bbHost .plan-badge{ font-size: 12px; padding: 6px 8px; height: fit-content; }}
+@media screen and (max-width: 767px){#bbHost .plan-badge span{ position: relative; top: 2px; }}
+@media screen and (max-width: 767px){#bbHost .plan-card{ height: 65px; }}
+@media screen and (max-width: 767px){#bbHost .plan-left{ width: 45px; height: 45px; }}
+@media screen and (max-width: 767px){#bbHost .plan-price{ font-size: 14px; height: auto; position: relative; top: 1px; }}
+@media screen and (max-width: 767px){#bbHost .plan-price span{ font-size: 12px; }}
+@media screen and (max-width: 767px){#bbHost .subscription-title, #bbHost .subscription-frequency{ font-size: 14px; }}
+@media screen and (max-width: 767px){#bbHost .plan-name{ position: relative; top: 1px; }}
+@media screen and (max-width: 767px){#bbHost .subscription-card{ padding: 20px 10px; }}
+@media screen and (max-width: 767px){#bbHost .subscrition-name{ line-height: 1; }}
+@media screen and (max-width: 767px){#bbHost .subscription-note{ font-size: 14px; gap: 2px; }}
+@media screen and (max-width: 480px){#bbHost .content{ flex-wrap: nowrap; gap: 15px; }}
+@media screen and (max-width: 480px){#bbHost .plan-right{ gap: 10px; }}
+@media screen and (max-width: 480px){#bbHost .subscription-wrapper .plan-right{ align-items: start; }}
+@media screen and (max-width: 480px){#bbHost .subscription-best{ font-size: 12px; padding: 3px 8px; }}
+#bbHost .truemed-entry-box{ display: flex; flex-wrap: wrap; align-items: center; font-family: Inter, sans-serif; }
+#bbHost .truemed-entry-text-container{ display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+#bbHost .truemed-entry-logo{ width: 15px; height: 15px; }
+#bbHost .truemed-entry-text{ color: var(--truemed-text-color); font-size: 12px; }
+#bbHost .truemed-entry-text-bold{ font-weight: 700; }
+#bbHost .truemed-entry-link{ color: var(--truemed-link-color); background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; padding: 0px; margin: 0px; text-align: center; font-size: 12px; cursor: pointer; letter-spacing: 0.02em; }
+#bbHost .truemed-entry-box{ gap: 6px; justify-content: flex-start; }
+#bbHost .truemed-entry-link{ font-weight: 600; text-decoration-line: underline; }
+#bbHost .truemed-entry-box{ --truemed-icon-height: 12px; }
+#bbHost .truemed-entry-box{ justify-content: center; margin-bottom: 15px; }
+@media (max-width: 767px){#bbHost .truemed-entry-text{ font-size: 11px; }}
+@media (max-width: 767px){#bbHost .truemed-entry-box{ margin-top: 15px; }}
+#bbHost .shipping-calculate-date{ clear: both; display: flex; justify-content: center; padding: 5px 3px; align-items: center; font-size: 16px; color: rgb(35, 65, 52); background-color: rgba(242, 203, 73, 0.1); text-align: center; }
+#bbHost .remain-time, #bbHost .within-time{ font-weight: 700; }
+@media (max-width: 1019px){#bbHost .shipping-calculate-date *{ font-size: 16px; }}
+@media (max-width: 767px){#bbHost .shipping-calculate-date *{ font-size: 12px; }}
+#bbHost .product-buy-infos{ display: flex; flex-direction: row; gap: 10px; padding: 15px 11px; justify-content: center; }
+#bbHost .product-buy-infos-item{ display: flex; align-items: center; gap: 5px; }
+#bbHost .product-buy-infos-item img{ width: 10px; height: 13px; }
+#bbHost .product-quantity{ display: none; }
+#bbHost .product-buy-infos-item span{ font-size: 16px; font-weight: 400; line-height: 19.6px; color: rgb(35, 65, 52); font-family: SuisseIntlMono, sans-serif; width: max-content; }
+#bbHost .product-badges{ display: flex; align-items: center; justify-content: center; gap: 14px; height: 141px; }
+#bbHost .product-badge-icon{ max-width: 149px; max-height: 141px; }
+#bbHost .product-badges img{ width: 100%; height: 100%; }
+@media screen and (max-width: 1019px){#bbHost .product-badges{ width: 100%; height: auto; }}
+@media screen and (max-width: 767px){#bbHost .product-badges{ margin-top: 15px; margin-bottom: 15px; }}
+@media screen and (max-width: 767px){#bbHost .product-buy-infos{ padding-top: 0px; font-size: 14px; }}
+#bbHost .truemed-instructions{ font-family: sans-serif; }
+
+  /* SAVE pills back to the live PDP's own treatment, per David 2026-08-27:
+     dark green #234134 with white labels. The gold version that used to sit here
+     is reverted. Still placed last on purpose, because the lifted PDP rule is
+     also `#bbHost .plan-badge` and this needs to win on source order rather than
+     an !important fight. The child colour is set explicitly too, since the
+     lifted CSS colours the inner <span>/<strong> rather than the pill, and
+     leaving it behind is what once produced green-on-green invisible labels. */
+  #bbHost .plan-badge{background:#234134;color:#ffffff}
+  #bbHost .plan-badge span, #bbHost .plan-badge strong{color:#ffffff}
+
+
+ .subscription-wrapper{
+ margin-bottom: 30px;
+ }
+ .plan-wrapper{
+ width: 100%;
+ }
+ .plan-wrapper *,
+ .subscription-wrapper *{
+ font-family: var(--bookmaniaFont);
+ }
+ .plan-title{
+ font-size: 20px;
+ font-weight: 700;
+ line-height: 1.2;
+ margin-bottom: 0px;
+ font-family: var(--bookmaniaFont);
+ color: #234134;
+ margin-top: 25px;
+ }
+ .plan-list{
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ margin-bottom: 23px;
+ }
+ .plan-badge.hidden{
+ display: none;
+ }
+ .content{
+ display: flex;
+ justify-content: space-between;
+ }
+ .plan-card{
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ padding: 10px 20px;
+ border: 1px solid #234134;
+ border-radius: 14px;
+ cursor: pointer;
+ transition: all 0.2s ease;
+ height: 92px;
+ position: relative;
+ }
+ .plan-card:hover{
+ border: 1px solid #234134;
+ }
+ .plan-card.active{
+ box-shadow: 0px 0px 4.9px 3px #23413475 inset;
+ }
+ .plan-left{
+ width: 75px;
+ height: 75px;
+ display: flex;
+ align-items: center;
+ }
+ .plan-left img{
+ width: 100%;
+ height: auto;
+ }
+ .plan-center{
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ }
+ .plan-name{
+ font-size: 18px;
+ font-weight: 700;
+ line-height: 1.2;
+ margin-bottom: 0px;
+ color: #234134;
+ }
+ .plan-subtitle{
+ font-size: 12px;
+ color: #777;
+ }
+ .plan-right{
+ display: flex;
+ flex-direction: row-reverse;
+ align-items: center;
+ gap: 23px;
+ }
+ .subscription-wrapper .plan-right{
+ flex-direction: row;
+ }
+ .plan-price{
+ font-size: 20px;
+ font-weight: 700;
+ height: 42px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ line-height: 1.2;
+ color: #234134;
+ }
+ .plan-price span{
+ font-size: 16px;
+ font-weight: 400;
+ text-align: end;
+ }
+ .plan-badge{
+ background: #234134;
+ color: #ffffff;
+ font-size: 14px;
+ font-weight: 700;
+ padding: 7px 8px 2px;
+ border-radius: 20px;
+ height: 24px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ line-height: 1;
+ min-width: 84px;
+ }
+ /* VARIANT CARDS */
+ /* SUBSCRIPTIONS */
+ .subscription-group{
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ }
+ .subscription-group[hidden]{
+ display: none !important;
+ }
+ .subscription-card{
+ margin-top: 10px;
+ border: 1px solid #234134;
+ border-radius: 10px;
+ padding: 20px;
+ cursor: pointer;
+ position: relative;
+ transition: all 0.2s ease;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ }
+ .subscription-card.active{
+ box-shadow: 0px 0px 4.9px 3px #23413475 inset;
+ }
+ .subscription-top{
+ display: flex;
+ gap: 8px;
+ margin-bottom: 6px;
+ }
+ .subscription-header{
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-top: 25px;
+ }
+ .subscription-best{
+ font-family: var(--copyBodyFont);
+ background: #f2cb49;
+ color: #234134;
+ font-size: 14px;
+ font-weight: 700;
+ padding: 4px 8px;
+ border-radius: 35px;
+ position: absolute;
+ top: -13px;
+ left: 50%;
+ transform: translateX(-50%);
+ border: 1px solid #234134;
+ white-space: nowrap;
+ z-index: 1;
+ line-height: 1.2;
+ }
+ .subscription-off{
+ background: #ffc107;
+ color: #000;
+ font-size: 11px;
+ font-weight: 700;
+ padding: 4px 8px;
+ position: absolute;
+ top: -1px;
+ right: -2px;
+ border-bottom-left-radius: 11px;
+ border-top-right-radius: 11px;
+ height: 24px;
+ }
+ .subscrition-name{
+ font-size: 18px;
+ font-weight: 700;
+ margin-bottom: 0px;
+ line-height: 1.2;
+ color: #234134;
+ }
+ .subscription-frequency{
+ color: #234134;
+ }
+ .subscription-note{
+ display: flex;
+ flex-direction: column;
+ gap: 5px;
+ font-size: 16px;
+ font-weight: 400;
+ margin-bottom: 0px;
+ color: #234134;
+ }
+ .subscription-note span{
+ line-height: 1.2;
+ }
+ @media screen and (max-width: 1019px){
+ .plan-wrapper,
+ .subscription-wrapper{
+ max-width: 100%;
+ }
+ .plan-name{
+ font-size: 14px;
+ }
+ }
+ @media screen and (max-width: 767px){
+ .subscription-wrapper{
+ margin-bottom: 20px;
+ }
+ .plan-badge{
+ font-size: 12px;
+ padding: 6px 8px;
+ height: fit-content;
+ }
+ .plan-badge span{
+ position: relative;
+ top: 2px;
+ }
+ .plan-card{
+ height: 65px;
+ }
+ .plan-left{
+ width: 45px;
+ height: 45px;
+ }
+ .plan-title{
+ font-size: 18px;
+ margin-top: 20px;
+ }
+ .plan-price{
+ font-size: 14px;
+ height: auto;
+ position: relative;
+ top: 1px;
+ }
+ .plan-price span{
+ font-size: 12px;
+ }
+ .subscription-title,
+ .subscription-frequency{
+ font-size: 14px;
+ }
+ .plan-name{
+ position: relative;
+ top: 1px;
+ }
+ .subscription-card{
+ padding: 20px 10px;
+ }
+ .subscrition-name{
+ line-height: 1;
+ }
+ .subscription-note{
+ font-size: 14px;
+ gap: 2px;
+ }
+ }
+ @media screen and (max-width: 480px){
+ .content{
+ flex-wrap: nowrap;
+ gap: 15px;
+ }
+ .plan-right{
+ gap: 10px;
+ }
+ .subscription-wrapper .plan-right{
+ align-items: start;
+ }
+ .subscription-best{
+ font-size: 12px;
+ padding: 3px 8px;
+ }
+ }
+
+
+      @import url(https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap);.truemed-entry-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+}
+.truemed-entry-text-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.truemed-entry-logo {
+  width: 15px;
+  height: 15px;
+}
+.truemed-entry-text {
+  color: var(--truemed-text-color);
+  font-size: 12px;
+}
+.truemed-entry-text-bold {
+  font-weight: 700;
+}
+.truemed-entry-link {
+  color: var(--truemed-link-color);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+.truemed-entry-link:focus-visible,
+.truemed-entry-link:hover {
+  color: var(--truemed-link-hover-color);
+}
+.truemed-entry-box{gap:6px;justify-content:flex-start}.truemed-entry-link{font-weight:600;text-decoration-line:underline}
+      .truemed-entry-box {
+        --truemed-icon-height: 12px;
+      }
+    
+
+ .truemed-entry-box{
+ justify-content: center;
+ margin-bottom: 15px;
+ }
+ .atc-button-stack{
+ text-align: center;
+ background-color: #c2deb4;
+ padding: 10px;
+ width: 84%;
+ margin: 0 auto 10px;
+ border-radius: 10px;
+ }
+ .atc-button-stack p{
+ margin: 0;
+ }
+ @media (max-width: 767px){
+ .truemed-entry-text{
+ font-size: 11px;
+ }
+ .truemed-entry-box{
+ margin-top: 15px;
+ }
+ .atc-button-stack{
+ margin: 10px auto;
+ width: 90%;
+ }
+ }
+
+
+ .shipping-calculate-date{
+ clear: both;
+ display: flex;
+ justify-content: center;
+ padding: 5px 3px;
+ align-items: center;
+ font-size: 16px;
+ color: #234134;
+ background-color: #F2CB491A;
+ text-align: center;
+ }
+ .remain-time,
+ .within-time{
+ font-weight: 700;
+ }
+ @media (max-width: 1019px){
+ .shipping-calculate-date *{
+ font-size: 16px;
+ }
+ }
+ @media (max-width: 767px){
+ .shipping-calculate-date *{
+ font-size: 12px;
+ }
+ }
+
+</style>
+
 <div class="bb-smoker-labor-day">
-<p class="adline">Advertisement</p>
+<header class="masthead">
+    <div class="mw">
+      <p class="brand">Betterbrand</p>
+      <a class="offer-pill" data-pdp data-pos="header" href="https://www.trybetterbrand.com/products/betterlungs-r-mullein-gummies" rel="noopener">
+        <span class="p-pct">20% off</span>
+        <span class="p-txt">Subscribe &amp; Save</span>
+      </a>
+    </div>
+  </header>
+
+  <p class="adline">Advertisement</p>
 
   <div class="wrap">
 
     <h1>You Are Not Ready To Quit Smoking. Nobody Makes A Lung Product For You.</h1>
 
     <figure id="hero">
-      <img src="{{ 'bl-hero-man.webp' | asset_url }}" alt="A man in his early sixties sitting on his back step at dawn with a coffee mug, an ashtray on the step beside him" width="1000" height="1333" loading="eager" fetchpriority="high">
+      <img src="{{ 'smoker-lp-hero.jpg' | asset_url }}" alt="A man in his early sixties sitting on his back step at dawn with a coffee mug, an ashtray on the step beside him" width="1000" height="1333" loading="eager" fetchpriority="high">
     </figure>
 
     <p class="byline">Reviewed by Chris Jackson, PharmD, formulator at Betterbrand &nbsp;|&nbsp; Updated August 2026</p>
@@ -40,7 +1203,7 @@
     <h2>Two Lung-Shaped Gummies A Day. That Is The Whole Ask.</h2>
 
     <figure>
-      <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Mullein_Gummies_Listings-10.jpg" alt="Two lung-shaped amber mullein gummies on a wooden cutting board in morning light" width="1200" height="896" loading="eager" fetchpriority="high">
+      <img src="{{ 'smoker-lp-gummy-macro.jpg' | asset_url }}" alt="Two lung-shaped amber mullein gummies on a wooden cutting board in morning light" width="1200" height="896" loading="eager" fetchpriority="high">
     </figure>
 
     <p>Lung shaped, deep amber, pear flavored. Two chews with your coffee and you are done for the day.</p>
@@ -48,7 +1211,7 @@
     <p>Each serving carries <b>2,000mg of mullein equivalent</b>, drawn from 40mg of a <b>50:1 concentrated extract</b>. Concentrating the leaf is the only reason a full dose fits into two chews instead of a mug you have to brew.</p>
 
     <figure>
-      <img src="{{ 'bl-mullein-table-flatlay.webp' | asset_url }}" alt="A bag of BetterLungs Mullein Gummies on a clean kitchen counter beside a mug, car keys and reading glasses" width="1200" height="896" loading="lazy">
+      <img src="{{ 'smoker-lp-bag-counter.jpg' | asset_url }}" alt="A bag of BetterLungs Mullein Gummies on a clean kitchen counter beside a mug, car keys and reading glasses" width="1200" height="896" loading="lazy">
     </figure>
 
     <p>Sixty to a bag, so one bag is one month. No quit date, no counselor, no app, no contract.</p>
@@ -60,9 +1223,9 @@
             <div class="product-half rte w3_bg">
 
               <div class="bb-gal" id="bbGal">
-                <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp1bagsage.png" data-slide="0" alt="BetterLungs Mullein Gummies, one bag" width="900" height="900" loading="lazy">
-                <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp2threebagssage.png" data-slide="1" class="off" alt="BetterLungs Mullein Gummies, three bags" width="900" height="900" loading="lazy">
-                <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Mullein_Gummies_Listings-10.jpg" data-slide="2" class="off" alt="Two lung-shaped amber mullein gummies on a wooden board" width="1200" height="896" loading="lazy">
+                <img src="{{ 'smoker-lp-pdp-1bag.jpg' | asset_url }}" data-slide="0" alt="BetterLungs Mullein Gummies, one bag" width="900" height="900" loading="lazy">
+                <img src="{{ 'smoker-lp-pdp-3bag.jpg' | asset_url }}" data-slide="1" class="off" alt="BetterLungs Mullein Gummies, three bags" width="900" height="900" loading="lazy">
+                <img src="{{ 'smoker-lp-gummy-macro.jpg' | asset_url }}" data-slide="2" class="off" alt="Two lung-shaped amber mullein gummies on a wooden board" width="1200" height="896" loading="lazy">
                 <button class="g-nav g-prev" id="bbGalPrev" type="button" aria-label="Previous image">&#8249;</button>
                 <button class="g-nav g-next" id="bbGalNext" type="button" aria-label="Next image">&#8250;</button>
                 <div class="g-dots" id="bbGalDots"><i class="on"></i><i></i><i></i></div>
@@ -73,12 +1236,7 @@
               <p class="bbr-title">BetterLungs&reg; Mullein Gummies</p>
               <p class="bbr-dek">Pear-flavored chewables packed with 2,000mg of mullein leaf extract. Formulated to help thin mucus and support easier breathing.</p>
 
-              <form action="/cart/add" method="post" enctype="multipart/form-data" id="bbSmokerForm" class="form-add-to-cart">
-                <input type="hidden" name="form_type" value="product">
-                <input type="hidden" name="utf8" value="&#x2713;">
-                <input type="hidden" name="id" id="bbVariantId" value="50211146957099">
-                <input type="hidden" name="selling_plan" id="bbSellingPlan" value="">
-                <input type="hidden" name="quantity" value="1">
+              <div id="bbReal" class="form-add-to-cart jq-cart-add-product">
 
  <!-- Begin ReCharge code -->
  <!-- End ReCharge code -->
@@ -89,7 +1247,7 @@
  <label class="plan-card active" data-variant-id="50211146957099" data-price="3495">
  <input type="radio" hidden="">
   <div class="plan-left w3_bg">
- <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp1bagsage.png?v=1783981080&amp;width=120" alt="1 Bag (30 Day Supply)">
+ <img src="https://www.trybetterbrand.com/cdn/shop/files/gummiespdp1bagsage.png?v=1783981080&amp;width=120" alt="1 Bag (30 Day Supply)">
   </div>
  <div class="plan-center w3_bg">
   <span class="plan-name">
@@ -110,7 +1268,7 @@
  <label class="plan-card " data-variant-id="50211146989867" data-price="9435">
  <input type="radio" hidden="">
   <div class="plan-left w3_bg">
- <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/gummiespdp2threebagssage.png?v=1783981080&amp;width=120" alt="3 Bags (90 Day Supply)">
+ <img src="https://www.trybetterbrand.com/cdn/shop/files/gummiespdp2threebagssage.png?v=1783981080&amp;width=120" alt="3 Bags (90 Day Supply)">
   </div>
  <div class="plan-center w3_bg">
   <span class="plan-name">
@@ -460,7 +1618,7 @@
  </div>
  <!-- START atc-button (SNIPPET) -->
 <div class="product-form__buttons w3_bg">
- <button type="submit" id="bbRealAtc" class="cart-icon btn btn-add-tocart" data-pdp data-pos="buybox">
+ <a id="bbRealAtc" class="cart-icon btn btn-add-tocart" data-pdp data-pos="buybox" rel="noopener" href="https://www.trybetterbrand.com/cart/add?id=50211146957099&amp;quantity=1&amp;return_to=/checkout">
  <div class="text-btn w3_bg"><span class="btn-money"><strong>$34.95</strong></span>
  <span class="divisor"><strong>|</strong></span><span class="btn-label"><strong>Add To Cart</strong></span>
  <span class="btn-svg"><svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -468,8 +1626,8 @@
  </svg>
  </span>
  <span class="btn-items">(1 Item)</span><span class="btn-progress"></span></div>
- </button>
-              </form><div id="truemed-instructions-1787853136012" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp" class="truemed-instructions"><div>
+ </a>
+</div><div id="truemed-instructions-1787853136012" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp" class="truemed-instructions"><div>
     <style>
       @import url(https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap);.truemed-entry-box {
   display: flex;
@@ -552,18 +1710,18 @@
  <span class="invetoryError" style="display: none;">This variant can't be added anymore</span>
  <div class="product-badges w3_bg">
  <div class="product-badge-icon w3_bg">
- <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Frame_1618873766_medium.png?v=1766008191" alt="Round badge with American flag icon and text MADE IN USA indicating product origin." width="" height="">
+ <img src="https://www.trybetterbrand.com/cdn/shop/files/Frame_1618873766_medium.png?v=1766008191" alt="Round badge with American flag icon and text MADE IN USA indicating product origin." width="" height="">
  </div>
  <div class="product-badge-icon w3_bg">
- <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Frame_1618873767_medium.png?v=1766009382" alt="Circular green seal reading LAB TESTED;outer ring: 3RD PARTY TESTED FOR QUALITY AND CONSISTENCY" width="" height="">
+ <img src="https://www.trybetterbrand.com/cdn/shop/files/Frame_1618873767_medium.png?v=1766009382" alt="Circular green seal reading LAB TESTED;outer ring: 3RD PARTY TESTED FOR QUALITY AND CONSISTENCY" width="" height="">
  </div>
  <div class="product-badge-icon w3_bg">
- <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Frame_1618873768_1_medium.png?v=1766009366" alt="Green circular seal reading 'GMP CERTIFIED', indicating Good Manufacturing Practice certification." width="" height="">
+ <img src="https://www.trybetterbrand.com/cdn/shop/files/Frame_1618873768_1_medium.png?v=1766009366" alt="Green circular seal reading 'GMP CERTIFIED', indicating Good Manufacturing Practice certification." width="" height="">
  </div>
  </div>
  <div class="product-buy-infos">
  <div class="product-buy-infos-item">
- <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Vector_849bfd1a-9827-4a78-967e-f9775f2c5892.png?v=1766007623&amp;width=31" alt="Guarantee badge icon" width="" height="">
+ <img src="https://www.trybetterbrand.com/cdn/shop/files/Vector_849bfd1a-9827-4a78-967e-f9775f2c5892.png?v=1766007623&amp;width=31" alt="Guarantee badge icon" width="" height="">
  <span>365-Day Guarantee*</span>
  </div>
  </div>
@@ -610,16 +1768,16 @@
 
 
 
-    <a class="cta" data-pdp data-pos="hero" href="/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
+    <a class="cta" data-pdp data-pos="hero" href="https://www.trybetterbrand.com/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
     <p class="ctanote">Thank you for reading.</p>
-    <p class="finep">Secure checkout. Price and availability confirmed at checkout.</p>
+    <p class="finep">Takes you to trybetterbrand.com, the official retailer, where the current price and availability are shown.</p>
 
     <p><b>Quitting is still the single best thing you can do for your lungs. This is for the meantime.</b></p>
 
     <h2>&ldquo;Is The Pharmacist A Real Person?&rdquo;</h2>
 
     <figure>
-      <img src="{{ 'bl-dr-chris-branded.webp' | asset_url }}" alt="Chris Jackson, PharmD, on the Betterbrand fulfilment floor holding a bag of BetterLungs Mullein Gummies" width="1000" height="1000" loading="lazy">
+      <img src="{{ 'smoker-lp-dr-chris.jpg' | asset_url }}" alt="Chris Jackson, PharmD, on the Betterbrand fulfilment floor holding a bag of BetterLungs Mullein Gummies" width="1000" height="1000" loading="lazy">
     </figure>
 
     <p>Chris Jackson is a working pharmacist and he formulated this. His name and face are on the bag.</p>
@@ -635,7 +1793,12 @@
       <span class="attrib">Customer review on the Betterbrand product page</span>
     </div>
 
-    <p class="finep" style="text-align:left;margin:0 0 26px">Customer reviews below are from Trustpilot and the Betterbrand product page.</p>
+    <div class="vid">
+      <video controls preload="metadata" playsinline poster="{{ 'smoker-lp-deb-poster.jpg' | asset_url }}">
+        <source src="{{ 'smoker-lp-deb-testimonial.mp4' | asset_url }}" type="video/mp4">
+      </video>
+      <p class="cap">Deb, a Betterbrand VIP customer, unprompted and unscripted, on the products she reorders.</p>
+    </div>
 
     <p class="aggline">Betterbrand on Trustpilot: 4.1 out of 5</p>
     <p class="aggsub">From 151 reviews of Betterbrand Health, across the full range.</p>
@@ -651,13 +1814,13 @@
       <p>&ldquo;I loved the taste and looked forward to taking them.&rdquo;</p>
     </div>
 
-    <a class="cta" data-pdp data-pos="mid2" href="/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
+    <a class="cta" data-pdp data-pos="mid2" href="https://www.trybetterbrand.com/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
     <p class="ctanote">Thank you for reading.</p>
 
     <h2>&ldquo;So What Does It Actually Do?&rdquo;</h2>
 
     <figure>
-      <img src="{{ 'bl-mullein-in-wild.webp' | asset_url }}" alt="A mature common mullein plant with broad velvety silver-green leaves and a tall yellow flower spike" width="1000" height="1333" loading="lazy">
+      <img src="{{ 'smoker-lp-mullein.jpg' | asset_url }}" alt="A mature common mullein plant with broad velvety silver-green leaves and a tall yellow flower spike" width="1000" height="1333" loading="lazy">
     </figure>
 
     <p>Mullein leaf, <i>Verbascum thapsus</i>. The soft grey-green roadside plant, used for exactly this for a very long time.</p>
@@ -669,20 +1832,20 @@
     <h2>&ldquo;What If It Does Nothing For Me?&rdquo;</h2>
 
     <figure>
-      <img src="https://cdn.shopify.com/s/files/1/0243/3030/5622/files/Mullein_Gummies_Listings-12.jpg" alt="A single lung-shaped amber gummy held up to the light between finger and thumb" width="1000" height="1000" loading="lazy">
+      <img src="{{ 'smoker-lp-gummy-held.jpg' | asset_url }}" alt="A single lung-shaped amber gummy held up to the light between finger and thumb" width="1000" height="1000" loading="lazy">
     </figure>
 
     <p>Send the bag back. The guarantee is <b>365 days</b>, against a category standard of 30, minus shipping, if you can find the return portal.</p>
 
     <p>Nobody writes a year-long guarantee unless they expect you back.</p>
 
-    <a class="cta" data-pdp data-pos="mid3" href="/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
+    <a class="cta" data-pdp data-pos="mid3" href="https://www.trybetterbrand.com/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
     <p class="ctanote">Thank you for reading.</p>
 
     <h2>One Month, Or Another Year Of The Same Morning</h2>
 
     <figure>
-      <img src="{{ 'bl-hero-man.webp' | asset_url }}" alt="A couple in their sixties sitting on their back porch steps in early September light" width="1000" height="684" loading="lazy">
+      <img src="{{ 'smoker-lp-porch.jpg' | asset_url }}" alt="A couple in their sixties sitting on their back porch steps in early September light" width="1000" height="684" loading="lazy">
     </figure>
 
     <p>You can keep going out after breakfast and clearing your throat at the sink, and nothing about today has to change.</p>
@@ -691,7 +1854,7 @@
 
     <p>Nobody is asking you to quit to do it.</p>
 
-    <a class="cta" data-pdp data-pos="footer" href="/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
+    <a class="cta" data-pdp data-pos="footer" href="https://www.trybetterbrand.com/products/betterlungs-r-mullein-gummies" rel="noopener">CLAIM YOUR LABOR DAY DISCOUNT<span class="c-sub">Subscribe &amp; Save 20%, from $27.96 a month</span></a>
     <p class="ctanote">Thank you for reading.</p>
     <p class="finep">Subscribe &amp; Save is 20% off and you can cancel any time.</p>
 
@@ -699,8 +1862,8 @@
 
   </div>
 
-  <a class="sticky" id="sticky" data-pdp data-pos="sticky" href="/products/betterlungs-r-mullein-gummies" rel="noopener" aria-hidden="true" tabindex="-1">
-    <img class="s-thumb" src="{{ 'bl-mullein-table-flatlay.webp' | asset_url }}" alt="" width="50" height="50" loading="lazy">
+  <a class="sticky" id="sticky" data-pdp data-pos="sticky" href="https://www.trybetterbrand.com/products/betterlungs-r-mullein-gummies" rel="noopener" aria-hidden="true" tabindex="-1">
+    <img class="s-thumb" src="{{ 'smoker-lp-bag-counter.jpg' | asset_url }}" alt="" width="50" height="50" loading="lazy">
     <span class="s-left">
       <span class="s-save">Labor Day &middot; 20% off</span>
       <span class="s-price"><s>$34.95</s>$27.96 &#47;mo</span>
@@ -716,18 +1879,40 @@
       <p>This product is a dietary supplement. It is not intended to diagnose, treat, cure, or prevent any disease, and it is not a cough medicine or a replacement for any medication, therapy, or treatment plan. Statements on this page have not been evaluated by the Food and Drug Administration. Individual experiences vary. A cough that persists, worsens, or brings up blood should be assessed by a doctor. Consult your healthcare provider before starting any new supplement, especially if you are pregnant, nursing, taking medication, or using supplemental oxygen.</p>
     </div>
   </footer>
+<script>
+(function(){
+  var OFFSTORE = !/(^|\.)trybetterbrand\.com$/.test(location.hostname);
+  window.__bbOffstore = OFFSTORE;
+  if(!OFFSTORE) return;
 
-  <script>
-var SEC = document.querySelector('.bb-smoker-labor-day') || document;
-function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById(id); }
+  /* Meta pixel */
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+  (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','451332722114843');
+  fbq('track','PageView');
+
+  /* Northbeam */
+  var a=document.createElement('script');
+  a.src='https://j.northbeam.io/vendor/nb-sp.min.js'; a.async=true;
+  document.head.appendChild(a);
+  var b2=document.createElement('script');
+  b2.src='https://j.northbeam.io/ota-sp/01096d94-28ca-4a1a-abb8-ec2d95ff5aa1.js'; b2.async=true;
+  b2.onload=function(){ try{ window.Northbeam && window.Northbeam.trackPageView(); }catch(e){} };
+  document.head.appendChild(b2);
+})();
+</script>
+<script>
   /* Sticky CTA reveals once the hero image has scrolled out of view.
      IntersectionObserver drives it; a passive scroll listener
      is a fallback for engines where IO does not fire. Both call the same
      idempotent update(), so whichever runs first wins and the other is a no-op. */
   (function(){
-    var el=SEC_ID('sticky'), hero=SEC_ID('hero');
+    var el=document.getElementById('sticky'), hero=document.getElementById('hero');
     if(!el||!hero) return;
-    var box=SEC_ID('bbHost');
+    var box=document.getElementById('bbHost');
     document.body.classList.add('has-sticky');
     var shown=null, hid=null;
     function update(){
@@ -739,8 +1924,14 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
         var b=box.getBoundingClientRect();
         hide = b.bottom > 0 && b.top < window.innerHeight;
       }
-      if(on!==shown){ shown=on; el.classList.toggle('on',on); }
-      if(hide!==hid){ hid=hide; el.classList.toggle('hidden-for-box',hide); }
+      if(on!==shown){
+        shown=on;
+        el.classList.toggle('on',on);
+      }
+      if(hide!==hid){
+        hid=hide;
+        el.classList.toggle('hidden-for-box',hide);
+      }
       var live = on && !hide;
       el.setAttribute('aria-hidden', live?'false':'true');
       el.setAttribute('tabindex', live?'0':'-1');
@@ -759,6 +1950,66 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
     update();
   })();
 
+  /* Buy box: option select drives the price, the qty label and the cart URL.
+     Cart wiring uses the PDP's own variant + selling_plan IDs via the
+     /cart/add?id=..&selling_plan=..&return_to=/checkout form. The bare
+     /cart/{variant}:{qty}?selling_plan= permalink silently DROPS the plan and
+     charges full price, so it is deliberately not used here.
+     Shipping cutoff below is a real daily cutoff, not a per-visitor timer.
+     TODO confirm the true cutoff hour with fulfilment; set SHIP_CUTOFF_CT. */
+  (function(){
+    var box = document.getElementById('buybox');
+    if(!box) return;
+    var opts = [].slice.call(box.querySelectorAll('.bb-opt'));
+    var atc = document.getElementById('bbAtc');
+    var priceEl = document.getElementById('bbPrice');
+    var qtyEl = document.getElementById('bbQty');
+
+    /* gallery: arrows, dots, and it follows the selected pack size like the PDP */
+    var gal = document.getElementById('bbGal');
+    var slides = [].slice.call(gal.querySelectorAll('img[data-slide]'));
+    var dots = [].slice.call(document.getElementById('bbGalDots').children);
+    var cur = 0;
+    function show(i){
+      cur = (i + slides.length) % slides.length;
+      slides.forEach(function(im, n){ im.classList.toggle('off', n !== cur); });
+      dots.forEach(function(d, n){ d.classList.toggle('on', n === cur); });
+    }
+    document.getElementById('bbGalPrev').addEventListener('click', function(e){ e.preventDefault(); show(cur - 1); });
+    document.getElementById('bbGalNext').addEventListener('click', function(e){ e.preventDefault(); show(cur + 1); });
+
+    function select(opt){
+      if(opt.dataset.slide) show(+opt.dataset.slide);
+      opts.forEach(function(o){
+        var on = o === opt;
+        o.classList.toggle('sel', on);
+        var r = o.querySelector('input'); if(r) r.checked = on;
+      });
+      priceEl.textContent = '$' + opt.dataset.price;
+      var q = +opt.dataset.qty;
+      qtyEl.textContent = '(' + q + ' Item' + (q > 1 ? 's' : '') + ')';
+      atc.setAttribute('href', opt.dataset.url);
+      if(window.__bbDecorate) window.__bbDecorate(atc);
+    }
+    opts.forEach(function(o){
+      o.addEventListener('click', function(){ select(o); });
+    });
+
+    /* daily shipping cutoff, 3pm US Central = 20:00 UTC (21:00 during CDT) */
+    var SHIP_CUTOFF_UTC_HOUR = 20;
+    var el = document.getElementById('bbShip');
+    function tick(){
+      var now = new Date();
+      var cut = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), SHIP_CUTOFF_UTC_HOUR, 0, 0));
+      if(cut - now <= 0){ cut.setUTCDate(cut.getUTCDate() + 1); }
+      var ms = cut - now;
+      var h = Math.floor(ms/3600000), m = Math.floor(ms%3600000/60000), sec = Math.floor(ms%60000/1000);
+      el.textContent = h + 'hr ' + m + 'mins ' + sec + ' sec';
+      setTimeout(tick, 1000);
+    }
+    tick();
+  })();
+
   (function(){
     var incoming=new URLSearchParams(window.location.search);
     var dataLayer=window.dataLayer=window.dataLayer||[];
@@ -769,7 +2020,7 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
       if(a.dataset.pos) u.searchParams.set('pl_pos',a.dataset.pos);
       a.setAttribute('href',u.toString());
     };
-    SEC.querySelectorAll('a[data-pdp]').forEach(function(a){
+    document.querySelectorAll('a[data-pdp]').forEach(function(a){
       var u=new URL(a.getAttribute('href'), window.location.href);
       incoming.forEach(function(v,k){ u.searchParams.set(k,v); });
       u.searchParams.set('prelander','bl-smoker-gummies-labor-day');
@@ -787,23 +2038,21 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
       });
     });
   })();
-  </script>
-
-<script>
+  </script><script>
 /* Real PDP buy box behaviour. Variant and selling-plan IDs are read off the
    real elements' own data attributes, so the cart wiring is exactly the PDP's. */
 (function(){
-  var box = SEC_ID('bbReal');
+  var box = document.getElementById('bbReal');
   if(!box) return;
   var cards = [].slice.call(box.querySelectorAll('.plan-card, .subscription-card'));
-  var atc   = SEC_ID('bbRealAtc');
+  var atc   = document.getElementById('bbRealAtc');
   var money = box.querySelector('.btn-money strong') || box.querySelector('.btn-money');
   var items = box.querySelector('.btn-items strong') || box.querySelector('.btn-items');
   if(!cards.length || !atc) return;
 
-  var gal = SEC_ID('bbGal');
+  var gal = document.getElementById('bbGal');
   var slides = gal ? [].slice.call(gal.querySelectorAll('img[data-slide]')) : [];
-  var dots = gal ? [].slice.call(SEC_ID('bbGalDots').children) : [];
+  var dots = gal ? [].slice.call(document.getElementById('bbGalDots').children) : [];
   var cur = 0;
   function show(i){
     if(!slides.length) return;
@@ -812,8 +2061,8 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
     dots.forEach(function(d,n){ d.classList.toggle('on', n === cur); });
   }
   if(gal){
-    SEC_ID('bbGalPrev').addEventListener('click', function(e){ e.preventDefault(); show(cur-1); });
-    SEC_ID('bbGalNext').addEventListener('click', function(e){ e.preventDefault(); show(cur+1); });
+    document.getElementById('bbGalPrev').addEventListener('click', function(e){ e.preventDefault(); show(cur-1); });
+    document.getElementById('bbGalNext').addEventListener('click', function(e){ e.preventDefault(); show(cur+1); });
   }
 
   function select(card){
@@ -825,375 +2074,23 @@ function SEC_ID(id){ return SEC.querySelector('#'+id) || document.getElementById
     var mm = (card.innerText || '').match(/(\d+)\s*Bags?/i);
     var n = mm ? parseInt(mm[1], 10) : 1;
     if(items) items.textContent = '(' + n + ' Item' + (n > 1 ? 's' : '') + ')';
-    var vEl = SEC.querySelector('#bbVariantId');
-    var pEl = SEC.querySelector('#bbSellingPlan');
-    if(vEl) vEl.value = vid;
-    if(pEl) pEl.value = plan || '';
+    var url = 'https://www.trybetterbrand.com/cart/add?id=' + vid + '&quantity=1'
+            + (plan ? '&selling_plan=' + plan : '') + '&return_to=/checkout';
+    atc.setAttribute('href', url);
+    if(window.__bbDecorate) window.__bbDecorate(atc);
     show(n > 1 ? 1 : 0);
   }
   cards.forEach(function(c){ c.addEventListener('click', function(){ select(c); }); });
   select(box.querySelector('.plan-card.active') || cards[0]);
 })();
 </script>
-
-<style>
-/* No SAVE-pill override. Reverted 2026-08-27 on David's call: the pills stay
-   the live PDP's dark green #234134 with white labels, so on-domain the theme
-   paints them and there is nothing here to drift out of sync. Verified against
-   the live PDP: background rgb(35,65,52), label rgb(255,255,255), radius 20px,
-   identical on both the SAVE 10% and SAVE 20% pills. */
-
-/* Single-column guard. The box ships the PDP's real ancestor chain, and the theme
-   styles .products-info as a two-column flex row with .product-half at half width.
-   On the PDP that is right, there is a gallery in the other half. Here there is
-   only one half, so without this the buy box renders at ~50% width jammed to the
-   left of the page on desktop. Collapsing the row and centring the column at the
-   live desktop column width (563px of content, 603 with the wrapper's 20px sides)
-   makes it read as one centred box at every width. Measured off the live PDP at
-   1440px, where the buy-box column is 563px and the ATC is 563x84. */
-#bbHost{max-width:603px;margin:30px auto 0}
-#bbHost .product-page{width:auto;max-width:100%}
-#bbHost .product-mobile-wrapper{width:100%;max-width:100%;margin:0;padding:0 20px 20px}
-#bbHost .products-info{display:block}
-#bbHost .product-half{width:100%;max-width:100%;float:none;padding:0;margin:0}
-
-/* Add To Cart: nothing removed, live's own five-part run kept intact —
-   price, divisor, label, cart icon, item count. Nothing to override on-domain
-   either, because the theme's own sizes and the real SuisseIntlMono give the
-   live proportions for free. The off-domain preview needed explicit sizes to
-   match, since neither brand webfont loads there and the wider fallback filled
-   85% of the button against live's 79%, which reads as off centre even with
-   equal gaps. That correction lives in the standalone page only. */
-</style>
 </div>
-
-
-<style>
-/* ==========================================================
-     naturvahealth.com/pages/mucus layout DNA, kept.
-     Changed ONLY: palette to legacy Betterbrand green/gold,
-     type scale raised for 45+ readers, claims made compliant.
-     Source fonts kept exactly: Open Sans / Public Sans /
-     Poppins / Abel / Oswald.
-     Source structural traits deliberately preserved:
-       - long left-aligned H1, no dek
-       - tiny byline line under the hero image
-       - tinted pull-quote block in Abel
-       - staccato one-idea paragraphs, no callout boxes
-       - plain H3 + text sections, images with no captions
-       - full-width solid green CTA, squared, fine print beneath
-       - guarantee and testimonials as plain H3 sections
-       - centred Oswald product block last
-     ========================================================== */
-  .bb-smoker-labor-day{
-    --canvas:#ffffff;
-    --tint:#f7f5f0;
-    --quote:rgba(168,208,252,.3);
-    --ink:#121212;
-    --body:#2f2f2c;
-    --muted:#5c5c57;
-    --green:#1B3A2D;
-    --green-hi:#142C22;
-    --gold:#D4A829;
-    --hair:#e0ddd6;
-    --maxw:680px;
-  }
-  :where(.bb-smoker-labor-day) *{box-sizing:border-box}
-  .bb-smoker-labor-day{-webkit-text-size-adjust:100%}
-  .bb-smoker-labor-day{
-    margin:0;background:var(--canvas);color:var(--body);
-    font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
-    font-size:19px;font-weight:400;line-height:1.95;
-    -webkit-font-smoothing:antialiased;
-  }
-  :where(.bb-smoker-labor-day) img{max-width:100%;height:auto;display:block}
-
-  /* source: solid bar, small Poppins label, left aligned */
-  /* ---------- header ----------
-     One band, not two. Brand left, offer as a compact gold pill right, so the
-     bar stays balanced at any viewport instead of becoming a field of gold on
-     desktop. The advertisement disclosure moves inside the article column where
-     it reads as editorial chrome rather than a second stacked band. */
-  .bb-smoker-labor-day .masthead{background:var(--green);position:sticky;top:0;z-index:30;
-    box-shadow:0 1px 0 rgba(0,0,0,.18)}
-  .bb-smoker-labor-day .masthead .mw{max-width:var(--maxw);margin:0 auto;padding:11px 18px;
-    display:flex;align-items:center;justify-content:space-between;gap:14px}
-  .bb-smoker-labor-day .masthead .brand{margin:0;color:#fff;font-family:'Public Sans',sans-serif;
-    font-size:18px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
-  .bb-smoker-labor-day .masthead .offer-pill{display:flex;align-items:center;gap:7px;background:var(--gold);
-    color:#20241f;border-radius:999px;padding:6px 13px;white-space:nowrap;
-    font-family:'Public Sans',sans-serif;text-decoration:none}
-  .bb-smoker-labor-day .masthead .offer-pill .p-pct{font-weight:800;font-size:16px;letter-spacing:-.01em}
-  .bb-smoker-labor-day .masthead .offer-pill .p-txt{font-weight:600;font-size:13px;letter-spacing:.01em}
-
-  /* small screens: the brand wordmark plus the offer pill overflowed 390px and
-     put a horizontal scrollbar on the page. Shrink both and let the pill lose its
-     secondary label rather than push the layout wider than the viewport. */
-  @media (max-width:430px){
-    .bb-smoker-labor-day .masthead .mw{padding:10px 14px;gap:8px}
-    .bb-smoker-labor-day .masthead .brand{font-size:15px;letter-spacing:.05em}
-    .bb-smoker-labor-day .masthead .offer-pill{padding:5px 10px;gap:5px}
-    .bb-smoker-labor-day .masthead .offer-pill .p-pct{font-size:14px}
-    .bb-smoker-labor-day .masthead .offer-pill .p-txt{font-size:11.5px}
-  }
-  @media (max-width:360px){
-    .bb-smoker-labor-day .masthead .offer-pill .p-txt{display:none}
-  }
-  .bb-smoker-labor-day, .bb-smoker-labor-day{overflow-x:hidden;max-width:100%}
-
-  .bb-smoker-labor-day .adline{max-width:var(--maxw);margin:0 auto;padding:14px 18px 0;
-    font-family:'Public Sans',sans-serif;font-size:11.5px;font-weight:700;
-    letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-
-  .bb-smoker-labor-day .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
-
-  /* source: H1 straight in, no eyebrow above it, no dek under it */
-  :where(.bb-smoker-labor-day) h1{font-family:'Open Sans',sans-serif;font-weight:700;font-size:34px;line-height:1.24;
-    color:var(--ink);text-align:left;margin:24px 0 18px;letter-spacing:-.01em}
-
-  /* source: byline is a single small line directly under the hero image */
-  .bb-smoker-labor-day .byline{font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;color:var(--muted);
-    margin:14px 0 22px;line-height:1.75}
-
-  :where(.bb-smoker-labor-day) figure{margin:0 0 20px}
-
-  /* source: pale tinted block, Abel, sat right under the byline */
-  .bb-smoker-labor-day .pullquote{background:var(--quote);padding:18px 20px;margin:0 0 24px;
-    font-family:'Abel',sans-serif;font-size:21px;line-height:1.72;color:rgba(18,18,18,.9)}
-  .bb-smoker-labor-day .pullquote .attrib{display:block;margin-top:10px;font-family:'Poppins',sans-serif;
-    font-size:15px;color:var(--muted)}
-
-  :where(.bb-smoker-labor-day) p{margin:0 0 26px}
-
-  /* source: Public Sans 700, black, left, generous space above */
-  :where(.bb-smoker-labor-day) h2{font-family:'Public Sans',sans-serif;font-weight:700;font-size:29px;line-height:1.24;
-    color:var(--ink);text-align:left;margin:36px 0 16px;letter-spacing:-.01em}
-
-  :where(.bb-smoker-labor-day) b, :where(.bb-smoker-labor-day) strong{font-weight:600;color:var(--ink)}
-
-  /* source: full width, solid fill, white label, squared, Public Sans */
-  .bb-smoker-labor-day a.cta{display:block;background:var(--green);color:#fff;text-decoration:none;text-align:center;
-    font-family:'Public Sans',sans-serif;font-weight:700;font-size:22px;line-height:1.3;
-    padding:19px 20px;border-radius:4px;margin:26px 0 12px;letter-spacing:.01em}
-  .bb-smoker-labor-day a.cta:hover{background:var(--green-hi)}
-  .bb-smoker-labor-day a.cta .c-sub{display:block;font-family:'Poppins',sans-serif;font-weight:500;font-size:15px;
-    line-height:1.3;margin-top:6px;color:rgba(255,255,255,.88);letter-spacing:0}
-  .bb-smoker-labor-day .ctanote{font-family:'Public Sans',sans-serif;font-size:18px;font-weight:700;color:var(--ink);
-    text-align:center;margin:0 0 8px}
-  .bb-smoker-labor-day .finep{font-family:'Open Sans',sans-serif;font-size:15px;color:var(--muted);
-    text-align:center;margin:0 0 30px;line-height:1.8}
-
-  /* source: testimonials are plain entries under a plain H3 */
-  .bb-smoker-labor-day .rev{padding:16px 0;border-top:1px solid var(--hair)}
-  .bb-smoker-labor-day .rev:first-of-type{border-top:0}
-  .bb-smoker-labor-day .rev .stars{color:var(--gold);font-size:17px;letter-spacing:2px;margin:0 0 5px}
-  .bb-smoker-labor-day .rev .who{font-family:'Public Sans',sans-serif;font-weight:700;font-size:16px;color:var(--ink);margin:0 0 6px}
-  .bb-smoker-labor-day .rev p{margin:0;font-size:18px;line-height:1.9}
-  .bb-smoker-labor-day .aggline{font-family:'Public Sans',sans-serif;font-weight:700;font-size:19px;color:var(--ink);margin:0 0 6px}
-  .bb-smoker-labor-day .aggsub{font-size:16px;color:var(--muted);margin:0 0 16px;line-height:1.75}
-
-  .bb-smoker-labor-day .vid{margin:0 0 22px}
-  .bb-smoker-labor-day .vid video{width:100%;height:auto;aspect-ratio:540/820;background:#000;display:block;border-radius:4px}
-  .bb-smoker-labor-day .vid .cap{font-size:16px;color:var(--muted);margin:12px 0 0;line-height:1.8}
-
-  /* source: centred product block at the end, Oswald headline */
-  .bb-smoker-labor-day .product{background:var(--tint);padding:24px 20px;margin:30px 0 0;text-align:center;border-radius:4px}
-  .bb-smoker-labor-day .product img{margin:0 auto 16px;max-width:250px}
-  .bb-smoker-labor-day .product h3{font-family:'Oswald',sans-serif;font-weight:400;font-size:30px;line-height:1.22;
-    margin:0 0 12px;color:var(--ink);letter-spacing:.01em}
-  .bb-smoker-labor-day .product p{font-size:18px;margin:0 0 6px}
-  .bb-smoker-labor-day .product p:last-child{margin:0}
-
-  /* top sale strip */
-  /* offer block: real price ladder. Restored after being cut with the old sale bar. */
-  .bb-smoker-labor-day .offer{border:2px solid var(--green);border-radius:6px;overflow:hidden;margin:28px 0 0}
-  .bb-smoker-labor-day .offer .o-head{background:var(--green);color:#fff;text-align:center;padding:13px 16px;
-    font-family:'Public Sans',sans-serif;font-weight:800;font-size:16px;letter-spacing:.03em}
-  .bb-smoker-labor-day .offer .o-body{padding:6px 18px 18px;background:#fff}
-  .bb-smoker-labor-day .offer .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-    padding:14px 0;border-bottom:1px solid var(--hair);font-size:17px;line-height:1.5}
-  .bb-smoker-labor-day .offer .row:last-of-type{border-bottom:0}
-  .bb-smoker-labor-day .offer .row .lbl{font-weight:600;color:var(--ink)}
-  .bb-smoker-labor-day .offer .row .val{font-family:'Public Sans',sans-serif;font-weight:800;white-space:nowrap;color:var(--ink)}
-  .bb-smoker-labor-day .offer .row.best{background:#f2f7ee;margin:0 -18px;padding:14px 18px}
-  .bb-smoker-labor-day .offer .row.best .val{color:var(--green)}
-  .bb-smoker-labor-day .offer .tag{display:inline-block;background:var(--green);color:#fff;font-size:10.5px;
-    font-weight:800;letter-spacing:.07em;padding:3px 7px;border-radius:3px;margin-left:8px;
-    vertical-align:1px;font-family:'Public Sans',sans-serif;white-space:nowrap}
-  .bb-smoker-labor-day .offer .o-foot{font-size:15px;color:var(--muted);padding:14px 0 0;line-height:1.8;margin:0}
-
-  /* ============================================================
-     BUY BOX - mirrored from the live PDP (Figma node 97:806).
-     Real tokens off the capture: green #234134, gold #F2CB49,
-     cream #f6edda, mid-green #3f745d. Copy, option labels, badges
-     and displayed prices are exactly as the PDP shows them.
-     Cart wiring uses the PDP's own variant + selling_plan IDs, so
-     checkout behaves identically to the PDP.
-     ============================================================ */
-  .bb-smoker-labor-day .bb-pdp{--pg:#234134;--pgold:#F2CB49;--pcream:#f6edda;--pmid:#3f745d;
-    background:#fff;border:1px solid #e3e0d8;border-radius:10px;
-    padding:20px 18px 22px;margin:30px 0 0}
-  .bb-smoker-labor-day .bb-pdp .bb-gal{position:relative;margin:-20px -18px 16px;border-radius:10px 10px 0 0;
-    overflow:hidden;background:#dfe9cf;aspect-ratio:1/1}
-  .bb-smoker-labor-day .bb-pdp .bb-gal img{width:100%;height:100%;object-fit:cover;display:block}
-  .bb-smoker-labor-day .bb-pdp .bb-gal img.off{display:none}
-  .bb-smoker-labor-day .bb-pdp .bb-gal .g-nav{position:absolute;top:50%;transform:translateY(-50%);
-    width:38px;height:38px;border-radius:50%;background:rgba(35,65,52,.62);color:#fff;
-    border:0;cursor:pointer;font-size:19px;line-height:1;display:flex;align-items:center;
-    justify-content:center;padding:0}
-  .bb-smoker-labor-day .bb-pdp .bb-gal .g-nav:hover{background:rgba(35,65,52,.82)}
-  .bb-smoker-labor-day .bb-pdp .bb-gal .g-prev{left:10px}
-  .bb-smoker-labor-day .bb-pdp .bb-gal .g-next{right:10px}
-  .bb-smoker-labor-day .bb-pdp .bb-gal .g-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;
-    justify-content:center;gap:6px}
-  .bb-smoker-labor-day .bb-pdp .bb-gal .g-dots i{width:7px;height:7px;border-radius:50%;background:rgba(35,65,52,.3)}
-  .bb-smoker-labor-day .bb-pdp .bb-gal .g-dots i.on{background:#234134}
-  @media (max-width:400px){ .bb-smoker-labor-day .bb-pdp .bb-gal{margin:-18px -14px 14px} }
-
-  .bb-smoker-labor-day .bb-pdp .bb-stars{color:var(--pgold);font-size:16px;letter-spacing:2px;margin:0}
-  .bb-smoker-labor-day .bb-pdp .bb-rev{font-family:'Public Sans',sans-serif;font-size:11px;color:#4B4A49;margin:3px 0 10px}
-  .bb-smoker-labor-day .bb-pdp h3{font-family:'Public Sans',sans-serif;font-weight:800;font-size:26px;line-height:1.12;
-    color:var(--pg);margin:0 0 10px;letter-spacing:-.01em}
-  .bb-smoker-labor-day .bb-pdp .bb-dek{font-size:15px;line-height:1.6;color:#3c3c3c;margin:0 0 18px}
-
-  .bb-smoker-labor-day .bb-opt{display:block;position:relative;border:1px solid #d8d5cc;border-radius:9px;
-    padding:13px 14px;margin:0 0 11px;cursor:pointer;background:#fff;
-    display:flex;align-items:center;gap:12px}
-  .bb-smoker-labor-day .bb-opt.sel{border:2px solid var(--pg);box-shadow:0 2px 7px rgba(35,65,52,.16);padding:12px 13px}
-  .bb-smoker-labor-day .bb-opt input{position:absolute;opacity:0;pointer-events:none}
-  .bb-smoker-labor-day .bb-opt img{width:44px;height:44px;object-fit:contain;border-radius:6px;background:#eaf0e2;flex:0 0 44px}
-  .bb-smoker-labor-day .bb-opt .o-name{flex:1;min-width:0;font-family:'Public Sans',sans-serif;font-weight:700;
-    font-size:15px;line-height:1.3;color:var(--pg)}
-  .bb-smoker-labor-day .bb-opt .o-name small{display:block;font-weight:600;font-size:12.5px;color:var(--pmid);margin-top:2px}
-  .bb-smoker-labor-day .bb-opt .o-save{flex:0 0 auto;background:var(--pg);color:#fff;border-radius:999px;
-    font-family:'Public Sans',sans-serif;font-weight:800;font-size:11px;letter-spacing:.03em;
-    padding:5px 9px;white-space:nowrap}
-  .bb-smoker-labor-day .bb-opt .o-price{flex:0 0 auto;font-family:'Public Sans',sans-serif;font-weight:800;
-    font-size:16px;color:var(--pg);text-align:right;line-height:1.15;white-space:nowrap}
-  .bb-smoker-labor-day .bb-opt .o-price small{display:block;font-weight:600;font-size:10.5px;color:#969696}
-  .bb-smoker-labor-day .bb-opt .o-best{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
-    background:var(--pgold);color:#252525;border-radius:999px;
-    font-family:'Public Sans',sans-serif;font-weight:800;font-size:11px;letter-spacing:.02em;
-    padding:4px 12px;white-space:nowrap}
-  .bb-smoker-labor-day .bb-opt.sub{flex-wrap:wrap;padding-top:18px}
-  .bb-smoker-labor-day .bb-opt.sub .o-terms{flex:1 1 100%;font-size:13px;line-height:1.55;color:#3c3c3c;margin-top:8px}
-  .bb-smoker-labor-day .bb-opt.sub .o-terms b{color:var(--pg)}
-
-  .bb-smoker-labor-day .bb-atc{display:flex;align-items:center;justify-content:center;gap:0;
-    background:var(--pgold);color:#252525;text-decoration:none;border-radius:999px;
-    padding:16px 18px;margin:16px 0 12px;
-    font-family:'Public Sans',sans-serif;font-weight:800;letter-spacing:.02em}
-  .bb-smoker-labor-day .bb-atc:hover{background:#e6bf42}
-  .bb-smoker-labor-day .bb-atc .a-price{font-size:19px;padding-right:14px;border-right:1.5px solid rgba(37,37,37,.35)}
-  .bb-smoker-labor-day .bb-atc .a-label{font-size:17px;padding-left:14px;text-transform:uppercase}
-  .bb-smoker-labor-day .bb-atc .a-qty{font-size:14px;font-weight:600;padding-left:8px;color:#3c3c3c}
-
-  .bb-smoker-labor-day .bb-hsa{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;
-    font-family:'Public Sans',sans-serif;font-size:12px;font-weight:700;color:#252525;margin:0 0 4px}
-  .bb-smoker-labor-day .bb-hsa span{font-weight:600;color:#4B4A49}
-  .bb-smoker-labor-day .bb-learn{text-align:center;font-size:12px;margin:0 0 18px}
-  .bb-smoker-labor-day .bb-learn a{color:#4B4A49;text-decoration:underline}
-
-  .bb-smoker-labor-day .bb-seals{display:flex;justify-content:center;gap:14px;margin:0 0 16px}
-  .bb-smoker-labor-day .bb-seals img{width:88px;height:auto;display:block}
-
-  .bb-smoker-labor-day .bb-guar{display:flex;align-items:center;justify-content:center;gap:7px;
-    font-family:'Public Sans',sans-serif;font-weight:700;font-size:15px;color:var(--pg);margin:0 0 16px}
-  .bb-smoker-labor-day .bb-guar img{width:17px;height:auto}
-
-  .bb-smoker-labor-day .bb-ship{background:var(--pcream);border-radius:6px;text-align:center;padding:11px 14px;margin:0}
-  .bb-smoker-labor-day .bb-ship .s-l{font-size:12.5px;color:#3c3c3c;display:block}
-  .bb-smoker-labor-day .bb-ship .s-t{font-family:'Public Sans',sans-serif;font-weight:800;font-size:15px;
-    color:var(--pg);display:block;margin-top:2px;font-variant-numeric:tabular-nums}
-
-  @media (max-width:400px){
-    .bb-smoker-labor-day .bb-pdp{padding:18px 14px 20px}
-    .bb-smoker-labor-day .bb-pdp h3{font-size:23px}
-    .bb-smoker-labor-day .bb-opt{gap:9px;padding:12px 11px}
-    .bb-smoker-labor-day .bb-opt .o-name{font-size:14px}
-    .bb-smoker-labor-day .bb-atc .a-price{font-size:17px}
-    .bb-smoker-labor-day .bb-atc .a-label{font-size:15px}
-    .bb-smoker-labor-day .bb-seals img{width:76px}
-  }
-
-  .bb-smoker-labor-day .ps{background:var(--tint);padding:22px 20px;border-radius:4px;margin:30px 0 0;font-size:18px;line-height:1.9}
-
-  /* sticky buy bar. Reads as a Shopify add-to-cart bar: product thumb, a real
-     strikethrough price anchor ($34.95 to $27.96), then the button. Urgency comes
-     from the saving being concrete, NOT from a countdown, because the 20% is the
-     evergreen Subscribe & Save and does not expire. KB rule 29: scarcity must be
-     real or it destroys trust. Drop in a countdown only when a real promo exists. */
-  .bb-smoker-labor-day .sticky{
-    position:fixed;left:0;right:0;bottom:0;z-index:40;
-    background:#14291F;border-top:3px solid var(--gold);
-    color:#fff;text-decoration:none;
-    display:flex;align-items:center;gap:12px;
-    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-    box-shadow:0 -6px 22px rgba(0,0,0,.34);
-    transform:translateY(105%);opacity:0;pointer-events:none;
-    transition:transform .22s ease,opacity .22s ease;
-  }
-  .bb-smoker-labor-day .sticky.on{transform:translateY(0);opacity:1;pointer-events:auto}
-  /* Never sit on top of the real buy box. */
-  .bb-smoker-labor-day .sticky.on.hidden-for-box{transform:translateY(105%);opacity:0;pointer-events:none}
-  .bb-smoker-labor-day .sticky .s-thumb{flex:0 0 auto;width:50px;height:50px;border-radius:6px;
-    object-fit:cover;background:#0d1c15;display:block}
-  .bb-smoker-labor-day .sticky .s-left{flex:1;min-width:0}
-  .bb-smoker-labor-day .sticky .s-save{display:inline-block;background:var(--gold);color:#20241f;
-    font-family:'Public Sans',sans-serif;font-weight:800;font-size:12px;
-    letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:3px;
-    margin-bottom:3px}
-  .bb-smoker-labor-day .sticky .s-price{display:block;font-family:'Public Sans',sans-serif;font-weight:800;
-    font-size:19px;line-height:1.1;letter-spacing:-.01em;white-space:nowrap;
-    overflow:hidden;text-overflow:ellipsis}
-  .bb-smoker-labor-day .sticky .s-price s{font-weight:600;font-size:15px;color:rgba(255,255,255,.55);
-    margin-right:6px;text-decoration-thickness:1.5px}
-  .bb-smoker-labor-day .sticky .s-sub{display:block;font-family:'Poppins',sans-serif;font-size:12.5px;
-    line-height:1.2;margin-top:1px;color:rgba(255,255,255,.72);white-space:nowrap;
-    overflow:hidden;text-overflow:ellipsis}
-  .bb-smoker-labor-day .sticky .s-btn{flex:0 0 auto;background:var(--gold);color:#20241f;border-radius:6px;
-    font-family:'Public Sans',sans-serif;font-weight:800;font-size:16px;letter-spacing:.03em;
-    padding:14px 16px;white-space:nowrap;text-transform:uppercase;
-    box-shadow:0 2px 0 #a8801c, 0 3px 10px rgba(0,0,0,.3);
-    animation:sbeat 2.4s ease-in-out infinite}
-  .bb-smoker-labor-day .sticky:hover .s-btn{background:#e6bc3c}
-  .bb-smoker-labor-day .sticky:active .s-btn{transform:translateY(2px);box-shadow:0 0 0 #a8801c}
-  @keyframes sbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-  @media (prefers-reduced-motion:reduce){ .bb-smoker-labor-day .sticky .s-btn{animation:none} }
-  @media (max-width:520px){
-    .bb-smoker-labor-day .sticky{gap:9px;padding-left:11px;padding-right:11px}
-    .bb-smoker-labor-day .sticky .s-thumb{width:44px;height:44px}
-    .bb-smoker-labor-day .sticky .s-price{font-size:17.5px}
-    .bb-smoker-labor-day .sticky .s-sub{display:none}
-    .bb-smoker-labor-day .sticky .s-btn{font-size:15px;padding:13px 13px}
-  }
-  .bb-smoker-labor-day{padding-bottom:0}
-  body.has-sticky .bb-smoker-labor-day{padding-bottom:92px}
-
-  :where(.bb-smoker-labor-day) footer{background:var(--tint);margin-top:34px;padding:26px 0 44px}
-  .bb-smoker-labor-day footer .fw{max-width:var(--maxw);margin:0 auto;padding:0 18px}
-  :where(.bb-smoker-labor-day) footer p{font-family:'Open Sans',sans-serif;font-size:14px;line-height:1.85;color:var(--muted);margin:0 0 14px}
-  .bb-smoker-labor-day footer .hard{font-weight:700;color:var(--body);text-transform:uppercase;font-size:13px;letter-spacing:.02em}
-  :where(.bb-smoker-labor-day) footer a{color:var(--muted)}
-
-  @media (min-width:700px){
-    .bb-smoker-labor-day{font-size:20px;line-height:1.95}
-    :where(.bb-smoker-labor-day) h1{font-size:42px}
-    :where(.bb-smoker-labor-day) h2{font-size:33px}
-    .bb-smoker-labor-day .pullquote{font-size:23px}
-  }
-
-  /* The PDP buy box CSS is deliberately NOT shipped here. On-domain the theme
-   already defines .plan-card / .plan-badge / .subscription-card /
-   .btn-add-tocart, so the box inherits the real styling and the real
-   bookmania + SuisseIntlMono webfonts for free. */
-</style>
-
 
 {% schema %}
 {
   "name": "Smoker Labor Day Lander",
   "tag": "section",
+  "class": "bb-smoker-lp-section",
   "settings": [],
   "presets": [
     { "name": "Smoker Labor Day Lander" }
