@@ -25,14 +25,8 @@
 
       {% if template contains 'collection' %}
         {% assign show_b2g1_badge = false %}
-        {% if prod.metafields.pdp.selling_plan_id_to_show_on_pdp != blank %}
-          {% for group in prod.selling_plan_groups %}
-            {% assign sp_group_name_lower = group.name | downcase %}
-            {% if sp_group_name_lower contains 'buy 2 get 1' or sp_group_name_lower contains 'b2g1f' %}
-              {% assign show_b2g1_badge = true %}
-              {% break %}
-            {% endif %}
-          {% endfor %}
+        {% if prod.metafields.pdp.selling_plan_id_to_show_on_pdp != blank and prod.metafields.pdp.variant_id_with_subscription != blank %}
+          {% assign show_b2g1_badge = true %}
         {% endif %}
         <div class="product-card__promo-badges">
           {% if show_b2g1_badge %}

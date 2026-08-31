@@ -16,14 +16,8 @@
         <a href="{{ block.settings.product_url }}" class="bs-card" {{ block.shopify_attributes }}>
           <div class="bs-promo-badges">
             {% assign show_b2g1_badge = false %}
-            {% if card_product != blank and card_product.metafields.pdp.selling_plan_id_to_show_on_pdp != blank %}
-              {% for group in card_product.selling_plan_groups %}
-                {% assign sp_group_name_lower = group.name | downcase %}
-                {% if sp_group_name_lower contains 'buy 2 get 1' or sp_group_name_lower contains 'b2g1f' %}
-                  {% assign show_b2g1_badge = true %}
-                  {% break %}
-                {% endif %}
-              {% endfor %}
+            {% if card_product != blank and card_product.metafields.pdp.selling_plan_id_to_show_on_pdp != blank and card_product.metafields.pdp.variant_id_with_subscription != blank %}
+              {% assign show_b2g1_badge = true %}
             {% endif %}
             {% if show_b2g1_badge %}
               <span class="bs-b2g1-badge">Buy 2, Get 1 Free</span>
