@@ -25,10 +25,10 @@
 
       {% if template contains 'collection' %}
         <div class="product-card__promo-badges">
-          <span class="product-card__labor-day-badge">20% Off</span>
           {% if prod.selling_plan_groups.size > 0 %}
             <span class="product-card__b2g1-badge">Buy 2, Get 1 Free</span>
           {% endif %}
+          <span class="product-card__labor-day-badge">20% Off</span>
         </div>
       {% endif %}
 

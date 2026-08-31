@@ -15,10 +15,10 @@
         {% assign card_product = block.settings.product %}
         <a href="{{ block.settings.product_url }}" class="bs-card" {{ block.shopify_attributes }}>
           <div class="bs-promo-badges">
-            <span class="bs-labor-day-badge">20% Off</span>
             {% if card_product != blank and card_product.selling_plan_groups.size > 0 %}
               <span class="bs-b2g1-badge">Buy 2, Get 1 Free</span>
             {% endif %}
+            <span class="bs-labor-day-badge">20% Off</span>
           </div>
           {% if block.settings.badge != blank %}
             <span class="bs-badge">{{ block.settings.badge }}</span>
