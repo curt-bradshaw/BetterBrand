@@ -13,7 +13,7 @@
     <div class="bs-products">
       {% for block in section.blocks %}
         <a href="{{ block.settings.product_url }}" class="bs-card" {{ block.shopify_attributes }}>
-          <span class="bs-labor-day-badge">Labor Day Sale - 20% Off</span>
+          <span class="bs-labor-day-badge">20% Off</span>
           {% if block.settings.badge != blank %}
             <span class="bs-badge">{{ block.settings.badge }}</span>
           {% endif %}
