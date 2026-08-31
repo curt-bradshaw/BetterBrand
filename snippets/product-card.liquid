@@ -24,7 +24,12 @@
       {%- endfor -%}
 
       {% if template contains 'collection' %}
-        <span class="product-card__labor-day-badge">20% Off</span>
+        <div class="product-card__promo-badges">
+          <span class="product-card__labor-day-badge">20% Off</span>
+          {% if prod.selling_plan_groups.size > 0 %}
+            <span class="product-card__b2g1-badge">Buy 2, Get 1 Free</span>
+          {% endif %}
+        </div>
       {% endif %}
 
       <div title="{{- prod.title -}}" class="product-card__grid-item-link">
@@ -214,13 +219,25 @@
       position: relative;
     }
 
-    .product-card__labor-day-badge {
+    .product-card__promo-badges {
       position: absolute;
       top: 10px;
       left: 10px;
       z-index: 9;
-      background: #f2cb49;
-      color: #234134;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 6px;
+      max-width: calc(100% - 20px);
+      pointer-events: none;
+    }
+
+    .product-card__labor-day-badge,
+    .product-card__b2g1-badge {
+      position: static;
+      top: auto;
+      left: auto;
+      z-index: auto;
       font-family: var(--copyBodyFont, sans-serif);
       font-size: 11px;
       font-weight: 700;
@@ -230,7 +247,17 @@
       padding: 6px 10px;
       border-radius: 6px;
       pointer-events: none;
-      max-width: calc(100% - 20px);
+      max-width: none;
+    }
+
+    .product-card__labor-day-badge {
+      background: #f2cb49;
+      color: #234134;
+    }
+
+    .product-card__b2g1-badge {
+      background: #234134;
+      color: #ffffff;
     }
 
     .product-card__grid-item-image-wrapper {
@@ -533,11 +560,16 @@
     }
 
     @media (max-width: 767px) {
-      .product-card__labor-day-badge {
-        font-size: 7px;
-        padding: 5px 8px;
+      .product-card__promo-badges {
         top: 8px;
         left: 8px;
+        gap: 4px;
+      }
+
+      .product-card__labor-day-badge,
+      .product-card__b2g1-badge {
+        font-size: 7px;
+        padding: 5px 8px;
       }
 
       .product-card__item-title,

@@ -12,8 +12,14 @@
   
     <div class="bs-products">
       {% for block in section.blocks %}
+        {% assign card_product = block.settings.product %}
         <a href="{{ block.settings.product_url }}" class="bs-card" {{ block.shopify_attributes }}>
-          <span class="bs-labor-day-badge">20% Off</span>
+          <div class="bs-promo-badges">
+            <span class="bs-labor-day-badge">20% Off</span>
+            {% if card_product != blank and card_product.selling_plan_groups.size > 0 %}
+              <span class="bs-b2g1-badge">Buy 2, Get 1 Free</span>
+            {% endif %}
+          </div>
           {% if block.settings.badge != blank %}
             <span class="bs-badge">{{ block.settings.badge }}</span>
           {% endif %}
@@ -22,7 +28,6 @@
           </div>
   
           <div class="bs-rating">
-            {% assign card_product = block.settings.product %}
             <span class="bs-rating-text">
               <div class="loox-rating" 
                 data-id="{{ card_product.id }}" 
@@ -107,13 +112,25 @@
 
   .bs-card:hover { transform: translateY(-4px); }
 
-  .bs-labor-day-badge {
+  .bs-promo-badges {
     position: absolute;
     top: 10px;
     left: 10px;
     z-index: 2;
-    background: #f2cb49;
-    color: #234134;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 6px;
+    max-width: calc(100% - 20px);
+    pointer-events: none;
+  }
+
+  .bs-labor-day-badge,
+  .bs-b2g1-badge {
+    position: static;
+    top: auto;
+    left: auto;
+    z-index: auto;
     font-family: var(--copyBodyFont, sans-serif);
     font-size: 11px;
     font-weight: 700;
@@ -123,7 +140,17 @@
     padding: 6px 10px;
     border-radius: 6px;
     pointer-events: none;
-    max-width: calc(100% - 20px);
+    max-width: none;
+  }
+
+  .bs-labor-day-badge {
+    background: #f2cb49;
+    color: #234134;
+  }
+
+  .bs-b2g1-badge {
+    background: #234134;
+    color: #ffffff;
   }
   
   .bs-image-wrapper {
@@ -209,11 +236,15 @@
     .bs-badge {
       font-size: 12px;
     }
-    .bs-labor-day-badge {
-      font-size: 7px;
-      padding: 5px 8px;
+    .bs-promo-badges {
       top: 8px;
       left: 8px;
+      gap: 4px;
+    }
+    .bs-labor-day-badge,
+    .bs-b2g1-badge {
+      font-size: 7px;
+      padding: 5px 8px;
     }
     .bs-product-title {
       font-size: 14px;
