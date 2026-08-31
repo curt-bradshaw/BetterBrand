@@ -151,14 +151,65 @@
         "product_card_title_font_size_mobile": 13
       }
     },
+    "better_reviews_FBepjy": {
+      "type": "better-reviews",
+      "blocks": {
+        "review_D9pmMQ": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746_2.png",
+            "name": "Judie M.",
+            "location": "United States",
+            "review_title": "Positive Results After 3 Weeks",
+            "review_text": "I have COPD. In the 3 weeks that I have taken these products, my lungs have never felt better. I will definitely buy again."
+          }
+        },
+        "review_cfygLn": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746_1.png",
+            "name": "Ahmad Herwitz",
+            "location": "United States",
+            "review_title": "A Surprising Boost to My Breathing",
+            "review_text": "I smoke daily and I'd say it improves my breathing by like 15-20%. Which is awesome. I can't really ask more from a product like this."
+          }
+        },
+        "review_TDrdtB": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Frame_1618873746.png",
+            "name": "Michelle C.",
+            "location": "United States",
+            "review_title": "Better Lungs for Energy and Easier Breathing",
+            "review_text": "It is good for overall good health. This product gives you energy and helps you breath better. I love Better Lungs!"
+          }
+        }
+      },
+      "block_order": [
+        "review_D9pmMQ",
+        "review_cfygLn",
+        "review_TDrdtB"
+      ],
+      "custom_css": [
+        ".bfw-videos {padding: 40px 20px; text-align: center;}"
+      ],
+      "name": "Better Reviews",
+      "settings": {
+        "heading": "Real Results. [BREAK_MOBILE]Real People.",
+        "subtitle": "Trusted by +1 Million Customers",
+        "button_label": "Show All Reviews",
+        "button_link": "shopify://pages/reviews"
+      }
+    },
     "banner_with_text_TMKFjA": {
       "type": "banner-with-text",
+      "disabled": true,
+      "custom_css": [],
       "name": "Banner with text",
       "settings": {
-        "image": "shopify://shop_images/a7a570916be09fc252c371e34b3b5215b864f9d3.png",
         "svg": true,
         "heading": "Our Story",
-        "text": "<p>Immediately started clearing lungs of old mucus and making breathing so much easier. My pulmonologist has advised me to continue taking the Better Lungs indefinitely!</p><p><br/>Thank you Betterbrand for my life, literally</p>",
+        "text": "<p>\"Immediately started clearing lungs of old mucus and making breathing so much easier. My pulmonologist has advised me to continue taking the Better Lungs indefinitely!</p><p><br/>Thank you Betterbrand for my life, literally\"<br/><br/>- Dave, <em><strong>Verified Customer</strong></em></p>",
         "link_text": "Learn More",
         "link_url": "",
         "padding_top_desktop": 80,
@@ -233,6 +284,7 @@
   "order": [
     "banner_style3_7zCjGj",
     "main",
+    "better_reviews_FBepjy",
     "banner_with_text_TMKFjA",
     "faq_section_DXNVBQ"
   ]
