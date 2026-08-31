@@ -19,7 +19,7 @@
         "custom-margin-bottom": 0,
         "custom-padding-top": 0,
         "custom-padding-bottom": 0,
-        "homepage_banner_style_3": "shopify://shop_images/betterbrand_labor_day_hero_desktop_1440x500_LOSSLESS_v2.webp",
+        "homepage_banner_style_3": "shopify://shop_images/img_1d3e63929c55.png",
         "mobile_banner_style_3": "shopify://shop_images/betterbrand_labor_day_hero_mobile_1086x1448_LOSSLESS_v2.webp",
         "enable_custom_banner_height": false,
         "banner_max_height": 600,
@@ -187,7 +187,7 @@
           "type": "product_item",
           "settings": {
             "product": "betterlungs-tea",
-            "image": "shopify://shop_images/openai_gpt-image-2-medium_20260820_231704_27fd4a94_optimized.webp",
+            "image": "shopify://shop_images/ea271c10-4aa7-459d-81ea-f987407b1479.webp",
             "product_url": "shopify://products/betterlungs-tea",
             "badge": "",
             "title": "BetterLungs®  Tea",
