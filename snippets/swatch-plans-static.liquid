@@ -76,22 +76,16 @@
                 {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
                 {% assign total_price_cents = last_option_allocation_to_use.price %}
                 {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
-                {% assign msrp_each_cents = price_per_item_cents | times: 120 | divided_by: 100 %}
-                {% assign msrp_dollars = msrp_each_cents | divided_by: 100 %}
-                {% assign msrp_cents_rem = msrp_each_cents | modulo: 100 %}
                 {% assign price_per_item_dollars = price_per_item_cents | divided_by: 100 %}
                 {% assign cents_remainder = price_per_item_cents | modulo: 100 %}
-                <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                <span class="plan-price-msrp">$34.95</span>
                 ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
                 <span>each</span>
                 {% else %}
                   {% assign sub_price_cents = last_option_allocation_to_use.price %}
-                  {% assign msrp_cents = sub_price_cents | times: 120 | divided_by: 100 %}
-                  {% assign msrp_dollars = msrp_cents | divided_by: 100 %}
-                  {% assign msrp_cents_rem = msrp_cents | modulo: 100 %}
                   {% assign price_dollars = sub_price_cents | divided_by: 100 %}
                   {% assign price_cents = sub_price_cents | modulo: 100 %}
-                  <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                  <span class="plan-price-msrp">$34.95</span>
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
@@ -162,10 +156,7 @@
                   {% assign total_price_cents = v.price %}
                   {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
                   {% if curr_idx == 2 %}
-                    {% assign msrp_each_cents = price_per_item_cents | times: 110 | divided_by: 100 %}
-                    {% assign msrp_dollars = msrp_each_cents | divided_by: 100 %}
-                    {% assign msrp_cents_rem = msrp_each_cents | modulo: 100 %}
-                    <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                    <span class="plan-price-msrp">$34.95</span>
                   {% endif %}
                   {% assign price_per_item_dollars = price_per_item_cents | divided_by: 100 %}
                   {% assign cents_remainder = price_per_item_cents | modulo: 100 %}
@@ -173,10 +164,7 @@
                   <span>each</span>
                 {% else %}  
                   {% if curr_idx == 2 %}
-                    {% assign msrp_cents = v.price | times: 110 | divided_by: 100 %}
-                    {% assign msrp_dollars = msrp_cents | divided_by: 100 %}
-                    {% assign msrp_cents_rem = msrp_cents | modulo: 100 %}
-                    <span class="plan-price-msrp">${{ msrp_dollars }}.{% if msrp_cents_rem < 10 %}0{% endif %}{{ msrp_cents_rem }}</span>
+                    <span class="plan-price-msrp">$34.95</span>
                   {% endif %}
                   {% assign price_dollars = v.price | divided_by: 100 %}
                   {% assign price_cents = v.price | modulo: 100 %}
