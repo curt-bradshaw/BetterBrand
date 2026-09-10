@@ -36,15 +36,9 @@
   </div>
 {%- endif -%}
 
-<div id="truemed-instructions" style="font-size: 14px;" icon-height="12" data-public-id="tm_qual_9xseuzwifp"></div>
-<script src="https://static.truemed.com/widgets/product-page-widget.min.js" defer></script>
+{%- render 'bbhsa-pdp-line', product: product, variant: variant -%}
 
 <style>
-  .truemed-entry-box {
-    justify-content: center;
-    margin-bottom: 15px;
-  }
-
   .atc-button-stack {
     text-align: center;
     background-color: #c2deb4;
@@ -59,12 +53,6 @@
   }
 
   @media (max-width: 767px) {
-    .truemed-entry-text {
-      font-size: 11px;
-    }
-    .truemed-entry-box {
-        margin-top: 15px;
-    }
     .atc-button-stack {
       margin: 10px auto; 
       width: 90%;
