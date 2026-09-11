@@ -147,7 +147,6 @@
                 {% assign variant_title_lower = v.title | downcase %}
                 {% assign items_count = 0 %}
                 {% assign show_each = false %}
-                {% assign msrp_cents = 3495 %}
                 
                 {% if v.metafields.pdp.amount_of_items %}
                   {% assign items_count = v.metafields.pdp.amount_of_items | times: 1 %}
@@ -178,13 +177,7 @@
                 {% endif %}
               </div>
               <div class="plan-badge {% if hide_plan_badge %}hidden{% elsif curr_idx <= 1 %}hidden{% endif %}">
-                {% assign save_cents = msrp_cents | minus: display_price_cents %}
-                {% if save_cents < 0 %}
-                  {% assign save_cents = 0 %}
-                {% endif %}
-                {% assign save_dollars = save_cents | divided_by: 100 %}
-                {% assign save_cents_rem = save_cents | modulo: 100 %}
-                <span><strong>You Save ${{ save_dollars }}.{% if save_cents_rem < 10 %}0{% endif %}{{ save_cents_rem }}</strong></span>
+                <span><strong>YOU SAVE $10.50</strong></span>
               </div>
             </div>
           </label>
