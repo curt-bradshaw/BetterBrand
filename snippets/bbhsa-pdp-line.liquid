@@ -1,0 +1,260 @@
+{%- doc -%}
+  PDP quiet line + "Learn more" modal (v1.1 redesign: images big, words few).
+  Structure locked to the reference: single-column scrollable sheet, X close
+  only (Escape + backdrop also close), two-line non-savings headline, three
+  numbered steps each pill -> short heading -> one full-width screenshot on a
+  tinted card (no body copy under any step), one tiny muted footer line. No
+  external links, no HSA page on this store.
+
+  GATE: renders only when snippets/bbhsa-verdict.liquid returns a verdict
+  other than "none" for the selected/first available variant. Same copy for
+  "eligible" and "lmn" verdicts -- this line never says "with a letter."
+
+  PLACEMENT: sits in the same slot as the prior third-party entry box,
+  directly under Add to Cart.
+
+  QUICK-ADD SUPPRESSION: accepts is_quick directly and renders nothing when
+  it is explicitly true, matching the factory's standard defense-in-depth
+  idiom for any future call site that wraps a quick-shop render. This theme
+  has no quick-shop call site today (confirmed via a search of every
+  atc-button/product-form render).
+
+  MODAL: native <dialog>, opened by the "Learn more" button. The ONLY close
+  control is the top-right X; Escape and a backdrop click also close it --
+  there is no footer Close button bar. Manual Tab-trap on top of the
+  browser's native modal focus containment; body scroll locked while open;
+  focus returns to the "Learn more" trigger on close. Card tint (soft
+  gold-cream), pill tint (soft dark-green), and heading ink (dark green) are
+  measured off this merchant's own live PDP -- the Add to Cart button's own
+  fill/ink pair, and the pale band under "Ships Tomorrow" -- not assumed.
+  The script guards itself with a data-bbhsa-bound flag so a future
+  double-render of this snippet cannot double-bind listeners or produce
+  duplicate ids.
+
+  @param {object} product - required
+  @param {object} variant - optional, defaults to selected/first available
+  @param {boolean} is_quick - optional, defense-in-depth only.
+{%- enddoc -%}
+
+{%- liquid
+  assign _v = variant | default: product.selected_or_first_available_variant
+  capture _verdict_raw
+    render 'bbhsa-verdict', product: product, variant: _v
+  endcapture
+  assign _verdict = _verdict_raw | strip
+
+  assign _render = false
+  if _verdict != 'none' and is_quick != true
+    assign _render = true
+  endif
+-%}
+{%- if _render -%}
+  <div class="bbhsa-line-wrap">
+    <p class="bbhsa-line">
+      <span class="bbhsa-line__text">HSA/FSA eligible</span>
+      <span class="bbhsa-line__sep" aria-hidden="true">&middot;</span>
+      <button
+        type="button"
+        class="bbhsa-line__link"
+        data-bbhsa-open
+        aria-haspopup="dialog"
+        aria-controls="bbhsa-modal"
+      >Learn more</button>
+    </p>
+  </div>
+
+  <dialog id="bbhsa-modal" class="bbhsa-modal" aria-labelledby="bbhsa-modal-heading">
+    <div class="bbhsa-modal__inner">
+      <button type="button" class="bbhsa-modal__x" data-bbhsa-close aria-label="Close">&times;</button>
+
+      <h2 id="bbhsa-modal-heading" class="bbhsa-modal__heading">Pay with your HSA/FSA.<br>Here's how.</h2>
+
+      <ol class="bbhsa-modal__steps">
+        <li class="bbhsa-modal__step">
+          <span class="bbhsa-modal__step-pill">Step 1</span>
+          <p class="bbhsa-modal__step-heading">Pick HSA/FSA at checkout</p>
+          <div class="bbhsa-modal__step-card">
+            <img
+              class="bbhsa-modal__step-img"
+              src="{{ 'bbhsa-checkout-payment-step.png' | asset_url }}"
+              alt="HSA/FSA listed in the checkout payment list alongside credit card and wallet options"
+              width="1054"
+              height="608"
+            >
+          </div>
+        </li>
+        <li class="bbhsa-modal__step">
+          <span class="bbhsa-modal__step-pill">Step 2</span>
+          <p class="bbhsa-modal__step-heading">Answer a few questions</p>
+          <div class="bbhsa-modal__step-card">
+            <img
+              class="bbhsa-modal__step-img"
+              src="{{ 'bbhsa-lmn-questionnaire-step.png' | asset_url }}"
+              alt="A short questionnaire confirming HSA/FSA eligibility"
+              width="1262"
+              height="1194"
+            >
+          </div>
+        </li>
+        <li class="bbhsa-modal__step">
+          <span class="bbhsa-modal__step-pill">Step 3</span>
+          <p class="bbhsa-modal__step-heading">Pay with your HSA/FSA card</p>
+          <div class="bbhsa-modal__step-card">
+            <img
+              class="bbhsa-modal__step-img"
+              src="{{ 'bbhsa-gale-payment-step.png' | asset_url }}"
+              alt="Paying with an HSA/FSA card at checkout"
+              width="1056"
+              height="800"
+            >
+          </div>
+        </li>
+      </ol>
+
+      <p class="bbhsa-modal__footer">Eligibility is confirmed by a licensed provider.</p>
+    </div>
+  </dialog>
+
+  <style>
+    .bbhsa-line-wrap{width:100%;box-sizing:border-box;display:flex;justify-content:center;margin-bottom:15px}
+    .bbhsa-line{margin:0;font-family:inherit;font-size:14px;line-height:1.4;color:#1f1f1f;text-align:center}
+    .bbhsa-line__text{font-family:inherit;font-weight:400}
+    .bbhsa-line__sep{margin:0 6px;color:#1f1f1f}
+    .bbhsa-line__link{
+      font:inherit;font-family:inherit;font-size:inherit;font-weight:400;
+      background:none;border:0;padding:0;margin:0;cursor:pointer;
+      color:#1f1f1f;text-decoration:underline;text-underline-offset:2px;
+    }
+    .bbhsa-line__link:hover{color:#000000}
+
+    @media (max-width:767px){
+      .bbhsa-line-wrap{margin-top:15px}
+      .bbhsa-line{font-size:12px}
+    }
+
+    .bbhsa-modal{
+      border:none;border-radius:16px;padding:0;margin:auto;
+      width:calc(100% - 32px);max-width:520px;max-height:85vh;overflow:hidden;
+      box-shadow:0 20px 60px rgba(0,0,0,0.25);background:#ffffff;color:#1f1f1f;
+      font-family:inherit;
+    }
+    .bbhsa-modal::backdrop{background:rgba(0,0,0,0.5)}
+    .bbhsa-modal[open]{display:block}
+    /* the host theme's own .rte ol/.rte ul/.rte p/.rte h2 rules (confirmed
+       live on this PDP: padding-left:2rem on lists, margin-bottom:16px on
+       p/ol/ul, margin-bottom:.75rem on h2) outrank a bare single-class
+       selector by specificity wherever this modal lands inside a
+       .rte-scoped column -- every descendant rule below is double-qualified
+       against .bbhsa-modal so it wins outright instead of racing the theme
+       on source order. */
+    .bbhsa-modal .bbhsa-modal__inner{max-height:85vh;overflow-y:auto;overflow-x:hidden;padding:32px 28px 24px;position:relative;box-sizing:border-box}
+    .bbhsa-modal .bbhsa-modal__x{
+      position:absolute;top:16px;right:16px;width:36px;height:36px;
+      background:none;border:0;cursor:pointer;font-size:26px;line-height:1;
+      color:#1f1f1f;font-family:inherit;
+    }
+    .bbhsa-modal .bbhsa-modal__heading{margin:0 0 20px;padding:0 36px 0 0;width:auto;max-width:100%;box-sizing:border-box;font-family:inherit;font-size:20px;line-height:1.25;font-weight:700;color:#234134}
+    .bbhsa-modal .bbhsa-modal__steps{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:20px}
+    .bbhsa-modal .bbhsa-modal__step{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+    .bbhsa-modal .bbhsa-modal__step-pill{
+      display:inline-block;padding:4px 12px;border-radius:999px;
+      background:rgba(35,65,52,0.08);color:#234134;
+      font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.02em;
+    }
+    .bbhsa-modal .bbhsa-modal__step-heading{margin:0;font-family:inherit;font-size:14px;font-weight:700;color:#234134}
+    .bbhsa-modal .bbhsa-modal__step-card{
+      width:100%;box-sizing:border-box;border-radius:12px;
+      background:rgba(242,203,73,0.1);
+      padding:14px;display:flex;justify-content:center;align-items:center;
+    }
+    .bbhsa-modal .bbhsa-modal__step-img{width:100%;height:auto;display:block;border-radius:8px}
+    .bbhsa-modal .bbhsa-modal__footer{margin:8px 0 0;font-family:inherit;font-size:12px;line-height:1.5;color:#6b6b6b}
+
+    @media (max-width:600px){
+      .bbhsa-modal{width:100%;max-width:100%;height:100%;max-height:100%;border-radius:0;position:fixed;inset:0;margin:0}
+      .bbhsa-modal .bbhsa-modal__inner{max-height:100%;height:100%;padding:40px 16px 24px}
+      .bbhsa-modal .bbhsa-modal__x{top:12px;right:12px}
+      .bbhsa-modal .bbhsa-modal__heading{font-size:22px;margin:0 0 24px;padding-right:32px}
+      .bbhsa-modal .bbhsa-modal__steps{gap:24px}
+      .bbhsa-modal .bbhsa-modal__step-card{padding:12px}
+    }
+  </style>
+
+  <script>
+    (function () {
+      var dialog = document.getElementById('bbhsa-modal');
+      var openBtn = document.querySelector('[data-bbhsa-open]');
+      if (!dialog || !openBtn || dialog.getAttribute('data-bbhsa-bound') === '1') return;
+      dialog.setAttribute('data-bbhsa-bound', '1');
+
+      var lastFocused = null;
+
+      function lockScroll() {
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      }
+      function unlockScroll() {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+
+      function openModal() {
+        lastFocused = document.activeElement;
+        if (typeof dialog.showModal === 'function') {
+          dialog.showModal();
+        } else {
+          dialog.setAttribute('open', '');
+        }
+        lockScroll();
+        var closeBtn = dialog.querySelector('[data-bbhsa-close]');
+        if (closeBtn) closeBtn.focus();
+      }
+
+      function closeModal() {
+        if (typeof dialog.close === 'function' && dialog.open) {
+          dialog.close();
+        } else {
+          dialog.removeAttribute('open');
+          onClosed();
+        }
+      }
+
+      function onClosed() {
+        unlockScroll();
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+          lastFocused.focus();
+        }
+      }
+
+      openBtn.addEventListener('click', openModal);
+
+      var closers = dialog.querySelectorAll('[data-bbhsa-close]');
+      for (var i = 0; i < closers.length; i++) {
+        closers[i].addEventListener('click', closeModal);
+      }
+
+      dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) closeModal();
+      });
+
+      dialog.addEventListener('close', onClosed);
+
+      dialog.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab') return;
+        var focusable = dialog.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable.length) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      });
+    })();
+  </script>
+{%- endif -%}

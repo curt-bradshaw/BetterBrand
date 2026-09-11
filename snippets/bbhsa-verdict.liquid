@@ -1,0 +1,83 @@
+{%- doc -%}
+  HSA/FSA eligibility verdict for the PDP quiet line. THE single source of
+  truth for this line. Outputs exactly one of three literal strings:
+
+    none      show nothing at all
+    lmn       eligible, requires a letter of medical necessity
+    eligible  eligible outright, no letter
+
+  Usage (Liquid cannot return values, so capture it):
+
+    {%- capture hsa -%}{%- render 'bbhsa-verdict', product: product, variant: variant -%}{%- endcapture -%}
+    {%- assign hsa = hsa | strip -%}
+    {%- if hsa != 'none' -%} ... {%- endif -%}
+
+  @param {object} product - required
+  @param {object} variant - optional, defaults to the selected/first available
+
+  DATA CONTRACT, TWO SOURCES, IN ORDER. A product with no verdict from
+  either source below renders nothing, not a guess.
+
+    1. The production per-VARIANT metafield:
+         redohsa.hsa_eligibility  "eligible" | "eligible_with_lmn" | "not_eligible"
+       "not_eligible" -> none, unconditionally. "eligible_with_lmn" -> lmn.
+       "eligible" -> eligible (plain, no letter). Blank/absent/any other
+       value -> fall to source 2.
+
+    2. The clinical-review metafields (per-VARIANT):
+         gale_payments.gale_eligibility   "1" eligible | "0" not eligible | absent/other = no verdict
+         gale_payments.gale_product_type  "dual_purpose" = letter of medical necessity required
+       "0" -> none. "1" -> lmn when dual_purpose, else eligible.
+
+    NOTE: sampled live via Admin GraphQL against 30 unique ACTIVE products
+    (61 variant reads across two passes) on this store (2026-09-10):
+    gale_eligibility is a binary "0"/"1" string here, never the three-tier
+    eligible/lmn/not_eligible spelling. redohsa.hsa_eligibility read null
+    on every sampled variant -- source 1 is dark on this merchant today;
+    every live verdict currently resolves through source 2. This snippet
+    still checks source 1 first so a future redohsa stamp is honored
+    without a code change.
+
+  EXCLUSIONS, checked before either metafield source: gift cards.
+
+  A handle with no verdict from either source is silent, not guessed.
+{%- enddoc -%}
+
+{%- liquid
+  assign _v = variant | default: product.selected_or_first_available_variant
+  assign _out = 'none'
+
+  assign _excluded = false
+  if product.gift_card or product.type == 'Gift Card'
+    assign _excluded = true
+  endif
+
+  unless _excluded
+    assign _redo = _v.metafields.redohsa.hsa_eligibility.value | default: '' | strip
+
+    if _redo == 'not_eligible'
+      assign _out = 'none'
+    elsif _redo == 'eligible_with_lmn'
+      assign _out = 'lmn'
+    elsif _redo == 'eligible'
+      assign _out = 'eligible'
+    else
+      assign _gale = _v.metafields.gale_payments.gale_eligibility.value | default: '' | strip
+      assign _gtype = _v.metafields.gale_payments.gale_product_type.value | default: '' | strip
+
+      if _gale == '0'
+        assign _out = 'none'
+      elsif _gale == '1'
+        if _gtype == 'dual_purpose'
+          assign _out = 'lmn'
+        else
+          assign _out = 'eligible'
+        endif
+      else
+        assign _out = 'none'
+      endif
+    endif
+  endunless
+
+  echo _out
+-%}
