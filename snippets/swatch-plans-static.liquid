@@ -64,7 +64,6 @@
             <div class="plan-right">
               {% assign show_each = false %}
               {% assign items_count = 0 %}
-              {% assign msrp_cents = 3495 %}
               {% if last_option_variant.metafields.pdp.amount_of_items %}
                 {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
                 {% assign show_each = true %}
@@ -74,15 +73,9 @@
               {% else %}
                 {% assign display_price_cents = last_option_allocation_to_use.price %}
               {% endif %}
-              {% assign save_cents = msrp_cents | minus: display_price_cents %}
-              {% if save_cents < 0 %}
-                {% assign save_cents = 0 %}
-              {% endif %}
-              {% assign save_dollars = save_cents | divided_by: 100 %}
-              {% assign save_cents_rem = save_cents | modulo: 100 %}
 
               <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>You Save ${{ save_dollars }}.{% if save_cents_rem < 10 %}0{% endif %}{{ save_cents_rem }}</strong></span>
+                <span><strong>YOU SAVE $21</strong></span>
               </div>
               <div class="plan-price">
                 {% if show_each and items_count > 0 %}
