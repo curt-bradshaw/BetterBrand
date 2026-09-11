@@ -62,29 +62,38 @@
               </span>
             </p>
             <div class="plan-right">
+              {% assign show_each = false %}
+              {% assign items_count = 0 %}
+              {% assign msrp_cents = 3495 %}
+              {% if last_option_variant.metafields.pdp.amount_of_items %}
+                {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
+                {% assign show_each = true %}
+              {% endif %}
+              {% if show_each and items_count > 0 %}
+                {% assign display_price_cents = last_option_allocation_to_use.price | divided_by: items_count %}
+              {% else %}
+                {% assign display_price_cents = last_option_allocation_to_use.price %}
+              {% endif %}
+              {% assign save_cents = msrp_cents | minus: display_price_cents %}
+              {% if save_cents < 0 %}
+                {% assign save_cents = 0 %}
+              {% endif %}
+              {% assign save_dollars = save_cents | divided_by: 100 %}
+              {% assign save_cents_rem = save_cents | modulo: 100 %}
+
               <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>SAVE 20%</strong></span>
+                <span><strong>You Save ${{ save_dollars }}.{% if save_cents_rem < 10 %}0{% endif %}{{ save_cents_rem }}</strong></span>
               </div>
               <div class="plan-price">
-                {% assign show_each = false %}
-                {% if last_option_variant.metafields.pdp.amount_of_items %}
-                  {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
-                  {% assign show_each = true %}
-                {% endif %}
-                
                 {% if show_each and items_count > 0 %}
-                {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
-                {% assign total_price_cents = last_option_allocation_to_use.price %}
-                {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
-                {% assign price_per_item_dollars = price_per_item_cents | divided_by: 100 %}
-                {% assign cents_remainder = price_per_item_cents | modulo: 100 %}
-                <span class="plan-price-msrp">$34.95</span>
-                ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
-                <span>each</span>
+                  {% assign price_per_item_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign cents_remainder = display_price_cents | modulo: 100 %}
+                  <span class="plan-price-msrp">$34.95</span>
+                  ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
+                  <span>each</span>
                 {% else %}
-                  {% assign sub_price_cents = last_option_allocation_to_use.price %}
-                  {% assign price_dollars = sub_price_cents | divided_by: 100 %}
-                  {% assign price_cents = sub_price_cents | modulo: 100 %}
+                  {% assign price_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign price_cents = display_price_cents | modulo: 100 %}
                   <span class="plan-price-msrp">$34.95</span>
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
@@ -145,6 +154,7 @@
                 {% assign variant_title_lower = v.title | downcase %}
                 {% assign items_count = 0 %}
                 {% assign show_each = false %}
+                {% assign msrp_cents = 3495 %}
                 
                 {% if v.metafields.pdp.amount_of_items %}
                   {% assign items_count = v.metafields.pdp.amount_of_items | times: 1 %}
@@ -152,39 +162,36 @@
                 {% endif %}
                 
                 {% if show_each and items_count > 0 %}
-                  {% comment %} Calculate price per bottle/pack {% endcomment %}
-                  {% assign total_price_cents = v.price %}
-                  {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
+                  {% assign display_price_cents = v.price | divided_by: items_count %}
+                {% else %}
+                  {% assign display_price_cents = v.price %}
+                {% endif %}
+
+                {% if show_each and items_count > 0 %}
                   {% if curr_idx == 2 %}
                     <span class="plan-price-msrp">$34.95</span>
                   {% endif %}
-                  {% assign price_per_item_dollars = price_per_item_cents | divided_by: 100 %}
-                  {% assign cents_remainder = price_per_item_cents | modulo: 100 %}
+                  {% assign price_per_item_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign cents_remainder = display_price_cents | modulo: 100 %}
                   ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
                   <span>each</span>
                 {% else %}  
                   {% if curr_idx == 2 %}
                     <span class="plan-price-msrp">$34.95</span>
                   {% endif %}
-                  {% assign price_dollars = v.price | divided_by: 100 %}
-                  {% assign price_cents = v.price | modulo: 100 %}
+                  {% assign price_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign price_cents = display_price_cents | modulo: 100 %}
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
               <div class="plan-badge {% if hide_plan_badge %}hidden{% elsif curr_idx <= 1 %}hidden{% endif %}">
-                {% case curr_idx %}
-                  {% when 2 %}
-                    {% assign discount = 10 %}
-                  {% when 3 %}
-                    {% assign discount = 15 %}
-                  {% else %}
-                    {% assign discount = v.compare_at_price
-                      | minus: v.price
-                      | times: 100
-                      | divided_by: v.compare_at_price
-                    %}
-                {% endcase %}
-                <span><strong>SAVE {{ discount }}%</strong></span>
+                {% assign save_cents = msrp_cents | minus: display_price_cents %}
+                {% if save_cents < 0 %}
+                  {% assign save_cents = 0 %}
+                {% endif %}
+                {% assign save_dollars = save_cents | divided_by: 100 %}
+                {% assign save_cents_rem = save_cents | modulo: 100 %}
+                <span><strong>You Save ${{ save_dollars }}.{% if save_cents_rem < 10 %}0{% endif %}{{ save_cents_rem }}</strong></span>
               </div>
             </div>
           </label>
@@ -553,16 +560,17 @@
     .plan-badge {
       background: #234134;
       color: #ffffff;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      padding: 7px 8px 2px;
+      padding: 7px 10px 2px;
       border-radius: 20px;
       height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       line-height: 1;
-      min-width: 84px;
+      min-width: 0;
+      white-space: nowrap;
     }
 
     .plan-badge--b2g1f {
@@ -674,11 +682,12 @@
 
     .subscription-card .plan-badge {
       background: linear-gradient(135deg, #234134 0%, #2d5a44 100%);
-      font-size: 14px;
-      min-width: 84px;
+      font-size: 13px;
+      min-width: 0;
       height: 24px;
-      padding: 7px 8px 2px;
+      padding: 7px 10px 2px;
       box-shadow: 0 2px 6px rgba(35, 65, 52, 0.3);
+      white-space: nowrap;
     }
 
     .subscription-card .plan-badge--b2g1f {
@@ -767,17 +776,17 @@
         margin-bottom: 20px;
       }
       .plan-badge {
-        font-size: 12px;
+        font-size: 11px;
         padding: 6px 8px;
         height: fit-content;
-        min-width: 84px;
+        min-width: 0;
       }
 
       .subscription-card .plan-badge {
-        font-size: 12px;
+        font-size: 11px;
         padding: 6px 8px;
         height: fit-content;
-        min-width: 84px;
+        min-width: 0;
       }
 
       .plan-badge span {
