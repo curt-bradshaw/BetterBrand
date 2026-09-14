@@ -76,7 +76,7 @@
 
               <div class="plan-badge-stack{% if hide_plan_badge %} hidden{% endif %}">
                 <div class="plan-badge plan-badge--percent">
-                  <span><strong>Save 20%</strong></span>
+                  <span><strong>SAVE 20%</strong></span>
                 </div>
                 <div class="plan-badge">
                   <span><strong>YOU SAVE $21</strong></span>
@@ -183,7 +183,7 @@
               </div>
               <div class="plan-badge-stack {% if hide_plan_badge %}hidden{% elsif curr_idx != 2 %}hidden{% endif %}">
                 <div class="plan-badge plan-badge--percent">
-                  <span><strong>Save 10%</strong></span>
+                  <span><strong>SAVE 10%</strong></span>
                 </div>
                 <div class="plan-badge">
                   <span><strong>YOU SAVE $10.50</strong></span>
@@ -579,6 +579,12 @@
     .plan-badge strong {
       text-align: center;
       width: 100%;
+    }
+
+    .plan-badge--percent,
+    .plan-badge--percent span,
+    .plan-badge--percent strong {
+      text-transform: uppercase;
     }
 
     .plan-badge-stack {
