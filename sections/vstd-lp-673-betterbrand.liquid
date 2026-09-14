@@ -3546,6 +3546,8 @@ product needs no edit here: variant[0] = single, variant[1] = 3-pack, subscripti
 
 
 <div class="vy-vstd-disclaimer" style="padding:28px 20px 34px;background:#fff;border-top:1px solid #e6e6e6"><p style="max-width:1100px;margin:0 auto;font-family:inherit;font-size:11px;line-height:1.6;color:#767676;text-align:center">*These statements haven't been evaluated by the FDA or any agency. BetterBrand Health's products aren't designed for diagnosing, treating, curing, or preventing diseases or altering any bodily structure/function. Use as directed. All trademarks/copyrights are owned by their respective parties, unaffiliated with and not endorsing this product. No sales to minors. Betterbrand Health makes no health or medical claims for the product. Don't use if on medication or have/suspect a medical condition.Provided information doesn't replace medical advice or treatment. Consult a physician for medical advice, and a healthcare professional before using new products. Read all Warnings &amp;&nbsp;Disclaimers. Results may vary, no guaranteed results. Limited offer, void where prohibited. **All products have been formulated for adults 18 and older.</p></div>
+
+<script>/**/</script>
   <script>
 window.Shopify=window.Shopify||{};Shopify.routes=Shopify.routes||{root:"/"};
   </script>
@@ -4630,6 +4632,29 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.querySelectorAll('[data-clone-reveal]').forEach(function(el){ el.style.cursor = 'pointer'; });
 })();
+  </script>
+
+  <script>
+
+/* vystodian agent: CTA anchors point at a display:contents element; scroll to the buy box instead */
+(function () {
+  function buyBox() {
+    var o = document.querySelector('[data-bl-opt]') || document.querySelector('[data-bl-atc]');
+    return o ? (o.closest('[data-block-type]') || o) : null;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="#product-info"]') : null;
+    if (!a) return;
+    var t = buyBox();
+    if (!t) return;
+    e.preventDefault();
+    var head = document.querySelector('header'), off = 16;
+    if (head && getComputedStyle(head).position === 'fixed') off += head.getBoundingClientRect().height;
+    var y = t.getBoundingClientRect().top + window.pageYOffset - off;
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+  }, true);
+})();
+
   </script>
 
   <script>
