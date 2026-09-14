@@ -86,13 +86,13 @@
                 {% if show_each and items_count > 0 %}
                   {% assign price_per_item_dollars = display_price_cents | divided_by: 100 %}
                   {% assign cents_remainder = display_price_cents | modulo: 100 %}
-                  <span class="plan-price-msrp">$34.95</span>
+                  <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
                   ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
                   <span>each</span>
                 {% else %}
                   {% assign price_dollars = display_price_cents | divided_by: 100 %}
                   {% assign price_cents = display_price_cents | modulo: 100 %}
-                  <span class="plan-price-msrp">$34.95</span>
+                  <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
@@ -166,7 +166,7 @@
 
                 {% if show_each and items_count > 0 %}
                   {% if curr_idx == 2 %}
-                    <span class="plan-price-msrp">$34.95</span>
+                    <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
                   {% endif %}
                   {% assign price_per_item_dollars = display_price_cents | divided_by: 100 %}
                   {% assign cents_remainder = display_price_cents | modulo: 100 %}
@@ -174,7 +174,7 @@
                   <span>each</span>
                 {% else %}  
                   {% if curr_idx == 2 %}
-                    <span class="plan-price-msrp">$34.95</span>
+                    <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
                   {% endif %}
                   {% assign price_dollars = display_price_cents | divided_by: 100 %}
                   {% assign price_cents = display_price_cents | modulo: 100 %}
@@ -542,10 +542,14 @@
       font-size: 16px;
       font-weight: 400;
       color: #234134;
-      text-decoration: line-through;
+      text-decoration: none;
       text-align: end;
       line-height: 1.2;
       opacity: 0.7;
+    }
+
+    .plan-price-msrp > span {
+      text-decoration: line-through;
     }
 
     .plan-price > span:not(.plan-price-msrp) {
