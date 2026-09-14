@@ -555,19 +555,17 @@
       font-family: var(--bookmaniaFont);
     }
     .plan-badge {
-      background: none;
-      border: none;
-      box-shadow: none;
-      color: #234134;
+      background: #234134;
+      color: #ffffff;
       font-size: 13px;
       font-weight: 700;
-      padding: 0;
-      border-radius: 0;
-      height: auto;
+      padding: 7px 10px 2px;
+      border-radius: 20px;
+      height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 1.1;
+      line-height: 1;
       min-width: 0;
       white-space: nowrap;
     }
@@ -584,14 +582,13 @@
     }
 
     .plan-badge--percent {
-      background: none;
+      background: #f2cb49;
       color: #234134;
       font-size: 11px;
       font-weight: 700;
-      padding: 3px 8px;
-      height: auto;
+      padding: 4px 8px;
+      height: 20px;
       border: 1px solid #234134;
-      border-radius: 0;
     }
 
     .plan-badge--b2g1f {
@@ -702,14 +699,12 @@
     }
 
     .subscription-card .plan-badge:not(.plan-badge--percent) {
-      background: none;
-      border: none;
-      box-shadow: none;
-      color: #234134;
+      background: linear-gradient(135deg, #234134 0%, #2d5a44 100%);
       font-size: 13px;
       min-width: 0;
-      height: auto;
-      padding: 0;
+      height: 24px;
+      padding: 7px 10px 2px;
+      box-shadow: 0 2px 6px rgba(35, 65, 52, 0.3);
       white-space: nowrap;
     }
 
@@ -800,27 +795,27 @@
       }
       .plan-badge {
         font-size: 11px;
-        padding: 0;
-        height: auto;
+        padding: 6px 8px;
+        height: fit-content;
         min-width: 0;
       }
 
       .plan-badge--percent {
         font-size: 10px;
-        padding: 2px 6px;
-        height: auto;
+        padding: 3px 7px;
+        height: fit-content;
       }
 
       .subscription-card .plan-badge:not(.plan-badge--percent) {
         font-size: 11px;
-        padding: 0;
-        height: auto;
+        padding: 6px 8px;
+        height: fit-content;
         min-width: 0;
       }
 
       .plan-badge span {
         position: relative;
-        top: 0;
+        top: 2px;
       }
       .plan-card{
         min-height: 65px;
