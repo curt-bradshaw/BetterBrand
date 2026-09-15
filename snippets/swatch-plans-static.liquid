@@ -62,27 +62,37 @@
               </span>
             </p>
             <div class="plan-right">
-              <div class="plan-badge{% if hide_plan_badge %} hidden{% endif %}">
-                <span><strong>SAVE 20%</strong></span>
+              {% assign show_each = false %}
+              {% assign items_count = 0 %}
+              {% if last_option_variant.metafields.pdp.amount_of_items %}
+                {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
+                {% assign show_each = true %}
+              {% endif %}
+              {% if show_each and items_count > 0 %}
+                {% assign display_price_cents = last_option_allocation_to_use.price | divided_by: items_count %}
+              {% else %}
+                {% assign display_price_cents = last_option_allocation_to_use.price %}
+              {% endif %}
+
+              <div class="plan-badge-stack{% if hide_plan_badge %} hidden{% endif %}">
+                <div class="plan-badge plan-badge--percent">
+                  <span><strong>SAVE 20%</strong></span>
+                </div>
+                <div class="plan-badge">
+                  <span><strong>YOU SAVE $21</strong></span>
+                </div>
               </div>
               <div class="plan-price">
-                {% assign show_each = false %}
-                {% if last_option_variant.metafields.pdp.amount_of_items %}
-                  {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
-                  {% assign show_each = true %}
-                {% endif %}
-                
                 {% if show_each and items_count > 0 %}
-                {% assign items_count = last_option_variant.metafields.pdp.amount_of_items | times: 1 %}
-                {% assign total_price_cents = last_option_allocation_to_use.price %}
-                {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
-                {% assign price_per_item_dollars = price_per_item_cents | divided_by: 100 %}
-                {% assign cents_remainder = price_per_item_cents | modulo: 100 %}
-                ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
-                <span>each</span>
+                  {% assign price_per_item_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign cents_remainder = display_price_cents | modulo: 100 %}
+                  <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
+                  ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
+                  <span>each</span>
                 {% else %}
-                  {% assign price_dollars = last_option_allocation_to_use.price | divided_by: 100 %}
-                  {% assign price_cents = last_option_allocation_to_use.price | modulo: 100 %}
+                  {% assign price_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign price_cents = display_price_cents | modulo: 100 %}
+                  <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
@@ -112,16 +122,6 @@
           >
             <input type="radio" hidden>
 
-              <div class="plan-left">
-                {% if v.image %}
-                  <img src="{{ v.image | image_url: width: 120 }}" alt="{{ v.title }}">
-                {% elsif product.featured_image %}
-                  <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ v.title }}">
-                {% else %}
-                  <div class="image-placeholder"></div>
-                {% endif %}
-              </div>
-
             <div class="plan-center">
               <span class="plan-name">
                 {% if v.title contains '(' %}
@@ -149,33 +149,35 @@
                 {% endif %}
                 
                 {% if show_each and items_count > 0 %}
-                  {% comment %} Calculate price per bottle/pack {% endcomment %}
-                  {% assign total_price_cents = v.price %}
-                  {% assign price_per_item_cents = total_price_cents | divided_by: items_count %}
-                  {% assign price_per_item_dollars = price_per_item_cents | divided_by: 100 %}
-                  {% assign cents_remainder = price_per_item_cents | modulo: 100 %}
+                  {% assign display_price_cents = v.price | divided_by: items_count %}
+                {% else %}
+                  {% assign display_price_cents = v.price %}
+                {% endif %}
+
+                {% if show_each and items_count > 0 %}
+                  {% if curr_idx == 2 %}
+                    <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
+                  {% endif %}
+                  {% assign price_per_item_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign cents_remainder = display_price_cents | modulo: 100 %}
                   ${{ price_per_item_dollars }}.{% if cents_remainder < 10 %}0{% endif %}{{ cents_remainder }}
                   <span>each</span>
                 {% else %}  
-                  {% assign price_dollars = v.price | divided_by: 100 %}
-                  {% assign price_cents = v.price | modulo: 100 %}
+                  {% if curr_idx == 2 %}
+                    <span class="plan-price-msrp">MSRP <span>$34.95</span></span>
+                  {% endif %}
+                  {% assign price_dollars = display_price_cents | divided_by: 100 %}
+                  {% assign price_cents = display_price_cents | modulo: 100 %}
                   ${{ price_dollars }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents }}
                 {% endif %}
               </div>
-              <div class="plan-badge {% if hide_plan_badge %}hidden{% elsif curr_idx <= 1 %}hidden{% endif %}">
-                {% case curr_idx %}
-                  {% when 2 %}
-                    {% assign discount = 10 %}
-                  {% when 3 %}
-                    {% assign discount = 15 %}
-                  {% else %}
-                    {% assign discount = v.compare_at_price
-                      | minus: v.price
-                      | times: 100
-                      | divided_by: v.compare_at_price
-                    %}
-                {% endcase %}
-                <span><strong>SAVE {{ discount }}%</strong></span>
+              <div class="plan-badge-stack {% if hide_plan_badge %}hidden{% elsif curr_idx != 2 %}hidden{% endif %}">
+                <div class="plan-badge plan-badge--percent">
+                  <span><strong>SAVE 10%</strong></span>
+                </div>
+                <div class="plan-badge">
+                  <span><strong>YOU SAVE $10.50</strong></span>
+                </div>
               </div>
             </div>
           </label>
@@ -465,7 +467,8 @@
       border-radius: 14px;
       cursor: pointer;
       transition: all 0.2s ease;
-      height: 92px;
+      min-height: 92px;
+      height: auto;
       position: relative;
     }
     .plan-card:hover {
@@ -473,16 +476,6 @@
     }
     .plan-card.active {
       box-shadow: 0px 0px 4.9px 3px #23413475 inset;
-    }
-    .plan-left {
-      width: 75px;
-      height: 75px;
-      display: flex;
-      align-items: center;
-    }
-    .plan-left img {
-      width: 100%;
-      height: auto;
     }
     .plan-center {
       flex: 1;
@@ -526,13 +519,17 @@
 
     .plan-price-msrp {
       font-family: var(--bookmaniaFont);
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 400;
       color: #234134;
-      text-decoration: line-through;
+      text-decoration: none;
       text-align: end;
       line-height: 1.2;
-      opacity: 0.7;
+      opacity: 1;
+    }
+
+    .plan-price-msrp > span {
+      text-decoration: line-through;
     }
 
     .plan-price > span:not(.plan-price-msrp) {
@@ -542,18 +539,73 @@
       font-family: var(--bookmaniaFont);
     }
     .plan-badge {
-      background: #234134;
-      color: #ffffff;
-      font-size: 14px;
+      background: none;
+      border: none;
+      box-shadow: none;
+      color: #234134;
+      font-size: 13px;
       font-weight: 700;
-      padding: 7px 8px 2px;
-      border-radius: 20px;
-      height: 24px;
+      padding: 0;
+      border-radius: 0;
+      height: auto;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      line-height: 1.1;
+      min-width: 0;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+
+    .plan-badge span,
+    .plan-badge strong {
+      text-align: center;
+      width: 100%;
+    }
+
+    .plan-badge--percent,
+    .plan-badge--percent span,
+    .plan-badge--percent strong {
+      text-transform: uppercase;
+    }
+
+    .plan-badge-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      width: max-content;
+    }
+
+    .plan-badge-stack.hidden {
+      display: none;
+    }
+
+    .plan-badge--percent {
+      background: #234134;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 8px 3px;
+      height: auto;
+      width: 96px;
+      min-width: 96px;
+      max-width: 96px;
+      align-self: center;
+      border: 1px solid #234134;
+      border-radius: 0;
+      text-transform: uppercase;
       line-height: 1;
-      min-width: 84px;
+      box-sizing: border-box;
+    }
+
+    .plan-badge--percent span,
+    .plan-badge--percent strong {
+      display: block;
+      line-height: 1;
+      width: auto;
     }
 
     .plan-badge--b2g1f {
@@ -663,13 +715,16 @@
       line-height: 1;
     }
 
-    .subscription-card .plan-badge {
-      background: linear-gradient(135deg, #234134 0%, #2d5a44 100%);
-      font-size: 14px;
-      min-width: 84px;
-      height: 24px;
-      padding: 7px 8px 2px;
-      box-shadow: 0 2px 6px rgba(35, 65, 52, 0.3);
+    .subscription-card .plan-badge:not(.plan-badge--percent) {
+      background: none;
+      border: none;
+      box-shadow: none;
+      color: #234134;
+      font-size: 13px;
+      min-width: 0;
+      height: auto;
+      padding: 0;
+      white-space: nowrap;
     }
 
     .subscription-card .plan-badge--b2g1f {
@@ -758,30 +813,35 @@
         margin-bottom: 20px;
       }
       .plan-badge {
-        font-size: 12px;
-        padding: 6px 8px;
-        height: fit-content;
-        min-width: 84px;
+        font-size: 11px;
+        padding: 0;
+        height: auto;
+        min-width: 0;
       }
 
-      .subscription-card .plan-badge {
-        font-size: 12px;
-        padding: 6px 8px;
-        height: fit-content;
+      .plan-badge--percent {
+        font-size: 11px;
+        padding: 4px 6px 2px;
+        height: auto;
+        width: 84px;
         min-width: 84px;
+        max-width: 84px;
+      }
+
+      .subscription-card .plan-badge:not(.plan-badge--percent) {
+        font-size: 11px;
+        padding: 0;
+        height: auto;
+        min-width: 0;
       }
 
       .plan-badge span {
-        position: relative;
-        top: 2px;
+        position: static;
+        top: auto;
       }
       .plan-card{
-        height: 65px;
-      }
-
-      .plan-left{
-        width: 45px;
-        height: 45px;
+        min-height: 65px;
+        height: auto;
       }
 
       .plan-title {
@@ -797,7 +857,7 @@
       }
 
       .plan-price-msrp {
-        font-size: 12px;
+        font-size: 10px;
       }
 
       .plan-price > span:not(.plan-price-msrp) {
