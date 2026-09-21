@@ -192,7 +192,12 @@
     max-width: 1200px;
     margin: 0 auto;
   }
-  @media (min-width: 1024px) { .hero-inner { grid-template-columns: 1.05fr 1fr; min-height: 560px; } }
+  /* Mobile: video above form content */
+  .hero-image { order: -1; }
+  @media (min-width: 1024px) {
+    .hero-inner { grid-template-columns: 1.05fr 1fr; min-height: 560px; }
+    .hero-image { order: 0; }
+  }
 
   .hero-form { padding: 32px 20px 24px; display: flex; flex-direction: column; justify-content: center; }
   @media (min-width: 1024px) { .hero-form { padding: 56px var(--bb-pad-desktop); } }
