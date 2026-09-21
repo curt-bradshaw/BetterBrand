@@ -2,9 +2,10 @@
   ============================================================
   Betterbrand · SMS VIP Lander — Hero + Video (hero-only)
   ============================================================
-  Duplicate of sms-lander.liquid with all sections removed except
-  the hero. Right column uses an autoplaying hero video (with
-  sound) instead of the iMessage phone mockup.
+  Duplicate of sms-lander.liquid with mid-page sections removed —
+  keeps header, hero (with video), and footer disclaimer.
+  Right column uses an autoplaying hero video (with sound)
+  instead of the iMessage phone mockup.
   ============================================================
 {%- endcomment -%}
 
@@ -126,6 +127,88 @@
   a { color: inherit; text-decoration: none; }
   button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
   input { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; width: 100%; }
+
+  /* Faux header */
+  .bb-header {
+    background: var(--bb-white);
+    border-bottom: 1px solid var(--bb-border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .bb-shipping-bar {
+    background: var(--bb-green-dark);
+    color: var(--bb-white);
+    text-align: center;
+    padding: 11px 16px;
+    font-family: var(--bb-body);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .bb-header-inner {
+    display: flex; align-items: center;
+    padding: 16px 20px;
+    max-width: 1440px; margin: 0 auto;
+    height: 64px;
+    position: relative;
+  }
+  .bb-logo {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex; align-items: center;
+  }
+  .bb-logo img { height: 32px; width: auto; }
+  .bb-header-right { margin-left: auto; }
+
+  @media (min-width: 1024px) {
+    .bb-header-inner { padding: 16px 40px; height: 72px; }
+    .bb-logo {
+      position: static; transform: none;
+    }
+    .bb-logo img { height: 42px; }
+    .bb-header-right { margin-left: auto; }
+  }
+
+  .bb-nav {
+    display: none;
+    gap: 36px;
+    align-items: center;
+    font-family: var(--bb-body);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bb-text-dark);
+  }
+  @media (min-width: 1024px) {
+    .bb-nav {
+      display: flex;
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .bb-nav a:hover { color: var(--bb-green-mid); }
+  .bb-header-right { display: flex; align-items: center; gap: 14px; }
+  .bb-header-icons { display: flex; gap: 14px; color: var(--bb-text-dark); }
+  .bb-header-icons svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; cursor: pointer; }
+  .bb-mobile-menu { display: flex; flex-direction: column; gap: 4px; cursor: pointer; padding: 4px; }
+  .bb-mobile-menu span { display: block; width: 20px; height: 1.5px; background: var(--bb-text-dark); }
+  .bb-mobile-menu span:last-child { width: 16px; }
+  @media (min-width: 1024px) { .bb-mobile-menu { display: none; } }
+
+  /* Promo bar — yellow per brand */
+  .promo {
+    background: var(--bb-yellow);
+    color: var(--bb-green-dark);
+    text-align: center;
+    padding: 12px 16px;
+    font-family: var(--bb-body);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
 
   /* Hero — DARK FOREST background */
   .hero {
@@ -376,7 +459,45 @@
     margin-top: 16px;
   }
   .success-card.show { display: block; }
+
+  /* Footer disclaimer */
+  .discl {
+    background: var(--bb-footer-black);
+    color: rgba(255, 255, 255, 0.55);
+    padding: 36px var(--bb-pad-mobile);
+  }
+  @media (min-width: 1024px) { .discl { padding: 36px var(--bb-pad-desktop); } }
+  .discl-inner {
+    font-family: var(--bb-body);
+    font-size: 11px; line-height: 1.6;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .discl a { color: rgba(255, 255, 255, 0.7); text-decoration: underline; }
 </style>
+
+<!-- HEADER -->
+<header class="bb-header">
+  <div class="bb-shipping-bar">We Pay Shipping On Orders Over $50  ·  365-Day Money-Back Guarantee</div>
+  <div class="bb-header-inner">
+    <button class="bb-mobile-menu" aria-label="Menu"><span></span><span></span><span></span></button>
+    <a href="https://trybetterbrand.com" class="bb-logo">
+      <img src="https://www.trybetterbrand.com/cdn/shop/files/Betterbrand_Logo_HD-green.png?v=1766094376&width=600" alt="Betterbrand">
+    </a>
+    <nav class="bb-nav">
+      <a href="#signup">Sign Up</a>
+      <a href="https://trybetterbrand.com/policies/privacy-policy">Privacy</a>
+    </nav>
+    <div class="bb-header-right">
+      <div class="bb-header-icons">
+        <a href="#" aria-label="Account"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></a>
+        <a href="#" aria-label="Cart"><svg viewBox="0 0 24 24"><path d="M5 7h14l-1.5 11h-11z"/><path d="M9 7a3 3 0 1 1 6 0"/></svg></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROMO -->
+<div class="promo">✦  VIP Members only  ·  Your 15% off + first access starts by text  ✦</div>
 
 <!-- HERO -->
 <section class="hero" id="signup">
@@ -436,6 +557,11 @@
       </div>
     </div>
   </div>
+</section>
+
+<!-- FOOTER / DISCLAIMER -->
+<section class="discl">
+  <p class="discl-inner">*These statements haven't been evaluated by the FDA. Betterbrand products aren't designed for diagnosing, treating, curing, or preventing disease. Use as directed. By providing your phone number you consent to receive recurring marketing texts from Betterbrand at the number provided, including messages sent by autodialer. Consent isn't a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. View our <a href="https://trybetterbrand.com/policies/privacy-policy">Privacy Policy</a> and <a href="https://trybetterbrand.com/policies/terms-of-service">Terms of Service</a>. **All products formulated for adults 18+.</p>
 </section>
 
 <script>
