@@ -1,0 +1,571 @@
+{%- comment -%}
+  ============================================================
+  Betterbrand · SMS VIP Lander — Hero + Video (hero-only)
+  ============================================================
+  Duplicate of sms-lander.liquid with all sections removed except
+  the hero. Right column uses an autoplaying hero video (with
+  sound) instead of the iMessage phone mockup.
+  ============================================================
+{%- endcomment -%}
+
+<style>
+  /* Hide theme header, footer, and announcement/shipping bar on this page only */
+  .essential_annoucement_bar_wrapper,
+  [class*="essential_annoucement_bar"],
+  [class*="essential_announcement_bar"],
+  announcement-bar,
+  .announcement-bar,
+  .announcement-bar-section,
+  #shopify-section-announcement-bar,
+  [id*="announcement"],
+  [class*="announcement-bar"],
+  .shopify-section.shipping-bar,
+  [class*="shipping-bar"],
+  [id*="shipping_bar"],
+  [id*="shipping-bar"],
+  header.header-content,
+  .header-content,
+  .site-header,
+  #shopify-section-header,
+  #shopify-section-menu-mobile,
+  #shopify-section-cart-drawer,
+  [class*="site-header"],
+  sticky-header,
+  .header-wrapper,
+  .shopify-section.section-header,
+  .shopify-section-header-sticky,
+  [class*="section-header"],
+  [id*="section-header"],
+  footer.footer-content,
+  .footer-content,
+  .site-footer,
+  #shopify-section-footer,
+  [class*="site-footer"],
+  .shopify-section .ntg-footer,
+  .ntg-footer,
+  [id*="section-footer"],
+  .patrol-skip-link {
+    display: none !important;
+  }
+
+  #MainContent,
+  main#MainContent,
+  .main-content,
+  [id="MainContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* ---- Brand fonts (rebrand 2026) — self-hosted ---- */
+  @font-face { font-family: 'Sohne'; src: url('{{ "soehne-dreiviertelfett.woff2" | asset_url }}') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'MierA'; src: url('{{ "MierA-Regular.woff2" | asset_url }}') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'MierA'; src: url('{{ "MierA-Bold.woff2" | asset_url }}') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'MierA'; src: url('{{ "MierA-ExtraBold.woff2" | asset_url }}') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Tiempos'; src: url('{{ "tiempos-text-regular.woff2" | asset_url }}') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+
+  .shopify-section.bb-sms-vip-hero-video,
+  .shopify-section.bb-sms-vip-hero-video p,
+  .shopify-section.bb-sms-vip-hero-video li,
+  .shopify-section.bb-sms-vip-hero-video span,
+  .shopify-section.bb-sms-vip-hero-video label,
+  .shopify-section.bb-sms-vip-hero-video button,
+  .shopify-section.bb-sms-vip-hero-video input,
+  .shopify-section.bb-sms-vip-hero-video textarea,
+  .shopify-section.bb-sms-vip-hero-video div {
+    font-family: var(--bb-body);
+  }
+
+  .shopify-section.bb-sms-vip-hero-video .h1 {
+    font-family: var(--bb-display);
+    font-weight: 700;
+  }
+
+  html { scroll-behavior: smooth; }
+  #signup { scroll-margin-top: 76px; }
+  @media (min-width: 768px) { #signup { scroll-margin-top: 88px; } }
+
+  :root {
+    --bb-green-dark: #1a3a1a;
+    --bb-green-mid: #2d5a2d;
+    --bb-green-bottle: #1e4620;
+    --bb-green-sage: #e8f0e8;
+    --bb-green-light: #f0f5f0;
+    --bb-off-white: #f9faf9;
+    --bb-white: #ffffff;
+    --bb-yellow: #e8c84a;
+    --bb-yellow-hover: #d4b435;
+    --bb-yellow-light: #fdf8e1;
+    --bb-text-dark: #1a2e1a;
+    --bb-text-mid: #3d5c3d;
+    --bb-text-light: #6b8c6b;
+    --bb-border: #d0ddd0;
+    --bb-footer-black: #0d1f0d;
+
+    --bb-display: 'Sohne', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    --bb-body:    'MierA', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --bb-serif:   'Tiempos', Georgia, 'Times New Roman', serif;
+
+    --bb-pad-desktop: 40px;
+    --bb-pad-mobile: 20px;
+    --bb-radius-pill: 50px;
+    --bb-radius-card: 16px;
+    --bb-radius-input: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .bb-sms-vip-hero-video {
+    color: var(--bb-text-dark);
+    background: var(--bb-white);
+    font-family: var(--bb-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
+  input { font: inherit; color: inherit; background: transparent; border: 0; outline: 0; width: 100%; }
+
+  /* Hero — DARK FOREST background */
+  .hero {
+    background: var(--bb-green-dark);
+    color: var(--bb-white);
+    overflow: hidden;
+    position: relative;
+    min-height: 560px;
+  }
+  .hero-inner {
+    display: grid; grid-template-columns: 1fr;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (min-width: 1024px) { .hero-inner { grid-template-columns: 1.05fr 1fr; min-height: 560px; } }
+
+  .hero-form { padding: 32px 20px 24px; display: flex; flex-direction: column; justify-content: center; }
+  @media (min-width: 1024px) { .hero-form { padding: 56px var(--bb-pad-desktop); } }
+
+  .pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bb-yellow);
+    color: var(--bb-green-dark);
+    border-radius: var(--bb-radius-pill);
+    padding: 10px 22px;
+    font-family: var(--bb-body);
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    align-self: flex-start;
+    margin-bottom: 28px;
+  }
+
+  .h1 {
+    font-family: var(--bb-display);
+    font-weight: 700;
+    color: var(--bb-white);
+    font-size: clamp(46px, 5.4vw, 76px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .h1-line { display: block; }
+  .h1-line--accent { color: var(--bb-yellow); }
+  .h1-mark { color: var(--bb-yellow); }
+
+  .lede {
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--bb-body);
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.7;
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .vip-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px;
+    max-width: 540px;
+    display: flex; flex-direction: column;
+    gap: 12px;
+  }
+  .vip-bullets li {
+    color: rgba(255, 255, 255, 0.92);
+    font-family: var(--bb-body);
+    font-size: clamp(15px, 1.3vw, 17px);
+    font-weight: 500;
+    line-height: 1.5;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .vip-check {
+    flex: 0 0 24px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bb-yellow);
+    color: var(--bb-green-dark);
+    font-weight: 800;
+    font-size: 13px;
+    display: inline-flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+
+  .trust--prominent {
+    color: var(--bb-white) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    gap: 16px 32px !important;
+    border-top: 1px solid rgba(255,255,255,0.18);
+    padding-top: 24px;
+    margin-top: 32px !important;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 560px; }
+  @media (min-width: 600px) { .form-row { grid-template-columns: minmax(220px, 1fr) auto; } }
+
+  .phone {
+    display: flex; align-items: center;
+    background: var(--bb-white);
+    border: 1px solid var(--bb-border);
+    border-radius: var(--bb-radius-input);
+    height: 56px;
+    padding: 0 18px;
+    gap: 12px;
+    transition: border 0.15s;
+  }
+  .phone:focus-within { border-color: var(--bb-green-mid); border-width: 1.5px; padding: 0 17.5px; }
+  .phone .flag { font-family: var(--bb-body); font-size: 14px; font-weight: 600; color: var(--bb-text-dark); white-space: nowrap; }
+  .phone .divider { width: 1px; height: 24px; background: var(--bb-border); }
+  .phone input { font-family: var(--bb-body); font-size: 15px; color: var(--bb-text-dark); }
+  .phone input::placeholder { color: var(--bb-text-light); }
+
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bb-yellow);
+    color: var(--bb-green-dark);
+    border: 0;
+    border-radius: var(--bb-radius-pill);
+    height: 56px;
+    padding: 18px 28px;
+    font-family: var(--bb-body);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background 0.15s, transform 0.05s;
+    white-space: nowrap;
+  }
+  .cta:hover { background: var(--bb-yellow-hover); }
+  .cta:active { transform: translateY(1px); }
+  .cta:focus-visible { outline: 2px solid var(--bb-yellow); outline-offset: 2px; }
+
+  .tcpa {
+    color: rgba(255, 255, 255, 0.55);
+    font-family: var(--bb-body);
+    font-size: 11px;
+    line-height: 1.6;
+    margin-top: 18px;
+    max-width: 560px;
+  }
+  .tcpa a { text-decoration: underline; }
+
+  .trust {
+    display: flex; flex-wrap: wrap; gap: 12px 16px;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--bb-body);
+    font-weight: 600;
+    font-size: 12px;
+    align-items: center;
+  }
+  @media (min-width: 600px) { .trust { flex-wrap: nowrap; } }
+  .trust span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .trust svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--bb-yellow); }
+
+  /* Hero video column */
+  .hero-image {
+    position: relative;
+    background: var(--bb-green-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px;
+    overflow: hidden;
+  }
+  @media (min-width: 1024px) {
+    .hero-image { padding: 40px 32px; align-self: stretch; }
+  }
+
+  .hero-video-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #0a1a0a;
+    aspect-ratio: 9 / 16;
+    max-height: min(72vh, 640px);
+  }
+  @media (min-width: 1024px) {
+    .hero-video-wrap {
+      max-width: 100%;
+      aspect-ratio: 4 / 5;
+      max-height: none;
+      height: 100%;
+      min-height: 480px;
+    }
+  }
+
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Browsers often block unmuted autoplay — one-tap unlock keeps intent clear */
+  .hero-video-unmute {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 26, 10, 0.45);
+    cursor: pointer;
+  }
+  .hero-video-unmute.is-visible { display: flex; }
+  .hero-video-unmute span {
+    background: var(--bb-yellow);
+    color: var(--bb-green-dark);
+    border-radius: var(--bb-radius-pill);
+    padding: 12px 22px;
+    font-family: var(--bb-body);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease-out, transform 0.55s ease-out; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  .h1.reveal { transition-delay: 0.1s; }
+  .lede.reveal { transition-delay: 0.2s; }
+  #form-hero.reveal { transition-delay: 0.3s; }
+
+  @keyframes bb-shake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-3px); }
+    50%      { transform: translateX(3px); }
+    75%      { transform: translateX(-3px); }
+  }
+  .phone.is-invalid { animation: bb-shake 0.15s ease-out 2; border-color: #ff6d6d; }
+
+  .error-msg { display: none; color: #ff6d6d; font-family: var(--bb-body); font-size: 12px; margin-top: 8px; }
+  .error-msg.show { display: block; }
+  .success-card {
+    display: none;
+    background: rgba(232, 200, 74, 0.12);
+    border: 1px solid var(--bb-yellow);
+    border-radius: var(--bb-radius-input);
+    padding: 22px;
+    color: var(--bb-white);
+    font-family: var(--bb-body);
+    font-size: 14px; line-height: 1.65;
+    margin-top: 16px;
+  }
+  .success-card.show { display: block; }
+</style>
+
+<!-- HERO -->
+<section class="hero" id="signup">
+  <div class="hero-inner">
+    <div class="hero-form">
+      <span class="pill reveal">Trusted by 1M+ customers</span>
+      <h1 class="h1 reveal">
+        <span class="h1-line">Become a <span class="h1-mark">VIP</span></span>
+        <span class="h1-line">Today.</span>
+      </h1>
+      <p class="lede reveal">Join by text and get a code for 15% off your first purchase, plus early access to new drops, sales, and restock alerts before anyone else.</p>
+      <ul class="vip-bullets reveal">
+        <li><span class="vip-check">✓</span> 15% off your first purchase as a VIP Member</li>
+        <li><span class="vip-check">✓</span> First access to limited product drops</li>
+        <li><span class="vip-check">✓</span> First in line when stock runs low</li>
+        <li><span class="vip-check">✓</span> Dr. Chris's breathing tips, texted to you first</li>
+      </ul>
+
+      <form id="form-hero" class="reveal" novalidate>
+        <div class="form-row">
+          <label class="phone">
+            <span class="flag">🇺🇸 +1</span>
+            <span class="divider"></span>
+            <input type="tel" name="phone" inputmode="tel" autocomplete="tel-national" placeholder="(555) 123-4567" required maxlength="14" />
+          </label>
+          <button type="submit" class="cta">Activate VIP Status</button>
+        </div>
+        <p class="error-msg" id="err-hero">Please enter a valid US phone number.</p>
+        <div class="success-card" id="ok-hero"><strong>You're a VIP.</strong> Code incoming by text.</div>
+      </form>
+
+      <p class="tcpa">By tapping the button above, you agree to receive recurring marketing texts from Betterbrand at the number provided. Consent isn't a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. View <a href="https://trybetterbrand.com/policies/privacy-policy">Privacy Policy</a> &amp; <a href="https://trybetterbrand.com/policies/terms-of-service">Terms</a>.</p>
+
+      <div class="trust trust--prominent">
+        <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>1M+ VIP Customers</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>365-Day Guarantee</span>
+        <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>4.8/5 (12K Reviews)</span>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <div class="hero-video-wrap">
+        <video
+          id="sms-hero-video"
+          class="hero-video"
+          autoplay
+          loop
+          playsinline
+          preload="auto"
+          aria-label="Betterbrand VIP video"
+        >
+          <source src="{{ 'sms-lander-hero.mp4' | asset_url }}" type="video/mp4">
+        </video>
+        <button type="button" class="hero-video-unmute" id="sms-hero-unmute" aria-label="Enable sound">
+          <span>Tap for sound</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var video = document.getElementById('sms-hero-video');
+    var unmuteBtn = document.getElementById('sms-hero-unmute');
+    if (!video) return;
+
+    function playWithSound() {
+      video.muted = false;
+      video.volume = 1;
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        return playPromise.then(function () {
+          if (unmuteBtn) unmuteBtn.classList.remove('is-visible');
+          return true;
+        }).catch(function () {
+          if (unmuteBtn) unmuteBtn.classList.add('is-visible');
+          return false;
+        });
+      }
+      if (unmuteBtn) unmuteBtn.classList.remove('is-visible');
+      return Promise.resolve(true);
+    }
+
+    // Prefer unmuted autoplay on load (requested). Most browsers block this —
+    // if they do, show a one-tap overlay to unlock sound while keeping playback.
+    playWithSound().then(function (ok) {
+      if (ok) return;
+      video.muted = true;
+      video.play().catch(function () {});
+    });
+
+    if (unmuteBtn) {
+      unmuteBtn.addEventListener('click', function () {
+        playWithSound();
+      });
+    }
+
+    // Also unlock on first interaction anywhere on the page
+    function unlockOnce() {
+      playWithSound();
+      document.removeEventListener('pointerdown', unlockOnce);
+      document.removeEventListener('keydown', unlockOnce);
+    }
+    document.addEventListener('pointerdown', unlockOnce, { once: true });
+    document.addEventListener('keydown', unlockOnce, { once: true });
+  })();
+
+  var SUBMIT_URL = 'https://yswqqjakuifsgslwskgq.supabase.co/functions/v1/serve-form/sms-vip/submit';
+
+  function formatPhone(raw) {
+    var d = (raw || '').replace(/\D/g, '').slice(0, 10);
+    if (!d) return '';
+    if (d.length < 4) return '(' + d;
+    if (d.length < 7) return '(' + d.slice(0,3) + ') ' + d.slice(3);
+    return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+  }
+  document.querySelectorAll('input[type="tel"]').forEach(function(input){
+    input.addEventListener('input', function(e){ e.target.value = formatPhone(e.target.value); });
+  });
+
+  function bind(formId, errId, okId) {
+    var f = document.getElementById(formId);
+    if (!f) return;
+    f.addEventListener('submit', async function(e){
+      e.preventDefault();
+      var phone = f.querySelector('input[type="tel"]');
+      var phoneWrap = f.querySelector('.phone');
+      var d = (phone.value || '').replace(/\D/g, '');
+      var err = document.getElementById(errId);
+      var ok  = document.getElementById(okId);
+      var btn = f.querySelector('button');
+      var originalLabel = btn.textContent;
+
+      if (d.length !== 10) {
+        err.classList.add('show');
+        err.textContent = 'Please enter a valid US phone number.';
+        if (phoneWrap) { phoneWrap.classList.add('is-invalid'); setTimeout(function(){ phoneWrap.classList.remove('is-invalid'); }, 350); }
+        phone.focus();
+        return;
+      }
+      err.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      try {
+        var resp = await fetch(SUBMIT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: d,
+            form: 'sms-vip',
+            source: window.location.pathname || 'sms-lander-hero-video',
+          })
+        });
+        var data = await resp.json();
+        if (!data.success) {
+          throw new Error(data.error || 'Could not activate VIP status. Please try again.');
+        }
+        btn.textContent = 'Sent ✓';
+        ok.classList.add('show');
+        phone.value = '';
+      } catch (ex) {
+        err.classList.add('show');
+        err.textContent = (ex && ex.message) ? ex.message : 'Network error. Please try again.';
+        if (phoneWrap) { phoneWrap.classList.add('is-invalid'); setTimeout(function(){ phoneWrap.classList.remove('is-invalid'); }, 350); }
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      }
+    });
+  }
+  bind('form-hero', 'err-hero', 'ok-hero');
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }});
+    }, { threshold: 0.18 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "SMS VIP Hero Video",
+  "tag": "section",
+  "class": "bb-sms-vip-hero-video",
+  "settings": [],
+  "presets": [{ "name": "SMS VIP Hero Video" }]
+}
+{% endschema %}
