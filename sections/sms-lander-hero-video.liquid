@@ -323,6 +323,7 @@
     margin-top: 18px;
     max-width: 560px;
   }
+  .tcpa p { margin: 0; }
   .tcpa a { text-decoration: underline; }
 
   .trust {
@@ -439,58 +440,126 @@
     max-width: 1200px; margin: 0 auto;
   }
   .discl a { color: rgba(255, 255, 255, 0.7); text-decoration: underline; }
+  .discl-inner p { margin: 0; }
+  .success-card p { margin: 0; }
 </style>
+
+{%- liquid
+  assign logo = section.settings.logo
+  assign logo_alt = logo.alt | default: shop.name
+  assign hero_video = section.settings.hero_video
+  if hero_video != blank
+    assign video_src = hero_video.sources[1].url | default: hero_video.sources[0].url
+  elsif section.settings.hero_video_url != blank
+    assign video_src = section.settings.hero_video_url
+  else
+    assign video_src = 'sms-lander-hero.mp4' | asset_url
+  endif
+-%}
 
 <!-- HEADER -->
 <header class="bb-header">
-  <div class="bb-shipping-bar">We Pay Shipping On Orders Over $50  ·  365-Day Money-Back Guarantee</div>
+  {% if section.settings.shipping_bar != blank %}
+    <div class="bb-shipping-bar">{{ section.settings.shipping_bar | escape }}</div>
+  {% endif %}
   <div class="bb-header-inner">
     <div class="bb-logo">
-      <img src="https://www.trybetterbrand.com/cdn/shop/files/Betterbrand_Logo_HD-green.png?v=1766094376&width=600" alt="Betterbrand">
+      {% if logo != blank %}
+        {{ logo | image_url: width: 600 | image_tag: alt: logo_alt, loading: 'eager' }}
+      {% else %}
+        <img src="https://www.trybetterbrand.com/cdn/shop/files/Betterbrand_Logo_HD-green.png?v=1766094376&width=600" alt="{{ shop.name | escape }}">
+      {% endif %}
     </div>
   </div>
 </header>
 
-<!-- PROMO -->
-<div class="promo">✦  VIP Members only  ·  Your 15% off + first access starts by text  ✦</div>
+{% if section.settings.promo_text != blank %}
+  <div class="promo">{{ section.settings.promo_text | escape }}</div>
+{% endif %}
 
 <!-- HERO -->
 <section class="hero" id="signup">
   <div class="hero-inner">
     <div class="hero-form">
-      <span class="pill reveal">Trusted by 1M+ customers</span>
+      {% if section.settings.pill_text != blank %}
+        <span class="pill reveal">{{ section.settings.pill_text | escape }}</span>
+      {% endif %}
+
       <h1 class="h1 reveal">
-        <span class="h1-line">Become a <span class="h1-mark">VIP</span></span>
-        <span class="h1-line">Today.</span>
+        <span class="h1-line">
+          {{ section.settings.heading_line_1 | escape }}
+          {% if section.settings.heading_accent != blank %}
+            <span class="h1-mark">{{ section.settings.heading_accent | escape }}</span>
+          {% endif %}
+        </span>
+        {% if section.settings.heading_line_2 != blank %}
+          <span class="h1-line">{{ section.settings.heading_line_2 | escape }}</span>
+        {% endif %}
       </h1>
-      <p class="lede reveal">Join by text and get a code for 15% off your first purchase, plus early access to new drops, sales, and restock alerts before anyone else.</p>
-      <ul class="vip-bullets reveal">
-        <li><span class="vip-check">✓</span> 15% off your first purchase as a VIP Member</li>
-        <li><span class="vip-check">✓</span> First access to limited product drops</li>
-        <li><span class="vip-check">✓</span> First in line when stock runs low</li>
-        <li><span class="vip-check">✓</span> Dr. Chris's breathing tips, texted to you first</li>
-      </ul>
+
+      {% if section.settings.lede != blank %}
+        <p class="lede reveal">{{ section.settings.lede | escape }}</p>
+      {% endif %}
+
+      {% assign bullet_blocks = section.blocks | where: 'type', 'bullet' %}
+      {% if bullet_blocks.size > 0 %}
+        <ul class="vip-bullets reveal">
+          {% for block in bullet_blocks %}
+            {% if block.settings.text != blank %}
+              <li {{ block.shopify_attributes }}>
+                <span class="vip-check">✓</span>
+                {{ block.settings.text | escape }}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
 
       <form id="form-hero" class="reveal" novalidate>
         <div class="form-row">
           <label class="phone">
-            <span class="flag">🇺🇸 +1</span>
+            <span class="flag">{{ section.settings.phone_flag | escape }}</span>
             <span class="divider"></span>
-            <input type="tel" name="phone" inputmode="tel" autocomplete="tel-national" placeholder="(555) 123-4567" required maxlength="14" />
+            <input
+              type="tel"
+              name="phone"
+              inputmode="tel"
+              autocomplete="tel-national"
+              placeholder="{{ section.settings.phone_placeholder | escape }}"
+              required
+              maxlength="14"
+            >
           </label>
-          <button type="submit" class="cta">Activate VIP Status</button>
+          <button type="submit" class="cta">{{ section.settings.cta_label | escape }}</button>
         </div>
-        <p class="error-msg" id="err-hero">Please enter a valid US phone number.</p>
-        <div class="success-card" id="ok-hero"><strong>You're a VIP.</strong> Code incoming by text.</div>
+        <p class="error-msg" id="err-hero" data-default-error="{{ section.settings.error_message | escape }}">{{ section.settings.error_message | escape }}</p>
+        <div class="success-card" id="ok-hero">{{ section.settings.success_message }}</div>
       </form>
 
-      <p class="tcpa">By tapping the button above, you agree to receive recurring marketing texts from Betterbrand at the number provided. Consent isn't a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. View <a href="https://trybetterbrand.com/policies/privacy-policy">Privacy Policy</a> &amp; <a href="https://trybetterbrand.com/policies/terms-of-service">Terms</a>.</p>
+      {% if section.settings.tcpa != blank %}
+        <div class="tcpa">{{ section.settings.tcpa }}</div>
+      {% endif %}
 
-      <div class="trust trust--prominent">
-        <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>1M+ VIP Customers</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>365-Day Guarantee</span>
-        <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>4.8/5 (12K Reviews)</span>
-      </div>
+      {% assign trust_blocks = section.blocks | where: 'type', 'trust_badge' %}
+      {% if trust_blocks.size > 0 %}
+        <div class="trust trust--prominent">
+          {% for block in trust_blocks %}
+            {% if block.settings.text != blank %}
+              <span {{ block.shopify_attributes }}>
+                {% case block.settings.icon %}
+                  {% when 'check' %}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  {% when 'star' %}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  {% else %}
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                {% endcase %}
+                {{ block.settings.text | escape }}
+              </span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
 
     <div class="hero-image">
@@ -502,22 +571,23 @@
           loop
           playsinline
           preload="auto"
-          aria-label="Betterbrand VIP video"
+          aria-label="{{ section.settings.video_aria_label | escape }}"
         >
-          <source src="{{ 'sms-lander-hero.mp4' | asset_url }}" type="video/mp4">
+          <source src="{{ video_src }}" type="video/mp4">
         </video>
-        <button type="button" class="hero-video-unmute" id="sms-hero-unmute" aria-label="Enable sound">
-          <span>Tap for sound</span>
+        <button type="button" class="hero-video-unmute" id="sms-hero-unmute" aria-label="{{ section.settings.unmute_label | escape }}">
+          <span>{{ section.settings.unmute_label | escape }}</span>
         </button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER / DISCLAIMER -->
-<section class="discl">
-  <p class="discl-inner">*These statements haven't been evaluated by the FDA. Betterbrand products aren't designed for diagnosing, treating, curing, or preventing disease. Use as directed. By providing your phone number you consent to receive recurring marketing texts from Betterbrand at the number provided, including messages sent by autodialer. Consent isn't a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. View our <a href="https://trybetterbrand.com/policies/privacy-policy">Privacy Policy</a> and <a href="https://trybetterbrand.com/policies/terms-of-service">Terms of Service</a>. **All products formulated for adults 18+.</p>
-</section>
+{% if section.settings.disclaimer != blank %}
+  <section class="discl">
+    <div class="discl-inner">{{ section.settings.disclaimer }}</div>
+  </section>
+{% endif %}
 
 <script>
   (function () {
@@ -594,7 +664,7 @@
 
       if (d.length !== 10) {
         err.classList.add('show');
-        err.textContent = 'Please enter a valid US phone number.';
+        err.textContent = err.getAttribute('data-default-error') || 'Please enter a valid US phone number.';
         if (phoneWrap) { phoneWrap.classList.add('is-invalid'); setTimeout(function(){ phoneWrap.classList.remove('is-invalid'); }, 350); }
         phone.focus();
         return;
@@ -646,7 +716,231 @@
   "name": "SMS VIP Hero Video",
   "tag": "section",
   "class": "bb-sms-vip-hero-video",
-  "settings": [],
-  "presets": [{ "name": "SMS VIP Hero Video" }]
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Falls back to the Betterbrand CDN logo if empty."
+    },
+    {
+      "type": "text",
+      "id": "shipping_bar",
+      "label": "Shipping bar text",
+      "default": "We Pay Shipping On Orders Over $50  ·  365-Day Money-Back Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "promo_text",
+      "label": "Promo bar text",
+      "default": "✦  VIP Members only  ·  Your 15% off + first access starts by text  ✦"
+    },
+    {
+      "type": "header",
+      "content": "Hero content"
+    },
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Pill badge",
+      "default": "Trusted by 1M+ customers"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Become a"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent word",
+      "default": "VIP",
+      "info": "Highlighted in yellow after line 1."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "Today."
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Supporting text",
+      "default": "Join by text and get a code for 15% off your first purchase, plus early access to new drops, sales, and restock alerts before anyone else."
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "phone_flag",
+      "label": "Phone prefix",
+      "default": "🇺🇸 +1"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "(555) 123-4567"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Activate VIP Status"
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "Please enter a valid US phone number."
+    },
+    {
+      "type": "richtext",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "<p><strong>You're a VIP.</strong> Code incoming by text.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "tcpa",
+      "label": "TCPA / legal text under form",
+      "default": "<p>By tapping the button above, you agree to receive recurring marketing texts from Betterbrand at the number provided. Consent isn't a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. View <a href=\"https://trybetterbrand.com/policies/privacy-policy\">Privacy Policy</a> &amp; <a href=\"https://trybetterbrand.com/policies/terms-of-service\">Terms</a>.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Hero video",
+      "info": "Upload in Shopify Files. If empty, uses the theme asset or URL below."
+    },
+    {
+      "type": "text",
+      "id": "hero_video_url",
+      "label": "Hero video URL (optional)",
+      "info": "Direct .mp4 URL. Used when no Shopify video is selected."
+    },
+    {
+      "type": "text",
+      "id": "video_aria_label",
+      "label": "Video accessibility label",
+      "default": "Betterbrand VIP video"
+    },
+    {
+      "type": "text",
+      "id": "unmute_label",
+      "label": "Unmute button label",
+      "default": "Tap for sound"
+    },
+    {
+      "type": "header",
+      "content": "Footer"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "<p>*These statements haven't been evaluated by the FDA. Betterbrand products aren't designed for diagnosing, treating, curing, or preventing disease. Use as directed. By providing your phone number you consent to receive recurring marketing texts from Betterbrand at the number provided, including messages sent by autodialer. Consent isn't a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. View our <a href=\"https://trybetterbrand.com/policies/privacy-policy\">Privacy Policy</a> and <a href=\"https://trybetterbrand.com/policies/terms-of-service\">Terms of Service</a>. **All products formulated for adults 18+.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "VIP bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "15% off your first purchase as a VIP Member"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "people", "label": "People" },
+            { "value": "check", "label": "Check" },
+            { "value": "star", "label": "Star" }
+          ],
+          "default": "people"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "1M+ VIP Customers"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SMS VIP Hero Video",
+      "blocks": [
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "15% off your first purchase as a VIP Member"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "First access to limited product drops"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "First in line when stock runs low"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "Dr. Chris's breathing tips, texted to you first"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "people",
+            "text": "1M+ VIP Customers"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "check",
+            "text": "365-Day Guarantee"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "star",
+            "text": "4.8/5 (12K Reviews)"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -17,6 +8,62 @@
     "sms_lander_hero_video": {
       "type": "sms-lander-hero-video",
       "name": "SMS VIP Hero Video",
+      "blocks": {
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "text": "15% off your first purchase as a VIP Member"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "text": "First access to limited product drops"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "text": "First in line when stock runs low"
+          }
+        },
+        "bullet_4": {
+          "type": "bullet",
+          "settings": {
+            "text": "Dr. Chris's breathing tips, texted to you first"
+          }
+        },
+        "trust_1": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "people",
+            "text": "1M+ VIP Customers"
+          }
+        },
+        "trust_2": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "check",
+            "text": "365-Day Guarantee"
+          }
+        },
+        "trust_3": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "star",
+            "text": "4.8/5 (12K Reviews)"
+          }
+        }
+      },
+      "block_order": [
+        "bullet_1",
+        "bullet_2",
+        "bullet_3",
+        "bullet_4",
+        "trust_1",
+        "trust_2",
+        "trust_3"
+      ],
       "settings": {}
     }
   },
