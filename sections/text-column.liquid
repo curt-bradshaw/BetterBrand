@@ -32,11 +32,7 @@
                 height="{{ image_height }}">
             </div>
           {% else %}
-            {%-
-              render 'responsive-image' with
-              placeholder: 'product-1',
-              class: 'text-column__image'
-            -%}
+            {%- render 'responsive-image' with placeholder, placeholder: 'product-1', class: 'text-column__image' -%}
           {% endif %}
         </section>
       {% endif %}
@@ -201,4 +197,19 @@
       width: 100%;
     }
   }
-</style>
+</style>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                  render 'responsive-image' with
+                  placeholder: 'product-1',
+                  class: 'text-column__image'
+                -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: 'product-1', class:
+    'text-column__image' -%}"
+  position: 1375..1480
+{%- endcomment -%}

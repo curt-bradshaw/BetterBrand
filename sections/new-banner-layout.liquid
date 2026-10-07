@@ -16,13 +16,7 @@
         <div class="new-banner__block-reviews__head">
           {% if block.settings.review_image != blank %}
             <div class="new-banner__block-reviews__author-img">
-              {%- render 'responsive-image' with
-                image: block.settings.review_image,
-                lazyload: enable_lazy,
-                width: 400,
-                no_wrap: true, 
-                alt: block.settings.review_image.alt
-              -%}
+              {%- render 'responsive-image' with image, image: block.settings.review_image, lazyload: enable_lazy, width: 400, no_wrap: true, alt: block.settings.review_image.alt -%}
             </div>
           {% endif %}
           <div class="new-banner__block-reviews__infos">
@@ -132,13 +126,7 @@
           {% render 'lung-supplement' %}
         </div>
         <div class="new-banner__absolute-image">
-          {%- render 'responsive-image' with
-            image: section.settings.banner_absolute_image,
-            lazyload: enable_lazy,
-            width: 800,
-            no_wrap: true,
-            alt: section.settings.banner_absolute_image.alt | default: 'Banner decoration'
-          -%}
+          {%- render 'responsive-image' with image, image: section.settings.banner_absolute_image, lazyload: enable_lazy, width: 800, no_wrap: true, alt: section.settings.banner_absolute_image.alt, default: 'Banner decoration' -%}
         </div>
       {%- endif -%}
 
@@ -2850,3 +2838,29 @@
 }
 {% endschema %}
 <!-- end new-banner-layout.liquid -->
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'responsive-image' with\n                image: block.settings.review_image,\n
+    \               lazyload: enable_lazy,\n                width: 400,\n                no_wrap:
+    true, \n                alt: block.settings.review_image.alt\n              -%}"
+  to: "{%- render 'responsive-image' with image, image: block.settings.review_image,
+    lazyload: enable_lazy, width: 400, no_wrap: true, alt: block.settings.review_image.alt
+    -%}"
+  position: 1306..1474
+- from: |-
+    {%- render 'responsive-image' with
+                image: section.settings.banner_absolute_image,
+                lazyload: enable_lazy,
+                width: 800,
+                no_wrap: true,
+                alt: section.settings.banner_absolute_image.alt | default: 'Banner decoration'
+              -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.banner_absolute_image,
+    lazyload: enable_lazy, width: 800, no_wrap: true, alt: section.settings.banner_absolute_image.alt,
+    default: 'Banner decoration' -%}"
+  position: 8033..8253
+{% endcomment %}
