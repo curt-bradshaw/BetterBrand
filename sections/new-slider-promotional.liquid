@@ -236,13 +236,7 @@
                 title="{{ block.settings.title | strip_html | escape }}"
                 href="{{ block.settings.link_Image_slide_promotional | default: '#' }}"
               >
-                {%-
-                  render 'responsive-image' with
-                  image: block.settings.image_slide_promotional,
-                  width: 600,
-                  lazyload: false,
-                  id: index
-                -%}
+                {%- render 'responsive-image' with image, image: block.settings.image_slide_promotional, width: 600, lazyload: false, id: index -%}
               </a>
             </div>
 
@@ -540,3 +534,21 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                      render 'responsive-image' with
+                      image: block.settings.image_slide_promotional,
+                      width: 600,
+                      lazyload: false,
+                      id: index
+                    -%}
+  to: "{%- render 'responsive-image' with image, image: block.settings.image_slide_promotional,
+    width: 600, lazyload: false, id: index -%}"
+  position: 6399..6530
+{% endcomment %}

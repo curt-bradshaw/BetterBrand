@@ -4203,53 +4203,45 @@
                 {%- render 'product-sliders' -%}
               </div>
             {%- when 'title' -%}
-              {%- render 'product-title' with block: block, product_title: product.title -%}
+              {%- render 'product-title' with block, block: block, product_title: product.title -%}
               <p>{{ product.metafields.custom.product_description | escape }}</p>
             {% when 'reviews' %}
-              {%- render 'product-reviews' with block: block, pattern: '([rating] of [count] reviews)' -%}
+              {%- render 'product-reviews' with block, block: block, pattern: '([rating] of [count] reviews)' -%}
             {%- when 'price' -%}
-              {%- render 'product-price-new-layout' with block: block -%}
+              {%- render 'product-price-new-layout' with block, block: block -%}
             {%- when 'product_info' -%}
               {% unless product.metafields.custom.hide_product_benefits_on_pdp == true %}
                 {% if benefits_from_metafields == blank %} 
-                  {% render 'product-info' with block: block %}
+                  {% render 'product-info' with block, block: block %}
                 {% elsif benefits_from_metafields and all_benefits_rendered == false %}
                   {% for item in benefits_from_metafields %}
-                    {% render 'product-info' with item: item %}
+                    {% render 'product-info' with item, item: item %}
                   {% endfor %}
                   {% assign all_benefits_rendered = true %}
                 {% endif %}
               {% endunless %}
             {%- when 'description' -%}
-              {%- render 'product-description' with product: product, block: block -%}
+              {%- render 'product-description' with product, product: product, block: block -%}
             {%- when 'product_form' -%}
-              {%- render 'product-form' with settings: settings, product: product, section.id: section.id, block: block -%}
+              {%- render 'product-form' with settings, settings: settings, product: product, id: section.id, block: block -%}
             {% when 'product_badges' %}
-              {%- render 'product-badges' with block: block -%}
+              {%- render 'product-badges' with block, block: block -%}
             {%- when 'product_upsell' -%}
               <div class="product-page__upsell-wrapper">
                 <div class="new-product-page-upsell-carousel-title">Customers Also Bought</div>
-                {%- render 'product-page-upsell' with block:block -%}
+                {%- render 'product-page-upsell' with block.block, block: block -%}
               </div>
             {%- when 'container-reviews' -%}
-              {%- render 'container-reviews' with block:block -%}
+              {%- render 'container-reviews' with block.block, block: block -%}
           {%- endcase -%}
         {%- endfor -%}
 
         {%- if section.settings.enabled_videos -%}
-          {%- render 'product-video' with settings: settings, product: product, section.id: section.id -%}
+          {%- render 'product-video' with settings, settings: settings, product: product, id: section.id -%}
         {%- endif -%}
 
         {%- if section.settings.enabled_tabs -%}
-          {%-
-            render 'product-tabs-accordion' with
-            first_tab_index: first_tab_index,
-            tab_index:forloop.index,
-            block: block,
-            settings: settings,
-            product: product,
-            section.id: section.id
-          -%}
+          {%- render 'product-tabs-accordion' with first_tab_index, first_tab_index: first_tab_index, tab_index: forloop.index, block: block, settings: settings, product: product, id: section.id -%}
         {%- endif -%}
         {% if section.settings.enable_review_container %}
           {% render 'container-reviews' %}
@@ -5367,3 +5359,66 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'product-title' with block: block, product_title: product.title
+    -%}"
+  to: "{%- render 'product-title' with block, block: block, product_title: product.title
+    -%}"
+  position: 103215..103300
+- from: "{%- render 'product-reviews' with block: block, pattern: '([rating] of [count]
+    reviews)' -%}"
+  to: "{%- render 'product-reviews' with block, block: block, pattern: '([rating]
+    of [count] reviews)' -%}"
+  position: 103430..103529
+- from: "{%- render 'product-price-new-layout' with block: block -%}"
+  to: "{%- render 'product-price-new-layout' with block, block: block -%}"
+  position: 103577..103643
+- from: "{% render 'product-info' with block: block %}"
+  to: "{% render 'product-info' with block, block: block %}"
+  position: 103852..103904
+- from: "{% render 'product-info' with item: item %}"
+  to: "{% render 'product-info' with item, item: item %}"
+  position: 104074..104123
+- from: "{%- render 'product-description' with product: product, block: block -%}"
+  to: "{%- render 'product-description' with product, product: product, block: block
+    -%}"
+  position: 104326..104407
+- from: "{%- render 'product-form' with settings: settings, product: product, section.id:
+    section.id, block: block -%}"
+  to: "{%- render 'product-form' with settings, settings: settings, product: product,
+    id: section.id, block: block -%}"
+  position: 104462..104573
+- from: "{%- render 'product-badges' with block: block -%}"
+  to: "{%- render 'product-badges' with block, block: block -%}"
+  position: 104628..104684
+- from: "{%- render 'product-page-upsell' with block:block -%}"
+  to: "{%- render 'product-page-upsell' with block.block, block: block -%}"
+  position: 104896..104963
+- from: "{%- render 'container-reviews' with block:block -%}"
+  to: "{%- render 'container-reviews' with block.block, block: block -%}"
+  position: 105044..105109
+- from: "{%- render 'product-video' with settings: settings, product: product, section.id:
+    section.id -%}"
+  to: "{%- render 'product-video' with settings, settings: settings, product: product,
+    id: section.id -%}"
+  position: 105221..105319
+- from: |-
+    {%-
+                render 'product-tabs-accordion' with
+                first_tab_index: first_tab_index,
+                tab_index:forloop.index,
+                block: block,
+                settings: settings,
+                product: product,
+                section.id: section.id
+              -%}
+  to: "{%- render 'product-tabs-accordion' with first_tab_index, first_tab_index:
+    first_tab_index, tab_index: forloop.index, block: block, settings: settings, product:
+    product, id: section.id -%}"
+  position: 105402..105590
+{% endcomment %}

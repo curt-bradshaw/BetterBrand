@@ -28,15 +28,7 @@
                 class="img-post-home"
                 title="{{- article.image.alt | default: 'Article Image' -}}"
               >
-                {%-
-                  render 'responsive-image' with
-                  image: article.image,
-                  lazyload: true,
-                  width: 400,
-                  height: 400,
-                  alt: section.settings.homepage_banner_text,
-                  no_wrap: true,
-                -%}
+                {%- render 'responsive-image' with image, image: article.image, lazyload: true, width: 400, height: 400, alt: section.settings.homepage_banner_text, no_wrap: true -%}
               </a>
             {%- else -%}
               <a
@@ -45,15 +37,7 @@
                 title="{{- article.image.alt | default: 'Article Image' -}}"
               >
                 {%- if section.settings.blog_rewrite_image_home == 'placeholder' -%}
-                  {%-
-                    render 'responsive-image' with
-                    image: section.settings.blog_article_placeholder_home,
-                    lazyload: true,
-                    width: 110,
-                    height: 110,
-                    alt: section.settings.blog_article_placeholder_home.alt,
-                    no_wrap: true,
-                  -%}
+                  {%- render 'responsive-image' with image, image: section.settings.blog_article_placeholder_home, lazyload: true, width: 110, height: 110, alt: section.settings.blog_article_placeholder_home.alt, no_wrap: true -%}
                 {%- endif -%}
               </a>
             {%- endif -%}
@@ -96,12 +80,7 @@
 
         <article class="post {{ col }}">
           <div class="img-post-home">
-            {%-
-              render 'responsive-image' with
-              placeholder: 'product-6',
-              width: 110,
-              height: 110
-            -%}
+            {%- render 'responsive-image' with placeholder, placeholder: 'product-6', width: 110, height: 110 -%}
           </div>
 
           <div class="post-content-home">
@@ -1214,3 +1193,48 @@
 }
 {% endschema %}
 <!-- end blog-posts.liquid -->
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                      render 'responsive-image' with
+                      image: article.image,
+                      lazyload: true,
+                      width: 400,
+                      height: 400,
+                      alt: section.settings.homepage_banner_text,
+                      no_wrap: true,
+                    -%}
+  to: "{%- render 'responsive-image' with image, image: article.image, lazyload: true,
+    width: 400, height: 400, alt: section.settings.homepage_banner_text, no_wrap:
+    true -%}"
+  position: 1223..1389
+- from: |-
+    {%-
+                        render 'responsive-image' with
+                        image: section.settings.blog_article_placeholder_home,
+                        lazyload: true,
+                        width: 110,
+                        height: 110,
+                        alt: section.settings.blog_article_placeholder_home.alt,
+                        no_wrap: true,
+                      -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.blog_article_placeholder_home,
+    lazyload: true, width: 110, height: 110, alt: section.settings.blog_article_placeholder_home.alt,
+    no_wrap: true -%}"
+  position: 1741..1953
+- from: |-
+    {%-
+                  render 'responsive-image' with
+                  placeholder: 'product-6',
+                  width: 110,
+                  height: 110
+                -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: 'product-6', width:
+    110, height: 110 -%}"
+  position: 3369..3470
+{% endcomment %}
