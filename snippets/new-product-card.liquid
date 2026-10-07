@@ -2,13 +2,7 @@
 
 <a class="new-product-card" href="{{ product.url }}" id="new-product-card-{{ forloop.index }}">
   <picture class="new-product-card__image">
-    {% render 'responsive-image' with
-      image: product.featured_image,
-      alt: product.featured_image.alt | default: 'Product Image',
-      class: 'new-product-card__featured-img',
-      width: 274,
-      height: 304,      
-    %}
+    {% render 'responsive-image' with image, image: product.featured_image, alt: product.featured_image.alt, default: 'Product Image', class: 'new-product-card__featured-img', width: 274, height: 304 %}
   </picture>
   <div class="new-product-card__title">
     <h3>{{ product.title }}</h3>
@@ -22,7 +16,7 @@
   </div>
 
   <div class="new-product-card__reviews">
-    {% render 'reviews-stars' with prod: product %}   
+    {% render 'reviews-stars' with prod, prod: product %}   
     {% comment %} Delete this div when a reviews app is downloaded {% endcomment %}
     {% render 'review-stars-svg' %}
     <span>(5.0 of 800 Reviews)</span>
@@ -37,4 +31,21 @@
   
 
 
-</a>
+</a>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'responsive-image' with\n      image: product.featured_image,\n
+    \     alt: product.featured_image.alt | default: 'Product Image',\n      class:
+    'new-product-card__featured-img',\n      width: 274,\n      height: 304,      \n
+    \   %}"
+  to: "{% render 'responsive-image' with image, image: product.featured_image, alt:
+    product.featured_image.alt, default: 'Product Image', class: 'new-product-card__featured-img',
+    width: 274, height: 304 %}"
+  position: 187..385
+- from: "{% render 'reviews-stars' with prod: product %}"
+  to: "{% render 'reviews-stars' with prod, prod: product %}"
+  position: 770..823
+{%- endcomment -%}

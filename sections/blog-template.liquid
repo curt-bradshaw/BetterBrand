@@ -776,15 +776,7 @@
                     class="blog-page__article-image"
                     href="{{ article.url | default: '#' }}"
                   >
-                    {%
-                       render 'responsive-image' with
-                       id: article.title,
-                       image: article_image,
-                       lazyload: false,
-                       width: 800,
-                       no_wrap: true,
-                       alt: article.title 
-                    %}
+                    {% render 'responsive-image' with id, id: article.title, image: article_image, lazyload: false, width: 800, no_wrap: true, alt: article.title %}
                   </a>
                 </div>
               {% endif %}
@@ -1700,4 +1692,17 @@
       }
     ]
   }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%\n                       render 'responsive-image' with\n                       id:
+    article.title,\n                       image: article_image,\n                       lazyload:
+    false,\n                       width: 800,\n                       no_wrap: true,\n
+    \                      alt: article.title \n                    %}"
+  to: "{% render 'responsive-image' with id, id: article.title, image: article_image,
+    lazyload: false, width: 800, no_wrap: true, alt: article.title %}"
+  position: 18265..18409
+{%- endcomment -%}

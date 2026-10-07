@@ -45,19 +45,7 @@
 
   <div class="featured-collection__grid-uniform {{ items_qtd_per_row_desktop }} no-mobile">
     {%- for temp_product in temp_collection limit: item_count_desktop -%}
-      {%-
-          render 'product-card' with
-        prod: temp_product,
-        max_width: max_width,
-        max_height: max_height,
-        width_mobile: width_mobile,
-        index: forloop.index,
-        width_desk: width_desk,
-        enable_lazy: enable_lazy,
-        show_reviews: settings.feat_prod_enabled_app_reviews,
-        show_price: section.settings.show_price,
-        show_swatch: section.settings.show_swatch,
-        show_description: section.settings.show_description -%}
+      {%- render 'product-card' with prod, prod: temp_product, max_width: max_width, max_height: max_height, width_mobile: width_mobile, index: forloop.index, width_desk: width_desk, enable_lazy: enable_lazy, show_reviews: settings.feat_prod_enabled_app_reviews, show_price: section.settings.show_price, show_swatch: section.settings.show_swatch, show_description: section.settings.show_description -%}
     {% else %}
       {%- for i in (1..item_count_desktop) -%}
         {%- render 'product-card' -%}
@@ -67,19 +55,7 @@
 
   <div class="featured-collection__grid-uniform mobile {{ items_qtd_per_row_mobile }}">
     {%- for temp_product in temp_collection limit: item_count_mobile -%}
-      {%-
-          render 'product-card' with
-        prod: temp_product,
-        max_width: max_width,
-        max_height: max_height,
-        width_mobile: width_mobile,
-        index: forloop.index,
-        width_desk: width_desk,
-        enable_lazy: enable_lazy,
-        show_reviews: settings.feat_prod_enabled_app_reviews,
-        show_price: section.settings.show_price,
-        show_swatch: section.settings.show_swatch,
-        show_description: section.settings.show_description -%}
+      {%- render 'product-card' with prod, prod: temp_product, max_width: max_width, max_height: max_height, width_mobile: width_mobile, index: forloop.index, width_desk: width_desk, enable_lazy: enable_lazy, show_reviews: settings.feat_prod_enabled_app_reviews, show_price: section.settings.show_price, show_swatch: section.settings.show_swatch, show_description: section.settings.show_description -%}
     {% else %}
       {%- for i in (1..item_count_mobile) -%}
         {%- render 'product-card' -%}
@@ -605,4 +581,50 @@
     ]
   }
 {% endschema %}
-<!-- end featured-collection.liquid -->
+<!-- end featured-collection.liquid -->{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+              render 'product-card' with
+            prod: temp_product,
+            max_width: max_width,
+            max_height: max_height,
+            width_mobile: width_mobile,
+            index: forloop.index,
+            width_desk: width_desk,
+            enable_lazy: enable_lazy,
+            show_reviews: settings.feat_prod_enabled_app_reviews,
+            show_price: section.settings.show_price,
+            show_swatch: section.settings.show_swatch,
+            show_description: section.settings.show_description -%}
+  to: "{%- render 'product-card' with prod, prod: temp_product, max_width: max_width,
+    max_height: max_height, width_mobile: width_mobile, index: forloop.index, width_desk:
+    width_desk, enable_lazy: enable_lazy, show_reviews: settings.feat_prod_enabled_app_reviews,
+    show_price: section.settings.show_price, show_swatch: section.settings.show_swatch,
+    show_description: section.settings.show_description -%}"
+  position: 1995..2391
+- from: |-
+    {%-
+              render 'product-card' with
+            prod: temp_product,
+            max_width: max_width,
+            max_height: max_height,
+            width_mobile: width_mobile,
+            index: forloop.index,
+            width_desk: width_desk,
+            enable_lazy: enable_lazy,
+            show_reviews: settings.feat_prod_enabled_app_reviews,
+            show_price: section.settings.show_price,
+            show_swatch: section.settings.show_swatch,
+            show_description: section.settings.show_description -%}
+  to: "{%- render 'product-card' with prod, prod: temp_product, max_width: max_width,
+    max_height: max_height, width_mobile: width_mobile, index: forloop.index, width_desk:
+    width_desk, enable_lazy: enable_lazy, show_reviews: settings.feat_prod_enabled_app_reviews,
+    show_price: section.settings.show_price, show_swatch: section.settings.show_swatch,
+    show_description: section.settings.show_description -%}"
+  position: 2709..3105
+{%- endcomment -%}

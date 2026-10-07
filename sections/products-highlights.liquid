@@ -1014,41 +1014,11 @@
 {% capture contentView %}
     {% if section.settings.product1 != blank or section.settings.product2 != blank %}
         {% if section.settings.product1 != blank %}
-            {% render 'products-highlights-item',
-                productTarget: section.settings.product1,
-                source: 'product-1',
-                custom_metafield: section.settings.custom_metafield,
-                background_color: section.settings.product1_background,
-                background_icon: background1,
-                background_icon_tablet: background1_tablet,
-                background_icon_mobile: background1_mobile,
-                lazy_load: section.settings.enable_lazy_load.,
-                toggle_content: section.settings.product1_enable_toggle_content,
-                toggle_content_label: section.settings.product1_toggle_content_label,
-                short_description: section.settings.product1_enable_short_description,
-                short_description_text: section.settings.product1_description_text,
-                custom_image: section.settings.product1_image,
-                custom_title: section.settings.product1_custom_title,
-            %}
+            {% render 'products-highlights-item', productTarget: section.settings.product1, source: 'product-1', custom_metafield: section.settings.custom_metafield, background_color: section.settings.product1_background, background_icon: background1, background_icon_tablet: background1_tablet, background_icon_mobile: background1_mobile, lazy_load: section.settings.enable_lazy_load, toggle_content: section.settings.product1_enable_toggle_content, toggle_content_label: section.settings.product1_toggle_content_label, short_description: section.settings.product1_enable_short_description, short_description_text: section.settings.product1_description_text, custom_image: section.settings.product1_image, custom_title: section.settings.product1_custom_title %}
         {% endif %}
         
         {% if section.settings.product2 != blank %}
-            {% render 'products-highlights-item',
-                productTarget: section.settings.product2,
-                source: 'product-2',
-                custom_metafield: section.settings.custom_metafield,
-                background_color: section.settings.product2_background,
-                background_icon: background2,
-                background_icon_tablet: background2_tablet,
-                background_icon_mobile: background2_mobile,
-                lazy_load: section.settings.enable_lazy_load.,
-                toggle_content: section.settings.product2_enable_toggle_content,
-                toggle_content_label: section.settings.product2_toggle_content_label,
-                short_description: section.settings.product2_enable_short_description,
-                short_description_text: section.settings.product2_description_text,
-                custom_image: section.settings.product2_image,
-                custom_title: section.settings.product2_custom_title,
-            %}
+            {% render 'products-highlights-item', productTarget: section.settings.product2, source: 'product-2', custom_metafield: section.settings.custom_metafield, background_color: section.settings.product2_background, background_icon: background2, background_icon_tablet: background2_tablet, background_icon_mobile: background2_mobile, lazy_load: section.settings.enable_lazy_load, toggle_content: section.settings.product2_enable_toggle_content, toggle_content_label: section.settings.product2_toggle_content_label, short_description: section.settings.product2_enable_short_description, short_description_text: section.settings.product2_description_text, custom_image: section.settings.product2_image, custom_title: section.settings.product2_custom_title %}
         {% endif %}
         {% else %}
             {% render 'standart-products-highlights' %}
@@ -1059,31 +1029,7 @@
 {% capture contentDrawer %}
     {% if section.settings.product1 != blank or section.settings.product2 != blank %}
         {% if section.settings.product1 != blank %}
-            {% render 'products-highlights-drawer',
-                productTarget: section.settings.product1,
-                source: 'product-1',
-                custom_metafield: section.settings.custom_metafield,
-                background_color: section.settings.product1_background,
-                background_icon: background1,
-                background_icon_tablet: drawer_background_tablet,
-                background_icon_mobile: drawer_background_mobile,
-                lazy_load: section.settings.enable_lazy_load.,
-                toggle_content: section.settings.product1_enable_toggle_content,
-                toggle_content_label: section.settings.product1_toggle_content_label,
-                short_description: section.settings.product1_enable_description,
-                short_description_text: section.settings.product1_description_text,
-                enable_description: section.settings.product1_enable_description,
-                enable_badge: section.settings.product1_enable_badge,
-                text_badge: section.settings.product1_badge,
-                enable_product_link: section.settings.product1_enable_link_label,
-                enable_product_link_label: section.settings.product1_link_label,
-                this_section_blocks: section.blocks,
-                icons_text_direction: section.settings.icons_text_direction,
-                enable_custom_description: section.settings.product1_enable_custom_description,
-                custom_description: section.settings.product1_custom_description,
-                custom_image: section.settings.product1_image,
-                custom_title: section.settings.product1_custom_title,
-            %}
+            {% render 'products-highlights-drawer', productTarget: section.settings.product1, source: 'product-1', custom_metafield: section.settings.custom_metafield, background_color: section.settings.product1_background, background_icon: background1, background_icon_tablet: drawer_background_tablet, background_icon_mobile: drawer_background_mobile, lazy_load: section.settings.enable_lazy_load, toggle_content: section.settings.product1_enable_toggle_content, toggle_content_label: section.settings.product1_toggle_content_label, short_description: section.settings.product1_enable_description, short_description_text: section.settings.product1_description_text, enable_description: section.settings.product1_enable_description, enable_badge: section.settings.product1_enable_badge, text_badge: section.settings.product1_badge, enable_product_link: section.settings.product1_enable_link_label, enable_product_link_label: section.settings.product1_link_label, this_section_blocks: section.blocks, icons_text_direction: section.settings.icons_text_direction, enable_custom_description: section.settings.product1_enable_custom_description, custom_description: section.settings.product1_custom_description, custom_image: section.settings.product1_image, custom_title: section.settings.product1_custom_title %}
         {% endif %}
         {% if section.settings.product2 != blank %}
             {% render 'products-highlights-drawer',
@@ -2001,4 +1947,106 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'products-highlights-item',
+                    productTarget: section.settings.product1,
+                    source: 'product-1',
+                    custom_metafield: section.settings.custom_metafield,
+                    background_color: section.settings.product1_background,
+                    background_icon: background1,
+                    background_icon_tablet: background1_tablet,
+                    background_icon_mobile: background1_mobile,
+                    lazy_load: section.settings.enable_lazy_load.,
+                    toggle_content: section.settings.product1_enable_toggle_content,
+                    toggle_content_label: section.settings.product1_toggle_content_label,
+                    short_description: section.settings.product1_enable_short_description,
+                    short_description_text: section.settings.product1_description_text,
+                    custom_image: section.settings.product1_image,
+                    custom_title: section.settings.product1_custom_title,
+                %}
+  to: "{% render 'products-highlights-item', productTarget: section.settings.product1,
+    source: 'product-1', custom_metafield: section.settings.custom_metafield, background_color:
+    section.settings.product1_background, background_icon: background1, background_icon_tablet:
+    background1_tablet, background_icon_mobile: background1_mobile, lazy_load: section.settings.enable_lazy_load,
+    toggle_content: section.settings.product1_enable_toggle_content, toggle_content_label:
+    section.settings.product1_toggle_content_label, short_description: section.settings.product1_enable_short_description,
+    short_description_text: section.settings.product1_description_text, custom_image:
+    section.settings.product1_image, custom_title: section.settings.product1_custom_title
+    %}"
+  position: 29521..30271
+- from: |-
+    {% render 'products-highlights-item',
+                    productTarget: section.settings.product2,
+                    source: 'product-2',
+                    custom_metafield: section.settings.custom_metafield,
+                    background_color: section.settings.product2_background,
+                    background_icon: background2,
+                    background_icon_tablet: background2_tablet,
+                    background_icon_mobile: background2_mobile,
+                    lazy_load: section.settings.enable_lazy_load.,
+                    toggle_content: section.settings.product2_enable_toggle_content,
+                    toggle_content_label: section.settings.product2_toggle_content_label,
+                    short_description: section.settings.product2_enable_short_description,
+                    short_description_text: section.settings.product2_description_text,
+                    custom_image: section.settings.product2_image,
+                    custom_title: section.settings.product2_custom_title,
+                %}
+  to: "{% render 'products-highlights-item', productTarget: section.settings.product2,
+    source: 'product-2', custom_metafield: section.settings.custom_metafield, background_color:
+    section.settings.product2_background, background_icon: background2, background_icon_tablet:
+    background2_tablet, background_icon_mobile: background2_mobile, lazy_load: section.settings.enable_lazy_load,
+    toggle_content: section.settings.product2_enable_toggle_content, toggle_content_label:
+    section.settings.product2_toggle_content_label, short_description: section.settings.product2_enable_short_description,
+    short_description_text: section.settings.product2_description_text, custom_image:
+    section.settings.product2_image, custom_title: section.settings.product2_custom_title
+    %}"
+  position: 30365..31115
+- from: |-
+    {% render 'products-highlights-drawer',
+                    productTarget: section.settings.product1,
+                    source: 'product-1',
+                    custom_metafield: section.settings.custom_metafield,
+                    background_color: section.settings.product1_background,
+                    background_icon: background1,
+                    background_icon_tablet: drawer_background_tablet,
+                    background_icon_mobile: drawer_background_mobile,
+                    lazy_load: section.settings.enable_lazy_load.,
+                    toggle_content: section.settings.product1_enable_toggle_content,
+                    toggle_content_label: section.settings.product1_toggle_content_label,
+                    short_description: section.settings.product1_enable_description,
+                    short_description_text: section.settings.product1_description_text,
+                    enable_description: section.settings.product1_enable_description,
+                    enable_badge: section.settings.product1_enable_badge,
+                    text_badge: section.settings.product1_badge,
+                    enable_product_link: section.settings.product1_enable_link_label,
+                    enable_product_link_label: section.settings.product1_link_label,
+                    this_section_blocks: section.blocks,
+                    icons_text_direction: section.settings.icons_text_direction,
+                    enable_custom_description: section.settings.product1_enable_custom_description,
+                    custom_description: section.settings.product1_custom_description,
+                    custom_image: section.settings.product1_image,
+                    custom_title: section.settings.product1_custom_title,
+                %}
+  to: "{% render 'products-highlights-drawer', productTarget: section.settings.product1,
+    source: 'product-1', custom_metafield: section.settings.custom_metafield, background_color:
+    section.settings.product1_background, background_icon: background1, background_icon_tablet:
+    drawer_background_tablet, background_icon_mobile: drawer_background_mobile, lazy_load:
+    section.settings.enable_lazy_load, toggle_content: section.settings.product1_enable_toggle_content,
+    toggle_content_label: section.settings.product1_toggle_content_label, short_description:
+    section.settings.product1_enable_description, short_description_text: section.settings.product1_description_text,
+    enable_description: section.settings.product1_enable_description, enable_badge:
+    section.settings.product1_enable_badge, text_badge: section.settings.product1_badge,
+    enable_product_link: section.settings.product1_enable_link_label, enable_product_link_label:
+    section.settings.product1_link_label, this_section_blocks: section.blocks, icons_text_direction:
+    section.settings.icons_text_direction, enable_custom_description: section.settings.product1_enable_custom_description,
+    custom_description: section.settings.product1_custom_description, custom_image:
+    section.settings.product1_image, custom_title: section.settings.product1_custom_title
+    %}"
+  position: 31432..32730
+{%- endcomment -%}

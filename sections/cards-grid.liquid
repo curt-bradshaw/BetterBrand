@@ -129,11 +129,7 @@
         <ul class="{% if splide %}splide__list{% endif %} cards-grid__list">
           {% for product in collection.products, limit: 12 %}
             <li id="grid-item-{{ forloop.index }}" class="cards-grid__item {% if splide %}splide__slide{% endif %}">
-              {% render 'new-product-card' with 
-                product: product,
-                collection: collection,
-                forloop: forloop
-              %}
+              {% render 'new-product-card' with product, product: product, collection: collection, forloop: forloop %}
             </li>        
           {% endfor %}
         </ul>
@@ -144,12 +140,7 @@
     </div>
     {% if section.settings.enable_button %}
       <div class="cards-grid__button">
-        {% render 'redirect-button' with 
-          link_text: section.settings.link_text, 
-          link_href: collection.url, 
-          link_color: section.settings.link_color, 
-          link_color_hover: section.settings.link_color_hover
-        %}
+        {% render 'redirect-button' with link_text, link_text: section.settings.link_text, link_href: collection.url, link_color: section.settings.link_color, link_color_hover: section.settings.link_color_hover %}
       </div>
     {% endif %}
   </div>
@@ -445,4 +436,22 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'new-product-card' with \n                product: product,\n                collection:
+    collection,\n                forloop: forloop\n              %}"
+  to: "{% render 'new-product-card' with product, product: product, collection: collection,
+    forloop: forloop %}"
+  position: 4746..4850
+- from: "{% render 'redirect-button' with \n          link_text: section.settings.link_text,
+    \n          link_href: collection.url, \n          link_color: section.settings.link_color,
+    \n          link_color_hover: section.settings.link_color_hover\n        %}"
+  to: "{% render 'redirect-button' with link_text, link_text: section.settings.link_text,
+    link_href: collection.url, link_color: section.settings.link_color, link_color_hover:
+    section.settings.link_color_hover %}"
+  position: 5106..5311
+{%- endcomment -%}
