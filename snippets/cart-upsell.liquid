@@ -628,15 +628,7 @@
         <div class="cart__upsell-product" data-product-id="{{ product.id }}">
           <div class="cart__upsell-product-image-wrapper">
             <a class="cart__upsell-product-image-link" href="{{ product.url | default: '#' }}">
-              {%-
-                render 'responsive-image' with
-                image: product.featured_image,
-                width: 400,
-                height: 400,
-                class: 'cart__upsell-product-image',
-                lazyload: true,
-                alt: product.featured_image.alt
-              -%}
+              {%- render 'responsive-image' with image, image: product.featured_image, width: 400, height: 400, class: 'cart__upsell-product-image', lazyload: true, alt: product.featured_image.alt -%}
             </a>
           </div>
 
@@ -650,7 +642,7 @@
             </div>
 
             <div class="cart__upsell-product-review">
-              {%- render 'reviews-stars' with prod: product -%}
+              {%- render 'reviews-stars' with prod, prod: product -%}
             </div>
 
             <div class="cart__upsell-atc-wrapper">
@@ -984,3 +976,27 @@
     });
   </script>
 {% endif %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                    render 'responsive-image' with
+                    image: product.featured_image,
+                    width: 400,
+                    height: 400,
+                    class: 'cart__upsell-product-image',
+                    lazyload: true,
+                    alt: product.featured_image.alt
+                  -%}
+  to: "{%- render 'responsive-image' with image, image: product.featured_image, width:
+    400, height: 400, class: 'cart__upsell-product-image', lazyload: true, alt: product.featured_image.alt
+    -%}"
+  position: 14068..14254
+- from: "{%- render 'reviews-stars' with prod: product -%}"
+  to: "{%- render 'reviews-stars' with prod, prod: product -%}"
+  position: 14722..14777
+{% endcomment %}

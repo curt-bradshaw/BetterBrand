@@ -514,7 +514,7 @@
       </div> 
 
       {%- if block.settings.select_newsletter == "klaviyo" and settings.enable_klaviyo_id -%}
-        {%- render "newsletter-form-klaviyo" with klaviyo_id: settings.klaviyo_id, section_id: section.id -%}
+        {%- render "newsletter-form-klaviyo" with klaviyo_id, klaviyo_id: settings.klaviyo_id, section_id: section.id -%}
       {%- elsif block.settings.select_newsletter == "newsletter-default" -%}
         {%- render "newsletter-form", section_id: section.id -%}
       {%- elsif block.settings.select_newsletter == "newsletter-custom" -%}
@@ -637,4 +637,15 @@
       button.textContent = 'See Less';
     }
   }
-</script>
+</script>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{%- render "newsletter-form-klaviyo" with klaviyo_id: settings.klaviyo_id,
+    section_id: section.id -%}'
+  to: '{%- render "newsletter-form-klaviyo" with klaviyo_id, klaviyo_id: settings.klaviyo_id,
+    section_id: section.id -%}'
+  position: 10377..10490
+{%- endcomment -%}

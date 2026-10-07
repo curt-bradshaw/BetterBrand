@@ -36,12 +36,7 @@
                     href="/"
                   {% endif %}
                 >
-                  {%-
-                    render 'responsive-image' with
-                    image: block.settings.logo_url,
-                    width: 250,
-                    alt: block.settings.shop_logo_alt
-                  -%}
+                  {%- render 'responsive-image' with image, image: block.settings.logo_url, width: 250, alt: block.settings.shop_logo_alt -%}
                 </a>
               {% else %}
                 <a
@@ -65,7 +60,7 @@
           {%- if block.settings.footer_newsletter_enable -%}
             <div class="grid__item {{ column_width }}">
               {%- if block.settings.select_newsletter == 'klaviyo' and settings.enable_klaviyo_id -%}
-                {%- render "newsletter-form-klaviyo" with settings: settings, klaviyo_id: settings.klaviyo_id, section_id: section.id -%}
+                {%- render "newsletter-form-klaviyo" with settings, settings: settings, klaviyo_id: settings.klaviyo_id, section_id: section.id -%}
               {%- elsif block.settings.select_newsletter == 'newsletter-default' -%}
                 {%- render 'newsletter-form', section_id: section.id -%}
               {%- elsif block.settings.select_newsletter == 'newsletter-custom' -%}
@@ -89,13 +84,7 @@
               id="ftr-pop_col-link-{{ block.id }}"
               href="{{ block.settings.link_popular_collection | default: '#' }}"
             >
-              {%-
-                render 'responsive-image' with
-                image: block.settings.url_popular_collection,
-                width: 300,
-                lazyload : true,
-                no_wrap : true,
-              -%}
+              {%- render 'responsive-image' with image, image: block.settings.url_popular_collection, width: 300, lazyload: true, no_wrap: true -%}
               {% if block.settings.text_editable != blank %}
                 <h5 class="popular_collections_text">{{ block.settings.text_editable }}</h5>
               {% endif %}
@@ -195,7 +184,7 @@
                     href="{{ social_link | default: '#' }}"
                     target="_blank"
                   >
-                    {%- render 'icon-media-social' with icon: block.settings.social_media -%}
+                    {%- render 'icon-media-social' with icon, icon: block.settings.social_media -%}
                   </a>
                 </div>
               {%- endif -%}
@@ -299,12 +288,7 @@
                   href="/"
                 {% endif %}
               >
-                {%-
-                  render 'responsive-image' with
-                  image: block.settings.logo_url,
-                  alt: block.settings.logo_url.alt,
-                  width: 100
-                -%}
+                {%- render 'responsive-image' with image, image: block.settings.logo_url, alt: block.settings.logo_url.alt, width: 100 -%}
               </a>
             {% else %}
               <a
@@ -404,7 +388,7 @@
                   href="{{ social_link | default: '#' }}"
                   target="_blank"
                 >
-                  {%- render 'icon-media-social' with icon: block.settings.social_media -%}
+                  {%- render 'icon-media-social' with icon, icon: block.settings.social_media -%}
                 </a>
               {%- endif -%}
             {%- endfor -%}
@@ -437,13 +421,7 @@
             {%- if block.type == 'trust_badges_footer' -%}
               <div class="footer__trust-badge" id="trust-badges-img{{ block.id }}">
                 {% if block.settings.enable_img_trust_badge %}
-                  {%-
-                    render 'responsive-image' with
-                    image: block.settings.img_trust_badges_footer,
-                    width: 250,
-                    lazyload: true,
-                    no_wrap: true,
-                  -%}
+                  {%- render 'responsive-image' with image, image: block.settings.img_trust_badges_footer, width: 250, lazyload: true, no_wrap: true -%}
                 {% else %}
                   {%- if block.settings.enable_custom_trust_badge_svg -%}
                     {{ block.settings.custom_trust_badge_svg_html }}
@@ -1163,3 +1141,65 @@
     }
   }
 </style>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                        render 'responsive-image' with
+                        image: block.settings.logo_url,
+                        width: 250,
+                        alt: block.settings.shop_logo_alt
+                      -%}
+  to: "{%- render 'responsive-image' with image, image: block.settings.logo_url, width:
+    250, alt: block.settings.shop_logo_alt -%}"
+  position: 1720..1843
+- from: '{%- render "newsletter-form-klaviyo" with settings: settings, klaviyo_id:
+    settings.klaviyo_id, section_id: section.id -%}'
+  to: '{%- render "newsletter-form-klaviyo" with settings, settings: settings, klaviyo_id:
+    settings.klaviyo_id, section_id: section.id -%}'
+  position: 2741..2872
+- from: |-
+    {%-
+                    render 'responsive-image' with
+                    image: block.settings.url_popular_collection,
+                    width: 300,
+                    lazyload : true,
+                    no_wrap : true,
+                  -%}
+  to: "{%- render 'responsive-image' with image, image: block.settings.url_popular_collection,
+    width: 300, lazyload: true, no_wrap: true -%}"
+  position: 3917..4050
+- from: "{%- render 'icon-media-social' with icon: block.settings.social_media -%}"
+  to: "{%- render 'icon-media-social' with icon, icon: block.settings.social_media
+    -%}"
+  position: 8197..8276
+- from: |-
+    {%-
+                      render 'responsive-image' with
+                      image: block.settings.logo_url,
+                      alt: block.settings.logo_url.alt,
+                      width: 100
+                    -%}
+  to: "{%- render 'responsive-image' with image, image: block.settings.logo_url, alt:
+    block.settings.logo_url.alt, width: 100 -%}"
+  position: 12430..12552
+- from: "{%- render 'icon-media-social' with icon: block.settings.social_media -%}"
+  to: "{%- render 'icon-media-social' with icon, icon: block.settings.social_media
+    -%}"
+  position: 16512..16591
+- from: |-
+    {%-
+                        render 'responsive-image' with
+                        image: block.settings.img_trust_badges_footer,
+                        width: 250,
+                        lazyload: true,
+                        no_wrap: true,
+                      -%}
+  to: "{%- render 'responsive-image' with image, image: block.settings.img_trust_badges_footer,
+    width: 250, lazyload: true, no_wrap: true -%}"
+  position: 17789..17923
+{% endcomment %}
