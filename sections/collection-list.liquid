@@ -31,24 +31,12 @@
             {%- assign image = image -%}
 
             <a href="{{- item.url | default: '#' -}}" class="collection-list__link" title="{{- title | escape -}}">
-              {%-
-                render 'responsive-image' with
-                image: image,
-                class: 'collection-list__image',
-                width: 300,
-                height: 345,
-              -%}
+              {%- render 'responsive-image' with image, image: image, class: 'collection-list__image', width: 300, height: 345 -%}
             </a>
           {% else %}
             {% assign image_placeholder = 'collection-' | append: forloop.rindex %}
             
-            {%-
-              render 'responsive-image' with
-              placeholder: image_placeholder,
-              class: 'collection-list__image',
-              width: 300,
-              height: 345,
-            -%}
+            {%- render 'responsive-image' with placeholder, placeholder: image_placeholder, class: 'collection-list__image', width: 300, height: 345 -%}
           {% endif %}
         </div>
 
@@ -504,3 +492,32 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                    render 'responsive-image' with
+                    image: image,
+                    class: 'collection-list__image',
+                    width: 300,
+                    height: 345,
+                  -%}
+  to: "{%- render 'responsive-image' with image, image: image, class: 'collection-list__image',
+    width: 300, height: 345 -%}"
+  position: 1584..1700
+- from: |-
+    {%-
+                  render 'responsive-image' with
+                  placeholder: image_placeholder,
+                  class: 'collection-list__image',
+                  width: 300,
+                  height: 345,
+                -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: image_placeholder,
+    class: 'collection-list__image', width: 300, height: 345 -%}"
+  position: 1848..1988
+{% endcomment %}

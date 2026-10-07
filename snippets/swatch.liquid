@@ -17,14 +17,14 @@
                           {%- assign option_name = product_option.name | downcase -%}
 
                           {%- if option_name contains 'color' -%}
-                            {%- render 'swatch-color' with values: product_option.values, title_standard: 'Swatch Color', swatch_index: swatch_index, type: "color", variant: variant -%}
+                            {%- render 'swatch-color' with values, values: product_option.values, title_standard: 'Swatch Color', swatch_index: swatch_index, type: "color", variant: variant -%}
                           {%- elsif option_name contains 'style' -%}
-                            {%- render 'swatch-style' with values: product_option.values, title_standard: 'Swatch Style', swatch_index: swatch_index, type: "style", variant: variant -%}
+                            {%- render 'swatch-style' with values, values: product_option.values, title_standard: 'Swatch Style', swatch_index: swatch_index, type: "style", variant: variant -%}
                           {%- else  -%}
-                            {%- render 'swatch-standard' with values: product_option.values, title_standard: 'Swatch Standard', swatch_index: swatch_index, variant: variant -%}
+                            {%- render 'swatch-standard' with values, values: product_option.values, title_standard: 'Swatch Standard', swatch_index: swatch_index, variant: variant -%}
                           {%- endif -%}
                         {%- else -%}
-                          {%- render 'select-swatch' with values: product_option.values, swatch_index: swatch_index, title_standard: product_option.name -%}
+                          {%- render 'select-swatch' with values, values: product_option.values, swatch_index: swatch_index, title_standard: product_option.name -%}
                         {%- endunless -%}
                       </div>
                   </div>
@@ -63,3 +63,34 @@
   </style>
 {%- endcapture -%}
 {{- swatch_content -}}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{%- render ''swatch-color'' with values: product_option.values, title_standard:
+    ''Swatch Color'', swatch_index: swatch_index, type: "color", variant: variant
+    -%}'
+  to: '{%- render ''swatch-color'' with values, values: product_option.values, title_standard:
+    ''Swatch Color'', swatch_index: swatch_index, type: "color", variant: variant
+    -%}'
+  position: 1225..1390
+- from: '{%- render ''swatch-style'' with values: product_option.values, title_standard:
+    ''Swatch Style'', swatch_index: swatch_index, type: "style", variant: variant
+    -%}'
+  to: '{%- render ''swatch-style'' with values, values: product_option.values, title_standard:
+    ''Swatch Style'', swatch_index: swatch_index, type: "style", variant: variant
+    -%}'
+  position: 1488..1653
+- from: "{%- render 'swatch-standard' with values: product_option.values, title_standard:
+    'Swatch Standard', swatch_index: swatch_index, variant: variant -%}"
+  to: "{%- render 'swatch-standard' with values, values: product_option.values, title_standard:
+    'Swatch Standard', swatch_index: swatch_index, variant: variant -%}"
+  position: 1722..1878
+- from: "{%- render 'select-swatch' with values: product_option.values, swatch_index:
+    swatch_index, title_standard: product_option.name -%}"
+  to: "{%- render 'select-swatch' with values, values: product_option.values, swatch_index:
+    swatch_index, title_standard: product_option.name -%}"
+  position: 1982..2120
+{% endcomment %}

@@ -695,7 +695,7 @@
             </div>
 
             {%- if paginate.pages > 1 -%}
-              {%- render 'pagination' with paginate: paginate -%}
+              {%- render 'pagination' with paginate, paginate: paginate -%}
             {%- endif -%}
           </div>
         {%- endpaginate -%}
@@ -1017,3 +1017,13 @@
     };
   });
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'pagination' with paginate: paginate -%}"
+  to: "{%- render 'pagination' with paginate, paginate: paginate -%}"
+  position: 19733..19794
+{% endcomment %}
