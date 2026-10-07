@@ -5,7 +5,7 @@
     <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ prod.id }}" data-product-title="{{ prod.title | replace: '"', '&quote;' }}" data-product-type="{{ prod.type }}" style="display: block;"></span>
 
     {%- when 'judgeme' -%}
-        {%- render 'judgeme_widgets' with widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: prod -%}
+        {%- render 'judgeme_widgets' with widget_type, widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: prod -%}
     {%- when 'loox' -%}
         <a href="#looxReviews">
             <div 
@@ -39,4 +39,15 @@
   font-size: 12px;
 }
 
-{% endstyle %}
+{% endstyle %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'judgeme_widgets' with widget_type: 'judgeme_preview_badge', jm_style:
+    '', concierge_install: false, product: prod -%}"
+  to: "{%- render 'judgeme_widgets' with widget_type, widget_type: 'judgeme_preview_badge',
+    jm_style: '', concierge_install: false, product: prod -%}"
+  position: 366..508
+{%- endcomment -%}
