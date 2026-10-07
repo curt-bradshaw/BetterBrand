@@ -117,7 +117,7 @@
         {% endcomment %}
 
         {%- if collection_style == 'paginator' -%}
-          {%- render 'pagination' with paginate: paginate -%}
+          {%- render 'pagination' with paginate, paginate: paginate -%}
         {%- elsif collection_style == 'loading-more' -%}
           {%- if paginate.current_page < paginate.pages %}
             <div class="collection-page__loading-more-wrapper">
@@ -166,3 +166,13 @@
     </div>
   {% endpaginate %}
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'pagination' with paginate: paginate -%}"
+  to: "{%- render 'pagination' with paginate, paginate: paginate -%}"
+  position: 5374..5435
+{% endcomment %}

@@ -78,20 +78,9 @@
     <div class="image-whith-accordion_content">
       <div class="image-whith-accordion_image">
         {% if section.settings.image != blank %}
-          {%-
-            render 'responsive-image' with
-            image: section.settings.image,
-            lazyload: enable_lazy,
-            width: 600,
-            no_wrap: true,
-            alt: section.settings.image.alt
-          -%}
+          {%- render 'responsive-image' with image, image: section.settings.image, lazyload: enable_lazy, width: 600, no_wrap: true, alt: section.settings.image.alt -%}
         {% else %}
-          {%-
-            render 'responsive-image' with
-            placeholder: 'collection-1',
-            width: 600
-          -%}
+          {%- render 'responsive-image' with placeholder, placeholder: 'collection-1', width: 600 -%}
         {% endif %}
       </div>
       <div class="image-whith-accordion_accordion">
@@ -235,3 +224,31 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                render 'responsive-image' with
+                image: section.settings.image,
+                lazyload: enable_lazy,
+                width: 600,
+                no_wrap: true,
+                alt: section.settings.image.alt
+              -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.image, lazyload:
+    enable_lazy, width: 600, no_wrap: true, alt: section.settings.image.alt -%}"
+  position: 2205..2363
+- from: |-
+    {%-
+                render 'responsive-image' with
+                placeholder: 'collection-1',
+                width: 600
+              -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: 'collection-1',
+    width: 600 -%}"
+  position: 2393..2484
+{% endcomment %}

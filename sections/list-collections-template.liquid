@@ -71,14 +71,7 @@
                 <a href="{{- collection.url | default: '#' -}}" class="list-collections__link">
                   {%- assign image_id = 'collection-' | append: forloop.index -%}
 
-                  {%-
-                    render 'responsive-image' with
-                    id: image_id,
-                    image: image,
-                    class: "list-collections__image",
-                    width: 300,
-                    alt: image_alt
-                  -%}
+                  {%- render 'responsive-image' with id, id: image_id, image: image, class: "list-collections__image", width: 300, alt: image_alt -%}
                 </a>
               </div>
 
@@ -245,3 +238,22 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                        render 'responsive-image' with
+                        id: image_id,
+                        image: image,
+                        class: "list-collections__image",
+                        width: 300,
+                        alt: image_alt
+                      -%}
+  to: '{%- render ''responsive-image'' with id, id: image_id, image: image, class:
+    "list-collections__image", width: 300, alt: image_alt -%}'
+  position: 2973..3104
+{% endcomment %}
