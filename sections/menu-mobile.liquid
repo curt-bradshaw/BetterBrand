@@ -237,7 +237,7 @@
       </div>
       <!-- Search-bar -->
       {%- if section.settings.enable_mobile_search == true -%}
-        {%- render 'search-bar' with placeholder: section.settings.menu_mobile_searchbar_placeholder -%}
+        {%- render 'search-bar' with placeholder, placeholder: section.settings.menu_mobile_searchbar_placeholder -%}
       {%- endif -%}
     </div>
 
@@ -268,16 +268,7 @@
                     {%- unless url_icon == '' or url_icon contains 'no-image' or url_icon == blank -%}
                       {%- assign icon_id = 'menu-mobile-icon-' | append: forloop.index -%}
 
-                      {%-
-                        render 'responsive-image' with
-                        class: 'sidenav__item__img',
-                        id: icon_id,
-                        image: url_icon,
-                        width: 50,
-                        lazyload: true,
-                        no_wrap: true,
-                        alt: item.title
-                      -%}
+                      {%- render 'responsive-image' with class, class: 'sidenav__item__img', id: icon_id, image: url_icon, width: 50, lazyload: true, no_wrap: true, alt: item.title -%}
                     {%- endunless -%}
                   {%- endif -%}
 
@@ -368,16 +359,7 @@
                 -%}
                   {%- assign icon_id = 'menu-mobile-icon-' | append: forloop.index -%}
 
-                  {%-
-                    render 'responsive-image' with
-                    class: icon_id,
-                    id: 'menu-mobile',
-                    image: url_icon,
-                    width: 50,
-                    lazyload: true,
-                    no_wrap: true,
-                    alt: item.title
-                  -%}
+                  {%- render 'responsive-image' with class, class: icon_id, id: 'menu-mobile', image: url_icon, width: 50, lazyload: true, no_wrap: true, alt: item.title -%}
                 {%- endunless -%}
 
                 {{ item.title }}
@@ -698,3 +680,44 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'search-bar' with placeholder: section.settings.menu_mobile_searchbar_placeholder
+    -%}"
+  to: "{%- render 'search-bar' with placeholder, placeholder: section.settings.menu_mobile_searchbar_placeholder
+    -%}"
+  position: 6252..6361
+- from: |-
+    {%-
+                            render 'responsive-image' with
+                            class: 'sidenav__item__img',
+                            id: icon_id,
+                            image: url_icon,
+                            width: 50,
+                            lazyload: true,
+                            no_wrap: true,
+                            alt: item.title
+                          -%}
+  to: "{%- render 'responsive-image' with class, class: 'sidenav__item__img', id:
+    icon_id, image: url_icon, width: 50, lazyload: true, no_wrap: true, alt: item.title
+    -%}"
+  position: 7824..7986
+- from: |-
+    {%-
+                        render 'responsive-image' with
+                        class: icon_id,
+                        id: 'menu-mobile',
+                        image: url_icon,
+                        width: 50,
+                        lazyload: true,
+                        no_wrap: true,
+                        alt: item.title
+                      -%}
+  to: "{%- render 'responsive-image' with class, class: icon_id, id: 'menu-mobile',
+    image: url_icon, width: 50, lazyload: true, no_wrap: true, alt: item.title -%}"
+  position: 12252..12407
+{% endcomment %}

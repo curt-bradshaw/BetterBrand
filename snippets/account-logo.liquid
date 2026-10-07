@@ -5,14 +5,7 @@
         {{ settings.login_logo_svg }}
       {%- else -%}
         {%- if settings.login_logo_url != blank -%}
-          {%-
-            render 'responsive-image' with
-            id: id,
-            image: settings.login_logo_url,
-            width: 400,
-            no_wrap: true,
-            alt: title
-          -%}
+          {%- render 'responsive-image' with id, id: id, image: settings.login_logo_url, width: 400, no_wrap: true, alt: title -%}
         {%- endif -%}
       {%- endif -%}
     </a>
@@ -58,3 +51,22 @@
     }
   </style>
 {% endunless %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                render 'responsive-image' with
+                id: id,
+                image: settings.login_logo_url,
+                width: 400,
+                no_wrap: true,
+                alt: title
+              -%}
+  to: "{%- render 'responsive-image' with id, id: id, image: settings.login_logo_url,
+    width: 400, no_wrap: true, alt: title -%}"
+  position: 339..459
+{% endcomment %}

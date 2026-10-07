@@ -206,7 +206,7 @@
 
 <div class="account__wrapper wrapper">
   <div class="account__container">
-    {% render 'account-header' with accountPage: true %}
+    {% render 'account-header' with accountPage, accountPage: true %}
 
     {%- if customer.orders.size != 0 -%}
       {%- paginate customer.orders by 10 -%}
@@ -247,7 +247,7 @@
         </div>
 
         {%- if paginate.pages > 1 -%}
-          {%- render 'pagination' with paginate: paginate -%}
+          {%- render 'pagination' with paginate, paginate: paginate -%}
         {%- endif -%}
         
       {%- endpaginate -%}
@@ -258,7 +258,7 @@
     {%- endif -%}
 
     <div class="account__address-wrapper">
-      {%- render 'customer-address' with address: customer.default_address -%}
+      {%- render 'customer-address' with address, address: customer.default_address -%}
 
       <div class="account__customer-addresses-link">
         <a class="account__customer-addresses" title="Addresses" id="id-addresses" href="/account/addresses">
@@ -276,3 +276,20 @@
     });
   });
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'account-header' with accountPage: true %}"
+  to: "{% render 'account-header' with accountPage, accountPage: true %}"
+  position: 4001..4066
+- from: "{%- render 'pagination' with paginate: paginate -%}"
+  to: "{%- render 'pagination' with paginate, paginate: paginate -%}"
+  position: 5951..6012
+- from: "{%- render 'customer-address' with address: customer.default_address -%}"
+  to: "{%- render 'customer-address' with address, address: customer.default_address
+    -%}"
+  position: 6290..6371
+{% endcomment %}

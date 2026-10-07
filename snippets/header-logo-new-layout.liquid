@@ -6,16 +6,28 @@
     {%- assign logo = section.settings.shop_logo -%}
     {%- assign logo_alt = section.settings.shop_logo_alt | default: logo.alt -%}
 
-    {%-
-      render 'responsive-image' with
-      image: logo,
-      id: logo_alt,
-      width: 400,
-      lazyload: false,
-      no_wrap: true,
-      alt: logo_alt
-    -%}
+    {%- render 'responsive-image' with image, image: logo, id: logo_alt, width: 400, lazyload: false, no_wrap: true, alt: logo_alt -%}
   {%- else -%}
     {{ shop.name }}
   {%- endif -%}
 </a>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+          render 'responsive-image' with
+          image: logo,
+          id: logo_alt,
+          width: 400,
+          lazyload: false,
+          no_wrap: true,
+          alt: logo_alt
+        -%}
+  to: "{%- render 'responsive-image' with image, image: logo, id: logo_alt, width:
+    400, lazyload: false, no_wrap: true, alt: logo_alt -%}"
+  position: 441..571
+{% endcomment %}
