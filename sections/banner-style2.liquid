@@ -64,10 +64,7 @@
               >
             </picture>
           {% else %}
-            {%-
-              render 'responsive-image' with
-              placeholder: 'collection-2'
-            -%}
+            {%- render 'responsive-image' with placeholder, placeholder: 'collection-2' -%}
           {% endif %}
         </div>
         <p class="no-mobile banner-2-subtitle">{{ section.settings.homepage_text_under_banner }}</p>
@@ -108,11 +105,7 @@
             >
           {% endif %}
         {% else %}
-          {%-
-            render 'responsive-image' with
-            placeholder: 'collection-6',
-            class: 'no-mobile banner-2-image'
-          -%}
+          {%- render 'responsive-image' with placeholder, placeholder: 'collection-6', class: 'no-mobile banner-2-image' -%}
         {% endif %}
 
         {%- if section.settings.homepage_text_button != blank -%}
@@ -547,3 +540,27 @@
 }
 {% endschema %}
 <!-- end banner-style2.liquid -->
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                  render 'responsive-image' with
+                  placeholder: 'collection-2'
+                -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: 'collection-2'
+    -%}"
+  position: 3858..3937
+- from: |-
+    {%-
+                render 'responsive-image' with
+                placeholder: 'collection-6',
+                class: 'no-mobile banner-2-image'
+              -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: 'collection-6',
+    class: 'no-mobile banner-2-image' -%}"
+  position: 5811..5925
+{% endcomment %}

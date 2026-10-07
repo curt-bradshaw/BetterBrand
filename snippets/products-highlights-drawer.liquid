@@ -84,12 +84,7 @@
           {% endif %}
           {% if product_image != blank %}
           <div class="products-highlights__product-image-content">
-            {%-
-              render 'responsive-image' with
-              image: product_image,
-              image_class: 'products-highlights__product-image',
-              active_lazy: lazy_load
-            -%}
+            {%- render 'responsive-image' with image, image: product_image, image_class: 'products-highlights__product-image', active_lazy: lazy_load -%}
             <span class="grid_hero-image-shadow"></span>
           </div>
         {% endif %}
@@ -161,3 +156,20 @@
     {% endif %}
 </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                  render 'responsive-image' with
+                  image: product_image,
+                  image_class: 'products-highlights__product-image',
+                  active_lazy: lazy_load
+                -%}
+  to: "{%- render 'responsive-image' with image, image: product_image, image_class:
+    'products-highlights__product-image', active_lazy: lazy_load -%}"
+  position: 3930..4071
+{% endcomment %}

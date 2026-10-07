@@ -11,13 +11,25 @@
     </div>
   {%- elsif section.settings.enable_img_custom_icon_cart -%}
     <div class="header__item-cart-custom">
-      {%-
-        render 'responsive-image' with
-        image: section.settings.img_icon_cart,
-        width: 200,
-        lazyload: false,
-        no_wrap: true,
-        alt: 'Cart Icon'
-      -%}
+      {%- render 'responsive-image' with image, image: section.settings.img_icon_cart, width: 200, lazyload: false, no_wrap: true, alt: 'Cart Icon' -%}
     </div>
   {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+            render 'responsive-image' with
+            image: section.settings.img_icon_cart,
+            width: 200,
+            lazyload: false,
+            no_wrap: true,
+            alt: 'Cart Icon'
+          -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.img_icon_cart,
+    width: 200, lazyload: false, no_wrap: true, alt: 'Cart Icon' -%}"
+  position: 564..709
+{% endcomment %}

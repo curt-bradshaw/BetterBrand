@@ -406,15 +406,7 @@
                 {%- unless same_vendor and current_product.vendor != product.vendor -%}
                   {%- unless same_type and current_product.type != product.type -%}
                     {% if product.available or settings.enable_out_of_stock_button == true %}
-                      {%-
-                        render 'product-card' with
-                        prod: product,
-                        enable_lazy: true,
-                        max_width: 300,
-                        show_description: section.settings.show_description,
-                        show_reviews: true,
-                        show_price: section.settings.show_price
-                      -%}
+                      {%- render 'product-card' with prod, prod: product, enable_lazy: true, max_width: 300, show_description: section.settings.show_description, show_reviews: true, show_price: section.settings.show_price -%}
                       {%- assign counter = counter | plus: 1 -%}
                     {%- endif -%}
                     {%- if counter == number_of_related_products_per_row -%}
@@ -778,3 +770,24 @@
     ]
   }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                            render 'product-card' with
+                            prod: product,
+                            enable_lazy: true,
+                            max_width: 300,
+                            show_description: section.settings.show_description,
+                            show_reviews: true,
+                            show_price: section.settings.show_price
+                          -%}
+  to: "{%- render 'product-card' with prod, prod: product, enable_lazy: true, max_width:
+    300, show_description: section.settings.show_description, show_reviews: true,
+    show_price: section.settings.show_price -%}"
+  position: 12759..12962
+{% endcomment %}

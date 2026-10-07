@@ -362,15 +362,7 @@
                 {%- if block.settings.author_review != blank -%}
                   <div class="reviews__author-content">
                     <div class="reviews__image-athor">
-                      {%-
-                        render 'responsive-image' with
-                        image: block.settings.author_image,
-                        width: block.settings.author_image.width,
-                        height: block.settings.author_image.height,
-                        alt: block.settings.author_image.alt,
-                        lazyload: true,
-                        no_wrap: true,
-                      -%}
+                      {%- render 'responsive-image' with image, image: block.settings.author_image, width: block.settings.author_image.width, height: block.settings.author_image.height, alt: block.settings.author_image.alt, lazyload: true, no_wrap: true -%}
                     </div>
 
                     <div class="reviews__name-author">
@@ -408,15 +400,7 @@
 
                   <a href="{{ item.url }}">
                   {%- if img != blank -%}
-                    {%-
-                      render 'responsive-image' with
-                      image: img,
-                      width: 600,
-                      height: 600,
-                      alt: image_alt,
-                      lazyload: true,
-                      no_wrap: true,
-                    -%}
+                    {%- render 'responsive-image' with image, image: img, width: 600, height: 600, alt: image_alt, lazyload: true, no_wrap: true -%}
                     <span>{{ item.title }}</span>
 
                     {% comment %} <span class="qtd_img">+{{ item.images.size | minus: 1 }}</span> {% endcomment %}
@@ -926,3 +910,37 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                            render 'responsive-image' with
+                            image: block.settings.author_image,
+                            width: block.settings.author_image.width,
+                            height: block.settings.author_image.height,
+                            alt: block.settings.author_image.alt,
+                            lazyload: true,
+                            no_wrap: true,
+                          -%}
+  to: "{%- render 'responsive-image' with image, image: block.settings.author_image,
+    width: block.settings.author_image.width, height: block.settings.author_image.height,
+    alt: block.settings.author_image.alt, lazyload: true, no_wrap: true -%}"
+  position: 10312..10547
+- from: |-
+    {%-
+                          render 'responsive-image' with
+                          image: img,
+                          width: 600,
+                          height: 600,
+                          alt: image_alt,
+                          lazyload: true,
+                          no_wrap: true,
+                        -%}
+  to: "{%- render 'responsive-image' with image, image: img, width: 600, height: 600,
+    alt: image_alt, lazyload: true, no_wrap: true -%}"
+  position: 12042..12170
+{% endcomment %}

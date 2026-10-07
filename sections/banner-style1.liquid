@@ -63,11 +63,7 @@
             <img class="homepage-style-1__image" width="375" height="460" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Banner"/>
           </picture>
         {% else %}
-          {%-
-            render 'responsive-image' with
-            placeholder: 'lifestyle-1',
-            class: 'homepage-style-1__image'
-          -%}
+          {%- render 'responsive-image' with placeholder, placeholder: 'lifestyle-1', class: 'homepage-style-1__image' -%}
         {% endif %}
 
         {%- if section.settings.main_banner_title != "" -%}
@@ -1214,3 +1210,19 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                render 'responsive-image' with
+                placeholder: 'lifestyle-1',
+                class: 'homepage-style-1__image'
+              -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: 'lifestyle-1',
+    class: 'homepage-style-1__image' -%}"
+  position: 3980..4092
+{% endcomment %}
