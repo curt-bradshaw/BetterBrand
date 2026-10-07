@@ -42,7 +42,7 @@
             href="{{ social_link | default: '#' }}"
             target="_blank"
           >
-            {%- render 'icon-media-social' with icon: block.settings.social_media, show_title: section.settings.show_title -%}
+            {%- render 'icon-media-social' with icon, icon: block.settings.social_media, show_title: section.settings.show_title -%}
           </a>
         {%- endif -%}
       {%- endfor -%}
@@ -310,3 +310,15 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'icon-media-social' with icon: block.settings.social_media, show_title:
+    section.settings.show_title -%}"
+  to: "{%- render 'icon-media-social' with icon, icon: block.settings.social_media,
+    show_title: section.settings.show_title -%}"
+  position: 1714..1834
+{% endcomment %}
