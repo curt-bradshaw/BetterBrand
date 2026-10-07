@@ -41,19 +41,7 @@
     <div class="swiper-wrapper">
       {%- for temp_product in temp_collection limit: item_count -%}
         <div class="swiper-slide">
-          {%-
-              render 'product-card' with
-            prod: temp_product,
-            max_width: max_width,
-            max_height: max_height,
-            width_mobile: width_mobile,
-            index: forloop.index,
-            width_desk: width_desk,
-            enable_lazy: enable_lazy,
-            show_reviews: settings.feat_prod_enabled_app_reviews,
-            show_price: section.settings.show_price,
-            show_swatch: section.settings.show_swatch,
-            show_description: section.settings.show_description -%}
+          {%- render 'product-card' with prod, prod: temp_product, max_width: max_width, max_height: max_height, width_mobile: width_mobile, index: forloop.index, width_desk: width_desk, enable_lazy: enable_lazy, show_reviews: settings.feat_prod_enabled_app_reviews, show_price: section.settings.show_price, show_swatch: section.settings.show_swatch, show_description: section.settings.show_description -%}
         </div>
       {% else %}
         {%- for i in (1..item_count) -%}
@@ -551,4 +539,30 @@
     ]
   }
 {% endschema %}
-<!-- end featured-collection-slider.liquid -->
+<!-- end featured-collection-slider.liquid -->{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                  render 'product-card' with
+                prod: temp_product,
+                max_width: max_width,
+                max_height: max_height,
+                width_mobile: width_mobile,
+                index: forloop.index,
+                width_desk: width_desk,
+                enable_lazy: enable_lazy,
+                show_reviews: settings.feat_prod_enabled_app_reviews,
+                show_price: section.settings.show_price,
+                show_swatch: section.settings.show_swatch,
+                show_description: section.settings.show_description -%}
+  to: "{%- render 'product-card' with prod, prod: temp_product, max_width: max_width,
+    max_height: max_height, width_mobile: width_mobile, index: forloop.index, width_desk:
+    width_desk, enable_lazy: enable_lazy, show_reviews: settings.feat_prod_enabled_app_reviews,
+    show_price: section.settings.show_price, show_swatch: section.settings.show_swatch,
+    show_description: section.settings.show_description -%}"
+  position: 1780..2176
+{%- endcomment -%}

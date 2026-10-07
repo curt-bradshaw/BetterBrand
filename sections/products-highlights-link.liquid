@@ -544,11 +544,7 @@
               <a href="{{ section.settings.product1.url }}?variant={{ section.settings.product1.variants[0].id }}">
               {% if section.settings.product1_badge != blank %}
                 <div class="products-highlights-link__product-badge">
-                  {%-
-                    render 'responsive-image' with
-                    image: section.settings.product1_badge,
-                    active_lazy: lazy_load
-                  -%}
+                  {%- render 'responsive-image' with image, image: section.settings.product1_badge, active_lazy: lazy_load -%}
                 </div>
               </a>
               {% endif %} 
@@ -558,12 +554,7 @@
                 {% else %}
                   {% assign product_image = section.settings.product1.featured_image %}
                 {% endif %}
-                {%-
-                  render 'responsive-image' with
-                  image: product_image,
-                  image_class: 'products-highlights-link__product-image',
-                  active_lazy: lazy_load
-                -%}
+                {%- render 'responsive-image' with image, image: product_image, image_class: 'products-highlights-link__product-image', active_lazy: lazy_load -%}
               </a>
               <span class="grid_hero-image-shadow"></span>
             </div>
@@ -613,11 +604,7 @@
               {% if section.settings.product2_badge != blank %}
                 <div class="products-highlights-link__product-badge">
                   <a href="{{ section.settings.product2.url }}?variant={{ section.settings.product2.variants[0].id }}">
-                    {%-
-                      render 'responsive-image' with
-                      image: section.settings.product2_badge,
-                      active_lazy: lazy_load
-                    -%}
+                    {%- render 'responsive-image' with image, image: section.settings.product2_badge, active_lazy: lazy_load -%}
                   </a>
                 </div>
               {% endif %}                  
@@ -627,12 +614,7 @@
                 {% else %}
                   {% assign product_image = section.settings.product2.featured_image %}
                 {% endif %}
-                {%-
-                  render 'responsive-image' with
-                  image: product_image,
-                  image_class: 'products-highlights-link__product-image',
-                  active_lazy: lazy_load
-                -%}
+                {%- render 'responsive-image' with image, image: product_image, image_class: 'products-highlights-link__product-image', active_lazy: lazy_load -%}
               </a>
               <span class="grid_hero-image-shadow"></span>
             </div>
@@ -682,11 +664,7 @@
               {% if section.settings.product3_badge != blank %}
                 <div class="products-highlights-link__product-badge">
                   <a href="{{ section.settings.product3.url }}?variant={{ section.settings.product3.variants[0].id }}">
-                    {%-
-                      render 'responsive-image' with
-                      image: section.settings.product3_badge,
-                      active_lazy: lazy_load
-                    -%}
+                    {%- render 'responsive-image' with image, image: section.settings.product3_badge, active_lazy: lazy_load -%}
                   </a>
                 </div>
               {% endif %} 
@@ -697,12 +675,7 @@
                 {% else %}
                   {% assign product_image = section.settings.product3.featured_image %}
                 {% endif %}
-                {%-
-                  render 'responsive-image' with
-                  image: product_image,
-                  image_class: 'products-highlights-link__product-image',
-                  active_lazy: lazy_load
-                -%}
+                {%- render 'responsive-image' with image, image: product_image, image_class: 'products-highlights-link__product-image', active_lazy: lazy_load -%}
               </a>
               <span class="grid_hero-image-shadow"></span>
             </div>
@@ -1397,4 +1370,67 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                        render 'responsive-image' with
+                        image: section.settings.product1_badge,
+                        active_lazy: lazy_load
+                      -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.product1_badge,
+    active_lazy: lazy_load -%}"
+  position: 16901..17009
+- from: |-
+    {%-
+                      render 'responsive-image' with
+                      image: product_image,
+                      image_class: 'products-highlights-link__product-image',
+                      active_lazy: lazy_load
+                    -%}
+  to: "{%- render 'responsive-image' with image, image: product_image, image_class:
+    'products-highlights-link__product-image', active_lazy: lazy_load -%}"
+  position: 17499..17645
+- from: |-
+    {%-
+                          render 'responsive-image' with
+                          image: section.settings.product2_badge,
+                          active_lazy: lazy_load
+                        -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.product2_badge,
+    active_lazy: lazy_load -%}"
+  position: 20012..20120
+- from: |-
+    {%-
+                      render 'responsive-image' with
+                      image: product_image,
+                      image_class: 'products-highlights-link__product-image',
+                      active_lazy: lazy_load
+                    -%}
+  to: "{%- render 'responsive-image' with image, image: product_image, image_class:
+    'products-highlights-link__product-image', active_lazy: lazy_load -%}"
+  position: 20631..20777
+- from: |-
+    {%-
+                          render 'responsive-image' with
+                          image: section.settings.product3_badge,
+                          active_lazy: lazy_load
+                        -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.product3_badge,
+    active_lazy: lazy_load -%}"
+  position: 23140..23248
+- from: |-
+    {%-
+                      render 'responsive-image' with
+                      image: product_image,
+                      image_class: 'products-highlights-link__product-image',
+                      active_lazy: lazy_load
+                    -%}
+  to: "{%- render 'responsive-image' with image, image: product_image, image_class:
+    'products-highlights-link__product-image', active_lazy: lazy_load -%}"
+  position: 23757..23903
+{%- endcomment -%}

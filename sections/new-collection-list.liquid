@@ -273,14 +273,7 @@
         <div class="new-collection-list__item">
           <div class="new-collection-list__image-wrapper">
             <a href="{{- item.url | default: '#' -}}" class="new-collection-list__link" title="{{- title | escape -}}">
-              {%-
-                render 'responsive-image' with
-                image: image,
-                class: 'new-collection-list__image',
-                width: 300,
-                height: 345,
-                lazyload: true;
-              -%}
+              {%- render 'responsive-image' with image, image: image, class: 'new-collection-list__image', width: 300, height: 345, lazyload: true -%}
 
               {% if title != blank %}
                 <span class="new-collection-list__item-title">{{ title }}</span>
@@ -652,3 +645,22 @@ document.addEventListener("DOMContentLoaded", function() {
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                    render 'responsive-image' with
+                    image: image,
+                    class: 'new-collection-list__image',
+                    width: 300,
+                    height: 345,
+                    lazyload: true;
+                  -%}
+  to: "{%- render 'responsive-image' with image, image: image, class: 'new-collection-list__image',
+    width: 300, height: 345, lazyload: true -%}"
+  position: 7462..7598
+{% endcomment %}

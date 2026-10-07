@@ -63,7 +63,7 @@
     <div class="products-offers__card-content">
     <div class="products-offers__card-title-notes-wrapper">
       <div class="product-card__item-reviews-wrapper">
-        {%- render 'product-reviews' with product: custom_product, pattern: '[rating]&nbsp;([count])' -%}
+        {%- render 'product-reviews' with product, product: custom_product, pattern: '[rating]&nbsp;([count])' -%}
         </div>
       <p class="products-offers__card-title">{{ custom_product.title }}</p>
     </div>
@@ -289,4 +289,15 @@ window.handleAddToBundle = async function (bundle_product, button) {
       font-size: clamp(12px, 2.5vw, 14px);
     }
   }
-</style>
+</style>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'product-reviews' with product: custom_product, pattern: '[rating]&nbsp;([count])'
+    -%}"
+  to: "{%- render 'product-reviews' with product, product: custom_product, pattern:
+    '[rating]&nbsp;([count])' -%}"
+  position: 2614..2720
+{%- endcomment -%}

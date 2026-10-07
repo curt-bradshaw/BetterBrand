@@ -335,15 +335,7 @@
           <div class="reviews-no-slider__author">
             {%- if block.settings.author_review != blank -%}
               <div class="reviews-no-slider__image-author">
-                {%-
-                  render 'responsive-image' with
-                  image: block.settings.author_image,
-                  width: block.settings.author_image.width,
-                  height: block.settings.author_image.height,
-                  alt: block.settings.author_image.alt,
-                  lazyload: true,
-                  no_wrap: true,
-                -%}
+                {%- render 'responsive-image' with image, image: block.settings.author_image, width: block.settings.author_image.width, height: block.settings.author_image.height, alt: block.settings.author_image.alt, lazyload: true, no_wrap: true -%}
               </div>
 
               <div class="reviews-no-slider__author-content">
@@ -354,15 +346,7 @@
                   {% if section.settings.verified_buyer_svg != blank and section.settings.verified_buyer_svg != '' %}
                     {{ section.settings.verified_buyer_svg }}
                   {% elsif section.settings.verified_buyer_img != blank and section.settings.verified_buyer_img != '' %}
-                    {%-
-                      render 'responsive-image' with
-                      image: section.settings.verified_buyer_img,
-                      width: section.settings.verified_buyer_img.width,
-                      height: section.settings.verified_buyer_img.height,
-                      alt: 'Verified Buyer',
-                      lazyload: true,
-                      no_wrap: true,
-                    -%}
+                    {%- render 'responsive-image' with image, image: section.settings.verified_buyer_img, width: section.settings.verified_buyer_img.width, height: section.settings.verified_buyer_img.height, alt: 'Verified Buyer', lazyload: true, no_wrap: true -%}
                   {% else %}
                     <sub>Verified Buyer</sub>
                   {% endif %}
@@ -403,15 +387,7 @@
 
               <a href="{{ item.url }}" class="reviews-no-slider__image-product-link">
                 {%- if img != blank -%}
-                  {%-
-                    render 'responsive-image' with
-                    image: img,
-                    width: 600,
-                    height: 600,
-                    alt: image_alt,
-                    lazyload: true,
-                    no_wrap: true,
-                  -%}
+                  {%- render 'responsive-image' with image, image: img, width: 600, height: 600, alt: image_alt, lazyload: true, no_wrap: true -%}
                 {%- endif -%}
                 <span>{{ item.title }}</span>
               </a>
@@ -965,3 +941,51 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                      render 'responsive-image' with
+                      image: block.settings.author_image,
+                      width: block.settings.author_image.width,
+                      height: block.settings.author_image.height,
+                      alt: block.settings.author_image.alt,
+                      lazyload: true,
+                      no_wrap: true,
+                    -%}
+  to: "{%- render 'responsive-image' with image, image: block.settings.author_image,
+    width: block.settings.author_image.width, height: block.settings.author_image.height,
+    alt: block.settings.author_image.alt, lazyload: true, no_wrap: true -%}"
+  position: 12382..12617
+- from: |-
+    {%-
+                          render 'responsive-image' with
+                          image: section.settings.verified_buyer_img,
+                          width: section.settings.verified_buyer_img.width,
+                          height: section.settings.verified_buyer_img.height,
+                          alt: 'Verified Buyer',
+                          lazyload: true,
+                          no_wrap: true,
+                        -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.verified_buyer_img,
+    width: section.settings.verified_buyer_img.width, height: section.settings.verified_buyer_img.height,
+    alt: 'Verified Buyer', lazyload: true, no_wrap: true -%}"
+  position: 13246..13490
+- from: |-
+    {%-
+                        render 'responsive-image' with
+                        image: img,
+                        width: 600,
+                        height: 600,
+                        alt: image_alt,
+                        lazyload: true,
+                        no_wrap: true,
+                      -%}
+  to: "{%- render 'responsive-image' with image, image: img, width: 600, height: 600,
+    alt: image_alt, lazyload: true, no_wrap: true -%}"
+  position: 15098..15226
+{% endcomment %}
