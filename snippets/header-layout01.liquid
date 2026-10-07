@@ -476,7 +476,7 @@
     {%- render 'header-logo' -%}
 
     {%- if section.settings.enabled_search_bar -%}
-      {%- render 'header-searchbar' with search_id: 'desktop', mobile: false -%}
+      {%- render 'header-searchbar' with search_id, search_id: 'desktop', mobile: false -%}
     {%- endif -%}
 
     {%- if section.settings.enabled_search_bar == false
@@ -509,7 +509,7 @@
   </div>
 
   {%- if section.settings.enabled_search_bar_mobile -%}
-    {%- render 'header-searchbar' with search_id: 'mobile', mobile: true -%}
+    {%- render 'header-searchbar' with search_id, search_id: 'mobile', mobile: true -%}
   {%- endif -%}
 
   {%- unless section.settings.enabled_main_menu == false
@@ -522,3 +522,18 @@
 {%- else -%}
   {%- render 'header-cart' -%}
 {%- endunless -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'header-searchbar' with search_id: 'desktop', mobile: false -%}"
+  to: "{%- render 'header-searchbar' with search_id, search_id: 'desktop', mobile:
+    false -%}"
+  position: 12541..12626
+- from: "{%- render 'header-searchbar' with search_id: 'mobile', mobile: true -%}"
+  to: "{%- render 'header-searchbar' with search_id, search_id: 'mobile', mobile:
+    true -%}"
+  position: 13665..13748
+{% endcomment %}

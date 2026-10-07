@@ -660,14 +660,7 @@
             </video>
           {% endif %}
         {% else %}
-          {%-
-            render 'responsive-image' with
-            image: section.settings.url_call_to_action,
-            placeholder: 'product-1'
-            lazyload: section.settings.enable_lazy,
-            width: 767,
-            height: 534
-          -%}
+          {%- render 'responsive-image' with image, image: section.settings.url_call_to_action, placeholder: 'product-1', lazyload: section.settings.enable_lazy, width: 767, height: 534 -%}
         {% endif %}
       </div>
     </div>
@@ -1442,3 +1435,23 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                render 'responsive-image' with
+                image: section.settings.url_call_to_action,
+                placeholder: 'product-1'
+                lazyload: section.settings.enable_lazy,
+                width: 767,
+                height: 534
+              -%}
+  to: "{%- render 'responsive-image' with image, image: section.settings.url_call_to_action,
+    placeholder: 'product-1', lazyload: section.settings.enable_lazy, width: 767,
+    height: 534 -%}"
+  position: 21125..21304
+{% endcomment %}

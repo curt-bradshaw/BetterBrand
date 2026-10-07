@@ -30,7 +30,7 @@
 
             {% comment %} {%- render 'you-save' with variant: variant, enable_you_save: settings.enable_you_save -%} {% endcomment %}
 
-            {%- render 'price-per-unit' with variant: variant -%}
+            {%- render 'price-per-unit' with variant, variant: variant -%}
         </span>
     </div>
 
@@ -51,7 +51,7 @@
 
         <span class="current-price price recharger-price" id="product-price" data-product-price="{{ variant.price }}">{{ variant.price | money }}</span>
 
-        {%- render 'price-per-unit' with variant: variant -%}
+        {%- render 'price-per-unit' with variant, variant: variant -%}
 
         {% comment %} {%- render 'you-save' with variant: variant, enable_you_save: settings.enable_you_save -%} {% endcomment %}
         
@@ -62,5 +62,20 @@
 {%- endif -%}
 
 {% if block.settings.enable_special_offer_badge %}
-    {%- render 'special-offer-badge' with block: block -%}
-{% endif %}
+    {%- render 'special-offer-badge' with block, block: block -%}
+{% endif %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'price-per-unit' with variant: variant -%}"
+  to: "{%- render 'price-per-unit' with variant, variant: variant -%}"
+  position: 1587..1649
+- from: "{%- render 'price-per-unit' with variant: variant -%}"
+  to: "{%- render 'price-per-unit' with variant, variant: variant -%}"
+  position: 2800..2862
+- from: "{%- render 'special-offer-badge' with block: block -%}"
+  to: "{%- render 'special-offer-badge' with block, block: block -%}"
+  position: 3436..3497
+{%- endcomment -%}
