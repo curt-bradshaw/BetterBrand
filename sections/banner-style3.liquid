@@ -66,11 +66,7 @@
             <img  class="banner-link__image" width="{{ image_desktop_width }}" height="{{ image_desktop_height }}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Banner"/>
           </picture>
         {% else %}
-          {%-
-            render 'responsive-image' with
-            placeholder: 'lifestyle-2',
-            class: 'banner-link__image'
-          -%}
+          {%- render 'responsive-image' with placeholder, placeholder: 'lifestyle-2', class: 'banner-link__image' -%}
         {% endif %}
       </a>
     </section>
@@ -739,3 +735,19 @@
 }
 {% endschema %}
 <!-- end banner-style3.liquid -->
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                render 'responsive-image' with
+                placeholder: 'lifestyle-2',
+                class: 'banner-link__image'
+              -%}
+  to: "{%- render 'responsive-image' with placeholder, placeholder: 'lifestyle-2',
+    class: 'banner-link__image' -%}"
+  position: 3963..4070
+{% endcomment %}

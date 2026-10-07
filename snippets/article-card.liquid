@@ -11,14 +11,7 @@
       title="{{- article.title | strip_html | escape -}}"
       class="grid__item-link"
     >
-      {%-
-        render 'responsive-image' with
-        id: id,
-        image: article_image,
-        width: 300,
-        class: 'grid__item-image',
-        lazyload: enable_lazy
-      -%}
+      {%- render 'responsive-image' with id, id: id, image: article_image, width: 300, class: 'grid__item-image', lazyload: enable_lazy -%}
     </a>
   </div>
 
@@ -101,3 +94,22 @@
     </a>
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+            render 'responsive-image' with
+            id: id,
+            image: article_image,
+            width: 300,
+            class: 'grid__item-image',
+            lazyload: enable_lazy
+          -%}
+  to: "{%- render 'responsive-image' with id, id: id, image: article_image, width:
+    300, class: 'grid__item-image', lazyload: enable_lazy -%}"
+  position: 493..626
+{% endcomment %}

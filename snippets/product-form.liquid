@@ -123,16 +123,11 @@
 
     {% if section.settings.checkbox_upsell_product != blank and section.settings.checkbox_upsell_description != blank %}
       {% comment %} Priority Processing {% endcomment %}
-      {%-
-        render 'priority-processing' with
-        id: "priority-processing-form",
-        pp_product: all_products[section.settings.checkbox_upsell_product],
-        description: section.settings.checkbox_upsell_description
-      -%}
+      {%- render 'priority-processing' with id, id: "priority-processing-form", pp_product: all_products[section.settings.checkbox_upsell_product], description: section.settings.checkbox_upsell_description -%}
       {% comment %} End Priority Processing {% endcomment %}
     {% endif %}
 
-    {% render 'atc-button' with product: product, variant: variant %}
+    {% render 'atc-button' with product, product: product, variant: variant %}
 
     {%- if settings.enable_add_to_cart_sticky and product.available -%}
       <button type="submit" class="cart-icon btn btn-add-tocart AddToCartFixed no-show" id="AddToCart3">
@@ -216,7 +211,7 @@
       style="display: none"
     {% endif %}
   >
-    {%- render 'shipping-calculate' with block: block -%}
+    {%- render 'shipping-calculate' with block, block: block -%}
   </div>
 
   {% comment %}
@@ -320,3 +315,27 @@
     }
   }
 </style>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+            render 'priority-processing' with
+            id: "priority-processing-form",
+            pp_product: all_products[section.settings.checkbox_upsell_product],
+            description: section.settings.checkbox_upsell_description
+          -%}
+  to: '{%- render ''priority-processing'' with id, id: "priority-processing-form",
+    pp_product: all_products[section.settings.checkbox_upsell_product], description:
+    section.settings.checkbox_upsell_description -%}'
+  position: 4563..4766
+- from: "{% render 'atc-button' with product: product, variant: variant %}"
+  to: "{% render 'atc-button' with product, product: product, variant: variant %}"
+  position: 4849..4923
+- from: "{%- render 'shipping-calculate' with block: block -%}"
+  to: "{%- render 'shipping-calculate' with block, block: block -%}"
+  position: 8210..8270
+{% endcomment %}
